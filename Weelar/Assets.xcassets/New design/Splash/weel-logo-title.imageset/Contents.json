@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "weel-logo-title.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

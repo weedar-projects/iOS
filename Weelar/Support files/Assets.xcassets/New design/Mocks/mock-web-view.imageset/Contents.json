@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "mock-web-view.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

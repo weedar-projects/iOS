@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "01a_icons_weedar.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

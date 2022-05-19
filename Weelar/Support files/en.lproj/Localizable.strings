@@ -1,0 +1,163 @@
+/* 
+  Localization.strings
+  Weelar
+
+  Created by Sergey Monastyrskiy on 15.09.2021.
+  
+*/
+
+//SPLASH 2
+"startview.age.confirm.title" = "Are you over 21 years old?";
+"startview.age.confirm.subtitle" = "You are also allowed to use our service if you are 18 years old and you have physician's recommendation";
+"startview.age.confirm.description" = "Smoking may be hazardous to your health. We do not promote smoking and the use\nof smoking products that can expose the user to physical or mental harm.";
+"startview.leave_btn" = "I'm not";
+"startview.enter_btn" = "I am";
+"startview.open_weel_site_alert_description" = "Cannabis is legal in California.\nYou can buy cannabis if you are:
+18 or older with a physician’s recommendation (medicinal use)\n and 21 or older (adult use).";
+"startview.location.confirm.title" = "California residents only";
+"startview.location.confirm.subtitle" = "Delivery is only available in California.\n Do you live in mentioned area?";
+"startview.location.leave_no" = "No";
+"startview.location.enter_yes" = "Yes";
+
+// WelcomeView
+"welcomeview.welcome_welcome" = "Welcome";
+"welcomeview.welcome_to_weel" = "to WEEDAR";
+"welcomeview.welcome_enter_your_login" = "Log In with your email or register";
+"welcomeview.welcome_enter_register" = "Create an account with your email";
+"welcomeview.welcome_content_email" = "Email";
+"welcomeview.welcome_content_email_placeholder" = "Enter your email";
+"welcomeview.welcome_content_password" = "Password";
+"welcomeview.welcome_content_password_placeholder" = "Enter your password";
+"welcomeview.welcome_content_error" = "Either your email or password is incorrect. Make sure you typed them correctly.";
+"welcomeview.welcome_content_reset_password" = "Reset password";
+"welcomeview.welcome_content_next" = "Next";
+"welcomeview.welcome_content_error_not_found" = "User not found";
+"welcomeview.welcome_content_error_email" = "Given email is invalid";
+"welcomeview.welcome_content_error_password" = "Password should contain 1 capital letter, 1 lower letter, 1 digit and to be at least 8 characters length";
+"welcomeview.registration_option" = "Registration";
+"welcomeview.login_option" = "Login";
+"welcomeview.welcome_welcome" = "Welcome";
+"welcomeview.eight_characters" = "Eight characters";
+"welcomeview.one_digit" = "One digit";
+"welcomeview.one_uppercase_letter" = "One uppercase letter";
+"welcomeview.one_lowercase_letter" = "One lowercase letter";
+
+// ResetPasswordView
+"resetpasswordview.reset_password_reset_password" = "Reset password";
+"resetpasswordview.reset_password_email" = "Email";
+"resetpasswordview.reset_password_email_placeholder" = "Enter your email";
+"resetpasswordview.reset_password_error" = "Oops! That email is not registered.";
+"resetpasswordview.reset_password_alert_title" = "Success";
+"resetpasswordview.reset_password_alert_message" = "A new password is sent to your email.";
+"resetpasswordview.reset_password_alert_action_button" = "Back to Login";
+
+
+// PhoneNumberView
+"phonenumberview.phone_number_registration" = "Registration";
+"phonenumberview.phone_number_provide_phone_title" = "Provide your phone digits";
+"phonenumberview.phone_number_confirm_phone_title" = "Confirm your number";
+"phonenumberview.phone_number_provide_phone_note" = "Make sure you have access to that number \nto receive the confirmation code";
+"phonenumberview.phone_number_confirm_phone_note" = "The SMS code is sent to";
+"phonenumberview.phone_number_provide_phone_number" = "Phone number";
+"phonenumberview.phone_number_provide_phone_placeholder" = "+10000000000";
+"phonenumberview.phone_number_provide_phone_error" = "Oops! Something went wrong. Unsupported phone format.";
+"phonenumberview.phone_number_confirm_phone_error" = "Oops! That code is incorrect.";
+"phonenumberview.phone_number_confirm_phone_question" = "Didn´t receive a code?";
+"phonenumberview.phone_number_confirm_phone_reminder" = "Code sent";
+"phonenumberview.phone_number_confirm_phone_resend" = "Resend";
+"phonenumberview.phone_number_confirm_phone_resend_code" = "Resend code";
+"phonenumberview.phone_number_verify_identity_title" = "Upload your ID";
+"phonenumberview.phone_number_verify_identity_note" = "Please provide photo of your ID. \nUpload your medical recommendation \nif you are under 21.";
+"phonenumberview.phone_number_verify_identity_error" = "Error message 3";
+"phonenumberview.phone_number_verify_identity_id_verification" = "ID Verification";
+"phonenumberview.phone_number_verify_identity_recommendation" = "Physician’s recommendation";
+"phonenumberview.phone_number_verify_identity_upload_photo" = "Upload photo";
+"phonenumberview.phone_number_verify_identity_done" = "Done";
+"phonenumberview.phone_number_verify_identity_description" = "By clicking the button you accept our\n Terms & Conditions and Privacy Policy";
+"phonenumberview.phone_number_verify_identity_description_terms" = "Terms & Conditions";
+"phonenumberview.phone_number_verify_identity_description_privacy_policy" = "Privacy Policy";
+"phonenumberview.phone_number_verify_identity_album" = "Album";
+"phonenumberview.phone_number_verify_identity_camera" = "Camera";
+"phonenumberview.phone_number_verify_identity_cancel" = "Cancel";
+
+
+// HomeView
+"homeview.home_back_button_title" = "Catalog";
+
+
+// FiltersView
+"filtersview.filters_filters" = "Filters";
+"filtersview.filters_sort_by" = "Sort by";
+"filtersview.filters_price" = "Price";
+"filtersview.filters_price_from" = "From";
+"filtersview.filters_price_to" = "To";
+"filtersview.filters_price_brands" = "Brands";
+"filtersview.filters_price_effects" = "Effects";
+"filtersview.filters_price_confirm" = "Apply";
+
+
+// ProfileView
+"profileview.profile_title" = "Profile";
+"profileview.profile_section_1_title" = "My info";
+"profileview.profile_section_2_title" = "Settings";
+"profileview.profile_section_3_title" = "App";
+"profileview.profile_section_4_title" = "Danger zone";
+"profileview.profile_section_your_orders" = "Your orders";
+"profileview.profile_section_documents_center" = "Documents center";
+"profileview.profile_section_email" = "Email";
+"profileview.profile_section_phone" = "Phone";
+"profileview.profile_section_delivery_details" = "Delivery details";
+"profileview.profile_section_notifications" = "Notifications";
+"profileview.profile_section_change_password" = "Change password";
+"profileview.profile_section_contact_us" = "Contact us";
+"profileview.profile_section_legal" = "Legal";
+"profileview.profile_section_logout" = "Logout";
+"profileview.profile_settings_alert_title" = "\"WEEDAR\" Would Like to \nSend You Notifications";
+"profileview.profile_settings_alert_message" = "Notifications may include alerts,\nsounds and icon badges.These can be configured in Settings";
+"profileview.profile_settings_alert_primary_button_title" = "Cancel";
+"profileview.profile_settings_alert_secondary_button_title" = "Open Settings";
+
+
+// PasswordChangeView
+"passwordchangeview.change_password_title" = "Change password";
+"passwordchangeview.change_password_current_password_title" = "Current password";
+"passwordchangeview.change_password_current_password_placeholder" = "Enter your current password";
+"passwordchangeview.change_password_current_password_error" = "Given password was invalid. Please try again";
+"passwordchangeview.change_password_new_password_title" = "New password";
+"passwordchangeview.change_password_new_password_placeholder" = "Enter your new password";
+"passwordchangeview.change_password_new_password_error_regex" = "Your password should contain at least\n1 capital, 1 non-capital letter, 1 digit\nand to be at least 8 characters length";
+"passwordchangeview.change_password_new_password_error_match" = "Passwords do not match";
+"passwordchangeview.change_password_repeat_new_password_title" = "Confirm new password";
+"passwordchangeview.change_password_repeat_new_password_placeholder" = "Confirm your new password";
+"passwordchangeview.change_password_repeat_new_password_error_regex" = "Your password should contain at least\n1 capital, 1 non-capital letter, 1 digit\nand to be at least 8 characters length";
+"passwordchangeview.change_password_repeat_new_password_error_match" = "Passwords do not match";
+
+//Contact us
+"contactus.title" = "Contact us";
+"contactus.description" = "Share if you have any troubles regarding the service, suggestions or something you would like to let us know. We will reply to your email as soon as possible.";
+"contactus.message_title" = "Title";
+"contactus.mesage_title_placeholder" = "Message title";
+"contactus.message" = "Message";
+"contactus.message_body" = "Enter your message";
+"contactus.send_btn" = "Send";
+
+//Documents center
+"documentscenter.title" = "Documents center";
+"documentscenter.description" = "Provide your ID card number to confirm that you are over 21 year old. If you are under 21 but have at least 18 years old, please upload a picture of your physician’s recommendation";
+"documentscenter.warning" = "Our courier will require you to show your ID card to verify your identity and age";
+"documentscenter.id_label_title" = "ID Verification";
+"documentscenter.physicians_recommendation" = "Physician's recommendation";
+"documentscenter.upload_btn" = "Upload";
+
+//Delivery details
+"deliverydetails.title" = "Delivery details";
+"deliverydetails.description" = "Inputting an incorrect address may delay your order. Please double-check your information and do not provide dispatch information on these fields.";
+"deliverydetails.name_label_title" = "Legal name";
+"deliverydetails.name_field_placeholder" = "Enter your full legal name";
+"deliverydetails.address_label_title" = "Address";
+"deliverydetails.address_field_placeholder" = "Address";
+"deliverydetails.warning" = "Our courier will ask you to show your ID card to verify your identity and age";
+"deliverydetails.save_btn" = "Save";
+
+//OrderSuccessView
+"ordersuccessview.description" = "Delivery partner will handle the order from here. You can  check your order status in the Current Order bar. Please have your ID ready to show it to the driver for verification.";

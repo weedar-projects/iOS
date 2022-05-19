@@ -1,0 +1,77 @@
+{
+  "pins" : [
+    {
+      "identity" : "flanimatedimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Flipboard/FLAnimatedImage.git",
+      "state" : {
+        "revision" : "e7f9fd4681ae41bf6f3056db08af4f401d61da52",
+        "version" : "1.0.16"
+      }
+    },
+    {
+      "identity" : "focusentity",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/maxxfrazer/FocusEntity",
+      "state" : {
+        "branch" : "main",
+        "revision" : "d17dbbddd92d9b1661a42868fc51b86a3ad2fcb0"
+      }
+    },
+    {
+      "identity" : "scrollableimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gtokman/ScrollableImage.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "3097bdaa48d1cc50f9e3d91e4a412d356085941c"
+      }
+    },
+    {
+      "identity" : "sdwebimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDWebImage/SDWebImage.git",
+      "state" : {
+        "revision" : "2e63d0061da449ad0ed130768d05dceb1496de44",
+        "version" : "5.12.5"
+      }
+    },
+    {
+      "identity" : "sdwebimageswiftui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDWebImage/SDWebImageSwiftUI.git",
+      "state" : {
+        "revision" : "cd8625b7cf11a97698e180d28bb7d5d357196678",
+        "version" : "2.0.2"
+      }
+    },
+    {
+      "identity" : "starscream",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/daltoniam/Starscream.git",
+      "state" : {
+        "revision" : "df8d82047f6654d8e4b655d1b1525c64e1059d21",
+        "version" : "4.0.4"
+      }
+    },
+    {
+      "identity" : "swiftyjson",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftyJSON/SwiftyJSON.git",
+      "state" : {
+        "revision" : "2b6054efa051565954e1d2b9da831680026cd768",
+        "version" : "4.3.0"
+      }
+    },
+    {
+      "identity" : "toastui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/quanshousio/ToastUI",
+      "state" : {
+        "revision" : "e1fd43336630b40a4273a346bd9e6c250151c88d",
+        "version" : "2.0.0"
+      }
+    }
+  ],
+  "version" : 2
+}

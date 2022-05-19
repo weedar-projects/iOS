@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "phone-number-content-mock.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "mock-phone-number-provider-phone-error.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

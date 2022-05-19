@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "mock-phone-number-verify-identity.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
