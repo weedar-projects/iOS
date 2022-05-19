@@ -1216,7 +1216,7 @@
 			isa = PBXGroup;
 			children = (
 				2FC63CE12818687A00A5EE18 /* Settings.bundle */,
-				4D7464EA26B8830300CE8A62 /* Weelar */,
+				4D7464EA26B8830300CE8A62 /* Weedar */,
 				4D7464E926B8830300CE8A62 /* Products */,
 				E793C92E84DD71496F5AF967 /* Pods */,
 				9457F8120DFA2541FD7B1F70 /* Frameworks */,
@@ -1231,7 +1231,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4D7464EA26B8830300CE8A62 /* Weelar */ = {
+		4D7464EA26B8830300CE8A62 /* Weedar */ = {
 			isa = PBXGroup;
 			children = (
 				2F8B4FF927DD0CC7006662D2 /* catalog_ar_gif.gif */,
@@ -1249,7 +1249,7 @@
 				B129D46426F22C39004B7E00 /* Support files */,
 				4D7464F126B8830900CE8A62 /* Preview Content */,
 			);
-			path = Weelar;
+			path = Weedar;
 			sourceTree = "<group>";
 		};
 		4D7464F126B8830900CE8A62 /* Preview Content */ = {
@@ -2163,18 +2163,18 @@
 				CODE_SIGN_ENTITLEMENTS = Weelar/Weelar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Weelar/Preview Content\"";
 				DEVELOPMENT_TEAM = XT4D7V4P3J;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Weelar/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Weedar/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5;
+				MARKETING_VERSION = 2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.weel.ar;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2192,17 +2192,17 @@
 				CODE_SIGN_ENTITLEMENTS = Weelar/Weelar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Weelar/Preview Content\"";
 				DEVELOPMENT_TEAM = XT4D7V4P3J;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Weelar/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Weedar/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5;
+				MARKETING_VERSION = 2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.weel.ar;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
