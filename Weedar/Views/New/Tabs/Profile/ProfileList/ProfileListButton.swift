@@ -32,7 +32,7 @@ struct ProfileListButton: View {
                         .textCustom(.coreSansC65Bold, 16, Color.col_black)
                     Spacer()
                     Text(subtitle)
-                        .textCustom(.coreSansC65Bold, 14, Color.col_gray_dropdown_bg)
+                        .textCustom(.coreSansC65Bold, 14, .gray)
                     
                     if let info = additionaLinfo{
                         Text(info)
