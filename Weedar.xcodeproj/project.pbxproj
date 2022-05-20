@@ -193,6 +193,10 @@
 		849D02782704BDA600947B4F /* ImageResizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D02772704BDA600947B4F /* ImageResizable.swift */; };
 		84E8D8AB26DE4EB600353825 /* Blur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E8D8AA26DE4EB600353825 /* Blur.swift */; };
 		84ED00E626DCF24300707D18 /* PasswordChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ED00E526DCF24300707D18 /* PasswordChangeView.swift */; };
+		900DB7802837D2F9006FCEAF /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900DB77F2837D2F9006FCEAF /* EmailView.swift */; };
+		900DB7822837D303006FCEAF /* EmailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900DB7812837D303006FCEAF /* EmailVM.swift */; };
+		900DB7842837D30A006FCEAF /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900DB7832837D30A006FCEAF /* PhoneView.swift */; };
+		900DB7862837D31B006FCEAF /* PhoneVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900DB7852837D31B006FCEAF /* PhoneVM.swift */; };
 		B1260384270C37C6006B1C0A /* TabBarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1260383270C37C6006B1C0A /* TabBarPage.swift */; };
 		B129D45E26F22783004B7E00 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B129D45D26F22783004B7E00 /* Logger.swift */; };
 		B129D46026F22800004B7E00 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B129D45F26F22800004B7E00 /* Date+Extensions.swift */; };
@@ -459,6 +463,10 @@
 		849D02772704BDA600947B4F /* ImageResizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResizable.swift; sourceTree = "<group>"; };
 		84E8D8AA26DE4EB600353825 /* Blur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blur.swift; sourceTree = "<group>"; };
 		84ED00E526DCF24300707D18 /* PasswordChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordChangeView.swift; sourceTree = "<group>"; };
+		900DB77F2837D2F9006FCEAF /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
+		900DB7812837D303006FCEAF /* EmailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVM.swift; sourceTree = "<group>"; };
+		900DB7832837D30A006FCEAF /* PhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneView.swift; sourceTree = "<group>"; };
+		900DB7852837D31B006FCEAF /* PhoneVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneVM.swift; sourceTree = "<group>"; };
 		B1260383270C37C6006B1C0A /* TabBarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPage.swift; sourceTree = "<group>"; };
 		B129D45D26F22783004B7E00 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		B129D45F26F22800004B7E00 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
@@ -1061,6 +1069,8 @@
 		2FCF7F2127F4460B00DD425A /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				900DB77E2837D2EE006FCEAF /* EmailView */,
+				900DB77D2837D2E7006FCEAF /* PhoneView */,
 				84ED00E426DCF23100707D18 /* PasswordChangeView */,
 				2FF9996F28061D2F00F22BEB /* Contact us */,
 				2FF999682804B6FA00F22BEB /* DocumentCenter */,
@@ -1312,6 +1322,24 @@
 				84ED00E526DCF24300707D18 /* PasswordChangeView.swift */,
 			);
 			path = PasswordChangeView;
+			sourceTree = "<group>";
+		};
+		900DB77D2837D2E7006FCEAF /* PhoneView */ = {
+			isa = PBXGroup;
+			children = (
+				900DB7832837D30A006FCEAF /* PhoneView.swift */,
+				900DB7852837D31B006FCEAF /* PhoneVM.swift */,
+			);
+			path = PhoneView;
+			sourceTree = "<group>";
+		};
+		900DB77E2837D2EE006FCEAF /* EmailView */ = {
+			isa = PBXGroup;
+			children = (
+				900DB77F2837D2F9006FCEAF /* EmailView.swift */,
+				900DB7812837D303006FCEAF /* EmailVM.swift */,
+			);
+			path = EmailView;
 			sourceTree = "<group>";
 		};
 		9457F8120DFA2541FD7B1F70 /* Frameworks */ = {
@@ -1844,11 +1872,13 @@
 				4D88070B26CE9753006C3748 /* CarouselARVIew+Gestures.swift in Sources */,
 				E352B92426CFCBD1002E7977 /* FirebaseAuth.swift in Sources */,
 				4DD2478826D799320054FE45 /* ProductManager.swift in Sources */,
+				900DB7802837D2F9006FCEAF /* EmailView.swift in Sources */,
 				2F4252F227DA8E3100DE2041 /* OrderDeliveryVM.swift in Sources */,
 				2FE21E3627FBA12F004B0057 /* EffectModel.swift in Sources */,
 				E350DA0126B9A0C0007B5265 /* HomeView.swift in Sources */,
 				2FE21E5A2800559C004B0057 /* CustomNavigationBackBtn.swift in Sources */,
 				2F3BEDBD27E3624E00298399 /* CatalogProductsListVM.swift in Sources */,
+				900DB7822837D303006FCEAF /* EmailVM.swift in Sources */,
 				2FCEFF0A2813EFBD00D00AEE /* OrderTrackerContentVM.swift in Sources */,
 				2F3BEDBB27E3624400298399 /* CatalogProductsListView.swift in Sources */,
 				2FE21E5528002AAE004B0057 /* ImagesFullScreenVM.swift in Sources */,
@@ -1912,6 +1942,7 @@
 				2F57087127DEA621004751BA /* AvailabilityDeliveryView.swift in Sources */,
 				EE477829275509EE0040C0E5 /* ReadSizeModifier1.swift in Sources */,
 				B1397BAC26F37F0400862447 /* ActionButtonStyle.swift in Sources */,
+				900DB7842837D30A006FCEAF /* PhoneView.swift in Sources */,
 				E39CA5F7273576D600416A17 /* HomeTutorialView.swift in Sources */,
 				E3630D0E26DFA9580085FD90 /* SecureInput.swift in Sources */,
 				B129D46326F22841004B7E00 /* Enums.swift in Sources */,
@@ -1959,6 +1990,7 @@
 				E30D6BB126BC06230023A21F /* TextStyles.swift in Sources */,
 				B17D58F826FE19AB0094364A /* StringExtension.swift in Sources */,
 				8438737926DE3B02003CDE06 /* ModelRepository.swift in Sources */,
+				900DB7862837D31B006FCEAF /* PhoneVM.swift in Sources */,
 				E3733D242702223000ED3A2A /* Notification+Extensions.swift in Sources */,
 				B17D58EF26FE18FA0094364A /* Color+Extensions.swift in Sources */,
 				2F57086F27DEA5D7004751BA /* OrderReviewView.swift in Sources */,
