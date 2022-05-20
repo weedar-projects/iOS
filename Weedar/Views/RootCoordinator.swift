@@ -11,6 +11,7 @@ import SwiftyJSON
 
 struct RootCoordinator: View {
     //Tab Bar
+    //new build
     @EnvironmentObject var tabBarManager: TabBarManager
     @EnvironmentObject var coordinatorViewManager: CoordinatorViewManager
     @EnvironmentObject var orderTrackerManager: OrderTrackerManager
