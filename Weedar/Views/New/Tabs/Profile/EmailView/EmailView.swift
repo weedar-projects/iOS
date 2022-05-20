@@ -25,27 +25,8 @@ struct EmailView: View {
                 CustomTextField(text: $vm.emailTitle, state: $vm.emailTitleState, title: "New email", placeholder: "Enter your new email")
                     .padding(.top, 24)
 
-                Text("Password")
-                    .hLeading()
-                    .textCustom(.coreSansC45Regular, 14, Color.col_text_main.opacity(0.7))
-                    .padding(.leading, 36)
-                    .padding(.top, 12)
-                
-                ZStack{
-                    TextEditor(text: $vm.passwordTitle)
-                        .textCustom(.coreSansC45Regular, 16, Color.col_text_main)
-                        .padding(.horizontal, 24)
-                        .padding(10)
-                      //  .frame(height: 342)
-                    
-                    Text("Enter your password")
-                                .textCustom(.coreSansC45Regular, 16, Color.col_text_second.opacity(0.5))
-                                .hLeading()
-                                .vTop()
-                                .padding(.horizontal, 24)
-                                .padding(15).padding(.top,3)
-                                .opacity(vm.passwordTitle.isEmpty ? 1 : 0)
-                }
+                CustomTextField(text: $vm.passwordTitle, state: $vm.passwordTitleState, title: "Password", placeholder: "Enter your password")
+                    .padding(.top, 24)
                 
                 RequestButton(state: $vm.buttonState, isDisabled: $vm.buttonIsDisabled, showIcon: false, title: "Save") {
                     vm.ChangeEmail()
@@ -55,7 +36,6 @@ struct EmailView: View {
                 .padding(.horizontal, 24)
                 .padding(.bottom, 45)
             }
-            .navBarSettings("Change email")
             .customErrorAlert(title: "Error", message: vm.errorMessage, isPresented: $vm.showAlert)
         }
     }

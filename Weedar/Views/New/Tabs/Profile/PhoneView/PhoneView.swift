@@ -13,15 +13,6 @@ struct PhoneView: View {
     
     var body: some View{
         
-        //title
-        Text("Change\nyour phone number".localized)
-          .lineLimit(nil)
-          .lineSpacing(2.8)
-          .modifier(TextModifier(font: .coreSansC45Regular, size: 40, foregroundColor: .lightOnSurfaceB, opacity: 1))
-          .padding([.top, .leading], 24)
-          .hLeading()
-          
-       
         //description
         Text("Current phone \(vm.phone)")
             .textSecond()
@@ -38,9 +29,6 @@ struct PhoneView: View {
           .padding(.leading, 36)
         
         //phon number textfield
-
-            
-          
         HStack{
                 Text("\(vm.phoneEntered.countryFlag)")
                 .frame(width: 24, height: 24)

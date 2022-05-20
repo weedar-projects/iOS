@@ -32,9 +32,9 @@ struct ProfileMainView: View {
                         DocumentCenterView()
                             .navBarSettings("Document center")
                     case .email : EmailView()
-                            .navBarSettings("Email")
+                            .navBarSettings("Change email")
                     case .phone : PhoneView()
-                            .navBarSettings("Phone")
+                            .navBarSettings("Change phone number")
                     case .notification:
                         EmptyView()
                     case .changePassword:
