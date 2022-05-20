@@ -42,6 +42,8 @@ struct ProfileListButtonToggle: View {
 enum ProfileMenuItem {
     case orders
     case documents
+    case phone
+    case email
     
     case notification
     case changePassword

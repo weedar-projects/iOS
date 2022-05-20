@@ -9,8 +9,7 @@ import SwiftUI
 
 class ProfileMainVM: ObservableObject {
     
-    @Published var myInfoItems = [ProfileMenuItemModel(icon: "Profile-Cart", title: "My orders", state: .orders),
-                                  ProfileMenuItemModel(icon: "Profile-Document", title: "Document center", state: .documents)]
+    @Published var myInfoItems:[ProfileMenuItemModel] = []
     
     @Published var settingsItems = [ProfileMenuItemModel(icon: "Profile-Lock", title: "Change password", state: .changePassword)]
     
@@ -29,6 +28,29 @@ class ProfileMainVM: ObservableObject {
     
     @Published var showLoading = false
     
+    @Published var user: UserModel?
+    
+    init(){
+        getUserData(userData: {data in
+            self.myInfoItems = [ProfileMenuItemModel(icon: "Profile-Cart", title: "My orders", state: .orders),
+                                ProfileMenuItemModel(icon: "Profile-Document", title: "Document center", state: .documents),
+                                ProfileMenuItemModel(icon: "Profile-Email", title: "Email", subtitle: data.email, state: .email),
+                                ProfileMenuItemModel(icon: "Profile-Phone", title: "Phone", subtitle: data.phone, state: .phone)]
+            
+        })
+    }
+    
+    func getUserData(userData:@escaping(UserModel)-> Void){
+            API.shared.request(rout: .getCurrentUserInfo) { result in
+                switch result{
+                case let .success(json):
+                    let user = UserModel(json: json)
+                    userData(user)
+                case let .failure(error):
+                    print("error to load user data: \(error)")
+                }
+            }
+        }
 }
 
 enum ProfileMenuCategory{

@@ -12,6 +12,7 @@ struct ProfileMenuItemModel: Hashable {
     var type: ProfileMenuItemType = .button
     var icon: String
     var title: String
+    var subtitle: String?
     var state: ProfileMenuItem
     
     var additionaLinfo: String?
