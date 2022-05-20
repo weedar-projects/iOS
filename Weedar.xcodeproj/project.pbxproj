@@ -2165,7 +2165,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_ASSET_PATHS = "\"Weelar/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Weedar/Preview Content\"";
 				DEVELOPMENT_TEAM = XT4D7V4P3J;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Weedar/Info.plist";
@@ -2193,7 +2193,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_ASSET_PATHS = "\"Weelar/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Weedar/Preview Content\"";
 				DEVELOPMENT_TEAM = XT4D7V4P3J;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Weedar/Info.plist";
