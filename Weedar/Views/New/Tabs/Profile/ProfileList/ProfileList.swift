@@ -23,7 +23,7 @@ struct ProfileList: View{
             .padding(.top,24)
         
         ForEach(menuItems, id: \.self) { item in
-            ProfileListButton(icon: item.icon, title: item.title, state: item.state, additionaLinfo: item.additionaLinfo) {
+            ProfileListButton(icon: item.icon, title: item.title, subtitle: item.subtitle ?? "", state: item.state, additionaLinfo: item.additionaLinfo) {
                 selectedItem = item.state
                 showView = true
             }

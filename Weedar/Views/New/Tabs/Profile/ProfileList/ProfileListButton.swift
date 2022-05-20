@@ -11,7 +11,7 @@ struct ProfileListButton: View {
     
     @State var icon = ""
     @State var title = ""
-    
+    @State var subtitle = ""
     var state: ProfileMenuItem
     
     @State var additionaLinfo: String?
@@ -30,8 +30,9 @@ struct ProfileListButton: View {
                     
                     Text(title)
                         .textCustom(.coreSansC65Bold, 16, Color.col_black)
-                    
                     Spacer()
+                    Text(subtitle)
+                        .textCustom(.coreSansC65Bold, 14, Color.col_gray_dropdown_bg)
                     
                     if let info = additionaLinfo{
                         Text(info)
