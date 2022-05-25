@@ -40,7 +40,7 @@ struct ImagesFullScreenView: View {
                                 .opacity(vm.bgOpacity)
             
             if let product = product {
-                MainButton(title: "Add to card - $\(product.price.formattedString(format: .percent))", icon: "cart", iconSize: 18) {
+                MainButton(title: "Add to Cart - $\(product.price.formattedString(format: .percent))", icon: "cart", iconSize: 18) {
                     cartManager.productQuantityInCart(productId: product.id, quantity: .add)
                     vm.notification.notificationOccurred(.success)
                 }

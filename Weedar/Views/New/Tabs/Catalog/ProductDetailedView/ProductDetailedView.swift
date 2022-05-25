@@ -371,7 +371,7 @@ struct ProductDetailedView: View {
                     .frame(width: 18, height: 18)
                     .foregroundColor(Color.col_text_main)
                 
-                Text( "Add to cart - $\((product.price * Double(vm.quantity)).formattedString(format: .percent))")
+                Text( "Add to Cart - $\((product.price * Double(vm.quantity)).formattedString(format: .percent))")
                     .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
             }
             .frame(height: 48)
