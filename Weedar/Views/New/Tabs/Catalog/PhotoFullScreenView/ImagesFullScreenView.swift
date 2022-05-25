@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import Amplitude
 
 struct ImagesFullScreenView: View {
     
@@ -17,7 +18,7 @@ struct ImagesFullScreenView: View {
     @GestureState var draggingOffset: CGSize = .zero
     
     @State var imageLink: String = ""
-    @State var product: ProductModel?
+    @State var product: ProductModel
     @Binding var showImageFullScreen: Bool
     
     @State private var dragged = CGSize.zero
@@ -39,6 +40,7 @@ struct ImagesFullScreenView: View {
                                 .zoomable(scale: $vm.imageScale)
                                 .opacity(vm.bgOpacity)
             
+            
             if let product = product {
                 MainButton(title: "Add to Cart - $\(product.price.formattedString(format: .percent))", icon: "cart", iconSize: 18) {
                     cartManager.productQuantityInCart(productId: product.id, quantity: .add)
@@ -51,20 +53,18 @@ struct ImagesFullScreenView: View {
                 
             }
         }
-        .edgesIgnoringSafeArea(.all)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onChange(of: vm.showImageFullScreen, perform: { newValue in
-            withAnimation {
-                self.showImageFullScreen = false
+        .onTapGesture {
+            vm.notification.notificationOccurred(.success)
+            cartManager.productQuantityInCart(productId: product.id, quantity: .custom(vm.quantity))
+            if UserDefaults.standard.bool(forKey: "EnableTracking"){
+
+            Amplitude.instance().logEvent("add_cart_prod_card_full_screen", withEventProperties: ["category" : product.type.name,
+                                                                                      "product_id" : product.id,
+                                                                                      "product_qty" : vm.quantity,
+                                                                                      "product_price" : product.price.formattedString(format: .percent)])
             }
-            print("hide photo")
-        })
-        .gesture(DragGesture().updating($draggingOffset, body: { (value, outValue, _) in
-            
-            outValue = value.translation
-            vm.onChange(value: draggingOffset)
-            
-        }).onEnded(vm.onEnd(value:)))
+            vm.chageAddButtonState()
+        }.disabled(vm.animProductInCart)
         
     }
 }

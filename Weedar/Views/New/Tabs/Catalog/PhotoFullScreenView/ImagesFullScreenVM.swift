@@ -12,13 +12,16 @@ class ImagesFullScreenVM: ObservableObject {
 
     // BG Opacity...
     @Published var bgOpacity: Double = 1
-    
+    @Published var quantity: Int = 1
+
     // Scaling....
     @Published var imageScale: CGFloat = 1
     
     @Published var imageViewerOffset: CGSize = .zero
   
     @Published var showImageFullScreen = false
+    @Published var animProductInCart = false
+
     
     @Published var notification = UINotificationFeedbackGenerator()
     
@@ -56,6 +59,14 @@ class ImagesFullScreenVM: ObservableObject {
                 
                 imageViewerOffset = .zero
                 bgOpacity = 1
+            }
+        }
+    }
+    func chageAddButtonState(){
+        withAnimation(.linear(duration: 0.2)){
+            animProductInCart = true
+            DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                self.animProductInCart = false
             }
         }
     }
