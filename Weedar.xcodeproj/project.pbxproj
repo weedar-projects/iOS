@@ -270,7 +270,6 @@
 		E3FBC63426C2DDC0004402ED /* OrderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FBC63326C2DDC0004402ED /* OrderRepository.swift */; };
 		E3FBC63926C2DDE5004402ED /* ProductRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FBC63826C2DDE5004402ED /* ProductRepository.swift */; };
 		E3FBC64026C32A6E004402ED /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FBC63F26C32A6E004402ED /* KeychainService.swift */; };
-		EE220B72276CCE89006AE344 /* ToastUI in Frameworks */ = {isa = PBXBuildFile; productRef = EE220B71276CCE89006AE344 /* ToastUI */; };
 		EE477829275509EE0040C0E5 /* ReadSizeModifier1.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE477828275509EE0040C0E5 /* ReadSizeModifier1.swift */; };
 		EEC0D8E8275EAF0D00EEAE45 /* ReadSizeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC0D8E7275EAF0D00EEAE45 /* ReadSizeModifier.swift */; };
 /* End PBXBuildFile section */
@@ -551,7 +550,6 @@
 				2F60BA28280F4310002B6670 /* FocusEntity in Frameworks */,
 				2FAAFD5127C4E827008D4729 /* SDWebImageSwiftUI in Frameworks */,
 				2F5BE62B27B6972C008B71AB /* RealityKit.framework in Frameworks */,
-				EE220B72276CCE89006AE344 /* ToastUI in Frameworks */,
 				2F8B4FFD27DD0F0F006662D2 /* FLAnimatedImage in Frameworks */,
 				2F4252EB27DA619F00DE2041 /* SwiftyJSON in Frameworks */,
 				2FE21E58280049A8004B0057 /* ScrollableImage in Frameworks */,
@@ -1630,7 +1628,6 @@
 			);
 			name = Weedar;
 			packageProductDependencies = (
-				EE220B71276CCE89006AE344 /* ToastUI */,
 				2FAAFD5027C4E827008D4729 /* SDWebImageSwiftUI */,
 				2F4252EA27DA619F00DE2041 /* SwiftyJSON */,
 				2F8B4FFC27DD0F0F006662D2 /* FLAnimatedImage */,
@@ -1667,13 +1664,13 @@
 			);
 			mainGroup = 4D7464DF26B8830300CE8A62;
 			packageReferences = (
-				EE220B70276CCE89006AE344 /* XCRemoteSwiftPackageReference "ToastUI" */,
 				2FAAFD4F27C4E827008D4729 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				2F4252E927DA619F00DE2041 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				2F8B4FFB27DD0F0F006662D2 /* XCRemoteSwiftPackageReference "FLAnimatedImage" */,
 				2FE21E56280049A8004B0057 /* XCRemoteSwiftPackageReference "ScrollableImage" */,
 				2F60BA26280F4310002B6670 /* XCRemoteSwiftPackageReference "FocusEntity" */,
 				2FC63CE9281ABD6F00A5EE18 /* XCRemoteSwiftPackageReference "Starscream" */,
+				2F7D4AD8283FE2EC0097C2ED /* XCRemoteSwiftPackageReference "ToastUI" */,
 			);
 			productRefGroup = 4D7464E926B8830300CE8A62 /* Products */;
 			projectDirPath = "";
@@ -2251,6 +2248,14 @@
 				kind = branch;
 			};
 		};
+		2F7D4AD8283FE2EC0097C2ED /* XCRemoteSwiftPackageReference "ToastUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/quanshousio/ToastUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		2F8B4FFB27DD0F0F006662D2 /* XCRemoteSwiftPackageReference "FLAnimatedImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Flipboard/FLAnimatedImage.git";
@@ -2281,14 +2286,6 @@
 			requirement = {
 				branch = main;
 				kind = branch;
-			};
-		};
-		EE220B70276CCE89006AE344 /* XCRemoteSwiftPackageReference "ToastUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/quanshousio/ToastUI";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -2323,11 +2320,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2FE21E56280049A8004B0057 /* XCRemoteSwiftPackageReference "ScrollableImage" */;
 			productName = ScrollableImage;
-		};
-		EE220B71276CCE89006AE344 /* ToastUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EE220B70276CCE89006AE344 /* XCRemoteSwiftPackageReference "ToastUI" */;
-			productName = ToastUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
