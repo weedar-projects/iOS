@@ -29,7 +29,6 @@ class AuthRootVM: ObservableObject {
     @Published var nextButtonIsDisabled = true
     @Published var nextButtonState: ButtonState = .def
     
-    @Published var showOnboardingSecondView = false
     @Published var showOnboarding = true
     
     @Published var showServerError = false
@@ -43,7 +42,7 @@ class AuthRootVM: ObservableObject {
     
     
     init() {
-        showOnboarding = UserDefaultsService().get(fromKey: .showOnboarding) as? Bool ?? true
+//        showOnboarding = UserDefaultsService().get(fromKey: .showOnboarding) as? Bool ?? true
     }
     
     func validatePassword(_ password: String) {

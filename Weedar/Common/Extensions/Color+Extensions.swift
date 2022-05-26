@@ -77,4 +77,30 @@ extension Color {
     static let col_catalog_red = Color("col_catalog_red")
     static let col_catalog_pink = Color("col_catalog_pink")
     
+    
+    //borders
+    static let col_border_black = Color("col_border_black")
+    
+    //gradiens
+    static let col_gradient_black_first = Color("col_gradient_black_first")
+    static let col_gradient_black_second = Color("col_gradient_black_second")
+    
 }
+
+extension Image {
+    static let logoDark = Image("logo_dark")
+    static let logoLight = Image("logo_light")
+    static let bg_gradient_main = Image("bg_gradient_main")
+}
+
+
+class Gradients {
+    class Radial{
+        static let black = RadialGradient(colors: [Color.col_white,
+                                                   Color.col_gradient_black_second],
+                                          center: .center,
+                                          startRadius: 10,
+                                          endRadius: 100)
+    }
+}
+

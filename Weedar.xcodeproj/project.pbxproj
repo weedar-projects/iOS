@@ -37,6 +37,7 @@
 		2F4252EB27DA619F00DE2041 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 2F4252EA27DA619F00DE2041 /* SwiftyJSON */; };
 		2F4252F027DA8E2500DE2041 /* OrderDeliveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4252EF27DA8E2500DE2041 /* OrderDeliveryView.swift */; };
 		2F4252F227DA8E3100DE2041 /* OrderDeliveryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4252F127DA8E3100DE2041 /* OrderDeliveryVM.swift */; };
+		2F43C382283FF2DC00606C88 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F43C381283FF2DC00606C88 /* OnboardingView.swift */; };
 		2F4F5B3F282CF8B800394578 /* DiscountBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4F5B3E282CF8B800394578 /* DiscountBanner.swift */; };
 		2F57086F27DEA5D7004751BA /* OrderReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57086E27DEA5D7004751BA /* OrderReviewView.swift */; };
 		2F57087127DEA621004751BA /* AvailabilityDeliveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57087027DEA621004751BA /* AvailabilityDeliveryView.swift */; };
@@ -73,9 +74,7 @@
 		2F60BA5D280F7FAC002B6670 /* ProfileList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F60BA5C280F7FAC002B6670 /* ProfileList.swift */; };
 		2F60BA5F280F8009002B6670 /* OrderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F60BA5E280F8009002B6670 /* OrderSection.swift */; };
 		2F60BA61280F8075002B6670 /* ImageUrlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F60BA60280F8075002B6670 /* ImageUrlView.swift */; };
-		2F60BA69280F8326002B6670 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F60BA68280F8326002B6670 /* StartView.swift */; };
 		2F60BA6B280F8348002B6670 /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F60BA6A280F8348002B6670 /* OTPView.swift */; };
-		2F60BA6D280F8382002B6670 /* StartVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F60BA6C280F8382002B6670 /* StartVM.swift */; };
 		2F60BA70280F8480002B6670 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F60BA6F280F8480002B6670 /* ButtonStyles.swift */; };
 		2F60BA7328104810002B6670 /* OrderDetailsReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F60BA7228104810002B6670 /* OrderDetailsReview.swift */; };
 		2F60BA7628104854002B6670 /* CartProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F60BA7528104854002B6670 /* CartProduct.swift */; };
@@ -305,6 +304,7 @@
 		2F4252E527DA2AA900DE2041 /* DeliveryZipCodesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryZipCodesModel.swift; sourceTree = "<group>"; };
 		2F4252EF27DA8E2500DE2041 /* OrderDeliveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDeliveryView.swift; sourceTree = "<group>"; };
 		2F4252F127DA8E3100DE2041 /* OrderDeliveryVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDeliveryVM.swift; sourceTree = "<group>"; };
+		2F43C381283FF2DC00606C88 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		2F4F5B3E282CF8B800394578 /* DiscountBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountBanner.swift; sourceTree = "<group>"; };
 		2F57086E27DEA5D7004751BA /* OrderReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderReviewView.swift; sourceTree = "<group>"; };
 		2F57087027DEA621004751BA /* AvailabilityDeliveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityDeliveryView.swift; sourceTree = "<group>"; };
@@ -340,9 +340,7 @@
 		2F60BA5C280F7FAC002B6670 /* ProfileList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileList.swift; sourceTree = "<group>"; };
 		2F60BA5E280F8009002B6670 /* OrderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSection.swift; sourceTree = "<group>"; };
 		2F60BA60280F8075002B6670 /* ImageUrlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUrlView.swift; sourceTree = "<group>"; };
-		2F60BA68280F8326002B6670 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		2F60BA6A280F8348002B6670 /* OTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPView.swift; sourceTree = "<group>"; };
-		2F60BA6C280F8382002B6670 /* StartVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartVM.swift; sourceTree = "<group>"; };
 		2F60BA6F280F8480002B6670 /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		2F60BA7228104810002B6670 /* OrderDetailsReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsReview.swift; sourceTree = "<group>"; };
 		2F60BA7528104854002B6670 /* CartProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartProduct.swift; sourceTree = "<group>"; };
@@ -845,8 +843,7 @@
 		2F60BA67280F8316002B6670 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				2F60BA68280F8326002B6670 /* StartView.swift */,
-				2F60BA6C280F8382002B6670 /* StartVM.swift */,
+				2F43C381283FF2DC00606C88 /* OnboardingView.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -1789,7 +1786,6 @@
 				2F67C09227CD4A5A00BE8518 /* CustomTextField.swift in Sources */,
 				2F67C09727CD580C00BE8518 /* RequestButton.swift in Sources */,
 				2F60BA3F280F7CF4002B6670 /* CatalogFilters.swift in Sources */,
-				2F60BA69280F8326002B6670 /* StartView.swift in Sources */,
 				E3C96E0126EBAC4C0064FBAF /* ImageHandler.swift in Sources */,
 				2F2AA74127DB57E600AB6C57 /* CartRootVM.swift in Sources */,
 				2F57087B27DF499B004751BA /* CalculationRow.swift in Sources */,
@@ -1884,6 +1880,7 @@
 				2FCF7F2E27F4E6D400DD425A /* Routs.swift in Sources */,
 				2F8B4FAE27DB9B6B006662D2 /* OrderCalculationsList.swift in Sources */,
 				2F67C09C27CD684F00BE8518 /* RegisterView.swift in Sources */,
+				2F43C382283FF2DC00606C88 /* OnboardingView.swift in Sources */,
 				B1C2359527185C530067AD15 /* PasswordTextFieldWrapper.swift in Sources */,
 				2F4252DA27D8C3AE00DE2041 /* ComfirmPhoneVM.swift in Sources */,
 				2F3BEDAF27E27EC600298399 /* CustomTabBarView.swift in Sources */,
@@ -1972,7 +1969,6 @@
 				2F60BA53280F7F1B002B6670 /* OrderSectionListModel.swift in Sources */,
 				2F57088527DF4BA9004751BA /* OrderSuccessView.swift in Sources */,
 				8458BC0726FDECF500E1EDC5 /* ColorExtension.swift in Sources */,
-				2F60BA6D280F8382002B6670 /* StartVM.swift in Sources */,
 				2F3BEDB127E27EE000298399 /* TabBarManager.swift in Sources */,
 				2F60BA6B280F8348002B6670 /* OTPView.swift in Sources */,
 				E342897A26CD504A00F1EB6E /* UserDefaultsService.swift in Sources */,
@@ -2160,7 +2156,7 @@
 				CODE_SIGN_ENTITLEMENTS = Weedar/Weelar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Weedar/Preview Content\"";
 				DEVELOPMENT_TEAM = XT4D7V4P3J;
@@ -2171,7 +2167,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.6;
+				MARKETING_VERSION = 2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.weel.ar;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2189,7 +2185,7 @@
 				CODE_SIGN_ENTITLEMENTS = Weedar/Weelar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Weedar/Preview Content\"";
 				DEVELOPMENT_TEAM = XT4D7V4P3J;
 				ENABLE_PREVIEWS = YES;
@@ -2199,7 +2195,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.6;
+				MARKETING_VERSION = 2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.weel.ar;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
