@@ -80,7 +80,7 @@ struct LoginView: View {
                 .font(Font.system(size: 10))
                 .foregroundColor(.red)
             Text(error)
-                .textCustom(.coreSansC45Regular, 14, Color.col_red_main)
+                .textCustom(.coreSansC45Regular, 14, Color.col_pink_main)
         }
     }
     

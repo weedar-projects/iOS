@@ -95,7 +95,7 @@ struct ProductDetailedView: View {
         .onAppear{
             //add information values
             vm.productContentInfo.removeAll()
-            vm.addProductContntInfo(title: "THC", value: product.thc, textColor: Color.col_red_main, bgColor: Color.col_red_second)
+            vm.addProductContntInfo(title: "THC", value: product.thc, textColor: Color.col_pink_main, bgColor: Color.col_red_second)
             vm.addProductContntInfo(title: "CBD", value: product.cbd, textColor: Color.col_blue_main, bgColor: Color.col_blue_second)
             vm.addProductContntInfo(title: "Canabioids", value: product.totalCannabinoids, textColor: Color.col_green_main, bgColor: Color.col_green_second)
         }

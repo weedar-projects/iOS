@@ -81,7 +81,7 @@ struct ProvidePhoneView: View {
                 .modifier(
                     TextModifier(font: .coreSansC45Regular,
                                  size: 12,
-                                 foregroundColor: Color.col_red_main,
+                                 foregroundColor: Color.col_pink_main,
                                  opacity: 1.0)
                 )
                 .hLeading()

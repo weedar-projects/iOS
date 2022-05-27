@@ -23,15 +23,19 @@ struct ProductCartRowView: View {
         ZStack{
             //delete button
             ZStack {
-                RoundedRectangle(cornerRadius: 12.0)
-                    .fill(Color.col_red_second)
-                    .frame(width: 56, height: vm.itemViewHeight, alignment: .center)
-                    .overlay(Image("trash_red")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 18, alignment: .center))
+                RadialGradient(colors: [Color.col_gradient_pink_second,
+                                        Color.col_gradient_pink_first],
+                               center: .center,
+                               startRadius: 0,
+                               endRadius: 150)
+                
+                Image.icon_trash
+                    .colorMultiply(Color.col_pink_main)
                     
             }
+            .frame(width: 56, height: vm.itemViewHeight, alignment: .center)
+
+            .cornerRadius(12)
             .hTrailing()
             .onTapGesture {
                 if UserDefaults.standard.bool(forKey: "EnableTracking"){
@@ -67,6 +71,7 @@ struct ProductCartRowView: View {
                     //brand
                     Text(item.brand.name ?? "")
                         .textSecond()
+                    
                     Spacer()
                     
                     //title
@@ -80,7 +85,7 @@ struct ProductCartRowView: View {
                         
                         //price
                         Text("$\(item.price.formattedString(format: .percent))")
-                            .textCustom(.coreSansC65Bold, 16, Color.col_purple_main)
+                            .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
                         
                         //gram
                         Text("\(item.gramWeight.formattedString(format: .gramm))g / \(item.ounceWeight.formattedString(format: .ounce))oz")

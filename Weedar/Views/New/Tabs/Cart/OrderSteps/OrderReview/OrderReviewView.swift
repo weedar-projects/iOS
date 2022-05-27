@@ -57,18 +57,6 @@ struct OrderReviewView: View {
                                 .padding(.top, 24)
                                 .padding(.horizontal, 24)
                             
-                            if let cartData = cartManager.cartData{
-                                if cartData.discount > 0{
-                                    Text("Your $\(cartData.discount.formattedString(format: .int)) off discount is applied")
-                                        .textCustom(.coreSansC45Regular, 16, Color.col_green_main)
-                                        .frame(maxWidth: .infinity)
-                                        .frame(height: 48)
-                                        .background(Color.col_green_second.cornerRadius(12))
-                                        .padding(.top, 10)
-                                        .padding(.horizontal, 24)
-                                }
-                            }
-                            
                             
                             Text("Delivery details")
                                 .textCustom(.coreSansC65Bold

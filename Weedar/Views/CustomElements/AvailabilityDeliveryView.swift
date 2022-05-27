@@ -35,7 +35,7 @@ struct AvailabilityDeliveryView: View {
                         
                 } else if deliveryState == .notFound{
                     Image(systemName: "xmark")
-                        .foregroundColor(Color.col_red_main)
+                        .foregroundColor(Color.col_pink_main)
                         .font(.system(size: 11))
                 }
                 
@@ -71,8 +71,8 @@ struct AvailabilityDeliveryView: View {
                 self.borderColorDelivery = Color.col_green_main
                 self.textColorDelivery = Color.col_green_main
             case .notFound:
-                self.borderColorDelivery = Color.col_red_main
-                self.textColorDelivery = Color.col_red_main
+                self.borderColorDelivery = Color.col_pink_main
+                self.textColorDelivery = Color.col_pink_main
             }
         }
         .onChange(of: pickUpState) { newValue in
@@ -98,7 +98,7 @@ struct AvailabilityDeliveryView: View {
                 self.textColorDelivery = Color.col_green_main
             case .notFound:
                 self.borderColorDelivery = Color.textFieldGray
-                self.textColorDelivery = Color.col_red_main
+                self.textColorDelivery = Color.col_pink_main
             }
         }
     }

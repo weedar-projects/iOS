@@ -32,12 +32,14 @@ struct RequestButton: View {
                         .frame(height: 4)
                         .padding(EdgeInsets(top: 0, leading: 48, bottom: 0, trailing: 48))
                 case .success:
-                    Image("welcome-content-checked")
-                        .frame(width: 24, height: 24, alignment: .center)
+                    Image("checkmark")
+                        .colorInvert()
+                        .scaleEffect(0.7)
                 case .def:
                     HStack{
                         Text(title.localized)
                             .textCustom(.coreSansC65Bold, 16, Color.col_text_white)
+                        
                         if showIcon{
                             Image("welcome-content-arrow-right")
                                 .frame(width: 24, height: 24)

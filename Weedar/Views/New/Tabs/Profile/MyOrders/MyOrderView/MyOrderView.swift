@@ -112,7 +112,7 @@ struct MyOrderView: MainLoadViewProtocol {
                                 vm.showCancelAlert.toggle()
                             } label: {
                                 Text("Cancel order")
-                                    .textCustom(.coreSansC65Bold, 16, Color.col_red_main)
+                                    .textCustom(.coreSansC65Bold, 16, Color.col_pink_main)
                                     .frame(maxWidth: .infinity)
                                     .frame(height: 48)
                                     .background(Color.col_bg_second.cornerRadius(12))

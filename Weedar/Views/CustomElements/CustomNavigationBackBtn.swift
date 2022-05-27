@@ -19,16 +19,15 @@ struct CustomNavigationBackBtn: ViewModifier {
           .navigationBarBackButtonHidden(true)
           .toolbar(content: {
               ToolbarItem(placement: .navigationBarLeading) {
-                  ZStack{
+                  Button {
+                      self.mode.wrappedValue.dismiss()
+                  } label: {
                       Image("backNavBtn")
                           .resizable()
                           .frame(width: 14, height: 14)
+                          .padding(10)
                   }
                   .opacity(hideBtn ? 0 : 1)
-                  .onTapGesture {
-                      self.mode.wrappedValue.dismiss()
-                  }
-                  
               }
           })     
   }

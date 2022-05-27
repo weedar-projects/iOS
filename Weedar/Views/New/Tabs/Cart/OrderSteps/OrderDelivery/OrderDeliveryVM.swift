@@ -304,7 +304,8 @@ class OrderDeliveryVM: ObservableObject {
                                    exciseTaxSum: orderResponse.exciseTaxSum,
                                    totalWeight:  self.totalGramWeight().formattedString(format: .percent),
                                    salesTaxSum: orderResponse.salesTaxSum,
-                                   localTaxSum: orderResponse.cityTaxSum, discount: orderResponse.discount,
+                                   localTaxSum: orderResponse.cityTaxSum,
+                                   discount: orderResponse.discount,
                                    taxSum: orderResponse.taxSum,
                                    state: orderResponse.state)
                 self.saveUserInfo()

@@ -28,7 +28,7 @@ struct OrderDeliveryView: View {
     var body: some View {
         ZStack{
             NavigationLink(isActive: $orderNavigationManager.showOrderReviewView) {
-                OrderReviewView(data: vm.orderDetailsReview ?? OrderDetailsReview(orderId: 0, totalSum: 0, exciseTaxSum: 0, salesTaxSum: 0, localTaxSum: 0, discount: 0, taxSum: 0, state: 0))
+                OrderReviewView(data: vm.orderDetailsReview ?? OrderDetailsReview(orderId: 0, totalSum: 0, exciseTaxSum: 0, salesTaxSum: 0, localTaxSum: 0, discount: nil, taxSum: 0, state: 0))
             } label: {
                 Color.clear
             }.isDetailLink(false)
@@ -90,7 +90,7 @@ struct OrderDeliveryView: View {
                         TextField("Enter your address", text: $vm.address) { isEditing in
                             showDelivery = isEditing
                         }
-                        .modifier(TextFieldStyles.TextFieldStyle(strokeColor: Binding<Color>.constant(vm.addressTFState == .success ? Color.col_green_main.opacity(0.6) : vm.addressTFState == .error ?  Color.col_red_main .opacity(0.6): vm.addressTFState == .def ?  Color.col_borders : Color.clear)))
+                        .modifier(TextFieldStyles.TextFieldStyle(strokeColor: Binding<Color>.constant(vm.addressTFState == .success ? Color.col_green_main.opacity(0.6) : vm.addressTFState == .error ?  Color.col_pink_main .opacity(0.6): vm.addressTFState == .def ?  Color.col_borders : Color.clear)))
                       
                     }
                     .padding(.horizontal, 24)
@@ -126,7 +126,7 @@ struct OrderDeliveryView: View {
                     
                     if !vm.addressErrorMessage.isEmpty{
                         Text(vm.addressErrorMessage)
-                            .textCustom(.coreSansC45Regular, 14, Color.col_red_main)
+                            .textCustom(.coreSansC45Regular, 14, Color.col_pink_main)
                             .padding(.leading, 36)
                             .padding(.top, 10)
                             

@@ -51,9 +51,9 @@ struct OrderStatusView: View {
         case 7...8:
             return Color.col_green_main
         case 10:
-            return Color.col_red_main
+            return Color.col_pink_main
         default:
-            return Color.col_red_main
+            return Color.col_pink_main
         }
     }
     

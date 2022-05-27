@@ -152,13 +152,14 @@ struct OrderResponseModel: Codable, Identifiable {
     var createdAt: String
     var state: Int
     var comment: String?
-    var discount: Double
+    var discount: DiscountModel?
     var updatedAt: String
     var latitudeCoordinate, longitudeCoordinate: Double
 //    var partner: Partner? // not used yet
     var area: AreaModel
 //    var detail: [OrderDetail]?
     var userId, detailCount: Int?
+    
     
     init(json: JSON) {
         self.id = json["id"].intValue
@@ -180,7 +181,7 @@ struct OrderResponseModel: Codable, Identifiable {
         self.createdAt = json["createdAt"].stringValue
         self.state = json["state"].intValue
         self.comment = json["comment"].string
-        self.discount = json["discount"].doubleValue
+        self.discount = DiscountModel(json: json["discount"]) 
         self.updatedAt = json["updatedAt"].stringValue
         self.latitudeCoordinate = json["latitudeCoordinate"].doubleValue
         self.longitudeCoordinate = json["longitudeCoordinate"].doubleValue

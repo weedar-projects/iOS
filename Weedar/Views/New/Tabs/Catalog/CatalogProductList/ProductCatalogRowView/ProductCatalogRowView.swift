@@ -62,7 +62,7 @@ struct ProductCatalogRowView: View {
                     
                     HStack(spacing: 4){
                         Text("THC: \(item.thc.formattedString(format: .int))%")
-                            .textCustom(.coreSansC65Bold, 12, Color.col_red_main)
+                            .textCustom(.coreSansC65Bold, 12, Color.col_pink_main)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 5)
                             .background(
@@ -108,8 +108,6 @@ struct ProductCatalogRowView: View {
             
             Spacer()
             
-            
-            
             ZStack{
                 if vm.productAddToCart{
                     successButton()
@@ -140,7 +138,11 @@ struct ProductCatalogRowView: View {
     @ViewBuilder
     func addButton() -> some View {
         ZStack{
-            RadialGradient(colors: [Color.col_blue_gradient_second, Color.col_blue_gradient_main], center: .center, startRadius: 0, endRadius: 25)
+            RadialGradient(colors: [Color.col_gradient_pink_second,
+                                    Color.col_gradient_pink_first],
+                           center: .center,
+                           startRadius: 0,
+                           endRadius: 25)
             
             Image("plus_purple")
                 .resizable()

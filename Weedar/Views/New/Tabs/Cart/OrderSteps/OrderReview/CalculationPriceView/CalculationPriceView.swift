@@ -53,9 +53,6 @@ struct CalculationPriceView: View {
                         .padding(.trailing, 16)
                 }
                 
-                    
-
-                
             }
             .background(lightText ? nil : Color.col_bg_second.clipShape(CustomCorner(corners: showCalculations ? [.topRight, .topLeft] : .allCorners, radius: 12)))
             .onTapGesture {
@@ -89,11 +86,17 @@ struct CalculationPriceView: View {
                     CalculationRow(title: "Local tax",
                                    value: $data.localTaxSum,
                                    lightText: lightText )
-                    if data.discount > 0 && showDiscount{
-                    CalculationRow(title: "Discount",
-                                   value: $data.discount,
-                                   lightText: lightText,
-                                   isDiscount: true)
+                    
+                    if let discount = data.discount, discount.value > 0{
+                        HStack{
+                            Text(discount.type == .firstOrder ? "First order discount" : "Promo code discount")
+                                .textCustom(.coreSansC45Regular, 16, lightText ? Color.col_text_white : Color.col_green_main)
+                            
+                            Spacer()
+                            
+                            Text("-\(discount.measure == .dollar ? "$" : "%")\(discount.value.formattedString(format: .percent))")
+                                .textCustom(.coreSansC45Regular, 16, lightText ? Color.col_text_white : Color.col_green_main)
+                        }
                     }
                 }
                 .padding(15)

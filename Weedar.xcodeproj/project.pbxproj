@@ -151,6 +151,8 @@
 		2FE21E5528002AAE004B0057 /* ImagesFullScreenVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE21E5428002AAE004B0057 /* ImagesFullScreenVM.swift */; };
 		2FE21E58280049A8004B0057 /* ScrollableImage in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE21E57280049A8004B0057 /* ScrollableImage */; };
 		2FE21E5A2800559C004B0057 /* CustomNavigationBackBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE21E592800559C004B0057 /* CustomNavigationBackBtn.swift */; };
+		2FEFFFA82840EF7800D25F11 /* DiscontCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEFFFA72840EF7800D25F11 /* DiscontCodeView.swift */; };
+		2FEFFFAA2840EF8300D25F11 /* DiscontCodeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEFFFA92840EF8300D25F11 /* DiscontCodeVM.swift */; };
 		2FF9996428045BBE00F22BEB /* MyOrdersListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF9996328045BBE00F22BEB /* MyOrdersListVM.swift */; };
 		2FF9996728045DA800F22BEB /* OrderListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF9996628045DA800F22BEB /* OrderListModel.swift */; };
 		2FF9996A2804B71300F22BEB /* DocumentCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF999692804B71300F22BEB /* DocumentCenterView.swift */; };
@@ -413,6 +415,8 @@
 		2FE21E5228002AA2004B0057 /* ImagesFullScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesFullScreenView.swift; sourceTree = "<group>"; };
 		2FE21E5428002AAE004B0057 /* ImagesFullScreenVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesFullScreenVM.swift; sourceTree = "<group>"; };
 		2FE21E592800559C004B0057 /* CustomNavigationBackBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBackBtn.swift; sourceTree = "<group>"; };
+		2FEFFFA72840EF7800D25F11 /* DiscontCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscontCodeView.swift; sourceTree = "<group>"; };
+		2FEFFFA92840EF8300D25F11 /* DiscontCodeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscontCodeVM.swift; sourceTree = "<group>"; };
 		2FF9996328045BBE00F22BEB /* MyOrdersListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersListVM.swift; sourceTree = "<group>"; };
 		2FF9996628045DA800F22BEB /* OrderListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListModel.swift; sourceTree = "<group>"; };
 		2FF999692804B71300F22BEB /* DocumentCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentCenterView.swift; sourceTree = "<group>"; };
@@ -688,6 +692,7 @@
 		2F4252ED27DA8DFD00DE2041 /* Cart */ = {
 			isa = PBXGroup;
 			children = (
+				2FEFFFA62840EF6A00D25F11 /* PromoCode */,
 				2F3BEDAA27E21E0400298399 /* OrderSteps */,
 				2F2AA74727DB638000AB6C57 /* EmptyCartView */,
 				2F2AA74227DB57F900AB6C57 /* CartView */,
@@ -1156,6 +1161,15 @@
 				2FE21E5428002AAE004B0057 /* ImagesFullScreenVM.swift */,
 			);
 			path = PhotoFullScreenView;
+			sourceTree = "<group>";
+		};
+		2FEFFFA62840EF6A00D25F11 /* PromoCode */ = {
+			isa = PBXGroup;
+			children = (
+				2FEFFFA72840EF7800D25F11 /* DiscontCodeView.swift */,
+				2FEFFFA92840EF8300D25F11 /* DiscontCodeVM.swift */,
+			);
+			path = PromoCode;
 			sourceTree = "<group>";
 		};
 		2FF9996528045D9700F22BEB /* Orders */ = {
@@ -1778,6 +1792,7 @@
 				E350D9E826B99933007B5265 /* LoginRepository.swift in Sources */,
 				2F8B4FA927DB84B9006662D2 /* ProductCartRowVM.swift in Sources */,
 				B16F328F2706E9380098E87D /* PhoneTextFieldWrapper.swift in Sources */,
+				2FEFFFA82840EF7800D25F11 /* DiscontCodeView.swift in Sources */,
 				2FC63CE8281AA1EC00A5EE18 /* OrderTrackerManager.swift in Sources */,
 				2F5BE62727B6863D008B71AB /* CustomCorners.swift in Sources */,
 				B136EF15270ED3E90008F89A /* FiltersRequestModel.swift in Sources */,
@@ -1816,6 +1831,7 @@
 				2F3BEDB527E34FEB00298399 /* CatalogView.swift in Sources */,
 				2F2AA74D27DB6F2500AB6C57 /* MainButton.swift in Sources */,
 				2F4252E627DA2AA900DE2041 /* DeliveryZipCodesModel.swift in Sources */,
+				2FEFFFAA2840EF8300D25F11 /* DiscontCodeVM.swift in Sources */,
 				2F57087427DEA781004751BA /* OrderReviewVM.swift in Sources */,
 				2F60BA5B280F7F86002B6670 /* ProfileListButtonToggle.swift in Sources */,
 				849D02782704BDA600947B4F /* ImageResizable.swift in Sources */,

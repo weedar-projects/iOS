@@ -97,7 +97,7 @@ struct RegisterView: View {
         HStack(spacing: 4) {
             Image(systemName: isChecked ? "checkmark" : "xmark" )
                 .font(Font.system(size: 10))
-                .foregroundColor(isChecked ? Color.col_green_main : Color.col_red_main)
+                .foregroundColor(isChecked ? Color.col_green_main : Color.col_pink_main)
             
             Text(error.errorMessage.localized)
                 .textCustom(.coreSansC45Regular, 14, isChecked ? Color.col_green_main : Color.col_text_second)
@@ -112,7 +112,7 @@ struct RegisterView: View {
                 .font(Font.system(size: 10))
                 .foregroundColor(.red)
             Text(error)
-                .textCustom(.coreSansC45Regular, 14, Color.col_red_main)
+                .textCustom(.coreSansC45Regular, 14, Color.col_pink_main)
         }
     }
 }

@@ -14,7 +14,7 @@ struct OrderDetailsReview {
     var totalWeight: String?
     var salesTaxSum: Double
     var localTaxSum: Double
-    var discount: Double
+    var discount: DiscountModel?
     var taxSum: Double
     var state: Int
 }

@@ -24,10 +24,9 @@ extension Color {
     static let col_bg_second = Color("col_bg_second")
     static let col_black = Color("col_black")
     static let col_borders = Color("col_borders")
-    static let col_green_main = Color("col_green_main")
-    static let col_green_second = Color("col_green_second")
+
     static let col_purple_main = Color("col_purple_main")
-    static let col_red_main = Color("col_pink_main")
+    static let col_pink_main = Color("col_pink_main")
     static let col_red_second = Color("col_pink_second")
     static let col_orange_main = Color("col_orange_main")
     static let col_orange_second = Color("col_orange_second")
@@ -43,6 +42,8 @@ extension Color {
     static let col_blue_alert_bg = Color("col_blue_alert_bg")
     
     static let col_gray_main = Color("col_gray_main")
+    static let col_green_main = Color("col_green_main")
+    static let col_green_second = Color("col_green_second")
     
     
     
@@ -89,8 +90,15 @@ extension Color {
     static let col_gradient_black_first = Color("col_gradient_black_first")
     static let col_gradient_black_second = Color("col_gradient_black_second")
     
-    static let col_blue_gradient_main = Color("col_blue_gradient_main")
-    static let col_blue_gradient_second = Color("col_blue_gradient_second")
+    static let col_gradient_green_first = Color("col_gradient_green_first")
+    static let col_gradient_green_second = Color("col_gradient_green_second")
+    
+    static let col_gradient_blue_first = Color("col_blue_gradient_main")
+    static let col_gradient_blue_second = Color("col_blue_gradient_second")
+    
+    static let col_gradient_pink_first = Color("col_gradient_pink_first")
+    static let col_gradient_pink_second = Color("col_gradient_pink_second")
+    
     
     
 }
@@ -99,6 +107,11 @@ extension Image {
     static let logoDark = Image("logo_dark")
     static let logoLight = Image("logo_light")
     static let bg_gradient_main = Image("bg_gradient_main")
+    static let icon_trash = Image("trash")
+    static let ticket_discount = Image("ticket_discount")
+    static let ticket_discount_percent = Image("ticket_discount_percent")
+    
+    
 }
 
 

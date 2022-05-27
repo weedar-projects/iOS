@@ -122,7 +122,7 @@ struct ProfileMainView: View {
                 Image("Profile-Logout")
                 
                 Text("Logout")
-                    .textCustom(.coreSansC65Bold, 16, Color.col_red_main)
+                    .textCustom(.coreSansC65Bold, 16, Color.col_pink_main)
             }
             .frame(height: 48)
             .frame(maxWidth: .infinity)

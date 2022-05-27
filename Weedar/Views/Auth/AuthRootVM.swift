@@ -22,7 +22,9 @@ class AuthRootVM: ObservableObject {
     
     @Published var email: String = ""{
         didSet{
-            emailTFState = email.isEmpty ? .error : .success
+            if currentPage == .registration{
+                emailTFState = email.isEmpty ? .error : .success
+            }
         }
     }
     @Published var emailTFState: TextFieldState = .def
