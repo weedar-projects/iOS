@@ -160,4 +160,4 @@
 "deliverydetails.save_btn" = "Save";
 
 //OrderSuccessView
-"ordersuccessview.description" = "Delivery partner will handle the order from here. You can  check your order status in the Current Order bar. Please have your ID ready to show it to the driver for verification.";
+"ordersuccessview.description" = "Delivery partner will handle the order from here. You can check your order status in the Current Order bar. Please have your ID ready to show it to the driver for verification.";
