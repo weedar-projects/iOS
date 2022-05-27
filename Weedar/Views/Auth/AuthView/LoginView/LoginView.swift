@@ -43,7 +43,7 @@ struct LoginView: View {
                     .modifier(
                         TextModifier(font: .coreSansC65Bold,
                                      size: 16,
-                                     foregroundColor: .lightSecondaryE,
+                                     foregroundColor: .col_text_main,
                                      opacity: 1.0)
                     )
             }
@@ -72,7 +72,7 @@ struct LoginView: View {
         }
         
     }
-    
+
     @ViewBuilder
     func serverError(error: String) -> some View {
         HStack(spacing: 8){
@@ -80,12 +80,7 @@ struct LoginView: View {
                 .font(Font.system(size: 10))
                 .foregroundColor(.red)
             Text(error)
-                .modifier(
-                    TextModifier(font: .coreSansC45Regular,
-                                 size: 14,
-                                 foregroundColor: .lightSecondaryB,
-                                 opacity: 1.0)
-                )
+                .textCustom(.coreSansC45Regular, 14, Color.col_red_main)
         }
     }
     

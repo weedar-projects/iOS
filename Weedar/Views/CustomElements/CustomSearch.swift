@@ -43,7 +43,19 @@ struct CustomSearch: View {
                 .opacity(isEditing && searchText != "" ? 1 : 0)
             }
             .padding(.horizontal, 12)
-            .background(Color.col_yellow_main.cornerRadius(10).frame(height: 40))
+            .frame(height: 40)
+            .background(
+                ZStack{
+                    Color.col_gray_main
+                    
+                    Capsule()
+                        .fill(Color.col_white)
+                        .blur(radius: 35)
+                        .scaleEffect(0.6)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+            )
+//            .background(Color.col_yellow_main.cornerRadius(10).frame(height: 40))
             .padding(isEditing ? .leading : .horizontal)
 
             if showCancel{

@@ -52,7 +52,7 @@ struct CustomTextField: View {
             .overlay(
                 //color
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(strokeColor.opacity(state == .def ? 1 : 0.6), lineWidth: 2)
+                        .stroke(strokeColor, lineWidth: 2)
                         .frame(height: 48)
                         
                 )
@@ -63,9 +63,9 @@ struct CustomTextField: View {
             case .def:
                 strokeColor = Color.col_borders
             case .success:
-                strokeColor = Color.col_green_main
+                strokeColor = Color.col_green_second
             case .error:
-                strokeColor = Color.col_red_main
+                strokeColor = Color.col_red_second
             }
         }
         

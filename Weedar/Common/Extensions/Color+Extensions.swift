@@ -27,8 +27,8 @@ extension Color {
     static let col_green_main = Color("col_green_main")
     static let col_green_second = Color("col_green_second")
     static let col_purple_main = Color("col_purple_main")
-    static let col_red_main = Color("col_red_main")
-    static let col_red_second = Color("col_red_second")
+    static let col_red_main = Color("col_pink_main")
+    static let col_red_second = Color("col_pink_second")
     static let col_orange_main = Color("col_orange_main")
     static let col_orange_second = Color("col_orange_second")
     static let col_text_main = Color("col_text_main")
@@ -41,6 +41,10 @@ extension Color {
     static let col_blue_second = Color("col_blue_second")
     static let col_blue_dark = Color("col_blue_dark")
     static let col_blue_alert_bg = Color("col_blue_alert_bg")
+    
+    static let col_gray_main = Color("col_gray_main")
+    
+    
     
     //Discount
     static let col_red_discount_bg = Color("col_red_discount_bg")
@@ -84,6 +88,10 @@ extension Color {
     //gradiens
     static let col_gradient_black_first = Color("col_gradient_black_first")
     static let col_gradient_black_second = Color("col_gradient_black_second")
+    
+    static let col_blue_gradient_main = Color("col_blue_gradient_main")
+    static let col_blue_gradient_second = Color("col_blue_gradient_second")
+    
     
 }
 

@@ -15,8 +15,11 @@ struct UserIdentificationRootView: View, KeyboardReadable {
     var body: some View {
         ZStack{
             //color
-            Color.lightOnSurfaceB
-                .ignoresSafeArea(.all, edges: .all)
+            Image.bg_gradient_main
+                .resizable()
+                .frame(width: getRect().width, height: getRect().height / 1.7)
+                .edgesIgnoringSafeArea(.all)
+                .vTop()
             
             VStack{
                 ZStack{
@@ -27,7 +30,7 @@ struct UserIdentificationRootView: View, KeyboardReadable {
                         Image("arrow-back")
                             .resizable()
                             .scaledToFit()
-                            .foregroundColor(Color.white)
+                            .foregroundColor(Color.col_black)
                             .frame(width: 14, height: 14)
                             .padding(.top, 5)
                             .padding(.leading, 20)
@@ -37,16 +40,17 @@ struct UserIdentificationRootView: View, KeyboardReadable {
                     
                     //nav title
                     Text("Registration")
-                        .foregroundColor(Color.white)
+                        .foregroundColor(Color.col_text_main)
                         .bold()
                         .hCenter()
+                        .padding(.top,9)
                 }
                 .padding(.bottom, -15)
                 
                 //Page Indicator
                 RoundedRectangle(cornerRadius: 15)
                     .frame(width: getRect().width / vm.indicatorValue, height: 35)
-                    .foregroundColor(.lightPrimary)
+                    .foregroundColor(.col_black)
                     .offset(y: 35)
                     .hLeading()
                 

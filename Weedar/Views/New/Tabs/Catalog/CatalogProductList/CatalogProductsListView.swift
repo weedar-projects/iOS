@@ -56,17 +56,19 @@ struct CatalogProductsListView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 11)
-                            .foregroundColor(Color.col_purple_main)
+                            .foregroundColor(Color.col_black)
                         
                         Text("filtersview.filters_filters".localized)
-                            .textCustom(.coreSansC45Regular, 14, Color.col_purple_main)
+                            .textCustom(.coreSansC45Regular, 14, Color.col_black)
                             .padding(.top,7)
                             .padding(.bottom,4)
                     }
                     .frame(maxWidth: .infinity)
-                    .padding(.horizontal)
-                    .padding(.top, 12)
-                }.onTapGesture {
+                    .background(Color.col_white)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.col_black, lineWidth: 1))
+                }
+                .padding(.top, 12)
+                .onTapGesture {
                     withAnimation {
                         if UserDefaults.standard.bool(forKey: "EnableTracking"){
 
@@ -76,6 +78,7 @@ struct CatalogProductsListView: View {
                         vm.showFilterView = true
                     }
                 }
+                .padding(.horizontal)
                 
                 //product view
                 ScrollView(.vertical, showsIndicators: false) {
@@ -96,6 +99,7 @@ struct CatalogProductsListView: View {
                     }
                     .padding(.bottom, tabBarManager.showOrderTracker ? 95 : isSmallIPhone() ? 30 : 0)
                 }
+                .padding(.top, 12)
                 
                 Spacer()
             }

@@ -20,7 +20,11 @@ class AuthRootVM: ObservableObject {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    @Published var email: String = ""
+    @Published var email: String = ""{
+        didSet{
+            emailTFState = email.isEmpty ? .error : .success
+        }
+    }
     @Published var emailTFState: TextFieldState = .def
    
     @Published var password: String = ""
@@ -32,9 +36,29 @@ class AuthRootVM: ObservableObject {
     @Published var showOnboarding = true
     
     @Published var showServerError = false
-    @Published var authServerError: ServerError?
+    @Published var authServerError: ServerError?{
+        didSet{
+            if !email.isEmpty && !password.isEmpty{
+                if let _ = authServerError {
+                    passwordTFState = .error
+                    emailTFState = .error
+                }else{
+                    passwordTFState = .def
+                    emailTFState = .def
+                }
+            }
+        }
+    }
     @Published var errors: [PasswordError] = [.charactersCount, .oneUppercaseLetter, .oneDigit, .oneLowercaseLetter]
     
+    
+    @Published var currentPage: AuthViewPages = .registration{
+        didSet{
+            self.errors = []
+            self.authServerError = nil
+            self.password = ""
+        }
+    }
     
     @Published var isResetPasswordSheetShow = false
     @Published var showRegisterSteps: Bool = false
@@ -42,7 +66,7 @@ class AuthRootVM: ObservableObject {
     
     
     init() {
-//        showOnboarding = UserDefaultsService().get(fromKey: .showOnboarding) as? Bool ?? true
+        showOnboarding = UserDefaultsService().get(fromKey: .showOnboarding) as? Bool ?? true
     }
     
     func validatePassword(_ password: String) {
@@ -68,8 +92,10 @@ class AuthRootVM: ObservableObject {
         }
         self.errors = errors
        
-        if authServerError != nil && !errors.isEmpty {
-            authServerError = nil
+        if errors.isEmpty && !email.isEmpty{
+            nextButtonIsDisabled = false
+        }else{
+            nextButtonIsDisabled = true
         }
     }
     

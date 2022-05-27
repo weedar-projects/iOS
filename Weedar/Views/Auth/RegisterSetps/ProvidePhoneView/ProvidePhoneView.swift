@@ -40,9 +40,6 @@ struct ProvidePhoneView: View {
           .padding(.leading, 36)
         
         //phon number textfield
-
-            
-          
         HStack{
                 Text("\(vm.phoneEntered.countryFlag)")
                 .frame(width: 24, height: 24)
@@ -84,7 +81,7 @@ struct ProvidePhoneView: View {
                 .modifier(
                     TextModifier(font: .coreSansC45Regular,
                                  size: 12,
-                                 foregroundColor: .lightSecondaryB,
+                                 foregroundColor: Color.col_red_main,
                                  opacity: 1.0)
                 )
                 .hLeading()

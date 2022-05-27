@@ -54,8 +54,13 @@ struct CustomTabBarButtonView: View {
             }
             .frame(width: (UIScreen.main.bounds.width - 50)/3)
             .padding(.vertical,10)
-            .background(selected == page.tag ? Color.col_yellow_main : Color.clear)
-            .cornerRadius(12)
+            .background(
+                selected == page.tag ?
+                Image.bg_gradient_main
+                    .resizable()
+                    .cornerRadius(12) : nil
+            )
+//            .background(selected == page.tag ? Color.col_yellow_main : Color.clear)
             .overlay(
                 badge(cartManager.productsCount, display: page.tag == .cart && selected == .cart)
                , alignment: .topTrailing)
@@ -78,12 +83,10 @@ struct CustomTabBarButtonView: View {
     func badge(_ productsInCart: Int, display: Bool = false) -> some View {
         if productsInCart > 0 && display {
             Text("\(productsInCart)")
-                .textCustom(.coreSansC65Bold, 12, Color.col_white)
+                .textCustom(.coreSansC65Bold, 12, Color.col_black)
                 .padding(2)
                 .background(
-                    Circle()
-                        .fill(Color.red)
-                        .frame(width: 20, height: 20)
+                    Image.bg_gradient_main.resizable().frame(width: 20, height: 20).clipShape(Circle())
                 )
         } else {
             Color.clear

@@ -50,7 +50,7 @@ struct OTPView: View {
         TextFieldModifier(cornerRadius: 12,
                           borderWidth: 2,
                           height: 48,
-                          borderColor: .constant(viewModel.isErrorShow ? Color.lightSecondaryB.opacity(0.4) : (text == "" ? Color.lightSecondaryE.opacity(0.1) : Color.lightSecondaryF.opacity(0.4))),
+                          borderColor: .constant(viewModel.isErrorShow ? Color.col_red_second : (text == "" ? Color.col_borders : Color.col_green_second)),
                           font: .coreSansC45Regular,
                           size: 16,
                           textAlignment: .center)
