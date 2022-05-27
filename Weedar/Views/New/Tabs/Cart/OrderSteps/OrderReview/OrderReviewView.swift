@@ -59,7 +59,7 @@ struct OrderReviewView: View {
                             
                             if let cartData = cartManager.cartData{
                                 if cartData.discount > 0{
-                                    Text("Your $\(cartData.discount.formattedString(format: .int)) off discount is applied")
+                                    Text("Your $\(cartData.discount.formattedString(format: .int)) discount is applied")
                                         .textCustom(.coreSansC45Regular, 16, Color.col_green_main)
                                         .frame(maxWidth: .infinity)
                                         .frame(height: 48)
