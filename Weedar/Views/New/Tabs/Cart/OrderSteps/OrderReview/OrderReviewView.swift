@@ -82,7 +82,7 @@ struct OrderReviewView: View {
                         }
                         .padding(.top, 8)
                         
-                        Text("Our courier will ask you to show your ID card \nto verify your identity and age.")
+                        Text("Our courier will ask you to show your ID \nto verify your identity and age.")
                             .foregroundColor(ColorManager.Profile.lilacColor)
                             .padding(.top, 24)
                             .padding(.horizontal, 24)
