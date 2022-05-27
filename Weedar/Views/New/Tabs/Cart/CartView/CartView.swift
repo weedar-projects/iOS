@@ -54,7 +54,7 @@ struct CartView: View {
                             }
                     }
                     
-                  DiscountView()
+                        DiscountView()
                     //Prices
                         OrderCalculationsList()
                             .padding(.top, 24)
@@ -133,54 +133,82 @@ struct CartView: View {
     
     @ViewBuilder
     func DiscountView() -> some View {
-        ZStack{
+        HStack{
             ZStack{
-                Color.col_gradient_green_first
+                ZStack{
+                    Color.col_gradient_green_first
+                    
+                    Capsule()
+                        .fill(Color.col_white)
+                        .blur(radius: 23)
+                        .scaleEffect(1.2)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 12))
                 
-                Capsule()
-                    .fill(Color.col_white)
-                    .blur(radius: 23)
-                    .scaleEffect(1.2)
-            }
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            
-            
-            if let discount = cartManager.cartData?.discount, discount.value > 0{
-                if discount.type == .firstOrder{
-                    Text("Your $\(discount.value.formattedString(format: .int)) discount is applied")
-                        .textCustom(.coreSansC45Regular, 16, Color.col_green_main)
-                        .offset(y: 2)
-                }
-                HStack{
-                    Text("Promo code applied")
-                        .textCustom(.coreSansC45Regular, 16, Color.col_green_main)
-                        .offset(y: 2)
+                
+                if let discount = cartManager.cartData?.discount, discount.value > 0{
+                    if discount.type == .firstOrder{
+                        Text("Your $\(discount.value.formattedString(format: .int)) discount is applied")
+                            .textCustom(.coreSansC45Regular, 16, Color.col_green_main)
+                            .offset(y: 2)
+                        
+                    }else{
+                        HStack{
+                            Text("Promo code applied")
+                                .textCustom(.coreSansC45Regular, 16, Color.col_green_main)
+                                .offset(y: 2)
+                            
+                            Spacer()
+                            
+                            Image("checkmark")
+                                .colorInvert()
+                                .colorMultiply(Color.col_green_main)
+                                .scaleEffect(0.5)
+                        }
+                        .padding(.horizontal, 18)
+                    }
                     
-                    Spacer()
-                    
-                    Image("checkmark")
-                        .colorInvert()
-                        .colorMultiply(Color.col_green_main)
-                        .scaleEffect(0.5)
-                }
-                .padding(.horizontal, 18)
-            }else{
-                HStack{
-                    Image.ticket_discount
-                        .colorMultiply(Color.col_green_main)
-                    
-                    Text("Enter a promo code")
-                        .textCustom(.coreSansC65Bold, 16, Color.col_green_main)
+                }else{
+                    HStack{
+                        Image.ticket_discount
+                            .colorMultiply(Color.col_green_main)
+                        
+                        Text("Enter a promo code")
+                            .textCustom(.coreSansC65Bold, 16, Color.col_green_main)
+                    }
                 }
             }
-        }
-        .frame(height: 48)
-        .padding(.horizontal, 24)
-        .padding(.top, 34)
-        .onTapGesture {
-            vm.showDiscontCodeView = true
-        }
+            .frame(height: 48)
+            .padding(cartManager.cartData?.discount.type == .promoCode &&
+                     cartManager.cartData?.discount.value ?? 0 > 0 ? .leading : .horizontal, 24)
+            .padding(.top, 34)
+            .onTapGesture {
+                if let discount = cartManager.cartData?.discount, discount.type == .promoCode{
+                    vm.showDiscontCodeView = true
+                }
+            }
+            
+                if let discount = cartManager.cartData?.discount, discount.value > 0, discount.type == .promoCode{
+                    Button {
+                        self.cartManager.removePromocode()
+                    } label: {
+                        Image("xmark")
+                            .resizable()
+                            .frame(width: 10, height: 10)
+                            .padding(7)
+                            
+                            .overlay(
+                                Circle()
+                                    .stroke(Color.col_black, lineWidth: 1)
+                            )
+                            .padding(.trailing, 24)
+                            .padding(.top, 32)
+                            .padding(.leading, 7)
+                    }
 
+                }
+        }
+        
     }
 }
 

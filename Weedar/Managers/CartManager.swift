@@ -127,6 +127,22 @@ class CartManager: ObservableObject {
             }
         }
     }
+    
+    func removePromocode() {
+        let params = [
+            "promoCode" : ""
+        ]
+        API.shared.request(rout: .cart, method: .put, parameters: params, encoding: JSONEncoding.default) { result in
+            switch result{
+            case .success(let json):
+                let data = CartModel(json: json)
+                self.cartData = data
+                
+            case .failure(let error):
+                print("\(error.message)")
+            }
+        }
+    }
 }
 
 
