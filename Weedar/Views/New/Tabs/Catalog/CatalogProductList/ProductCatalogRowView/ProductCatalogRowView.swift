@@ -138,16 +138,14 @@ struct ProductCatalogRowView: View {
     @ViewBuilder
     func addButton() -> some View {
         ZStack{
-            RadialGradient(colors: [Color.col_gradient_pink_second,
-                                    Color.col_gradient_pink_first],
+            RadialGradient(colors: [Color.col_gradient_blue_second,
+                                    Color.col_gradient_blue_first],
                            center: .center,
                            startRadius: 0,
                            endRadius: 25)
             
-            Image("plus_purple")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 14, height: 14)
+            Image("icon_plus")
+                .colorInvert()
             
         }
         .clipShape(Circle())
@@ -158,7 +156,11 @@ struct ProductCatalogRowView: View {
     func successButton() -> some View {
         
         ZStack{
-            RadialGradient(colors: [Color.col_green_second, Color.col_green_main], center: .center, startRadius: 0, endRadius: 25)
+            RadialGradient(colors: [Color.col_gradient_green_second,
+                                    Color.col_gradient_green_first],
+                           center: .center,
+                           startRadius: 0,
+                           endRadius: 25)
             Image("checkmark")
                         .resizable()
                         .foregroundColor(Color.col_black)

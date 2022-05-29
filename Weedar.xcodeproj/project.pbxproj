@@ -133,7 +133,6 @@
 		2FCF7F3A27F5C91100DD425A /* MyOrderVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCF7F3927F5C91100DD425A /* MyOrderVM.swift */; };
 		2FD12FCF28295418008BB6EB /* NetworkConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD12FCE28295418008BB6EB /* NetworkConnection.swift */; };
 		2FD12FD12829AF6D008BB6EB /* NoInternetConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD12FD02829AF6D008BB6EB /* NoInternetConnectionView.swift */; };
-		2FDAA95F27EA0A75005498E1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2FDAA95E27EA0A75005498E1 /* GoogleService-Info.plist */; };
 		2FDD787F2800833D0071366B /* MainLoadViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDD787E2800833D0071366B /* MainLoadViewProtocol.swift */; };
 		2FDD7882280086980071366B /* LoadingScreenCatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDD7881280086980071366B /* LoadingScreenCatalogView.swift */; };
 		2FDD7884280089480071366B /* LoadingScreenMyOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDD7883280089480071366B /* LoadingScreenMyOrderView.swift */; };
@@ -153,6 +152,7 @@
 		2FE21E5A2800559C004B0057 /* CustomNavigationBackBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE21E592800559C004B0057 /* CustomNavigationBackBtn.swift */; };
 		2FEFFFA82840EF7800D25F11 /* DiscontCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEFFFA72840EF7800D25F11 /* DiscontCodeView.swift */; };
 		2FEFFFAA2840EF8300D25F11 /* DiscontCodeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEFFFA92840EF8300D25F11 /* DiscontCodeVM.swift */; };
+		2FEFFFAE284408BF00D25F11 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2FEFFFAD284408BF00D25F11 /* GoogleService-Info.plist */; };
 		2FF9996428045BBE00F22BEB /* MyOrdersListVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF9996328045BBE00F22BEB /* MyOrdersListVM.swift */; };
 		2FF9996728045DA800F22BEB /* OrderListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF9996628045DA800F22BEB /* OrderListModel.swift */; };
 		2FF9996A2804B71300F22BEB /* DocumentCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF999692804B71300F22BEB /* DocumentCenterView.swift */; };
@@ -398,7 +398,6 @@
 		2FCF7F3927F5C91100DD425A /* MyOrderVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrderVM.swift; sourceTree = "<group>"; };
 		2FD12FCE28295418008BB6EB /* NetworkConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConnection.swift; sourceTree = "<group>"; };
 		2FD12FD02829AF6D008BB6EB /* NoInternetConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInternetConnectionView.swift; sourceTree = "<group>"; };
-		2FDAA95E27EA0A75005498E1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2FDD787E2800833D0071366B /* MainLoadViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoadViewProtocol.swift; sourceTree = "<group>"; };
 		2FDD7881280086980071366B /* LoadingScreenCatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreenCatalogView.swift; sourceTree = "<group>"; };
 		2FDD7883280089480071366B /* LoadingScreenMyOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreenMyOrderView.swift; sourceTree = "<group>"; };
@@ -417,6 +416,7 @@
 		2FE21E592800559C004B0057 /* CustomNavigationBackBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBackBtn.swift; sourceTree = "<group>"; };
 		2FEFFFA72840EF7800D25F11 /* DiscontCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscontCodeView.swift; sourceTree = "<group>"; };
 		2FEFFFA92840EF8300D25F11 /* DiscontCodeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscontCodeVM.swift; sourceTree = "<group>"; };
+		2FEFFFAD284408BF00D25F11 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2FF9996328045BBE00F22BEB /* MyOrdersListVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOrdersListVM.swift; sourceTree = "<group>"; };
 		2FF9996628045DA800F22BEB /* OrderListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListModel.swift; sourceTree = "<group>"; };
 		2FF999692804B71300F22BEB /* DocumentCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentCenterView.swift; sourceTree = "<group>"; };
@@ -1345,7 +1345,7 @@
 			children = (
 				B1D83D142716DEAF004FC914 /* Assets.xcassets */,
 				4D7464EB26B8830300CE8A62 /* WeelarApp.swift */,
-				2FDAA95E27EA0A75005498E1 /* GoogleService-Info.plist */,
+				2FEFFFAD284408BF00D25F11 /* GoogleService-Info.plist */,
 				B1F2656326F20071007E1B15 /* Localizable.strings */,
 			);
 			path = "Support files";
@@ -1701,6 +1701,7 @@
 				E3F4C34726F2765B00876F27 /* CoreSansC-35Light.ttf in Resources */,
 				E3F4C34B26F2765B00876F27 /* CoreSansC-15Thin.ttf in Resources */,
 				E3F4C33A26F2720600876F27 /* CoreSansC-45Regular.ttf in Resources */,
+				2FEFFFAE284408BF00D25F11 /* GoogleService-Info.plist in Resources */,
 				2F8B4FFA27DD0CC7006662D2 /* catalog_ar_gif.gif in Resources */,
 				E3F4C34D26F2765B00876F27 /* CoreSansC-65Bold.ttf in Resources */,
 				E3F4C34A26F2765B00876F27 /* CoreSansC-55Medium.ttf in Resources */,
@@ -1712,7 +1713,6 @@
 				E3F4C34C26F2765B00876F27 /* CoreSansC-95Black.ttf in Resources */,
 				B1F2656126F20071007E1B15 /* Localizable.strings in Resources */,
 				E3F4C34826F2765B00876F27 /* CoreSansC-25ExtraLight.ttf in Resources */,
-				2FDAA95F27EA0A75005498E1 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

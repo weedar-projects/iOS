@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import Amplitude
 
 struct ImagesFullScreenView: View {
     
@@ -15,6 +16,8 @@ struct ImagesFullScreenView: View {
     @EnvironmentObject var tabBarManager: TabBarManager
     
     @GestureState var draggingOffset: CGSize = .zero
+    
+    @State var animProductInCart = false
     
     @State var imageLink: String = ""
     @State var product: ProductModel?
@@ -40,15 +43,53 @@ struct ImagesFullScreenView: View {
                                 .opacity(vm.bgOpacity)
             
             if let product = product {
-                MainButton(title: "Add to card - $\(product.price.formattedString(format: .percent))", icon: "cart", iconSize: 18) {
-                    cartManager.productQuantityInCart(productId: product.id, quantity: .add)
-                    vm.notification.notificationOccurred(.success)
+
+                ZStack{
+                    HStack{
+                        Image("checkmark")
+                            .resizable()
+                            .frame(width: 13, height: 13)
+                            .foregroundColor(Color.col_text_main)
+                        
+                        Text("Added to cart")
+                            .textCustom(.coreSansC65Bold, 16,Color.col_text_main)
+                    }
+                    .frame(height: 48)
+                    .frame(maxWidth: .infinity)
+                    .background(Image.bg_gradient_main)
+                    .cornerRadius(12)
+                    .opacity(animProductInCart ? 1 : 0)
+                    
+                    HStack{
+                        Image("cart")
+                            .resizable()
+                            .frame(width: 18, height: 18)
+                            .foregroundColor(Color.col_text_main)
+                        
+                        Text("Add to cart")
+                            .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
+                    }
+                    .frame(height: 48)
+                    .frame(maxWidth: .infinity)
+                    .background(Image.bg_gradient_main)
+                    .cornerRadius(12)
+                    .opacity(animProductInCart ? 0 : 1)
                 }
                 .vBottom()
                 .opacity(vm.bgOpacity)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 8 + getSafeArea().bottom)
-                
+                .onTapGesture {
+                    vm.notification.notificationOccurred(.success)
+                    cartManager.productQuantityInCart(productId: product.id, quantity: .add)
+                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
+                    Amplitude.instance().logEvent("add_cart_prod_card", withEventProperties: ["category" : product.type.name,
+                                                                                              "product_id" : product.id,
+                                                                                              "product_qty" : 1,
+                                                                                              "product_price" : product.price.formattedString(format: .percent)])
+                    }
+                    chageAddButtonState()
+                }
             }
         }
         .edgesIgnoringSafeArea(.all)
@@ -66,6 +107,14 @@ struct ImagesFullScreenView: View {
             
         }).onEnded(vm.onEnd(value:)))
         
+    }
+    func chageAddButtonState(){
+        withAnimation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true)){
+            self.animProductInCart = true
+            DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                self.animProductInCart = false
+            }
+        }
     }
 }
 

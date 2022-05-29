@@ -201,6 +201,7 @@ class UserRepository: BaseRepository {
         }
 
         let body = ["firebaseToken": fcmToken]
+        print("tokenfcm: \(fcmToken)")
         
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"

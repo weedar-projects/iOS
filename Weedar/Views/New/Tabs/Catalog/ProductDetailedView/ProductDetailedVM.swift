@@ -34,13 +34,14 @@ class ProductDetailedVM: ObservableObject {
         var title: String
         var value: String
         var textColor: Color
-        var bgColor: Color
+        var bgColor1: Color
+        var bgColor2: Color
     }
     
-    func addProductContntInfo(title: String, value: Double, textColor: Color, bgColor: Color) {
+    func addProductContntInfo(title: String, value: Double, textColor: Color, bgColor1: Color, bgColor2: Color) {
         let val = "\(String(format: "%.0f", value))%"
         
-        self.productContentInfo.append(ProductContentInfoModel(title: title, value: val, textColor: textColor, bgColor: bgColor))
+        self.productContentInfo.append(ProductContentInfoModel(title: title, value: val, textColor: textColor, bgColor1: bgColor1, bgColor2: bgColor2))
     }
     
     func chageAddButtonState(){
