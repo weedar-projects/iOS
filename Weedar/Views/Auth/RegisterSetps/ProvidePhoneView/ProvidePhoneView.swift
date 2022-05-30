@@ -16,7 +16,6 @@ struct ProvidePhoneView: View {
         
         //title
         Text("phonenumberview.phone_number_provide_phone_title".localized)
-          .lineLimit(nil)
           .lineSpacing(2.8)
           .modifier(TextModifier(font: .coreSansC45Regular, size: 40, foregroundColor: .lightOnSurfaceB, opacity: 1))
           .padding([.top, .leading], 24)
