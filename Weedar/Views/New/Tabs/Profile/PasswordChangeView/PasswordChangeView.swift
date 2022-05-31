@@ -156,7 +156,7 @@ struct PasswordChangeContent: View {
             
             if isPasswordCurrentRegexWrong {
                 Text("passwordchangeview.change_password_current_password_error".localized)
-                    .foregroundColor(.red)
+                    .foregroundColor(Color.col_pink_main)
                     .lineLimit(3)
                     .padding(.top, 4)
                     .padding(.bottom, 4)
@@ -343,7 +343,7 @@ struct PasswordChangeContent: View {
             VStack(alignment:.leading) {
                 if isPasswordNewRegexWrong {
                     Text("passwordchangeview.change_password_repeat_new_password_error_regex".localized)
-                        .foregroundColor(.red)
+                        .foregroundColor(Color.col_pink_main)
                         .lineLimit(3)
                         .padding(.top, 4)
                         .padding(.bottom, 4)
@@ -353,7 +353,7 @@ struct PasswordChangeContent: View {
             
                 if isPasswordNewMatch {
                     Text("passwordchangeview.change_password_repeat_new_password_error_match".localized)
-                        .foregroundColor(.red)
+                        .foregroundColor(Color.col_pink_main)
                         .lineLimit(3)
                         .padding(.top, 4)
                         .padding(.bottom, 4)
@@ -380,15 +380,15 @@ struct PasswordChangeContent: View {
             
             Spacer()
             
-            DefaultButton(text: "Save", isDisabled: isEmptyFields, action: {
+            MainButton(title: "Save") {
                 hideKeyboard()
                 
                 guard
                     passwordNew == passwordRepeat
                 else {
                     isPasswordNewMatch = false
-                    passwordRepeatBGColor = .red
-                    passwordNewBGColor = .red
+                    passwordRepeatBGColor = Color.col_red_second
+                    passwordNewBGColor = Color.col_red_second
                     return
                 }
                 
@@ -397,7 +397,7 @@ struct PasswordChangeContent: View {
                 guard
                     passwordNew.isPasswordValid
                 else {
-                    passwordNewBGColor = .red
+                    passwordNewBGColor = Color.col_red_second
                     isPasswordNewRegexWrong = true
                     return
                 }
@@ -412,18 +412,21 @@ struct PasswordChangeContent: View {
                     isPasswordCurrentChange = isSuccess
                     isPasswordCurrentRegexWrong = !isSuccess
                 }
+            }
+            .opacity(isEmptyFields ? 0.5 : 1)
+            .disabled(isEmptyFields)
+            .padding(.top)
+            .padding(.bottom, 24)
+            .alert(isPresented: $isPasswordCurrentChange, content: {
+                Alert(title: Text("Congratulations!"),
+                      message: Text("Your password is successfully changed."),
+                      dismissButton: .default(Text("Okay"),
+                                              action: {
+                    isPasswordCurrentChange = false
+                    presentationMode.wrappedValue.dismiss()
+                }))
             })
-                .padding(.top)
-                .padding(.bottom, 24)
-                .alert(isPresented: $isPasswordCurrentChange, content: {
-                    Alert(title: Text("Congratulations!"),
-                          message: Text("Your password is successfully changed."),
-                          dismissButton: .default(Text("Okay"),
-                                                  action: {
-                        isPasswordCurrentChange = false
-                        presentationMode.wrappedValue.dismiss()
-                    }))
-                })
+                
         } // VStack
         .onTapGesture {
             hideKeyboard()
@@ -435,12 +438,12 @@ struct PasswordChangeContent: View {
         HStack(spacing: 4) {
             Image(systemName: isChecked ? "checkmark" : "xmark" )
                 .font(Font.system(size: 10))
-                .foregroundColor(isChecked ? .lightSecondaryF : .red)
+                .foregroundColor(isChecked ? Color.col_green_main : Color.col_pink_main)
             Text(error.errorMessage.localized)
                 .modifier(
                     TextModifier(font: .coreSansC45Regular,
                                  size: 14,
-                                 foregroundColor: isChecked ? .lightSecondaryF : .lightSecondaryB,
+                                 foregroundColor: isChecked ? Color.col_green_main : Color.col_text_second,
                                  opacity: 1.0)
                 )
         }

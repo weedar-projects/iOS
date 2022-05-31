@@ -54,7 +54,16 @@ struct CalculationPriceView: View {
                 }
                 
             }
-            .background(lightText ? nil : Color.col_bg_second.clipShape(CustomCorner(corners: showCalculations ? [.topRight, .topLeft] : .allCorners, radius: 12)))
+            .background(
+                lightText ? nil :
+                RadialGradient(colors: [Color.col_gradient_blue_second,
+                                        Color.col_gradient_blue_first],
+                               center: .center,
+                               startRadius: 0,
+                               endRadius: 220)
+                .clipShape(CustomCorner(corners: showCalculations ? [.topRight, .topLeft] : .allCorners, radius: 12))
+                .opacity(0.25)
+            )
             .onTapGesture {
                 withAnimation(.spring()) {
                     showCalculations.toggle()
@@ -100,7 +109,15 @@ struct CalculationPriceView: View {
                     }
                 }
                 .padding(15)
-                .background(lightText ? nil : Color.col_bg_second.clipShape(CustomCorner(corners: [.bottomLeft, .bottomRight], radius: 12)))
+                .background(
+                    lightText ? nil :
+                    RadialGradient(colors: [Color.col_gradient_blue_second,
+                                            Color.col_gradient_blue_first],
+                                   center: .center,
+                                   startRadius: 0,
+                                   endRadius: 220)
+                    .clipShape(CustomCorner(corners: [.bottomLeft, .bottomRight], radius: 12))                    .opacity(0.25)
+                )
             }
         }
         .onAppear {

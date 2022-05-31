@@ -87,10 +87,11 @@ struct OrderDeliveryView: View {
                             .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 14))
                             .padding(.leading, 12)
                             .opacity(0.7)
+                        
                         TextField("Enter your address", text: $vm.address) { isEditing in
                             showDelivery = isEditing
                         }
-                        .modifier(TextFieldStyles.TextFieldStyle(strokeColor: Binding<Color>.constant(vm.addressTFState == .success ? Color.col_green_main.opacity(0.6) : vm.addressTFState == .error ?  Color.col_pink_main .opacity(0.6): vm.addressTFState == .def ?  Color.col_borders : Color.clear)))
+                        .modifier(TextFieldStyles.TextFieldStyle(strokeColor: Binding<Color>.constant(vm.addressTFState == .success ? Color.col_green_second.opacity(0.6) : vm.addressTFState == .error ?  Color.col_gradient_pink_first .opacity(0.6): vm.addressTFState == .def ?  Color.col_borders : Color.clear)))
                       
                     }
                     .padding(.horizontal, 24)
@@ -133,24 +134,34 @@ struct OrderDeliveryView: View {
                             .hLeading()
                     }
                     
-                    RequestButton(state: $vm.buttonState, isDisabled: $vm.buttonIsDisabled, showIcon: false, title: "Review order") {
-                        vm.disableNavButton = true
-                        if vm.needToLoadDoc{
-                            vm.saveUserInfo()
-                            orderNavigationManager.needToShowDocumentCenter = true
-                            vm.disableNavButton = false
-                        }else{
-                            self.makeOrder()
-                            print("MAKE ORdeRrr")
-                        }
-                    }
-                    .padding(.top, 16)
-                    .ignoresSafeArea(.keyboard)
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 45)
                 }
+
             }
+            
+            VStack{
+                Text("Our courier will ask you to show your ID card \nto verify your identity and age.")
+                    .textDefault()
+                    .multilineTextAlignment(.center)
+                
+                RequestButton(state: $vm.buttonState, isDisabled: $vm.buttonIsDisabled, showIcon: false, title: "Review order") {
+                    vm.disableNavButton = true
+                    if vm.needToLoadDoc{
+                        vm.saveUserInfo()
+                        orderNavigationManager.needToShowDocumentCenter = true
+                        vm.disableNavButton = false
+                    }else{
+                        self.makeOrder()
+                        print("MAKE ORdeRrr")
+                    }
+                }
+                .padding(.top, 8)
+                .padding(.horizontal, 24)
+            }
+            .background(Color.col_white)
+            .vBottom()
+            
         }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .navigationTitle("Delivery details")
         .navigationBarBackButtonHidden(true)
         .toolbar(content: {

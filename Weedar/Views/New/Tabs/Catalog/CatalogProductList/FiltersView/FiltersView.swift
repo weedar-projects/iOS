@@ -58,11 +58,36 @@ struct FiltersView: View {
                 EffectsRowView(catalogFilters: $rootVM.filters, effects: $rootVM.effects)
                     .padding(.top, 24)
                 
+          
+                //Reset button
+                ZStack{
+                    HStack{
+                        Image("navbar-refresh")
+                            .foregroundColor(Color.col_text_main)
+                        
+                        Text("Reset")
+                            .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
+                            .offset(y: 2)
+                    }
+                    .frame(height: 48)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.col_gray_second)
+                    .cornerRadius(12)
+                }
+                .onTapGesture {
+                    rootVM.getProducts(categoryId: rootVM.categoryId, filters: CatalogFilters())
+                    rootVM.filters = CatalogFilters()
+                    withAnimation {
+                        rootVM.showFilterView = false
+                    }
+                }
+                .padding(.horizontal,24)
+                .padding(.top, 24)
+                
                 //comfirm button
                 MainButton(title: "Confirm", icon: "checkmark", iconSize: 14) {
                     rootVM.getProducts(categoryId: rootVM.categoryId, filters: rootVM.filters)
                     if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
                     Amplitude.instance().logEvent("filters_apply", withEventProperties: ["category" : rootVM.categoryId,
                                                                                          "price_range" : "\(rootVM.filters.priceFrom?.formattedString(format: .percent)) - \(rootVM.filters.priceTo?.formattedString(format: .percent))",
                                                                                          "brand_name" : rootVM.filters.brands ?? 0,
@@ -73,8 +98,8 @@ struct FiltersView: View {
                     }
                 }
                 .padding(.horizontal,24)
-                .padding(.top, 30)
-                .padding(.bottom, 24)
+                .padding(.top, 10)
+                .padding(.bottom, 35)
             }
             .background(Color.col_white.cornerRadius(radius: 16, corners: [.topLeft,.topRight]))
         }

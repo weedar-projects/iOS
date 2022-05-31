@@ -74,9 +74,7 @@ struct OrderCalculationsList: View {
                     .frame(height: rowHeingt)
                     .padding(.horizontal, 15)
                 }
-            }
-           
-            
+            }   
             .background(
                 RadialGradient(colors: [Color.col_gradient_blue_second,
                                         Color.col_gradient_blue_first],

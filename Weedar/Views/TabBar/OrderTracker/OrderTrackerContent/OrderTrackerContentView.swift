@@ -45,7 +45,7 @@ struct OrderTrackerContentView: View {
                 
                 Text(orderTrackerManager.currentState?.deliveryText ?? "")
                     .textCustom(.coreSansC45Regular, 14, Color.col_white.opacity(0.8))
-                    .foregroundColor(orderTrackerManager.currentState?.color ?? Color.clear)
+                    .foregroundColor(orderTrackerManager.currentState?.colors.first ?? Color.clear)
                     .padding(.top, 12)
                     .hLeading()
                 
@@ -102,12 +102,12 @@ struct OrderTrackerContentView: View {
                             ZStack{
                                 ZStack{
                                     Text("Cancel order")
-                                        .textCustom(.coreSansC65Bold, 16, Color.red)
+                                        .textCustom(.coreSansC65Bold, 16, Color.col_pink_main)
                                 }
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 48)
                                 .padding(.horizontal, 24)
-                                .background(Color.col_red_second.cornerRadius(12))
+                                .background(ButtonBGDarkGradient())
                                 
                             }
                                 .padding(.top, 12)
@@ -176,10 +176,21 @@ struct OrderTrackerContentView: View {
         if let currentState = orderTrackerManager.currentState {
             ZStack{
                 Text(currentState.state.rawValue)
-                    .textCustom(.coreSansC65Bold, 12, currentState.id == 0 ? Color.col_text_main : Color.col_text_white)
+                    .textCustom(.coreSansC65Bold, 12, Color.col_text_main)
                     .padding(.vertical, 5)
                     .padding(.horizontal, 12)
-                    .background(currentState.color.cornerRadius(24))
+                    .background(
+                        ZStack{
+                            currentState.colors.first
+                            
+                            Capsule()
+                                .fill(currentState.colors.last!)
+                                .blur(radius: 12)
+                                .scaleEffect(CGSize(width: 0.75, height: 0.4))
+                                
+                        }
+                        .clipShape(Capsule())
+                    )
                     .overlay(Color.col_black.opacity(detailScrollValue))
                     .hTrailing()
                     .vTop()
@@ -328,13 +339,15 @@ struct CalculationOrderPriceView: View {
                         Text("$\(data.cityTaxSum.formattedString(format: .percent))")
                             .textCustom(.coreSansC45Regular, 16,Color.col_text_white)
                     }
-                    if data.discount > 0{
+                    if let discount = data.discount, discount.value > 0{
                         HStack{
-                            Text("Discount")
-                                .textCustom(.coreSansC45Regular, 16, Color.col_text_white)
+                            Text(discount.type == .firstOrder ? "First order discount" : "Promo code discount")
+                                .textCustom(.coreSansC45Regular, 16,Color.col_green_main)
+                            
                             Spacer()
-                            Text("-$\(data.discount.formattedString(format: .int))")
-                                .textCustom(.coreSansC45Regular, 16,Color.col_text_white)
+                            
+                            Text("-\(discount.measure == .dollar ? "$" : "%")\(discount.value.formattedString(format: .percent))")
+                                .textCustom(.coreSansC45Regular, 16, Color.col_green_main)
                         }
                     }
                 }

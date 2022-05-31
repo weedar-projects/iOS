@@ -42,7 +42,14 @@ struct MyOrderView: MainLoadViewProtocol {
                     }
                     .padding(.horizontal, 16)
                     .frame(height: 48)
-                    .background(Color.col_bg_second.cornerRadius(12))
+                    .background(RadialGradient(colors: [Color.col_gradient_blue_second,
+                                                        Color.col_gradient_blue_first],
+                                               center: .center,
+                                               startRadius: 0,
+                                               endRadius: 220)
+                                .clipShape(CustomCorner(corners: .allCorners, radius: 12))
+                                .opacity(0.25)
+                                )
                     .padding([.horizontal, .top],24)
                     
                     Text("List of items")
@@ -63,7 +70,14 @@ struct MyOrderView: MainLoadViewProtocol {
                                 }
                             }
                         }
-                        .background(Color.col_bg_second.cornerRadius(12))
+                        .background(RadialGradient(colors: [Color.col_gradient_blue_second,
+                                                            Color.col_gradient_blue_first],
+                                                   center: .center,
+                                                   startRadius: 0,
+                                                   endRadius: 220)
+                                    .clipShape(CustomCorner(corners: .allCorners, radius: 12))
+                                    .opacity(0.25)
+                                    )
                
                         
                         .padding(.horizontal, 24)
@@ -82,8 +96,14 @@ struct MyOrderView: MainLoadViewProtocol {
                         
                         //delivery user data
                         ZStack{
-                            Color.col_bg_second
-                                .cornerRadius(12)
+                            RadialGradient(colors: [Color.col_gradient_blue_second,
+                                                    Color.col_gradient_blue_first],
+                                           center: .center,
+                                           startRadius: 0,
+                                           endRadius: 220)
+                            .clipShape(CustomCorner(corners: .allCorners, radius: 12))
+                            .opacity(0.25)
+                            
                             
                             VStack(alignment: .leading,spacing: 10){
                                 Text("\(vm.order?.name ?? "")")
@@ -112,7 +132,7 @@ struct MyOrderView: MainLoadViewProtocol {
                                 vm.showCancelAlert.toggle()
                             } label: {
                                 Text("Cancel order")
-                                    .textCustom(.coreSansC65Bold, 16, Color.col_pink_main)
+                                    .textCustom(.coreSansC65Bold, 16, Color.col_pink_button)
                                     .frame(maxWidth: .infinity)
                                     .frame(height: 48)
                                     .background(Color.col_bg_second.cornerRadius(12))

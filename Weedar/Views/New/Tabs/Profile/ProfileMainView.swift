@@ -56,12 +56,8 @@ struct ProfileMainView: View {
                         
                         ProfileList(selectedItem: $vm.selectedItem, showView: $vm.showView,title: "Settings" ,menuItems: vm.settingsItems)
                         
-                        ProfileListButtonToggle(icon: "Profile-Notification", title: "Notifications", isOn: $vm.notificationToggle) {
-                            self.checkUserAnswerAPNS(with: vm.notificationToggle)
-                            if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                            Amplitude.instance().logEvent("notification_toogle", withEventProperties: ["notifications_allowance" : vm.notificationToggle])
-                            }
-                        }
+                        NotificationButtonView()
+                        
                         .customDefaultAlert(title: "\"WEEDAR\" Would Like to \nSend You Notifications", message: "Notifications may include alerts,\nsounds and icon badges.These can be configured in Settings", isPresented: $vm.showNotificationAlert, firstBtn: Alert.Button.cancel(Text("Cancel")), secondBtn: Alert.Button.default(Text("Open Settings"), action: {
                             if let appSettings = URL(string: UIApplication.openSettingsURLString),
                                UIApplication.shared.canOpenURL(appSettings) {
@@ -122,7 +118,7 @@ struct ProfileMainView: View {
                 Image("Profile-Logout")
                 
                 Text("Logout")
-                    .textCustom(.coreSansC65Bold, 16, Color.col_pink_main)
+                    .textCustom(.coreSansC65Bold, 16, Color.col_pink_button)
             }
             .frame(height: 48)
             .frame(maxWidth: .infinity)
@@ -136,6 +132,37 @@ struct ProfileMainView: View {
         
     }
     
+    @ViewBuilder
+    func NotificationButtonView() -> some View{
+        ZStack{
+            RadialGradient(colors: [Color.col_gradient_blue_second,
+                                    Color.col_gradient_blue_first],
+                           center: .center,
+                           startRadius: 0,
+                           endRadius: 220)
+            .clipShape(CustomCorner(corners: .allCorners, radius: 12))
+            .opacity(0.25)
+            
+            HStack{
+                Image("Profile-Notification")
+                
+                Text("Notification")
+                    .textCustom(.coreSansC65Bold, 16, Color.col_black)
+                
+                Spacer()
+                
+                CustomToggle(isOn: $vm.notificationToggle){
+                    self.checkUserAnswerAPNS(with: vm.notificationToggle)
+                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
+                    Amplitude.instance().logEvent("notification_toogle", withEventProperties: ["notifications_allowance" : vm.notificationToggle])
+                    }
+                }
+            }
+            .padding(.horizontal, 18)
+        }
+        .padding(.horizontal, 16)
+        .frame(height: 48)
+    }
     private func checkUserAnswerAPNS(with isOnValue: Bool) {
         if isOnValue {
             UNUserNotificationCenter
@@ -211,3 +238,28 @@ struct ProfileMainView_Previews: PreviewProvider {
 }
 
 
+
+struct CustomToggle: View {
+    @Binding var isOn: Bool
+    var actionOnChange: () -> Void
+    var body: some View{
+        ZStack{
+            Capsule()
+                .fill(Color.col_black)
+                .frame(width: 51, height: 31)
+            Image.bg_gradient_main
+                .resizable()
+                .frame(width: 27, height: 27)
+                .clipShape(Circle())
+                .offset(x: isOn ? 10 : -10)
+        }
+        .onTapGesture {
+            withAnimation {
+                isOn.toggle()
+            }
+        }
+        .onChange(of: isOn) { newValue in
+            actionOnChange()
+        }
+    }
+}

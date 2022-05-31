@@ -28,10 +28,8 @@ struct MainButton: View {
                         .foregroundColor(Color.col_text_white)
                 }
                 Text(title.localized)
+                    .offset(y: 2)
                     .textCustom(.coreSansC65Bold, 16, Color.col_text_white)
-                //
-                //                    Image("welcome-content-arrow-right")
-                //                        .frame(width: 24, height: 24)
             }
             .frame(height: 48)
             .frame(maxWidth: .infinity)

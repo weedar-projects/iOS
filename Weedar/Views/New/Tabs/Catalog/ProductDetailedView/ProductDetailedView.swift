@@ -84,6 +84,7 @@ struct ProductDetailedView: View {
                     .padding(.top, 25)
                     .padding(.horizontal, 24)
                     .padding(.bottom, 200)
+                
             }
             
             if vm.showImageFullScreen{
@@ -139,7 +140,6 @@ struct ProductDetailedView: View {
                                 .offset(y: -geo.size.width / 2 + 50))
                     .frame(alignment: .center)
                     .offset(x: CGFloat(-vm.imageSize/2))
-                
             }
         }
         .ignoresSafeArea(.all)

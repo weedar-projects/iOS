@@ -228,14 +228,17 @@ struct LoadPhotoView: View {
         ZStack{
             //delete button
             ZStack{
-                RoundedRectangle(cornerRadius: 12.0)
-                    .fill(Color.col_red_second)
-                    .frame(width: 56, height: selectedImage == nil ? 0 : maxHeight, alignment: .center)
-                    .overlay(Image("trash_red")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 18, alignment: .center))
+                RadialGradient(colors: [Color.col_gradient_pink_second,
+                                        Color.col_gradient_pink_first],
+                               center: .center,
+                               startRadius: 0,
+                               endRadius: 150)
+                
+                Image.icon_trash
+                    .colorMultiply(Color.col_pink_button)
             }
+            .frame(width: 54, height: selectedImage == nil ? 0 : maxHeight, alignment: .center)
+            .cornerRadius(12)
             .hTrailing()
             .onTapGesture {
                 withAnimation(.spring().speed(1.5)) {
@@ -246,11 +249,9 @@ struct LoadPhotoView: View {
 
             ZStack{
                 Color.col_white
-                    .padding(2)
                     .cornerRadius(12)
                 
                 Color.col_blue_second
-                    .padding(2)
                     .cornerRadius(12)
                 
                 
@@ -259,15 +260,11 @@ struct LoadPhotoView: View {
                         .resizable()
                         .scaledToFit()
                         .padding(2)
+                        .padding(.vertical, 4)
                 } else {
                     Text("phonenumberview.phone_number_verify_identity_upload_photo".localized)
-                        .textCustom(.coreSansC45Regular, 16, Color.col_purple_main)
+                        .textCustom(.coreSansC45Regular, 16, Color.col_black.opacity(0.6))
                 }
-                
-                RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(style: StrokeStyle(lineWidth: 2, lineCap: .square, dash: [0, 8]))
-                    .foregroundColor(Color.col_blue_main)
-                
                 VStack{
                     Spacer()
                     if value != 0{
@@ -279,7 +276,7 @@ struct LoadPhotoView: View {
                                     .foregroundColor(Color.col_white.opacity(0.5))
                                 
                                 Rectangle()
-                                    .fill(Color.col_purple_main)
+                                    .fill(Color.col_black)
                                     .cornerRadius(12)
                                     .frame(width: min(CGFloat(self.value)*geometry.size.width, geometry.size.width), height: geometry.size.height)
                                     .animation(.linear)
@@ -291,6 +288,8 @@ struct LoadPhotoView: View {
                 }
                 .opacity(showLoader && selectedImage != nil ? 1 : 0)
                 
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.col_borders, lineWidth: 2)
             }
             .frame(maxWidth: .infinity)
             .frame(height: selectedImage == nil ? minHeight : maxHeight)

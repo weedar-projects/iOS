@@ -23,8 +23,14 @@ struct ProfileListButton: View {
     var body: some View{
         ZStack{
             ZStack{
-                Color.col_bg_second
-                    .cornerRadius(12)
+                RadialGradient(colors: [Color.col_gradient_blue_second,
+                                        Color.col_gradient_blue_first],
+                               center: .center,
+                               startRadius: 0,
+                               endRadius: 220)
+                .clipShape(CustomCorner(corners: .allCorners, radius: 12))
+                .opacity(0.25)
+                
                 HStack{
                     Image(icon)
                     

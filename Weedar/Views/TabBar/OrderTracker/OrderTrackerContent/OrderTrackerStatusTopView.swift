@@ -24,7 +24,7 @@ struct OrderTrackerStatusTopView: View {
                                 .frame(width: (getRect().width - 72)  / 4, height: 4)
                             
                             Capsule()
-                                .fill(currentState.id >= state.id ? state.color : Color.clear)
+                                .fill(currentState.id >= state.id ? state.colors.first! : Color.clear)
                                 .frame(width: (getRect().width - 72)  / 4, height: 4)
                            
                             ShimmerView()
@@ -37,14 +37,19 @@ struct OrderTrackerStatusTopView: View {
                 }
                 
                 ZStack{
-                    currentState.color
-                        .cornerRadius(24)
+                    currentState.colors.first
+                    
+                    Capsule()
+                        .fill(currentState.colors.last!)
+                        .blur(radius: 24)
+                        .scaleEffect(CGSize(width: 0.75, height: 0.4))
                     
                     Text(currentState.state.rawValue)
                         .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 38)
+                .cornerRadius(24)
                 .padding(.top)
             }
         }

@@ -35,9 +35,6 @@ struct CatalogProductsListView: View {
                             Amplitude.instance().logEvent("select_product", withEventProperties: ["category" : product.type.name, "product_id" : product.id, "price" : product.price])
                             }
                         })
-//                        .onDisappear(perform: {
-//                            tabBarManager.show()
-//                        })
                 }
             } label: {
                 EmptyView()
@@ -56,16 +53,17 @@ struct CatalogProductsListView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 11)
-                            .foregroundColor(Color.col_black)
+                            .foregroundColor(Color.col_text_white)
                         
                         Text("filtersview.filters_filters".localized)
-                            .textCustom(.coreSansC45Regular, 14, Color.col_black)
+                            .textCustom(.coreSansC45Regular, 14, Color.col_text_white)
                             .padding(.top,7)
                             .padding(.bottom,4)
                     }
                     .frame(maxWidth: .infinity)
-                    .background(Color.col_white)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.col_black, lineWidth: 1))
+                    .frame(height: 28)
+                    .background(Color.col_black.cornerRadius(8))
+//                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.col_black, lineWidth: 1))
                 }
                 .padding(.top, 12)
                 .onTapGesture {
@@ -80,27 +78,43 @@ struct CatalogProductsListView: View {
                 }
                 .padding(.horizontal)
                 
+                
                 //product view
                 ScrollView(.vertical, showsIndicators: false) {
                     //show products
                     VStack{
-                        ForEach(filteredProducts(searchText: vm.searchText), id: \.self){ product in
-                            
-                            ProductCatalogRowView(item: product, productInCartAnimation: $vm.productInCartAnimation)
-                                .padding(.horizontal)
-                                .padding(.vertical, 10)
-                                .padding(.bottom, product == vm.products.last ? 35 : 0)
-                                .onTapGesture {
-                                    vm.productDetail = product
-                                    vm.showProductDetail.toggle()
-                                }
-                                .disabled(vm.productInCartAnimation)
+                        if filteredProducts(searchText: vm.searchText).count > 0{
+                            ForEach(filteredProducts(searchText: vm.searchText), id: \.self){ product in
+                                
+                                ProductCatalogRowView(item: product, productInCartAnimation: $vm.productInCartAnimation)
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 10)
+                                    .padding(.bottom, product == vm.products.last ? 35 : 0)
+                                    .onTapGesture {
+                                        vm.productDetail = product
+                                        vm.showProductDetail.toggle()
+                                    }
+                                    .disabled(vm.productInCartAnimation)
+                            }
+                        } else {
+                            VStack{
+                                Image("productsnotfound")
+                                    .resizable()
+                                    .frame(width: 109, height: 109)
+                                    
+                                Text("No products found.")
+                                    .textDefault()
+                                    .padding(.top, 18)
+                            }
+                            .ignoresSafeArea(.keyboard, edges: .all)
+                            .padding(.top, 100)
                         }
                     }
                     .padding(.bottom, tabBarManager.showOrderTracker ? 95 : isSmallIPhone() ? 30 : 0)
                 }
                 .padding(.top, 12)
-                
+                    
+      
                 Spacer()
             }
             //Filter View

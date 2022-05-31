@@ -102,7 +102,7 @@ struct CartView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 ZStack{
                     Text("Clear cart")
-                        .foregroundColor(Color.col_pink_main)
+                        .foregroundColor(Color.col_pink_button)
                 }.onTapGesture {
                     showAlert = true
                 }

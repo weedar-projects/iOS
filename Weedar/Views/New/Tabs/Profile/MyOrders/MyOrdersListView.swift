@@ -36,7 +36,14 @@ struct MyOrdersListView: View {
                                     }
                             } label: {
                                 ZStack{
-                                    Color.col_borders.cornerRadius(12)
+                                    RadialGradient(colors: [Color.col_gradient_blue_second,
+                                                            Color.col_gradient_blue_first],
+                                                   center: .center,
+                                                   startRadius: 0,
+                                                   endRadius: 220)
+                                    .clipShape(CustomCorner(corners: .allCorners, radius: 12))
+                                    .opacity(0.25)
+                                    
                                     HStack{
                                         VStack(alignment: .leading,spacing: 5){
                                             Text("$\(String(format: "%.2f",order.totalSum))")

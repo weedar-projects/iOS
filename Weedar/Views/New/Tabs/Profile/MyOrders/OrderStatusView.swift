@@ -17,8 +17,16 @@ struct OrderStatusView: View {
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
                 .background(
-                        getBGColor()
-                            .cornerRadius(12)
+                    ZStack{
+                        getBGColor().first
+                        
+                        Capsule()
+                            .fill(getBGColor().last!)
+                            .blur(radius: 12)
+                            .scaleEffect(CGSize(width: 0.75, height: 0.4))
+                            
+                    }
+                    .clipShape(Capsule())
                 )
         }
     }
@@ -42,36 +50,47 @@ struct OrderStatusView: View {
     
     private func getTextColor() -> Color {
         switch status {
+//            Processing
         case 1...4:
             return Color.col_orange_main
+//            Packing
         case 5:
-            return Color.col_blue_main
+            return Color.col_violet_status_text
+//            delivery
         case 6:
-            return Color.col_orange_main
+            return Color.col_blue_main
+//            Delivered
         case 7...8:
             return Color.col_green_main
+//            Canceled
         case 10:
-            return Color.col_pink_main
+            return Color.col_pink_status_text
+            
         default:
             return Color.col_pink_main
         }
     }
     
     
-    private func getBGColor() -> Color {
+    private func getBGColor() -> [Color] {
         switch status {
+            //proccesing
         case 1...4:
-            return Color.col_orange_statusbg
+            return [Color.col_gradient_orange_first, Color.col_gradient_orange_second]
+            //packing
         case 5:
-            return Color.col_blue_statusbg
+            return [Color.col_violet_status_bg, Color.col_white]
+            //delivery
         case 6:
-            return Color.col_orange_statusbg
+            return [Color.col_gradient_blue_first, Color.col_gradient_blue_second]
+            //delivered
         case 7...8:
-            return Color.col_green_statusbg
+            return [Color.col_gradient_green_first, Color.col_gradient_green_second]
+            //cancel
         case 10:
-            return Color.col_red_statusbg
+            return [Color.col_gradient_pink_first, Color.col_gradient_pink_second]
         default:
-            return Color.col_red_statusbg
+            return [Color.col_gradient_blue_first, Color.col_gradient_blue_second]
         }
     }
 }

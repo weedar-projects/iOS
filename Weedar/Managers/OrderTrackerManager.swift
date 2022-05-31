@@ -14,19 +14,19 @@ class OrderTrackerManager: ObservableObject, WebSocketDelegate{
     
     let allState: [OrderTrackerStateModel] = [
         OrderTrackerStateModel(id: 0, state: .submited,
-                               color: Color.col_yellow_orderTracker,
+                               colors: [Color.col_gradient_orange_first, Color.col_gradient_orange_second],
                                deliveryText: "Delivery partner is reviewing your order."),
         OrderTrackerStateModel(id: 1, state: .packing,
-                               color: Color.col_blue_orderTracker,
+                               colors: [Color.col_violet_status_bg, Color.col_white],
                                deliveryText: "Delivery partner is preparing your order."),
         OrderTrackerStateModel(id: 2,
                                state: .inDelivery,
-                               color: Color.col_orange_orderTracker,
+                               colors: [Color.col_gradient_blue_first, Color.col_gradient_blue_second],
                                deliveryText: "The driver is on the way."),
         OrderTrackerStateModel(id: 3,
                                state: .delivered,
-                               color: Color.col_green_orderTracker,
-                               deliveryText: "The order is delivered.\nThank you for choosing WEEDAR.")
+                               colors: [Color.col_gradient_green_first, Color.col_gradient_green_second],
+                               deliveryText: "The order is delivered.Thank you for choosing WEEDAR.")
     ]
     
     @Published var isConnected = false
@@ -192,7 +192,7 @@ struct OrderTrackerModel: Identifiable{
     var state: Int
     var comment: String?
     var updatedAt: String
-    var discount: Double
+    var discount: DiscountModel?
     var latitudeCoordinate: Double
     var longitudeCoordinate: Double
     var userId: Int?
@@ -225,7 +225,7 @@ struct OrderTrackerModel: Identifiable{
         self.longitudeCoordinate = json["longitudeCoordinate"].doubleValue
         self.userId = json["userId"].intValue
         self.detailCount = json["detailCount"].intValue
-        self.discount = json["discount"].doubleValue
+        self.discount = DiscountModel(json: json["discount"])
         self.orderDetails = json["orderDetails"].arrayValue.map({ OrderDetailsModel(json: $0)})
     }
     

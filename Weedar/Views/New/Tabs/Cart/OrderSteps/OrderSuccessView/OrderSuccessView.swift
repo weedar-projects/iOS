@@ -16,50 +16,64 @@ struct OrderSuccessView: View {
     
     var body: some View {
         ZStack{
-            Color.col_green_main
+            Image("orderSuccessGradient")
+                .resizable()
+                .frame(width: getRect().width, height: getRect().height - getSafeArea().bottom)
+                .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
             
             //imgage
-            Image("splash-background-lines")
-                .resizable()
-                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3, alignment: .top)
-                .opacity(0.5)
-                .edgesIgnoringSafeArea(.top)
-                .vTop()
-            
             VStack{
                 //Logo
-                Image("logo_new")
+                Image("orderSuccessLogo")
                     .resizable()
-                    .frame(width: 117, height: 117)
+                    .frame(width: 270, height: 70)
                     .hLeading()
                     .padding(.top, getSafeArea().top)
                 
                 Text("Thanks \nfor your order!")
                     .hLeading()
-                    .textCustom(.coreSansC65Bold, 40, Color.col_text_white)
+                    .textCustom(.coreSansC65Bold, 40, Color.col_text_main)
                     .padding(.top, 24)
                 
                 Text("ordersuccessview.description".localized)
-                    .textCustom(.coreSansC45Regular, 16, Color.col_text_white)
+                    .textCustom(.coreSansC45Regular, 16, Color.col_text_main)
                     .hLeading()
                     .padding(.top, 8)
                 
                 
                 Spacer()
                 
-                MainButton(title: "Back to store", action: {
+            }
+            .padding(.horizontal, 24)
+            .padding(.top, getSafeArea().top)
+            
+            VStack{
+                HStack{
+                    Text("Back to Store")
+                        .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
+                }
+                .frame(height: 48)
+                .frame(maxWidth: .infinity)
+                .background(Image.bg_gradient_main)
+                .cornerRadius(12)
+                .padding(.horizontal, 24)
+                .onTapGesture {
                     orderNavigationManager.hideAll()
                     tabBarManager.currentTab = .catalog
                     tabBarManager.show()
-                })
-                    .padding(.bottom,tabBarManager.showOrderTracker && tabBarManager.isHidden == false ? 50 : 0)
-
+                }
+                .padding(.bottom, 20)
+                
             }
-            .padding(.horizontal, 24)
-            .onDisappear {
-                cartManager.getCart()
-            }
+            .frame(height: getSafeArea().bottom + 90)
+            .background(Color.col_black.cornerRadius(radius: 16, corners: [.topLeft,.topRight]))
+            .padding(.bottom, 18)
+            .vBottom()
+        }
+        .edgesIgnoringSafeArea(.bottom)
+        .onDisappear {
+            cartManager.getCart()
         }
         
     }

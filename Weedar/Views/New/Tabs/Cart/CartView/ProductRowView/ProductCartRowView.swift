@@ -30,8 +30,7 @@ struct ProductCartRowView: View {
                                endRadius: 150)
                 
                 Image.icon_trash
-                    .colorMultiply(Color.col_pink_main)
-                    
+                    .colorMultiply(Color.col_pink_button)       
             }
             .frame(width: 56, height: vm.itemViewHeight, alignment: .center)
 
