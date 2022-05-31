@@ -77,7 +77,7 @@ struct CalculationPriceView: View {
                 VStack(spacing: 13){
                     
                     CalculationRow(title: "Product price",
-                                   value:  $data.totalSum,
+                                   value:  $data.sum,
                                    lightText: lightText)
                     
                     CalculationRow(title: "Delivery fee",

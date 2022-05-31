@@ -16,5 +16,6 @@ struct OrderDetailsReview {
     var localTaxSum: Double
     var discount: DiscountModel?
     var taxSum: Double
+    var sum: Double
     var state: Int
 }

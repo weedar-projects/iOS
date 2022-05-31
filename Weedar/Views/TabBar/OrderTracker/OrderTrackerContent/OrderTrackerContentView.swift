@@ -308,7 +308,7 @@ struct CalculationOrderPriceView: View {
                             .textCustom(.coreSansC45Regular, 16, Color.col_text_white)
                         Spacer()
                         
-                        Text("$\((data.totalSum).formattedString(format: .percent) )")
+                        Text("$\((data.sum).formattedString(format: .percent) )")
                             .textCustom(.coreSansC45Regular, 16,Color.col_text_white)
                     }
                     HStack{

@@ -28,7 +28,7 @@ struct OrderDeliveryView: View {
     var body: some View {
         ZStack{
             NavigationLink(isActive: $orderNavigationManager.showOrderReviewView) {
-                OrderReviewView(data: vm.orderDetailsReview ?? OrderDetailsReview(orderId: 0, totalSum: 0, exciseTaxSum: 0, salesTaxSum: 0, localTaxSum: 0, discount: nil, taxSum: 0, state: 0))
+                OrderReviewView(data: vm.orderDetailsReview ?? OrderDetailsReview(orderId: 0, totalSum: 0, exciseTaxSum: 0, salesTaxSum: 0, localTaxSum: 0, discount: nil, taxSum: 0, sum: 0, state: 0))
             } label: {
                 Color.clear
             }.isDetailLink(false)

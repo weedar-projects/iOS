@@ -307,6 +307,7 @@ class OrderDeliveryVM: ObservableObject {
                                    localTaxSum: orderResponse.cityTaxSum,
                                    discount: orderResponse.discount,
                                    taxSum: orderResponse.taxSum,
+                                   sum: orderResponse.sum,
                                    state: orderResponse.state)
                 self.saveUserInfo()
                 
