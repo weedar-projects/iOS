@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>648963645371-s8b7f7g0edjlujdf8vbu8llucovvmhug.apps.googleusercontent.com</string>
+	<string>1055278210758-c1too52bno6nc7aiesb2bghc4alcb1mt.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.648963645371-s8b7f7g0edjlujdf8vbu8llucovvmhug</string>
+	<string>com.googleusercontent.apps.1055278210758-c1too52bno6nc7aiesb2bghc4alcb1mt</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1055278210758-9uc6hcq8s3kvo839tselnst5q17tehpd.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAmgYww1TA1QKPi600fgULfgbERmGJuEqk</string>
+	<string>AIzaSyDDzNRNwW9EFLVZZoe2LzfH0LtH9ULy-Yk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>648963645371</string>
+	<string>1055278210758</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.weel.ar</string>
 	<key>PROJECT_ID</key>
-	<string>weelprod</string>
+	<string>ar-dispensary</string>
 	<key>STORAGE_BUCKET</key>
-	<string>weelprod.appspot.com</string>
+	<string>ar-dispensary.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:648963645371:ios:23a04e281b7da3eef96e9e</string>
+	<string>1:1055278210758:ios:6b9a1a2007605d896841c7</string>
+	<key>DATABASE_URL</key>
+	<string>https://ar-dispensary-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>
 </plist>
