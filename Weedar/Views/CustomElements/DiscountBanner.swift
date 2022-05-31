@@ -31,10 +31,20 @@ struct DiscountBanner: View {
                             Text("Enjoy your")
                                 .textCustom(.coreSansC65Bold, 16, Color.col_text_white)
                         Text("$10 off")
-                            .textCustom(.coreSansC65Bold, 16, Color.col_text_white)
+                            .textCustom(.coreSansC65Bold, 16, Color.col_pink_main)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 4)
-                            .background(Color.col_red_discount_bg.cornerRadius(50))
+                            .background(ZStack{
+                                Color.col_gradient_pink_first
+                                
+                                Capsule()
+                                    .fill(Color.col_gradient_pink_second)
+                                    .blur(radius: 12)
+                                    .scaleEffect(CGSize(width: 0.75, height: 0.4))
+                                    
+                            }
+                            .clipShape(Capsule())
+                            )
                             .padding(.leading, 4)
                         }
                         Text("towards the first order.")
@@ -48,7 +58,7 @@ struct DiscountBanner: View {
                     .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
                     .frame(maxWidth: .infinity)
                     .frame(height: 48)
-                    .background(Color.col_yellow_main.cornerRadius(12))
+                    .background(Image.bg_gradient_main.resizable().frame(height: 48).cornerRadius(12))
                     .padding([.horizontal, .bottom], 18)
                     .padding(.top, 48)
                     .onTapGesture {
@@ -59,14 +69,19 @@ struct DiscountBanner: View {
     
             }
             .frame(maxWidth: .infinity)
-            .background(Color.col_blue_dark_discount_bg.cornerRadius(16))
-            .padding(.horizontal, 53)
-            .overlay(
-                RoundedRectangle(cornerRadius: 16)
-                    .stroke(Color.col_yellow_main, style: StrokeStyle(lineWidth: 1)
-                           )
-                    .padding(.horizontal, 52)
+            .background(
+                ZStack{
+                RadialGradient(colors: [Color.col_gradient_black_first,
+                                                Color.col_gradient_black_second],
+                                       center: .center,
+                                       startRadius: 0,
+                                       endRadius: 250)
+                    Color.col_black.opacity(0.2)
+                }
+                .cornerRadius(16)
             )
+            .padding(.horizontal, 53)
+
         }
     }
     

@@ -134,11 +134,10 @@ class OrderTrackerManager: ObservableObject, WebSocketDelegate{
             isConnected = false
             print("websocket is disconnected: \(reason) with code: \(code)")
         case .text(let string):
-
             let dataJson = JSON(parseJSON: string)
             let aviableOrders = dataJson["data"].arrayValue.map({OrderTrackerModel(json: $0)})
             self.aviableOrders = aviableOrders
-            print("Current Orders Tracker: \(self.aviableOrders)")
+            print("Current Orders Tracker: \(dataJson)")
         case .binary(let data):
             print("Received data: \(data)")
         case .ping(_):
