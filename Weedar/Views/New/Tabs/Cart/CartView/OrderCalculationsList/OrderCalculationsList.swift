@@ -16,7 +16,7 @@ struct OrderCalculationsList: View {
     var body: some View{
         if let cartData = cartManager.cartData{
         VStack{
-            Text("Order calculations")
+            Text("Order Details")
                 .textCustom(.coreSansC65Bold, 14, Color.col_text_second)
                 .hLeading()
                 .padding(.leading, 12)

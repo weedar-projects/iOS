@@ -88,7 +88,7 @@ struct OrderReviewView: View {
                             .padding(.horizontal, 24)
                             .hLeading()
                         
-                        RequestButton(state: $vm.buttonState, isDisabled: $vm.buttonIsDisabled, showIcon: false, title: "Make order") {
+                        RequestButton(state: $vm.buttonState, isDisabled: $vm.buttonIsDisabled, showIcon: false, title: "Place Order") {
                             vm.disableNavButton = true
                             print("tap button")
                             vm.confirmOrder(orderDetailsReview: data) { success in
