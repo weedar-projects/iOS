@@ -143,7 +143,7 @@
 
 //Documents center
 "documentscenter.title" = "Documents center";
-"documentscenter.description" = "Provide your ID card number to confirm that you are over 21 year old. If you are under 21 but have at least 18 years old, please upload a picture of your physician’s recommendation";
+"documentscenter.description" = "Provide your ID number to confirm that you are over 21 year old. If you are under 21 but have at least 18 years old, please upload a picture of your physician’s recommendation";
 "documentscenter.warning" = "Our courier will require you to show your ID to verify your identity and age";
 "documentscenter.id_label_title" = "ID Verification";
 "documentscenter.physicians_recommendation" = "Physician's recommendation";

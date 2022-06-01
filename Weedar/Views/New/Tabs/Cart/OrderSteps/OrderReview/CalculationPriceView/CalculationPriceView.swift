@@ -85,7 +85,7 @@ struct CalculationPriceView: View {
                                    lightText: lightText)
                     
                     CalculationRow(title: "Excise tax",
-                                   value: $data.taxSum,
+                                   value: $data.exciseTaxSum,
                                    lightText: lightText)
                     
                     CalculationRow(title: "Sale tax",

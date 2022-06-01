@@ -322,7 +322,7 @@ struct CalculationOrderPriceView: View {
                         Text("Excise tax")
                             .textCustom(.coreSansC45Regular, 16, Color.col_text_white)
                         Spacer()
-                        Text("$\(data.taxSum.formattedString(format: .percent))")
+                        Text("$\(data.exciseTaxSum.formattedString(format: .percent))")
                             .textCustom(.coreSansC45Regular, 16,Color.col_text_white)
                     }
                     HStack{
