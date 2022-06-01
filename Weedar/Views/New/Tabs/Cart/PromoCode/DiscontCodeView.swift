@@ -42,12 +42,13 @@ struct DiscontCodeView: View {
             
             Text("Enter a promo code. You can use one discount at the time.")
                 .textSecond()
-                .padding(.top, 24)
+                .padding([.horizontal,.top], 24)
             
             CustomTextField(text: $vm.code,
                             state: $vm.codeTFState, title: "",
                             placeholder: "Enter promo code here")
             .padding(.top,12)
+            
             
             Text(vm.errorMessage)
                 .textCustom(.coreSansC45Regular, 12, Color.col_pink_main)

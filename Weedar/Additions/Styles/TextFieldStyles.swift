@@ -17,7 +17,12 @@ struct TextFieldStyles {
                     .padding()
                     .cornerRadius(12.0)
                     .frame(height: 48.0, alignment: .center)
-                .background(RoundedRectangle(cornerRadius: 12.0).strokeBorder(strokeColor, lineWidth: 2))
+                    .overlay(
+                        //color
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(strokeColor, lineWidth: 2)
+                                .frame(height: 48)
+                        )
         }
     }
 }

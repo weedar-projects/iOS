@@ -111,7 +111,7 @@ struct RegisterView: View {
         HStack(spacing: 8){
             Image(systemName: "xmark" )
                 .font(Font.system(size: 10))
-                .foregroundColor(.red)
+                .foregroundColor(Color.col_pink_button)
             Text(error)
                 .textCustom(.coreSansC45Regular, 14, Color.col_pink_main)
         }

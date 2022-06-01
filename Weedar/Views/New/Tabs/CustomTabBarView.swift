@@ -82,12 +82,15 @@ struct CustomTabBarButtonView: View {
     @ViewBuilder
     func badge(_ productsInCart: Int, display: Bool = false) -> some View {
         if productsInCart > 0 && display {
+            ZStack{
+                Color.col_pink_main.frame(width: 20, height: 20).clipShape(Circle())
+
             Text("\(productsInCart)")
-                .textCustom(.coreSansC65Bold, 12, Color.col_black)
+                .textCustom(.coreSansC65Bold, 12, Color.col_text_white)
                 .padding(2)
-                .background(
-                    Image.bg_gradient_main.resizable().frame(width: 20, height: 20).clipShape(Circle())
-                )
+                .offset(y: 1)
+            }
+            .offset(x: selected == .cart ? 7 : 4, y: selected == .cart ? -7 : 0)
         } else {
             Color.clear
         }

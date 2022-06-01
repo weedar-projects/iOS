@@ -356,7 +356,6 @@ struct ProductDetailedView: View {
     
     @ViewBuilder
     func AddToCartButton() -> some View {
-
         ZStack{
             HStack{
                 Image("checkmark")

@@ -245,8 +245,9 @@ struct CustomToggle: View {
     var body: some View{
         ZStack{
             Capsule()
-                .fill(Color.col_black)
+                .fill(isOn ? Color.col_black : Color.col_toggle_disable)
                 .frame(width: 51, height: 31)
+            
             Image.bg_gradient_main
                 .resizable()
                 .frame(width: 27, height: 27)

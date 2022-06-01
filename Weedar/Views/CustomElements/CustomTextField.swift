@@ -53,8 +53,7 @@ struct CustomTextField: View {
                 //color
                     RoundedRectangle(cornerRadius: 12)
                         .stroke(strokeColor, lineWidth: 2)
-                        .frame(height: 48)
-                        
+                        .frame(height: 48)     
                 )
         }
         .padding(.horizontal, 24)

@@ -91,7 +91,7 @@ struct OrderDeliveryView: View {
                         TextField("Enter your address", text: $vm.address) { isEditing in
                             showDelivery = isEditing
                         }
-                        .modifier(TextFieldStyles.TextFieldStyle(strokeColor: Binding<Color>.constant(vm.addressTFState == .success ? Color.col_green_second.opacity(0.6) : vm.addressTFState == .error ?  Color.col_gradient_pink_first .opacity(0.6): vm.addressTFState == .def ?  Color.col_borders : Color.clear)))
+                        .modifier(TextFieldStyles.TextFieldStyle(strokeColor: Binding<Color>.constant(vm.addressTFState == .success ? Color.col_green_second : vm.addressTFState == .error ?  Color.col_red_second: vm.addressTFState == .def ?  Color.col_borders : Color.clear)))
                       
                     }
                     .padding(.horizontal, 24)
@@ -123,6 +123,7 @@ struct OrderDeliveryView: View {
                     })
                         .frame(height: getRect().height / 4, alignment: .top)
                         .animation(.linear(duration: 0.35))
+                        
                     }
                     
                     if !vm.addressErrorMessage.isEmpty{
@@ -134,6 +135,10 @@ struct OrderDeliveryView: View {
                             .hLeading()
                     }
                     
+                    Rectangle()
+                        .fill(Color.clear)
+                        .frame(width: 10, height: 1)
+                        .padding(.bottom, 300)
                 }
 
             }
