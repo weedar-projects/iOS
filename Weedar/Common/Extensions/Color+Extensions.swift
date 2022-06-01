@@ -56,7 +56,8 @@ extension Color {
     static let col_gradient_orange_second = Color("col_gradient_orange_second")
     
     static let col_toggle_disable = Color("col_toggle_disable")
-
+    
+    static let col_gray_button = Color("col_gray_button")
     
     //Discount
     static let col_red_discount_bg = Color("col_red_discount_bg")

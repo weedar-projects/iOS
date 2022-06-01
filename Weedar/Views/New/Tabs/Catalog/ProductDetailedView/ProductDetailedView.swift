@@ -26,7 +26,7 @@ struct ProductDetailedView: View {
                         tabBarManager.show()
                     }
                     .onDisappear {
-                        tabBarManager.hide()
+//                        tabBarManager.hide()
                     }
             } label: {
                 EmptyView()
@@ -79,18 +79,20 @@ struct ProductDetailedView: View {
                 
                 //Quantity View
                 QuantityView()
-                
-                AddToCartButton()
-                    .padding(.top, 25)
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 200)
-                
+               
             }
+            
             
             if vm.showImageFullScreen{
                 ImagesFullScreenView(imageLink: product.imageLink,product: product ,showImageFullScreen: $vm.showImageFullScreen)
                     .transition(.fade)
                 
+            }
+            VStack{
+                Spacer()
+            AddToCartButton()
+                .padding(.horizontal, 24)
+                .padding(.bottom, tabBarManager.tabBarHeight - 24)
             }
         }
         .onAppear{
@@ -368,7 +370,7 @@ struct ProductDetailedView: View {
             }
             .frame(height: 48)
             .frame(maxWidth: .infinity)
-            .background(Color.col_black.opacity(0.3))
+            .background(Color.col_gray_button)
             .cornerRadius(12)
             .opacity(vm.animProductInCart ? 1 : 0)
             

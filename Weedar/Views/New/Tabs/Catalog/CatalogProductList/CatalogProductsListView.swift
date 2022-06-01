@@ -29,7 +29,7 @@ struct CatalogProductsListView: View {
                 if let product = vm.productDetail{
                     ProductDetailedView(product: product)
                         .onAppear(perform: {
-                            tabBarManager.hide()
+                            tabBarManager.hideTracker()
                             if UserDefaults.standard.bool(forKey: "EnableTracking"){
 
                             Amplitude.instance().logEvent("select_product", withEventProperties: ["category" : product.type.name, "product_id" : product.id, "price" : product.price])
@@ -53,16 +53,16 @@ struct CatalogProductsListView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 11)
-                            .foregroundColor(Color.col_text_white)
+                            .foregroundColor(Color.col_text_main)
                         
                         Text("filtersview.filters_filters".localized)
-                            .textCustom(.coreSansC45Regular, 14, Color.col_text_white)
+                            .textCustom(.coreSansC45Regular, 14, Color.col_text_main)
                             .padding(.top,7)
                             .padding(.bottom,4)
                     }
                     .frame(maxWidth: .infinity)
                     .frame(height: 28)
-                    .background(Color.col_black.cornerRadius(8))
+//                    .background(Color.col_black.cornerRadius(8))
 //                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.col_black, lineWidth: 1))
                 }
                 .padding(.top, 12)
