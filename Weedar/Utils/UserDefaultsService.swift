@@ -41,6 +41,8 @@ class UserDefaultsService {
         case zipCode = "zipCode"
         case city = "city"
         
+        case animCart = "animCart"
+        
         case userDiscountBanner = "userDiscountBanner"
         
         case needToOrderTrackerAnimation  = "needToOrderTrackerAnimation"

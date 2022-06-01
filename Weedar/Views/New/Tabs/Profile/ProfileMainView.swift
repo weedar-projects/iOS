@@ -73,10 +73,9 @@ struct ProfileMainView: View {
                                                 message: "You will be returned to the login screen",
                                                 isPresented: $vm.showLogOutAler,
                                                 firstBtn: .default(Text("Cancel")),
-                                                secondBtn: .destructive(Text("Logout").foregroundColor(.red),
+                                                secondBtn: .default(Text("Logout"),
                                                                         action: {
                                 self.logout()
-                                
                             }))
                             
                         if let info = Bundle.main.infoDictionary, let currentVersion = info["CFBundleShortVersionString"] as? String {

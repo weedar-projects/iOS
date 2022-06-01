@@ -28,6 +28,7 @@ struct RootCoordinator: View {
     
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont(name: CustomFont.coreSansC65Bold.rawValue, size: 32)!]
+        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor(Color.col_black)
     }
     
     var body: some View {

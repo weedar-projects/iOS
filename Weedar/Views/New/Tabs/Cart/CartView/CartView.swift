@@ -47,8 +47,9 @@ struct CartView: View {
                     //product list view
                     if let productsInCart = cartManager.cartData?.cartDetails{
                         ForEach(productsInCart, id: \.self) { product in
-                                ProductCartRowView(item: product.product,
-                                                   quantityField: String(product.quantity))
+                            ProductCartRowView(needToAnim: productsInCart.first == product,
+                                               item: product.product,
+                                               quantityField: String(product.quantity))
                                     .padding(.horizontal, 24)
                                     .padding(.top, 24)
                             }

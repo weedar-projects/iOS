@@ -78,7 +78,9 @@ struct OrderReviewView: View {
                                 
                                 Image("edit_icon")
                                     .onTapGesture {
-                                        orderNavigationManager.showOrderReviewView = false
+                                        if !vm.disableNavButton{
+                                            orderNavigationManager.showOrderReviewView = false
+                                        }
                                     }
                                     .padding(.trailing, 25)
                                     .offset(y: 9)
@@ -93,10 +95,12 @@ struct OrderReviewView: View {
                 }
                     RequestButton(state: $vm.buttonState, isDisabled: $vm.buttonIsDisabled, showIcon: false, title: "Make order") {
                         vm.disableNavButton = true
+                        vm.buttonState = .loading
                         print("tap button")
                         vm.confirmOrder(orderDetailsReview: data) { success in
                             if success {
                                 print("succsess")
+                                vm.buttonState = .success
                                 orderNavigationManager.showOrderSuccessView = true
                                 if UserDefaults.standard.bool(forKey: "EnableTracking"){
 

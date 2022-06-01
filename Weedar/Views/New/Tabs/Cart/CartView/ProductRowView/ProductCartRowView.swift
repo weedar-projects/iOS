@@ -11,8 +11,8 @@ import Amplitude
 
 struct ProductCartRowView: View {
     
-    @ObservedObject var vm = ProductCartRowVM()
-    
+    @StateObject var vm = ProductCartRowVM()
+    @State var needToAnim = false
     @EnvironmentObject var cartManager: CartManager
     
     var item: ProductModel
@@ -45,6 +45,13 @@ struct ProductCartRowView: View {
                 
                 cartManager.productQuantityInCart(productId: item.id, quantity: .removeAll)
             }
+            
+//            Button {
+//                vm.startAnimation
+//            } label: {
+//                <#code#>
+//            }
+
             
             HStack(spacing: 0){
                 //Item Image
@@ -148,6 +155,28 @@ struct ProductCartRowView: View {
             .background(Color.col_white.cornerRadius(12).padding(.trailing, -5))
             .offset(x: vm.offset)
             .gesture(DragGesture().onChanged(vm.onChanged(value:)).onEnded(vm.onEnd(value:)))
+            .onUIKitAppear {
+                if needToAnim && UserDefaultsService().get(fromKey: .animCart) as? Bool ?? true{
+                   DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                        animView(start: true)
+                        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                            animView(start: false)
+                            UserDefaultsService().set(value: false, forKey: .animCart)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    func animView(start: Bool){
+        if start{
+            withAnimation(.easeInOut(duration: 0.5)) {
+                vm.offset = -80
+            }
+        }else{
+            withAnimation(.easeInOut(duration: 0.5)) {
+                vm.offset = 0
+            }
         }
     }
 }
