@@ -206,14 +206,17 @@ struct ARProductInfo : View {
                                                                                                 "product_price" : product.price.formattedString(format: .percent)])
                         }
                     }){
-                        ColorManager.Buttons.buttonActiveColor.frame(width: 56, height: 56)
-                            .clipShape(Circle())
-                            .overlay(
-                                Image("Item-Add-Button")
-                                    .renderingMode(.original)
-                                    .resizable()
-                                    .frame(width: 19, height: 19)
-                            )
+                        ZStack{
+                            Image.bg_gradient_main
+                                .resizable()
+                                .frame(width: 56, height: 56)
+                                .clipShape(Circle())
+                            
+                            Image("Item-Add-Button")
+                                .renderingMode(.original)
+                                .resizable()
+                                .frame(width: 19, height: 19)
+                        }
                     }.padding(.top, 6)
                 } // HStack
                 .padding(.top, 16)

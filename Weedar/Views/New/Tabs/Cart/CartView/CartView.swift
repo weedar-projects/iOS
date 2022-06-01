@@ -60,7 +60,7 @@ struct CartView: View {
                             .padding(.top, 24)
                             .padding(.horizontal, 24)
                     
-                    if let data = cartManager.cartData, data.totalSum < 50{
+                    if let data = cartManager.cartData, !data.priceCorresponds{
                         //Minimum price info
                         Text("Minimum order amount is $50.")
                             .hLeading()
