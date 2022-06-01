@@ -37,17 +37,25 @@ class SessionManager: ObservableObject {
     }
     
     
-    func userData(userModel: @escaping (UserModel) -> Void){
+    func userData(withUpdate: Bool = false, userModel: @escaping (UserModel) -> Void = {_ in}){
+        if withUpdate{
         API.shared.request(rout: .getCurrentUserInfo) { result in
             switch result{
             case let .success(json):
                 let user = UserModel(json: json)
-                
+                self.user = user
+                UserDefaultsService().set(value: user.id, forKey: .user)
                 print("useruser \(json)")
                 userModel(user)
             case let .failure(error):
                 print("error to load user data: \(error)")
             }
+        }
+        }else{
+            guard let user = user else {
+                return
+            }
+            userModel(user)
         }
     }
 }
@@ -57,7 +65,7 @@ struct UserModel: Identifiable {
     var id: Int
     var name: String
     var email: String
-    var phone: String
+    var phone: String?
     var passportPhotoLink: String
     var physicianRecPhotoLink: String
     var showDiscountBanner: Bool

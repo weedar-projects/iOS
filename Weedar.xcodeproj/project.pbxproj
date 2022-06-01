@@ -150,6 +150,7 @@
 		2FE21E5528002AAE004B0057 /* ImagesFullScreenVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE21E5428002AAE004B0057 /* ImagesFullScreenVM.swift */; };
 		2FE21E58280049A8004B0057 /* ScrollableImage in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE21E57280049A8004B0057 /* ScrollableImage */; };
 		2FE21E5A2800559C004B0057 /* CustomNavigationBackBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE21E592800559C004B0057 /* CustomNavigationBackBtn.swift */; };
+		2FE34C372847CE760097BBFA /* LoadingCatalogProductsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE34C362847CE760097BBFA /* LoadingCatalogProductsListView.swift */; };
 		2FEFFFA82840EF7800D25F11 /* DiscontCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEFFFA72840EF7800D25F11 /* DiscontCodeView.swift */; };
 		2FEFFFAA2840EF8300D25F11 /* DiscontCodeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEFFFA92840EF8300D25F11 /* DiscontCodeVM.swift */; };
 		2FEFFFAE284408BF00D25F11 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2FEFFFAD284408BF00D25F11 /* GoogleService-Info.plist */; };
@@ -414,6 +415,7 @@
 		2FE21E5228002AA2004B0057 /* ImagesFullScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesFullScreenView.swift; sourceTree = "<group>"; };
 		2FE21E5428002AAE004B0057 /* ImagesFullScreenVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesFullScreenVM.swift; sourceTree = "<group>"; };
 		2FE21E592800559C004B0057 /* CustomNavigationBackBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBackBtn.swift; sourceTree = "<group>"; };
+		2FE34C362847CE760097BBFA /* LoadingCatalogProductsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCatalogProductsListView.swift; sourceTree = "<group>"; };
 		2FEFFFA72840EF7800D25F11 /* DiscontCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscontCodeView.swift; sourceTree = "<group>"; };
 		2FEFFFA92840EF8300D25F11 /* DiscontCodeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscontCodeVM.swift; sourceTree = "<group>"; };
 		2FEFFFAD284408BF00D25F11 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -1119,6 +1121,7 @@
 				2FDD7883280089480071366B /* LoadingScreenMyOrderView.swift */,
 				2FF9996D2805BDF600F22BEB /* LoadingDocumentCenterView.swift */,
 				2FA59F782832F224001597C2 /* LoadingScreenCart.swift */,
+				2FE34C362847CE760097BBFA /* LoadingCatalogProductsListView.swift */,
 			);
 			path = LoadingScreens;
 			sourceTree = "<group>";
@@ -1839,6 +1842,7 @@
 				2F60BA79281048E1002B6670 /* ProductsViewModel.swift in Sources */,
 				2F60BA3A280F7C39002B6670 /* EffectsRowView.swift in Sources */,
 				2FCEFF002813EC4B00D00AEE /* OrderTrackerStatusTopView.swift in Sources */,
+				2FE34C372847CE760097BBFA /* LoadingCatalogProductsListView.swift in Sources */,
 				2FF9996728045DA800F22BEB /* OrderListModel.swift in Sources */,
 				2F60BA4F280F7EA8002B6670 /* AddressModel.swift in Sources */,
 				2F67C0A927CD8F6100BE8518 /* ResetPasswordView.swift in Sources */,

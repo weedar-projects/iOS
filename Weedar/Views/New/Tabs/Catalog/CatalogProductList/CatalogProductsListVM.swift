@@ -24,6 +24,8 @@ class CatalogProductsListVM: ObservableObject {
     @Published var productDetail: ProductModel?
     
     @Published var showAR = false
+   
+    @Published var loading = false
     
     // filters settings
     @Published var filters: CatalogFilters = CatalogFilters()
@@ -48,6 +50,7 @@ class CatalogProductsListVM: ObservableObject {
     
     //get product
     func getProducts(categoryId: Int, filters: CatalogFilters?){
+        loading = true
         self.products = []
         
         self.lastCategory = categoryId
@@ -66,6 +69,7 @@ class CatalogProductsListVM: ObservableObject {
                 for product in data.arrayValue{
                     self.products.append(ProductModel(json: product))
                 }
+                self.loading = false
             case .failure(_):
                 break
             }

@@ -18,13 +18,13 @@ struct MyOrdersListView: View {
             VStack{    
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack{
+                        if !vm.orderSections.isEmpty{
                     ForEach(vm.orderSections) { section in
                         Text(section.date)
                             .textCustom(.coreSansC65Bold, 14, Color.col_text_second)
                             .padding(.leading,36)
                             .hLeading()
                             .padding(.top, 24)
-                        
                         ForEach(section.orders, id: \.id) { order in
                             NavigationLink {
                                 MyOrderView(id: order.id)
@@ -69,6 +69,11 @@ struct MyOrdersListView: View {
 
                         }
                     }
+                        }else{
+                            EmptyOrderList()
+                                .opacity(vm.loading ? 0 : 1)
+                                .padding(.top, 170)
+                        }
                     }
                     .padding(.bottom, tabBarManager.tabBarHeight)
                 }
@@ -78,6 +83,34 @@ struct MyOrdersListView: View {
         .onAppear(){
             vm.getOrderList {}
         }
+    }
+    
+    @ViewBuilder
+    func EmptyOrderList() -> some View {
+        ZStack{
+            RadialGradient(colors: [Color.col_gradient_blue_second,
+                                    Color.col_gradient_blue_first],
+                           center: .center,
+                           startRadius: 0,
+                           endRadius: 220)
+            .clipShape(CustomCorner(corners: .allCorners, radius: 12))
+                .frame(maxWidth: .infinity)
+                .frame(height: 150)
+                .padding(.horizontal, 53)
+                
+                .opacity(0.25)
+            
+            
+            VStack{
+                Image("emptyOrders_icon")
+                
+                Text("You don't have \nany orders yet.")
+                    .textCustom(.coreSansC55Medium, 16, Color.col_text_main)
+                    .padding(.top, 12)
+            }
+        }
+        
+        
     }
 }
 

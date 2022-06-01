@@ -82,6 +82,7 @@ struct CatalogProductsListView: View {
                 //product view
                 ScrollView(.vertical, showsIndicators: false) {
                     //show products
+                    
                     VStack{
                         if filteredProducts(searchText: vm.searchText).count > 0{
                             ForEach(filteredProducts(searchText: vm.searchText), id: \.self){ product in
@@ -108,6 +109,7 @@ struct CatalogProductsListView: View {
                             }
                             .ignoresSafeArea(.keyboard, edges: .all)
                             .padding(.top, 100)
+                            .opacity(vm.loading ? 0 : 1)
                         }
                     }
                     .padding(.bottom, tabBarManager.showOrderTracker ? 95 : isSmallIPhone() ? 30 : 0)

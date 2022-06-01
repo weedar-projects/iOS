@@ -17,6 +17,7 @@ struct ComfirmPhoneView: View {
     @EnvironmentObject var sessionManager: SessionManager
     @EnvironmentObject var coordinatorViewManager: CoordinatorViewManager
     @EnvironmentObject var orderTrackerManager: OrderTrackerManager
+    @EnvironmentObject var tabBarManager: TabBarManager
     
     var body: some View{
         VStack{
@@ -116,6 +117,7 @@ struct ComfirmPhoneView: View {
             UserDefaultsService().set(value: false, forKey: .needToFillUserData)
             sessionManager.needToFillUserData = false
             coordinatorViewManager.currentRootView = .main
+            tabBarManager.currentTab = .catalog
         }
         .onAppear {
             vm.errorMessage = ""

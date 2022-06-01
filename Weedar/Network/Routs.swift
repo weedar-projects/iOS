@@ -27,6 +27,8 @@ enum Routs: String {
     case user = "/user"
     
     case userRegister = "/user/register"
+    case userLogin = "/auth/login"
+    
     
     case getCurrentUserInfo = "/user/current"
     

@@ -56,7 +56,7 @@ struct RootCoordinator: View {
         .environmentObject(sessionManager)
         .onAppear {
             self.checkVersion()
-            
+            sessionManager.userData(withUpdate: true)
             if sessionManager.userIsLogged && !sessionManager.needToFillUserData{
                 coordinatorViewManager.currentRootView = .main
                 print("GO TO MAIN: userIsLogged: \(sessionManager.userIsLogged), needToFillUserData: \(sessionManager.needToFillUserData)")

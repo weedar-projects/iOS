@@ -53,17 +53,28 @@ struct LoginView: View {
             
             //Next Button
             RequestButton(state: $vm.nextButtonState,isDisabled: $vm.nextButtonIsDisabled ,title: "welcomeview.welcome_content_next") {
-                vm.userLogin { newUser in
-                    if !newUser{
+                vm.userLogin { needToFillData in
+                    
+                    sessionManager.userData(withUpdate: true)
+                    if needToFillData{
+                        sessionManager.needToFillUserData = true
+                        sessionManager.userIsLogged = true
+                        coordinatorViewManager.currentRootView = .registerSetps
+                        UserDefaultsService().set(value: true, forKey: .needToFillUserData)
+                        UserDefaultsService().set(value: true, forKey: .userIsLogged)
+                        cartManager.getCart()
+                        
+                    }else{
                         UserDefaultsService().set(value: true, forKey: .userIsLogged)
                         sessionManager.userIsLogged = true
                         orderTrackerManager.connect()
-                        UserDefaultsService().set(value: false, forKey: .needToFillUserData)
                         sessionManager.needToFillUserData = false
+                        UserDefaultsService().set(value: false, forKey: .needToFillUserData)
                         coordinatorViewManager.currentRootView = .main
                         tabBarManager.currentTab = .catalog
                         cartManager.getCart()
                     }
+  
                 }
             }
             .padding(.horizontal, 24)

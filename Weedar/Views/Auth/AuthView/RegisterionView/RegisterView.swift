@@ -73,14 +73,14 @@ struct RegisterView: View {
             RequestButton(state: $vm.nextButtonState,isDisabled: $vm.nextButtonIsDisabled ,title: "welcomeview.welcome_content_next") {
                 vm.userRegister {
                     //if new user open register steps view
-                    vm.userLogin(asNewUser: true) { newUser in
-                        if newUser{
-                            UserDefaultsService().set(value: true, forKey: .userIsLogged)
-                            sessionManager.userIsLogged = true
-                            UserDefaultsService().set(value: true, forKey: .needToFillUserData)
+                    vm.userLogin { needToFillData in
+                        sessionManager.userData(withUpdate: true)
+                        if needToFillData{
                             sessionManager.needToFillUserData = true
+                            sessionManager.userIsLogged = true
                             coordinatorViewManager.currentRootView = .registerSetps
-                            tabBarManager.currentTab = .catalog
+                            UserDefaultsService().set(value: true, forKey: .needToFillUserData)
+                            UserDefaultsService().set(value: true, forKey: .userIsLogged)
                             cartManager.getCart()
                         }
                     }

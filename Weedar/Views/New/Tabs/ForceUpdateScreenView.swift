@@ -10,18 +10,16 @@ import SwiftUI
 struct ForceUpdateScreenView: View {
     var body: some View {
         ZStack{
-            Color.col_black
-                .edgesIgnoringSafeArea(.all)
-            Image("splash-background-lines")
+            Image("bgForceUpdate_image")
                 .resizable()
-                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3, alignment: .top)
-                .opacity(0.5)
-                .edgesIgnoringSafeArea(.top)
-                .vTop()
+                .scaledToFill()
+                .edgesIgnoringSafeArea(.all)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
             
             VStack{
                 //Logo
-                Image("logo_new")
+                Image("logo_light")
                     .resizable()
                     .frame(width: 150, height: 162)
                 
@@ -37,14 +35,23 @@ struct ForceUpdateScreenView: View {
             }
             .offset(y: -(getRect().height / 7))
             
-            MainButton(title: "Go to Appstore") {
+            
+            ZStack{
+                Text( "Go to Appstore")
+                    .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
+            }
+            .frame(height: 48)
+            .frame(maxWidth: .infinity)
+            .background(Image.bg_gradient_main)
+            .cornerRadius(12)
+            .padding(.horizontal)
+            .padding(.bottom, getSafeArea().bottom + 10)
+            .vBottom()
+            .onTapGesture {
                 if let url = URL(string: "itms-apps://apple.com/app/id1601307559") {
                     UIApplication.shared.open(url)
                 }
             }
-            .padding(.horizontal)
-            .vBottom()
-            
         }
     }
 }

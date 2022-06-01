@@ -192,21 +192,8 @@ struct ProfileMainView: View {
             .shared
             .signOut { result in
                 switch result {
+               
                 case .success:
-                    
-                    orderTrackerManager.disconnect()
-                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                    Amplitude.instance().logEvent("logout_success")
-                    }
-                    if let _ = UserDefaultsService().get(fromKey: .accessToken){
-                        UserDefaultsService().remove(key: .accessToken)
-                    }
-                    KeychainService.removePassword(serviceKey: .accessToken)
-//                    
-                    UserDefaultsService().set(value: false, forKey: .userVerified)
-                    UserDefaultsService().set(value: false, forKey: .userIsLogged)
-                    UserDefaultsService().set(value: true, forKey: .needToFillUserData)
-//                    
                     
                     Messaging.messaging().deleteToken { error in
                         if let error = error {
@@ -216,6 +203,19 @@ struct ProfileMainView: View {
                             print("TOKEN WAS REMOVE")
 //                                vm.showLoading = false
                             DispatchQueue.main.async {
+                                orderTrackerManager.disconnect()
+                                if UserDefaults.standard.bool(forKey: "EnableTracking"){
+                                Amplitude.instance().logEvent("logout_success")
+                                }
+                                if let _ = UserDefaultsService().get(fromKey: .accessToken){
+                                    UserDefaultsService().remove(key: .accessToken)
+                                }
+                                KeychainService.removePassword(serviceKey: .accessToken)
+            //
+                                UserDefaultsService().set(value: false, forKey: .userVerified)
+                                UserDefaultsService().set(value: false, forKey: .userIsLogged)
+                                UserDefaultsService().set(value: true, forKey: .needToFillUserData)
+            //
                                 coordinatorManager.currentRootView = .auth
                             }
                         }

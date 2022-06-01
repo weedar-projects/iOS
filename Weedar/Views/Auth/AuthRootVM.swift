@@ -8,6 +8,7 @@
 import SwiftUI
 import Alamofire
 import Amplitude
+import SwiftyJSON
 
 class AuthRootVM: ObservableObject {
     
@@ -127,6 +128,44 @@ class AuthRootVM: ObservableObject {
         }
     }
     
+    func userLogin(needToFillData: @escaping (Bool) -> Void){
+        let params = ["email" : email,
+                      "password" : password]
+        API.shared.request(rout: .userLogin, method: .post, parameters: params , encoding: JSONEncoding.default) { result in
+            switch result{
+            case let .success(json):
+                
+                let userData = UserLoginDataModel(json: json)
+                
+                UserDefaultsService().set(value: userData.accessToken, forKey: .accessToken)
+                KeychainService.updatePassword(userData.accessToken, serviceKey: .accessToken)
+                
+                self.appDelegate.saveTokenFCM()
+                self.appDelegate.updatePushNotificationState(true)
+                Amplitude.instance().logEvent("login_success")
+                print("PHOOONE \(userData.phone)")
+                //neet to fill data
+                if let phone = userData.phone, !phone.isEmpty{
+                    needToFillData(false)
+                    print("PHOOONE NEED TO FIL = false")
+                }else{
+                    needToFillData(true)
+                    print("PHOOONE NEED TO FIL = true")
+                }
+            case let .failure(error):
+                print("errorerrror \(error)")
+                if UserDefaults.standard.bool(forKey: "EnableTracking"){
+                    Amplitude.instance().logEvent("login_fail", withEventProperties: ["error_type" : error.message])
+                }
+                Logger.log(message: error.message, event: .error)
+                self.showServerError = true
+                self.nextButtonState = .def
+                self.authServerError = ServerError(statusCode: error.statusCode, message: error.message)
+            }
+        }
+    }
+    
+    
     /// Register user button action
     func userRegisterOld(completionHandler: @escaping () -> Void) {
         UserRepository().userRegister(email: self.email, password: self.password) { result in
@@ -154,12 +193,13 @@ class AuthRootVM: ObservableObject {
 
 
     /// Login user button action
-    func userLogin(asNewUser: Bool = false, isNewUserLogined: @escaping (Bool) -> Void) {
+    func userLoginOLD(asNewUser: Bool = false, isNewUserLogined: @escaping (Bool) -> Void) {
         if email.isEmailValid {
                 LoginRepository()
                     .login(email: self.email, password: self.password) { result in
                         switch result {
                             case .success(let loginData):
+                            print("loginData: \(loginData)")
                                 DispatchQueue.main.async {
                                     if loginData.phone != nil {
                                         UserDefaultsService().set(value: loginData.phone!, forKey: .phone)
@@ -167,9 +207,7 @@ class AuthRootVM: ObservableObject {
                                     
                                     UserDefaultsService().set(value: loginData.id, forKey: .user)
                                    
-                                    UserDefaultsService().set(value: loginData.accessToken, forKey: .accessToken)
-
-                                    KeychainService.updatePassword(loginData.accessToken, serviceKey: .accessToken)
+                                    
 
                                     let granded = UserDefaultsService().get(fromKey: .fcmGranted) as? Bool
                                  
@@ -188,8 +226,7 @@ class AuthRootVM: ObservableObject {
                                             if asNewUser{
                                                 isNewUserLogined(true)
                                             }else{
-                                                isNewUserLogined(false)
-                                                
+                                                isNewUserLogined(false)  
                                             }
                                         }
                                         UserDefaultsService().set(value: true, forKey: .userVerified)
@@ -250,3 +287,21 @@ extension AuthRootVM.PasswordError {
 }
 
 
+
+struct UserLoginDataModel {
+    var id: Int
+    var email: String
+    var role: String
+    var state: String
+    var phone: String?
+    var accessToken: String
+    
+    init(json: JSON){
+        self.id = json["id"].intValue
+        self.email = json["email"].stringValue
+        self.role = json["role"].stringValue
+        self.state = json["state"].stringValue
+        self.phone = json["phone"].stringValue
+        self.accessToken = json["accessToken"].stringValue
+    }
+}
