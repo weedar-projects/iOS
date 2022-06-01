@@ -93,7 +93,7 @@ struct AvailabilityDeliveryView: View {
                 self.borderColorDelivery = Color.textFieldGray
                 self.textColorDelivery = Color.textFieldGray
             case .success:
-                self.borderColorDelivery = Color.col_green_main
+                self.borderColorDelivery = Color.col_green_second
                 self.textColorDelivery = Color.col_green_main
             case .notFound:
                 self.borderColorDelivery = Color.textFieldGray

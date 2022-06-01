@@ -68,13 +68,22 @@ struct OrderReviewView: View {
                                 .padding(.top, 24)
                                 .padding(.horizontal, 24)
                             
-                            
-                            Text("Delivery details")
-                                .textCustom(.coreSansC65Bold
-                                            , 14, Color.col_text_second)
-                                .padding(.top, 24)
-                                .padding(.leading, 35)
-                                .hLeading()
+                            HStack{
+                                Text("Delivery details")
+                                    .textCustom(.coreSansC65Bold
+                                                , 14, Color.col_text_second)
+                                    .padding(.top, 24)
+                                    .padding(.leading, 35)
+                                    .hLeading()
+                                
+                                Image("edit_icon")
+                                    .onTapGesture {
+                                        orderNavigationManager.showOrderReviewView = false
+                                    }
+                                    .padding(.trailing, 25)
+                                    .offset(y: 9)
+                                
+                            }
                             
                             //delivery user data
                             UserInfoView()
