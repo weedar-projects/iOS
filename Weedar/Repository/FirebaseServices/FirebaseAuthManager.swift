@@ -63,6 +63,12 @@ class FirebaseAuthManager: NSObject {
             .provider()
             .verifyPhoneNumber(phoneNumber.replacingOccurrences(of: " ", with: ""), uiDelegate: nil) { verificationID, error in
                 if let error = error {
+                    
+                    let castedError = error as NSError
+                    let firebaseError = AuthErrorCode(_nsError: castedError)
+                    print("ERROR FIREBASE: \(firebaseError)")
+    
+                
                     completion(.failure(error))
                     return
                 } else if let verificationID = verificationID {

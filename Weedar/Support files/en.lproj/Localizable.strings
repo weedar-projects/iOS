@@ -144,7 +144,7 @@
 //Documents center
 "documentscenter.title" = "Documents center";
 "documentscenter.description" = "Provide your ID card number to confirm that you are over 21 year old. If you are under 21 but have at least 18 years old, please upload a picture of your physician’s recommendation";
-"documentscenter.warning" = "Our courier will require you to show your ID card to verify your identity and age";
+"documentscenter.warning" = "Our courier will require you to show your ID to verify your identity and age";
 "documentscenter.id_label_title" = "ID Verification";
 "documentscenter.physicians_recommendation" = "Physician's recommendation";
 "documentscenter.upload_btn" = "Upload";
@@ -156,8 +156,8 @@
 "deliverydetails.name_field_placeholder" = "Enter your full legal name";
 "deliverydetails.address_label_title" = "Address";
 "deliverydetails.address_field_placeholder" = "Address";
-"deliverydetails.warning" = "Our courier will ask you to show your ID card to verify your identity and age";
+"deliverydetails.warning" = "Our courier will ask you to show your ID to verify your identity and age";
 "deliverydetails.save_btn" = "Save";
 
 //OrderSuccessView
-"ordersuccessview.description" = "Delivery partner will handle the order from here. You can  check your order status in the Current Order bar. Please have your ID ready to show it to the driver for verification.";
+"ordersuccessview.description" = "Delivery partner will handle the order from here. You can check your order status in the Current Order bar. Please have your ID ready to show it to the driver for verification.";

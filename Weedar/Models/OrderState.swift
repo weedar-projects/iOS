@@ -40,6 +40,6 @@ enum OrderState: Int {
 //        case .delivered: return "Delivered"
 //        case .canceled: return "Cancelled"
 //        }
-        return "It has been proceed and will be delivered within 1 hour.\nOur courier will get in touch with you to get drop details. Сourier may ask ID card to verify your identity."
+        return "It has been proceed and will be delivered within 1 hour.\nOur courier will get in touch with you to get drop details. Сourier may ask ID to verify your identity."
     }
 }
