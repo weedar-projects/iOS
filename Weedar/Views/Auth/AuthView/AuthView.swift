@@ -25,7 +25,7 @@ struct AuthView: View, KeyboardReadable {
                 .vTop()
             
             //Top View
-            VStack{
+            VStack(spacing: 0){
                 //Logo
                 Image.logoDark
                     .resizable()
@@ -33,10 +33,15 @@ struct AuthView: View, KeyboardReadable {
                     .hLeading()
                 
                 //Title
-                Text("Welcom to \nWEEDAR")
+                Text("Welcome to")
                     .hLeading()
-                    .textCustom(.coreSansC65Bold, 40, Color.col_text_main)
-                    .padding(.top, 12)
+                    .textCustom(.coreSansC55Medium, 36, Color.col_text_main)
+                    .padding(.top, 18)
+                
+                Text("\nWEEDAR")
+                    .hLeading()
+                    .textCustom(.coreSansC65Bold, 52, Color.col_text_main)
+                    .offset(y: -40)
                 
             }
             .padding(.leading, 24)
@@ -48,7 +53,7 @@ struct AuthView: View, KeyboardReadable {
             VStack{
                 //Title
                 VStack{
-                    Text("Welcom to WEEDAR")
+                    Text("Welcome to WEEDAR")
                         .textCustom(.coreSansC65Bold, 24, Color.col_text_main)
                         .hLeading()
                 }
@@ -58,15 +63,16 @@ struct AuthView: View, KeyboardReadable {
                 
                 CustomPicker()
                 
-                VStack{
+                VStack(spacing: 0){
                     switch rootVM.currentPage{
                     case .registration:
-                        RegisterView(vm: rootVM)
-                            .padding(.top, isKeyboardShow ? 24 : 34)
+                        RegisterView(vm: rootVM, keyboardIsShow: $isKeyboardShow)
+                            .padding(.top, 30)
+                        
                         
                     case .login:
-                        LoginView(vm: rootVM)
-                            .padding(.top, isKeyboardShow ? 24 : 34)
+                        LoginView(vm: rootVM, keyboardIsShow: $isKeyboardShow)
+                            .padding(.top, 30)
                         
                     }
                 }
@@ -76,7 +82,7 @@ struct AuthView: View, KeyboardReadable {
                         .ignoresSafeArea(.all, edges: .bottom)
                 )
                 .vBottom()
-                .frame(height: getRect().height / 2.2)
+                .frame(height: getRect().height /  2.3)
             }
         }
         .onChange(of: rootVM.email, perform: { newValue in
@@ -106,15 +112,15 @@ struct AuthView: View, KeyboardReadable {
             ZStack(alignment: .leading){
                 Rectangle()
                     .fill(Color.col_black)
-                    .frame(width: getRect().width / 4, height: 77)
+                    .frame(width: getRect().width / 3, height: 61)
                     .cornerRadius(radius: 16, corners: [.topLeft, .topRight])
                     .transition(.slide)
-                    .offset(x: rootVM.currentPage == .registration ? 0 : (getRect().width / 2 + getRect().width / 4) + 5, y: -7)
+                    .offset(x: rootVM.currentPage == .registration ? 0 : (getRect().width / 2 + getRect().width / 6) + 5, y: -7)
                 
                 
                 Rectangle()
                     .fill(Color.col_white)
-                    .frame(width: getRect().width / 2, height: 77)
+                    .frame(width: getRect().width / 2, height: 61)
                     .cornerRadius(radius: 16, corners: [.topLeft, .topRight])
                     .transition(.slide)
                     .offset(x: rootVM.currentPage == .registration ? 0 : (getRect().width / 2 + 5))
@@ -122,8 +128,8 @@ struct AuthView: View, KeyboardReadable {
             
             HStack{
                 Text("Registration")
-                    .textCustom(.coreSansC45Regular, 16, Color.col_black)
-                    .frame(width: getRect().width / 2, height: 77)
+                    .textCustom(rootVM.currentPage == .registration ? .coreSansC65Bold : .coreSansC45Regular, 16, Color.col_black)
+                    .frame(width: getRect().width / 2, height: 61)
                     .onTapGesture {
                         withAnimation{
                             rootVM.currentPage = .registration
@@ -131,9 +137,10 @@ struct AuthView: View, KeyboardReadable {
                         }
                     }
                 Spacer()
+                
                 Text("Login")
-                    .textCustom(.coreSansC45Regular, 16, Color.col_black)
-                    .frame(width: getRect().width / 2, height: 77)
+                    .textCustom(rootVM.currentPage == .login ? .coreSansC65Bold : .coreSansC45Regular, 16, Color.col_black)
+                    .frame(width: getRect().width / 2, height: 61)
                     .onTapGesture {
                         withAnimation {
                             rootVM.currentPage = .login

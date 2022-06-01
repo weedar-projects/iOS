@@ -11,6 +11,7 @@ struct RegisterView: View {
     
     @StateObject var vm: AuthRootVM
     
+    @Binding var keyboardIsShow: Bool
     @EnvironmentObject var coordinatorViewManager: CoordinatorViewManager
     @EnvironmentObject var tabBarManager: TabBarManager
     @EnvironmentObject var sessionManager: SessionManager
@@ -21,7 +22,6 @@ struct RegisterView: View {
             //Email TextField
             CustomTextField(text: $vm.email, state: $vm.emailTFState, title: "Email", placeholder: "welcomeview.welcome_content_email_placeholder".localized)
                 .keyboardType(.emailAddress)
-                .padding(.top, 16)
                 .onTapGesture {
                     if let _ = vm.authServerError {
                         vm.authServerError = nil
@@ -29,7 +29,7 @@ struct RegisterView: View {
                 }
             
             //Password TextField
-            CustomSecureTextField(text: $vm.password, title: "Password", placeholder: "welcomeview.welcome_content_password_placeholder".localized)
+            CustomSecureTextField(text: $vm.password, state: $vm.passwordTFState,title: "Password", placeholder: "welcomeview.welcome_content_password_placeholder".localized)
                 .padding(.top, 24)
                 .onTapGesture {
                     if let _ = vm.authServerError {
@@ -46,7 +46,7 @@ struct RegisterView: View {
                     .hLeading()
                     .padding(.top, 8)
                     .padding(.horizontal, 24)
-                    .padding(.leading, 6)
+                    .padding(.leading, 7)
                 
             } else if !vm.password.isEmpty{
                 //passowrdError stack
@@ -89,6 +89,7 @@ struct RegisterView: View {
             .vBottom()
             .padding(.bottom)
             .padding(.horizontal, 24)
+            .offset(y: keyboardIsShow ? -18 : 0)
         }
         
     }

@@ -54,8 +54,9 @@ struct ResetPasswordView: View {
                     Text("resetpasswordview.reset_password_error".localized)
                         .lineSpacing(2.4)
                         .padding([.top, .leading], 8)
-                        .modifier(TextModifier(font: .coreSansC45Regular, size: 12, foregroundColor: .lightSecondaryB, opacity: 1))
+                        .modifier(TextModifier(font: .coreSansC45Regular, size: 12, foregroundColor: Color.col_pink_main, opacity: 1))
                         .hLeading()
+                        .padding(.horizontal, 24)
                 }
                 //Reset password Button
                 RequestButton(state: $vm.buttonState, isDisabled: $vm.buttonDisabled, title: "resetpasswordview.reset_password_reset_password".localized) {

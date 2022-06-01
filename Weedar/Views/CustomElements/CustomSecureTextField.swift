@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct CustomSecureTextField: View {
+    
     @Binding var text: String
+    @Binding var state: TextFieldState
     @State var title: String = "Title"
     @State var placeholder: String = "PlaceHolder"
     @State private var focused: Bool = false
     @State var showPassword = false
+    @State private var strokeColor = Color.col_borders
+    
     var body: some View {
         VStack{
             //textfield placeholder
@@ -79,11 +83,21 @@ struct CustomSecureTextField: View {
             .overlay(
                 //color
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color.lightSecondaryE.opacity(0.1), lineWidth: 2)
+                    .stroke(strokeColor, lineWidth: 2)
                     .frame(height: 48)
+                
             )
         }
         .padding(.horizontal, 24)
-        
+        .onChange(of: state) { newValue in
+            switch newValue{
+            case .def:
+                strokeColor = Color.col_borders
+            case .success:
+                strokeColor = Color.col_green_second
+            case .error:
+                strokeColor = Color.col_red_second
+            }
+        }
     }
 }

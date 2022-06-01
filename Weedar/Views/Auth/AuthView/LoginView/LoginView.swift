@@ -10,7 +10,7 @@ import SwiftUI
 struct LoginView: View {
     
     @StateObject var vm: AuthRootVM
-    
+    @Binding var keyboardIsShow: Bool
     @EnvironmentObject var coordinatorViewManager: CoordinatorViewManager
     @EnvironmentObject var tabBarManager: TabBarManager
     @EnvironmentObject var sessionManager: SessionManager
@@ -21,10 +21,9 @@ struct LoginView: View {
             //Email TextField
             CustomTextField(text: $vm.email, state: $vm.emailTFState, title: "Email", placeholder: "welcomeview.welcome_content_email_placeholder".localized)
                 .keyboardType(.emailAddress)
-                .padding(.top, 16)
             
             //Password TextField
-            CustomSecureTextField(text: $vm.password, title: "Password", placeholder: "welcomeview.welcome_content_password_placeholder".localized)
+            CustomSecureTextField(text: $vm.password, state: $vm.passwordTFState ,title: "Password", placeholder: "welcomeview.welcome_content_password_placeholder".localized)
                 .padding(.top, 24)
             
             if let error = vm.authServerError {
@@ -32,6 +31,7 @@ struct LoginView: View {
                     .hLeading()
                     .padding(.top, 8)
                     .padding(.horizontal, 24)
+                    .padding(.leading, 7)
             }
             //ResetPassword Button
             Button(action: {
@@ -47,7 +47,7 @@ struct LoginView: View {
                                      opacity: 1.0)
                     )
             }
-            .padding(.top, 27)
+            .padding(.top, 16)
             
             Spacer()
             
@@ -66,9 +66,9 @@ struct LoginView: View {
                     }
                 }
             }
-            .vBottom()
             .padding(.horizontal, 24)
             .padding(.bottom)
+            .offset(y: keyboardIsShow ? -18 : 0)
         }
         
     }
@@ -78,7 +78,8 @@ struct LoginView: View {
         HStack(spacing: 8){
             Image(systemName: "xmark" )
                 .font(Font.system(size: 10))
-                .foregroundColor(.red)
+                .foregroundColor(Color.col_pink_main)
+            
             Text(error)
                 .textCustom(.coreSansC45Regular, 14, Color.col_pink_main)
         }

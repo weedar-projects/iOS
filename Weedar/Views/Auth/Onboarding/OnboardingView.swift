@@ -35,7 +35,7 @@ struct OnboardingView: View {
                              secondText: "You are also allowed to use our service \nif you are 18 years old and you have \nphysician's recommendation",
                              thirdText: "Smoking may be hazardous to your health. \nWe do not promote smoking and the use \nof smoking products that can  expose the \nuser to physical or mental harm.")
                     .customDefaultAlert(title: "Dear customer,",
-                                        message: "Cannabis is legal in California.\nYou can buy cannabis if you are: \n18 or older with a ph ysician’s \nrecommendation (medicinal use) \n and 21 or older (adult use).",
+                                        message: "Cannabis is legal in California.\nYou can buy cannabis if you are: \n18 or older with a physician’s \nrecommendation (medicinal use) \n and 21 or older (adult use).",
                                         isPresented: $showAlertWebFirst,
                                         firstBtn: Alert.Button.default(Text("Cancel"), action: {
                         self.showAlertWebFirst = false

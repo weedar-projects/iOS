@@ -23,7 +23,7 @@ class AuthRootVM: ObservableObject {
     @Published var email: String = ""{
         didSet{
             if currentPage == .registration{
-                emailTFState = email.isEmpty ? .error : .success
+                emailTFState = email.isEmailValid ? .success : .def
             }
         }
     }
@@ -217,6 +217,13 @@ class AuthRootVM: ObservableObject {
                 self.nextButtonState = .def
             }
         }
+    }
+    
+    var isEmailValid: Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        
+        return emailPred.evaluate(with: self)
     }
 }
 
