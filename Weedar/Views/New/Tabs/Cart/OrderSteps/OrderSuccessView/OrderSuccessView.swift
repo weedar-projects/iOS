@@ -69,6 +69,7 @@ struct OrderSuccessView: View {
             .frame(height: getSafeArea().bottom + 90)
             .background(Color.col_black.cornerRadius(radius: 16, corners: [.topLeft,.topRight]))
             .padding(.bottom, 18)
+            .padding(.bottom, isSmallIPhone() ? 35 : 0)
             .vBottom()
         }
         .edgesIgnoringSafeArea(.bottom)

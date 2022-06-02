@@ -88,6 +88,7 @@ struct ChangePasswordView: View {
                     }
                 }
                 .padding(.horizontal, 24)
+                .padding(.bottom, isSmallIPhone() ? 16 : 0)
                 .vBottom()
             }.ignoresSafeArea(.keyboard, edges: .bottom)
         }

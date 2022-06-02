@@ -125,6 +125,7 @@ struct OrderReviewView: View {
                                   .padding(.horizontal, 24)
                                   .background(Color.col_white)
                                   .vBottom()
+                                  .padding(.bottom, isSmallIPhone() ? 16 : 0)
                     
                 }
                 .alert(isPresented: self.$vm.showAlert, content: {

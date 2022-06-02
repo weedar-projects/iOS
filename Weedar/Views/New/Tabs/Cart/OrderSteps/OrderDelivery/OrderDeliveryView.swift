@@ -163,7 +163,9 @@ struct OrderDeliveryView: View {
                 .padding(.horizontal, 24)
             }
             .background(Color.col_white)
+            .padding(.bottom, isSmallIPhone() ? 16 : 0)
             .vBottom()
+            
             
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)

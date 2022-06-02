@@ -39,7 +39,7 @@ struct AuthView: View, KeyboardReadable {
                 Text("\nWEEDAR")
                     .hLeading()
                     .textCustom(.coreSansC65Bold, 52, Color.col_text_main)
-                    .offset(y: -40)
+                    .offset(y: isSmallIPhone() ? -55 : -40)
                 
             }
             .padding(.leading, 24)
@@ -54,6 +54,7 @@ struct AuthView: View, KeyboardReadable {
                     Text("Welcome to WEEDAR")
                         .textCustom(.coreSansC65Bold, 24, Color.col_text_main)
                         .hLeading()
+                        .opacity(isSmallIPhone() ? 0 : 1)
                 }
                 .vBottom()
                 .padding(.leading, 24)
@@ -80,7 +81,7 @@ struct AuthView: View, KeyboardReadable {
                         .ignoresSafeArea(.all, edges: .bottom)
                 )
                 .vBottom()
-                .frame(height: getRect().height /  2.3)
+                .frame(height: getRect().height / (isSmallIPhone() ? 2 : 2.3))
             }
         }
         .onChange(of: rootVM.email, perform: { newValue in

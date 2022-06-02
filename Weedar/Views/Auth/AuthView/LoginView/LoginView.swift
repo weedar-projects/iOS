@@ -79,7 +79,7 @@ struct LoginView: View {
             }
             .padding(.horizontal, 24)
             .padding(.bottom)
-            .offset(y: keyboardIsShow ? -18 : 0)
+            .offset(y: keyboardIsShow && !isSmallIPhone() ? -18 : 0)
         }
         
     }

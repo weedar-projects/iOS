@@ -88,7 +88,7 @@ struct RegisterView: View {
             .vBottom()
             .padding(.bottom)
             .padding(.horizontal, 24)
-            .offset(y: keyboardIsShow ? -18 : 0)
+            .offset(y: keyboardIsShow && !isSmallIPhone() ? -18 : 0)
         }
         
     }

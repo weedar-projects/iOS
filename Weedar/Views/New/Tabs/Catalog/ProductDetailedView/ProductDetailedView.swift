@@ -93,6 +93,7 @@ struct ProductDetailedView: View {
             AddToCartButton()
                 .padding(.horizontal, 24)
                 .padding(.bottom, tabBarManager.tabBarHeight - 24)
+                .padding(.bottom, isSmallIPhone() ? 30 : 0)
             }
             .opacity(vm.showImageFullScreen ? 0 : 1)
         }
