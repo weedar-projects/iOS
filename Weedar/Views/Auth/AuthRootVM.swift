@@ -12,13 +12,6 @@ import SwiftyJSON
 
 class AuthRootVM: ObservableObject {
     
-    enum PasswordError: CaseIterable {
-        case charactersCount
-        case oneUppercaseLetter
-        case oneDigit
-        case oneLowercaseLetter
-    }
-    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     @Published var email: String = ""{
@@ -284,7 +277,7 @@ class AuthRootVM: ObservableObject {
 
 
 
-extension AuthRootVM.PasswordError {
+extension PasswordError {
     var errorMessage: String {
         switch self {
             case .charactersCount: return "Eight characters"
@@ -322,4 +315,11 @@ struct UserLoginDataModel {
         self.phone = json["phone"].stringValue
         self.accessToken = json["accessToken"].stringValue
     }
+}
+
+enum PasswordError: CaseIterable {
+    case charactersCount
+    case oneUppercaseLetter
+    case oneDigit
+    case oneLowercaseLetter
 }

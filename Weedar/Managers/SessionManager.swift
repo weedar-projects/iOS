@@ -20,23 +20,9 @@ class SessionManager: ObservableObject {
     init() {
         userIsLogged = udf.get(fromKey: .userIsLogged) as? Bool ?? false
         needToFillUserData = udf.get(fromKey: .needToFillUserData) as? Bool ?? true
-        getUserData()
+        userData(withUpdate: true)
         print("dafsdf")
     }
-    
-    func getUserData(finish: @escaping () -> Void = {}){
-        API.shared.request(rout: .getCurrentUserInfo) { result in
-            switch result{
-            case let .success(json):
-                self.user = UserModel(json: json)
-                finish()
-            case let .failure(error):
-                print("error to load user data: \(error)")
-            }
-        }
-    }
-    
-    
     func userData(withUpdate: Bool = false, userModel: @escaping (UserModel) -> Void = {_ in}){
         if withUpdate{
         API.shared.request(rout: .getCurrentUserInfo) { result in

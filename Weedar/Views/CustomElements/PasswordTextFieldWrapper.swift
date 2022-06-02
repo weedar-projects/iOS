@@ -85,7 +85,7 @@ struct PasswordTextFieldWrapper: UIViewRepresentable {
         uiTextField.setContentHuggingPriority(.defaultHigh, for: .vertical)
         uiTextField.setContentHuggingPriority(.defaultLow, for: .horizontal)
         uiTextField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        
+        uiTextField.minimumFontSize = 16
         uiTextField.keyboardType = .emailAddress
         uiTextField.autocorrectionType = .no
         

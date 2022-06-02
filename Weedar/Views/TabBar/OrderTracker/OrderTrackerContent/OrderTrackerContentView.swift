@@ -148,7 +148,7 @@ struct OrderTrackerContentView: View {
         .alert(isPresented: $vm.showCancelAlert, content: {
           Alert(title: Text("Cancel order?"),
                 message: Text("Are you sure?"),
-                primaryButton: .cancel(Text("Close")),
+                primaryButton: .default(Text("Close")),
                 secondaryButton: .destructive(Text("Cancel"),
                                               action: {
               vm.loading = true
@@ -163,8 +163,7 @@ struct OrderTrackerContentView: View {
 //                  }else{
 //                      orderTrackerManager.currentOrder = nil
 //                  }
-                  
-                  
+                  vm.loading = false
               }
           }))
         })

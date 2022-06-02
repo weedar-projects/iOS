@@ -123,8 +123,5 @@ struct DeliveryDetailsView: View {
             rootVM.currentPage = 3
             rootVM.updateIndicatorValue()
         }
-        .onAppear {
-            sessionManager.getUserData()
-        }
     }
 }

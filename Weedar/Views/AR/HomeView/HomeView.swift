@@ -79,7 +79,10 @@ struct HomeView: View {
                         }) // OVERLAY
                         .overlay(
                             Tutorial(stage: $carousel.tutorialStage)
-                                .padding(24))
+                                .padding(24)
+                                .padding(.bottom, 50)
+                        )
+                    
                         .zIndex(6)
                 } //AR VSTACK
                 .statusBar(hidden: true)
@@ -199,6 +202,8 @@ struct ARProductInfo : View {
                         }.padding(.top, 8)
                     } // VStack
                     Button(action: {
+                        UINotificationFeedbackGenerator().notificationOccurred(.success)
+                        
                         cartManager.productQuantityInCart(productId: product.id, quantity: .add)
                         if UserDefaults.standard.bool(forKey: "EnableTracking"){
                         Amplitude.instance().logEvent("add_cart_ar", withEventProperties: ["category" : product.type.name,

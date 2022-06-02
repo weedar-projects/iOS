@@ -7,22 +7,23 @@
 
 import SwiftUI
 
-struct EmailTextFieldWrapper: UIViewRepresentable {
+struct TextFieldWrapper: UIViewRepresentable {
     // MARK: - Properties
     @Binding var text: String
     var placeholder: String
-
+    var keyboardType: UIKeyboardType = .default
+    
     let textField: UITextField = UITextField()
 
     var isFirstResponder: ((Bool) -> Void)?
 
     class Coordinator: NSObject, UITextFieldDelegate {
         // MARK: - Properties
-        var parent: EmailTextFieldWrapper
+        var parent: TextFieldWrapper
         
         
         // MARK: - Initialization
-        init(_ parent: EmailTextFieldWrapper) {
+        init(_ parent: TextFieldWrapper) {
             self.parent = parent
         }
         
@@ -79,9 +80,10 @@ struct EmailTextFieldWrapper: UIViewRepresentable {
         uiView.setContentHuggingPriority(.defaultLow, for: .horizontal)
         uiView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
+        uiView.minimumFontSize = 16
         PasswordTextFieldWrapper.tagIndex = 1
 
-        uiView.keyboardType = .emailAddress
+        uiView.keyboardType = keyboardType
         uiView.autocorrectionType = .no
                 
         return uiView

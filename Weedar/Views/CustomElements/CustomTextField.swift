@@ -18,6 +18,7 @@ struct CustomTextField: View {
     @Binding var state: TextFieldState
     @State var title: String = "Title"
     @State var placeholder: String = "PlaceHolder"
+    @State var keyboardType: UIKeyboardType = .default
     @State var focused: Bool = false
     @State private var strokeColor = Color.col_borders
     
@@ -30,22 +31,7 @@ struct CustomTextField: View {
                 .opacity(0.7)
             
             ZStack{
-                Text(placeholder)
-                    .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
-                    .opacity(0.3)
-                    .opacity(text == "" ? 1 : 0)
-                    .hLeading()
-                    .padding(.leading, 12)
-                    .frame(height: 48)
-                    .offset(y: 2)
-                
-                TextField("", text: $text, onEditingChanged: { focused in
-                    withAnimation(.easeIn.speed(4)){
-                        self.focused = focused
-                    }
-                })
-                    .offset(y: 2)
-                    .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
+                TextFieldWrapper(text: $text, placeholder: placeholder, keyboardType: keyboardType)
                     .padding(.leading, 12)
             }
             .frame(height: 48)

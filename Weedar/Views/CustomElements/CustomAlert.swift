@@ -51,6 +51,27 @@ struct CustomErrorAlert: ViewModifier {
   }
 }
 
+struct CustomAlertOneBtn: ViewModifier {
+    var title: String = ""
+    var message: String = ""
+        
+    @Binding var isPresented: Bool
+    
+    var button: Alert.Button
+    
+  func body(content: Content) -> some View {
+    content
+          .alert(isPresented: $isPresented) {
+              Alert(title:
+                      Text(title),
+                    message:
+                      Text(message),
+                    dismissButton: button
+              )
+          }
+  }
+}
+
 extension View {
     func customErrorAlert(title : String, message: String, isPresented: Binding<Bool>) -> some View {
       self
@@ -61,5 +82,9 @@ extension View {
                           secondBtn: Alert.Button) -> some View {
       self
             .modifier(CustomDefaultAlert(title: title, message: message,firstBtn: firstBtn,secondBtn: secondBtn, isPresented: isPresented))
+  }
+    func customAlertOneBtn(title : String, message: String,isPresented: Binding<Bool>, button: Alert.Button) -> some View {
+      self
+          .modifier(CustomAlertOneBtn(title: title, message: message, isPresented: isPresented, button: button))
   }
 }

@@ -120,6 +120,7 @@ struct ProductCatalogRowView: View {
                 productInCartAnimation = newValue
             }
             .onTapGesture {
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
                 cartManager.productQuantityInCart(productId: item.id, quantity: .add)
                 vm.product_qty += 1
                 if UserDefaults.standard.bool(forKey: "EnableTracking"){

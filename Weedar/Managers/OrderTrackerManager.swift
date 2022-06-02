@@ -95,24 +95,28 @@ class OrderTrackerManager: ObservableObject, WebSocketDelegate{
     private var socket: WebSocket?
     
     func connect() {
-        guard let token = self.token else { return }
-        var request = URLRequest(url: URL(string: PKSettingsBundleHelper.shared.currentEnvironment.baseUrl.appending("/websocket"))!)
-//        request.timeoutInterval = 5 // Sets the timeout for the connection
-        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        
-        socket = WebSocket(request: request)
-        socket?.delegate = self
-        socket?.connect()
-        update()
-        print("socket connect")
-        
+        if !isConnected{
+            guard let token = self.token else { return }
+            var request = URLRequest(url: URL(string: PKSettingsBundleHelper.shared.currentEnvironment.baseUrl.appending("/websocket"))!)
+            //        request.timeoutInterval = 5 // Sets the timeout for the connection
+            request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            
+            socket = WebSocket(request: request)
+            socket?.delegate = self
+            socket?.connect()
+            isConnected = true
+            update()
+            print("socket connect")
+        }
     }
     
     
     func disconnect() {
-        socket?.disconnect(closeCode: CloseCode.normal.rawValue)
-        print("socket disconnect")
-        isConnected = false
+        if isConnected{
+            socket?.disconnect(closeCode: CloseCode.normal.rawValue)
+            print("socket disconnect")
+            isConnected = false
+        }
     }
     
     func update() {
@@ -134,10 +138,12 @@ class OrderTrackerManager: ObservableObject, WebSocketDelegate{
             isConnected = false
             print("websocket is disconnected: \(reason) with code: \(code)")
         case .text(let string):
-            let dataJson = JSON(parseJSON: string)
-            let aviableOrders = dataJson["data"].arrayValue.map({OrderTrackerModel(json: $0)})
-            self.aviableOrders = aviableOrders
-            print("Current Orders Tracker: \(dataJson)")
+            DispatchQueue.main.async {
+                let dataJson = JSON(parseJSON: string)
+                let aviableOrders = dataJson["data"].arrayValue.map({OrderTrackerModel(json: $0)})
+                self.aviableOrders = aviableOrders
+                print("Current Orders Tracker: \(dataJson)")
+            }
         case .binary(let data):
             print("Received data: \(data)")
         case .ping(_):

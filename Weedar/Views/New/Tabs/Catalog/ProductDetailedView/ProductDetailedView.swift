@@ -94,6 +94,7 @@ struct ProductDetailedView: View {
                 .padding(.horizontal, 24)
                 .padding(.bottom, tabBarManager.tabBarHeight - 24)
             }
+            .opacity(vm.showImageFullScreen ? 0 : 1)
         }
         .onAppear{
             //add information values

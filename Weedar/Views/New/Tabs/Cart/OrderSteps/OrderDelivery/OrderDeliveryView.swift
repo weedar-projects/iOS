@@ -187,8 +187,8 @@ struct OrderDeliveryView: View {
         .onAppear {
             tabBarManager.hide()
             vm.validName = !vm.name.isEmpty
-            vm.zipcodeAndNameValidation()
-            sessionManager.userData { user in
+            sessionManager.userData(withUpdate: true) { user in
+                vm.validateUserData(userData: user)
                 if user.passportPhotoLink.isEmpty{
                     vm.needToLoadDoc = true
                 }else{

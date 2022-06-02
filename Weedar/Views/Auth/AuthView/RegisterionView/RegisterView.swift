@@ -20,8 +20,7 @@ struct RegisterView: View {
     var body: some View {
         VStack{
             //Email TextField
-            CustomTextField(text: $vm.email, state: $vm.emailTFState, title: "Email", placeholder: "welcomeview.welcome_content_email_placeholder".localized)
-                .keyboardType(.emailAddress)
+            CustomTextField(text: $vm.email, state: $vm.emailTFState,title: "Email", placeholder: "welcomeview.welcome_content_email_placeholder".localized, keyboardType: .emailAddress)
                 .onTapGesture {
                     if let _ = vm.authServerError {
                         vm.authServerError = nil
@@ -58,7 +57,7 @@ struct RegisterView: View {
                     spacing: 0,
                     pinnedViews: [],
                     content: {
-                        ForEach(AuthRootVM.PasswordError.allCases, id:\.self) { item in
+                        ForEach(PasswordError.allCases, id:\.self) { item in
                             errorStackMessage(for: item, isChecked: !vm.errors.contains(item))
                         }
                     })
@@ -94,7 +93,7 @@ struct RegisterView: View {
         
     }
     @ViewBuilder
-    func errorStackMessage(for error: AuthRootVM.PasswordError, isChecked: Bool) -> some View {
+    func errorStackMessage(for error: PasswordError, isChecked: Bool) -> some View {
         HStack(spacing: 4) {
             Image(systemName: isChecked ? "checkmark" : "xmark" )
                 .font(Font.system(size: 10))

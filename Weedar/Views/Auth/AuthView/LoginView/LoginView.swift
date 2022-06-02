@@ -19,7 +19,7 @@ struct LoginView: View {
     var body: some View {
         VStack{
             //Email TextField
-            CustomTextField(text: $vm.email, state: $vm.emailTFState, title: "Email", placeholder: "welcomeview.welcome_content_email_placeholder".localized)
+            CustomTextField(text: $vm.email, state: $vm.emailTFState, title: "Email",placeholder: "welcomeview.welcome_content_email_placeholder".localized, keyboardType: .emailAddress)
                 .keyboardType(.emailAddress)
             
             //Password TextField

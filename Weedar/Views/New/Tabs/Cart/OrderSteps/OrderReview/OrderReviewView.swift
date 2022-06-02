@@ -93,30 +93,38 @@ struct OrderReviewView: View {
                         .padding(.top, 8)
                     }
                 }
-                    RequestButton(state: $vm.buttonState, isDisabled: $vm.buttonIsDisabled, showIcon: false, title: "Make order") {
-                        vm.disableNavButton = true
-                        vm.buttonState = .loading
-                        print("tap button")
-                        vm.confirmOrder(orderDetailsReview: data) { success in
-                            if success {
-                                print("succsess")
-                                vm.buttonState = .success
-                                orderNavigationManager.showOrderSuccessView = true
-                                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                                Amplitude.instance().logEvent("make_order")
+                    
+                    
+                    RequestButton(state: $vm.buttonState,
+                                  isDisabled: $vm.buttonIsDisabled,
+                                  showIcon: false,
+                                  title: "Place order") {
+                        DispatchQueue.main.async {
+                            Logger.log(message: "start ____", event: .debug)
+                            vm.disableNavButton = true
+                            vm.buttonState = .loading
+                            print("tap button")
+                            vm.confirmOrder(orderDetailsReview: data) { success in
+                                if success {
+                                    print("succsess")
+                                    Logger.log(message: "end ____", event: .debug)
+                                    vm.buttonState = .success
+                                    orderNavigationManager.showOrderSuccessView = true
+                                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
+                                        Amplitude.instance().logEvent("make_order")
+                                    }
+                                } else {
+                                    vm.buttonState = .def
+                                    vm.showAlert = true
+                                    vm.disableNavButton = false
                                 }
-                            } else {
-                                print("errrrorrr")
-                                vm.buttonState = .def
-                                vm.showAlert = true
-                                vm.disableNavButton = false
                             }
                         }
+                        
                     }
-                    .padding(.horizontal, 24)
-                    .background(Color.col_white)
-                    .vBottom()
+                                  .padding(.horizontal, 24)
+                                  .background(Color.col_white)
+                                  .vBottom()
                     
                 }
                 .alert(isPresented: self.$vm.showAlert, content: {
@@ -143,7 +151,7 @@ struct OrderReviewView: View {
                 }
                 .onTapGesture {
                     if !vm.disableNavButton{
-                        self.mode.wrappedValue.dismiss()
+                        orderNavigationManager.showOrderReviewView = false
                     }
                 }
                 .opacity(orderNavigationManager.showOrderSuccessView ? 0 : 1)

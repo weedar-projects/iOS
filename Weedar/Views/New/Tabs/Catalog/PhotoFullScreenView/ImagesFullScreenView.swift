@@ -43,7 +43,6 @@ struct ImagesFullScreenView: View {
                                 .opacity(vm.bgOpacity)
             
             if let product = product {
-
                 ZStack{
                     HStack{
                         Image("checkmark")
@@ -78,7 +77,7 @@ struct ImagesFullScreenView: View {
                 .vBottom()
                 .opacity(vm.bgOpacity)
                 .padding(.horizontal, 24)
-                .padding(.bottom, 8 + getSafeArea().bottom)
+                .padding(.bottom, 80 + getSafeArea().bottom)
                 .onTapGesture {
                     vm.notification.notificationOccurred(.success)
                     cartManager.productQuantityInCart(productId: product.id, quantity: .add)

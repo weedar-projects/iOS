@@ -32,10 +32,9 @@ struct UserInfoView: View {
         )
         .padding(.top,8)
         .padding(.horizontal, 24)
-        
         .onAppear {
-            sessionManager.getUserData {
-                self.user = sessionManager.user
+            sessionManager.userData(withUpdate: true) { user in
+                self.user = user
             }
         }
     }

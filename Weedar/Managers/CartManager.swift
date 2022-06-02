@@ -43,18 +43,6 @@ class CartManager: ObservableObject {
         generator.notificationOccurred(.success)
     }
     
-    func getUserData(needToShowDiscount: @escaping (Bool) -> Void){
-        API.shared.request(rout: .getCurrentUserInfo) { result in
-            switch result{
-            case let .success(json):
-                let user = UserModel(json: json)
-                self.userData = user
-            case let .failure(error):
-                print("error to load user data: \(error)")
-            }
-        }
-    }
-    
     func getCart(){
         API.shared.request(rout: .cart, method: .get) { result in
             switch result{

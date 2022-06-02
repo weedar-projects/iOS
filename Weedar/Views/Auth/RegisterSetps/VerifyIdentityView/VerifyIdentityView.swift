@@ -54,7 +54,7 @@ struct VerifyIdentityView: View {
                 RequestButton(state: $vm.buttonState, isDisabled: $vm.buttonIsDisabled, title: "welcomeview.welcome_content_next".localized) {
                     vm.veryfiIdentity { success in
                         if success {
-                            orderTrackerManager.connect()
+//                            orderTrackerManager.connect()
                             UserDefaultsService().set(value: false, forKey: .needToFillUserData)
                             sessionManager.needToFillUserData = false
                             coordinatorViewManager.currentRootView = .main

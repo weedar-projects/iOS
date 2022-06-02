@@ -113,7 +113,7 @@ struct ComfirmPhoneView: View {
 //            rootVM.currentPage =  2
 //            rootVM.updateIndicatorValue()
             print("show onchange register")
-            orderTrackerManager.connect()
+//            orderTrackerManager.connect()
             UserDefaultsService().set(value: false, forKey: .needToFillUserData)
             sessionManager.needToFillUserData = false
             coordinatorViewManager.currentRootView = .main
@@ -122,8 +122,8 @@ struct ComfirmPhoneView: View {
         .onAppear {
             vm.errorMessage = ""
             vm.isErrorShow = false
-            sessionManager.getUserData {
-                vm.userId = sessionManager.user?.id ?? 0
+            sessionManager.userData { user in
+                vm.userId = user.id
             }
         }
     }

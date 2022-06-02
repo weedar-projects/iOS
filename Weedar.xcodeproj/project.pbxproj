@@ -151,6 +151,8 @@
 		2FE21E58280049A8004B0057 /* ScrollableImage in Frameworks */ = {isa = PBXBuildFile; productRef = 2FE21E57280049A8004B0057 /* ScrollableImage */; };
 		2FE21E5A2800559C004B0057 /* CustomNavigationBackBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE21E592800559C004B0057 /* CustomNavigationBackBtn.swift */; };
 		2FE34C372847CE760097BBFA /* LoadingCatalogProductsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE34C362847CE760097BBFA /* LoadingCatalogProductsListView.swift */; };
+		2FE34C3928491CD90097BBFA /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE34C3828491CD90097BBFA /* ChangePasswordView.swift */; };
+		2FE34C3B284925950097BBFA /* ChangePasswordVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE34C3A284925950097BBFA /* ChangePasswordVM.swift */; };
 		2FEFFFA82840EF7800D25F11 /* DiscontCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEFFFA72840EF7800D25F11 /* DiscontCodeView.swift */; };
 		2FEFFFAA2840EF8300D25F11 /* DiscontCodeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEFFFA92840EF8300D25F11 /* DiscontCodeVM.swift */; };
 		2FEFFFAE284408BF00D25F11 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2FEFFFAD284408BF00D25F11 /* GoogleService-Info.plist */; };
@@ -212,7 +214,7 @@
 		B185F67126F4E1650003E485 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B185F67026F4E1650003E485 /* ActivityView.swift */; };
 		B1A6AF4726F5112C00B560E3 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A6AF4626F5112C00B560E3 /* View+Extensions.swift */; };
 		B1B0554C26F4A76200652E72 /* SecureTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0554B26F4A76200652E72 /* SecureTextFieldView.swift */; };
-		B1C23577271839740067AD15 /* EmailTextFieldWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C23576271839740067AD15 /* EmailTextFieldWrapper.swift */; };
+		B1C23577271839740067AD15 /* TextFieldWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C23576271839740067AD15 /* TextFieldWrapper.swift */; };
 		B1C2359527185C530067AD15 /* PasswordTextFieldWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2359427185C530067AD15 /* PasswordTextFieldWrapper.swift */; };
 		B1C93DE5270C9674006A1C39 /* LocalStatusBarStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C93DE4270C9674006A1C39 /* LocalStatusBarStyle.swift */; };
 		B1CC0C1F27032461000238B9 /* DismissingKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CC0C1E27032461000238B9 /* DismissingKeyboard.swift */; };
@@ -416,6 +418,8 @@
 		2FE21E5428002AAE004B0057 /* ImagesFullScreenVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesFullScreenVM.swift; sourceTree = "<group>"; };
 		2FE21E592800559C004B0057 /* CustomNavigationBackBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBackBtn.swift; sourceTree = "<group>"; };
 		2FE34C362847CE760097BBFA /* LoadingCatalogProductsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCatalogProductsListView.swift; sourceTree = "<group>"; };
+		2FE34C3828491CD90097BBFA /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
+		2FE34C3A284925950097BBFA /* ChangePasswordVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVM.swift; sourceTree = "<group>"; };
 		2FEFFFA72840EF7800D25F11 /* DiscontCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscontCodeView.swift; sourceTree = "<group>"; };
 		2FEFFFA92840EF8300D25F11 /* DiscontCodeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscontCodeVM.swift; sourceTree = "<group>"; };
 		2FEFFFAD284408BF00D25F11 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -479,7 +483,7 @@
 		B185F67026F4E1650003E485 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		B1A6AF4626F5112C00B560E3 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		B1B0554B26F4A76200652E72 /* SecureTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureTextFieldView.swift; sourceTree = "<group>"; };
-		B1C23576271839740067AD15 /* EmailTextFieldWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailTextFieldWrapper.swift; sourceTree = "<group>"; };
+		B1C23576271839740067AD15 /* TextFieldWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldWrapper.swift; sourceTree = "<group>"; };
 		B1C2359427185C530067AD15 /* PasswordTextFieldWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordTextFieldWrapper.swift; sourceTree = "<group>"; };
 		B1C93DE4270C9674006A1C39 /* LocalStatusBarStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStatusBarStyle.swift; sourceTree = "<group>"; };
 		B1CC0C1E27032461000238B9 /* DismissingKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissingKeyboard.swift; sourceTree = "<group>"; };
@@ -984,6 +988,8 @@
 		2F67C08F27CD4A3B00BE8518 /* CustomElements */ = {
 			isa = PBXGroup;
 			children = (
+				B1C23576271839740067AD15 /* TextFieldWrapper.swift */,
+				B1C2359427185C530067AD15 /* PasswordTextFieldWrapper.swift */,
 				2F67C09127CD4A5A00BE8518 /* CustomTextField.swift */,
 				2F67C09327CD520600BE8518 /* CustomSecureTextField.swift */,
 				2F67C09627CD580C00BE8518 /* RequestButton.swift */,
@@ -1322,6 +1328,8 @@
 			isa = PBXGroup;
 			children = (
 				84ED00E526DCF24300707D18 /* PasswordChangeView.swift */,
+				2FE34C3828491CD90097BBFA /* ChangePasswordView.swift */,
+				2FE34C3A284925950097BBFA /* ChangePasswordVM.swift */,
 			);
 			path = PasswordChangeView;
 			sourceTree = "<group>";
@@ -1427,10 +1435,8 @@
 		B1FD5AE026FB02AE00F7A77F /* Wrappers */ = {
 			isa = PBXGroup;
 			children = (
-				B1C23576271839740067AD15 /* EmailTextFieldWrapper.swift */,
 				B1FD5AE726FB3EF200F7A77F /* ImagePickerWrapper.swift */,
 				B1C93DE4270C9674006A1C39 /* LocalStatusBarStyle.swift */,
-				B1C2359427185C530067AD15 /* PasswordTextFieldWrapper.swift */,
 				B16F328E2706E9380098E87D /* PhoneTextFieldWrapper.swift */,
 				B1F3602026FCB650004FFAEC /* TextFieldResponder.swift */,
 				B1FD5AE326FB074A00F7A77F /* TextViewWrapper.swift */,
@@ -1825,7 +1831,7 @@
 				E342897326CD0DCD00F1EB6E /* UserRepository.swift in Sources */,
 				2FC63CE428186A0100A5EE18 /* PKSettingsBundleHelper.swift in Sources */,
 				2F67C08327CD441D00BE8518 /* AuthRootView.swift in Sources */,
-				B1C23577271839740067AD15 /* EmailTextFieldWrapper.swift in Sources */,
+				B1C23577271839740067AD15 /* TextFieldWrapper.swift in Sources */,
 				E39CA5F327280B4A00416A17 /* ImagePickerView.swift in Sources */,
 				2F2AA74927DB63A300AB6C57 /* EmptyCartView.swift in Sources */,
 				2F67C0B127CE265200BE8518 /* ProvidePhoneView.swift in Sources */,
@@ -1848,6 +1854,7 @@
 				2F67C0A927CD8F6100BE8518 /* ResetPasswordView.swift in Sources */,
 				2F60BA7D281049C5002B6670 /* MainTabView.swift in Sources */,
 				2F3BEDA427E0C3E900298399 /* ProductDetailedVM.swift in Sources */,
+				2FE34C3B284925950097BBFA /* ChangePasswordVM.swift in Sources */,
 				B1DD193C270DEF0A000DEA68 /* BrandRepository.swift in Sources */,
 				2F3BEDC027E36DFF00298399 /* ProductCatalogRowView.swift in Sources */,
 				2F60BA61280F8075002B6670 /* ImageUrlView.swift in Sources */,
@@ -1921,6 +1928,7 @@
 				2F60BA7F28104A0F002B6670 /* OrderViewModel.swift in Sources */,
 				4D51165C26C40CF300E5D0BF /* CarouselARView.swift in Sources */,
 				845B8CFA26D5C3C4000B3E80 /* SupportModel.swift in Sources */,
+				2FE34C3928491CD90097BBFA /* ChangePasswordView.swift in Sources */,
 				845B8D0226D6BC4B000B3E80 /* GooglePlaceRepository.swift in Sources */,
 				2FF9996428045BBE00F22BEB /* MyOrdersListVM.swift in Sources */,
 				2F57087127DEA621004751BA /* AvailabilityDeliveryView.swift in Sources */,

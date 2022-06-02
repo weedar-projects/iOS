@@ -34,7 +34,7 @@ struct ProfileMainView: View {
                     case .notification:
                         EmptyView()
                     case .changePassword:
-                        PasswordChangeView()
+                        ChangePasswordView()
                     case .contact:
                         ContactUsView()
                     case .legal:
@@ -58,7 +58,7 @@ struct ProfileMainView: View {
                         
                         NotificationButtonView()
                         
-                        .customDefaultAlert(title: "\"WEEDAR\" Would Like to \nSend You Notifications", message: "Notifications may include alerts,\nsounds and icon badges.These can be configured in Settings", isPresented: $vm.showNotificationAlert, firstBtn: Alert.Button.cancel(Text("Cancel")), secondBtn: Alert.Button.default(Text("Open Settings"), action: {
+                        .customDefaultAlert(title: "\"WEEDAR\" Would Like to \nSend You Notifications", message: "Notifications may include alerts,\nsounds and icon badges.These can be configured in Settings", isPresented: $vm.showNotificationAlert, firstBtn: Alert.Button.destructive(Text("Cancel")), secondBtn: Alert.Button.default(Text("Open Settings"), action: {
                             if let appSettings = URL(string: UIApplication.openSettingsURLString),
                                UIApplication.shared.canOpenURL(appSettings) {
                                 UIApplication.shared.open(appSettings)
@@ -69,11 +69,11 @@ struct ProfileMainView: View {
                         
                         LogOutButton()
                             .padding(.top,24)
-                            .customDefaultAlert(title: "Logout",
+                            .customDefaultAlert(title: "Log out",
                                                 message: "You will be returned to the login screen",
                                                 isPresented: $vm.showLogOutAler,
                                                 firstBtn: .default(Text("Cancel")),
-                                                secondBtn: .default(Text("Logout"),
+                                                secondBtn: .destructive(Text("Log out"),
                                                                         action: {
                                 self.logout()
                             }))
@@ -116,7 +116,7 @@ struct ProfileMainView: View {
             HStack{
                 Image("Profile-Logout")
                 
-                Text("Logout")
+                Text("Log out")
                     .textCustom(.coreSansC65Bold, 16, Color.col_pink_button)
             }
             .frame(height: 48)

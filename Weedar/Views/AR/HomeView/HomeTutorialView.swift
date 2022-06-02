@@ -47,42 +47,35 @@ struct Tutorial : View {
                         HStack {
                             Spacer()
                             
+                            ZStack{
+                                Color.gray.opacity(0.1)
+                                    .frame(width: 67, height: 32)
+                                    .cornerRadius(12)
                                 
-                           ZStack{
                                 Text("Skip")
-                                    .font(.system(size: 14))
-                                    .padding([.trailing, .leading], 12)
-                                    .padding([.bottom], 10)
-                                    .padding([.top], 12)
+                                    .textCustom(.coreSansC45Regular, 14, Color.col_text_white)
                             }
-                            .foregroundColor(.white)
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(10.0)
-                            .frame(width: 61, height: 27, alignment: .center)
+                            .padding(.top, 10)
                             .onTapGesture {
                                 stage = .hide
                             }
                             
                             
-                            
+                            ZStack{
+                                Image.bg_gradient_main
+                                    .resizable()
+                                    .frame(width: 67, height: 32)
+                                    .cornerRadius(12)
                                 
-                      ZStack{
                                 Text("Show")
-                                    .bold()
-                                    .font(.system(size: 14))
-                                    .padding([.trailing, .leading], 12)
-                                    .padding([.bottom], 10)
-                                    .padding([.top], 12)
+                                    .textCustom(.coreSansC55Medium, 14, Color.col_text_main)
                             }
-                            .foregroundColor(.black)
-//                            .background(Color.black.opacity(0.4))
-                            .background(Image.bg_gradient_main)
-                            .cornerRadius(10.0)
+                            .padding(.top, 10)
                             .onTapGesture {
                                 stage = .swipeLeftRight
                             }
                             
-//                            .frame(width: 61, height: 27, alignment: .center)
+                            
                             
                         }
                     }

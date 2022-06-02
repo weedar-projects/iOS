@@ -26,46 +26,26 @@ struct CustomSecureTextField: View {
                 .padding(.leading, 12)
                 .opacity(0.7)
             
+            
             ZStack{
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(strokeColor, lineWidth: 2)
                     .frame(height: 48)
-                //text placeholder
-                Text(placeholder)
-                    .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
-                    .opacity(0.3)
-                    .opacity(text == "" ? 1 : 0)
-                    .hLeading()
-                    .padding(.leading, 12)
-                    .frame(height: 48)
-                    .offset(y: 2)
-                    
-                
                 HStack{
-                    if showPassword{   
-                        //show Text view
-                        TextField("", text: $text, onEditingChanged: { focused in
-                            withAnimation(.easeIn.speed(4)){
-                                self.focused = focused
-                            }
-                        })
-                            .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
-                            .padding(.leading, 12)
+                    if showPassword{
+                        PasswordTextFieldWrapper(text: $text,
+                                                 isSecureTextEntry: .constant(false),
+                                                 becomeFirstResponder: .constant(false),
+                                                 placeholder: placeholder)
+                        .padding(.leading, 12)
                             
                             
                     } else {
-                        
-                        //hide Text view
-                        SecureField("", text: $text)
-                            .textDefault()
-                            .padding(.leading, 12)
-                            .onChange(of: text) { newValue in
-                                if newValue == ""{
-                                    self.focused = false
-                                }else{
-                                    self.focused = true
-                                }
-                            }
+                        PasswordTextFieldWrapper(text: $text,
+                                                 isSecureTextEntry: .constant(true),
+                                                 becomeFirstResponder: .constant(false),
+                                                 placeholder: placeholder)
+                        .padding(.leading, 12)
                     }
                     
                     Spacer()
