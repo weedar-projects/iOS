@@ -12,7 +12,7 @@ struct ProfileList: View{
     @Binding var showView: Bool
     
     @State var title = ""
-    @State var menuItems: [ProfileMenuItemModel]
+    @Binding var menuItems: [ProfileMenuItemModel]
     
     
     var body: some View{

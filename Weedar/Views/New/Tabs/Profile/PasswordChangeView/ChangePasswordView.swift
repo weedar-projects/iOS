@@ -80,7 +80,6 @@ struct ChangePasswordView: View {
                 RequestButton(state: $vm.buttonState, isDisabled: $vm.buttonIsDisable,showIcon: false ,title: "Change password") {
                     if vm.validateRepeatPassword(tapButton: true){
                         sessionManager.userData { user in
-                            print(user.id)
                             vm.updatePassword(userID: user.id) {
                                 vm.showSuccessAlert = true
                             }
@@ -94,7 +93,7 @@ struct ChangePasswordView: View {
         }
         
         .navBarSettings("Change password")
-        .customAlertOneBtn(title: "Congratulations!", message: "Your password  is successfully changed.", isPresented: $vm.showSuccessAlert, button: .default(Text("Okay"), action: {
+        .customAlertOneBtn(title: "Congratulations!", message: "Your password is successfully changed.", isPresented: $vm.showSuccessAlert, button: .default(Text("Okay"), action: {
             vm.showSuccessAlert = false
             vm.newPassword = ""
             vm.oldPassword = ""

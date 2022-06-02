@@ -23,7 +23,8 @@ class API{
     
     private var token : String?  { return KeychainService.loadPassword(serviceKey: .accessToken) }
     
-    func request(endPoint: String = "", rout: Routs = .empty,
+    func request(endPoint: String = "",
+                 rout: Routs = .empty,
                  method: HTTPMethod = .get,
                  parameters: [String: Any] = [:],
                  encoding: ParameterEncoding = URLEncoding.default,

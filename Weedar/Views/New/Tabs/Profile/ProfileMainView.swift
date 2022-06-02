@@ -19,9 +19,9 @@ struct ProfileMainView: View {
     @EnvironmentObject var coordinatorManager: CoordinatorViewManager
     @EnvironmentObject var tabBarManager: TabBarManager
     @EnvironmentObject var orderTrackerManager: OrderTrackerManager
-    
+    @EnvironmentObject var sessionManager: SessionManager
+    @StateObject var userIdentificationRootVM = UserIdentificationRootVM()
     var body: some View {
-        
         NavigationView{
             ZStack{
                 NavigationLink(isActive: $vm.showView) {
@@ -31,6 +31,11 @@ struct ProfileMainView: View {
                     case .documents:
                         DocumentCenterView()
                             .navBarSettings("Document center")
+                    case .email:
+                        ChangeEmailView()
+                    case .phone:
+                        ChangePhoneView()
+                            .navBarSettings("Change phone number")
                     case .notification:
                         EmptyView()
                     case .changePassword:
@@ -51,10 +56,9 @@ struct ProfileMainView: View {
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack{
-                        ProfileList(selectedItem: $vm.selectedItem, showView: $vm.showView,title: "My info" ,menuItems: vm.myInfoItems)
+                        ProfileList(selectedItem: $vm.selectedItem, showView: $vm.showView,title: "My info" ,menuItems: $vm.myInfoItems)
                         
-                        
-                        ProfileList(selectedItem: $vm.selectedItem, showView: $vm.showView,title: "Settings" ,menuItems: vm.settingsItems)
+                        ProfileList(selectedItem: $vm.selectedItem, showView: $vm.showView,title: "Settings" ,menuItems: $vm.settingsItems)
                         
                         NotificationButtonView()
                         
@@ -65,7 +69,7 @@ struct ProfileMainView: View {
                             }
                         }))
                         
-                        ProfileList(selectedItem: $vm.selectedItem, showView: $vm.showView,title: "App" ,menuItems: vm.appItems)
+                        ProfileList(selectedItem: $vm.selectedItem, showView: $vm.showView,title: "App" ,menuItems: $vm.appItems)
                         
                         LogOutButton()
                             .padding(.top,24)
@@ -105,6 +109,10 @@ struct ProfileMainView: View {
         .id(tabBarManager.navigationIds[2])
         .onAppear {
             vm.notificationToggle = UserDefaultsService().isNotificationsEnabled
+            sessionManager.userData{user in
+                guard let phone = user.phone else { return }
+                vm.setData(email: user.email, phone: phone)
+            }
         }
     }
     
@@ -185,8 +193,6 @@ struct ProfileMainView: View {
     }
     
     private func logout() {
-//        vm.showLoading = true
-        
         FirebaseAuthManager
             .shared
             .signOut { result in
@@ -200,7 +206,6 @@ struct ProfileMainView: View {
                         } else {
                             print("debug: token is deleted")
                             print("TOKEN WAS REMOVE")
-//                                vm.showLoading = false
                             DispatchQueue.main.async {
                                 orderTrackerManager.disconnect()
                                 if UserDefaults.standard.bool(forKey: "EnableTracking"){
@@ -210,11 +215,11 @@ struct ProfileMainView: View {
                                     UserDefaultsService().remove(key: .accessToken)
                                 }
                                 KeychainService.removePassword(serviceKey: .accessToken)
-            //
+            
                                 UserDefaultsService().set(value: false, forKey: .userVerified)
                                 UserDefaultsService().set(value: false, forKey: .userIsLogged)
                                 UserDefaultsService().set(value: true, forKey: .needToFillUserData)
-            //
+        
                                 coordinatorManager.currentRootView = .auth
                             }
                         }

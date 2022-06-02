@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F07D40C28496614005D60CC /* ChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F07D40B28496614005D60CC /* ChangeEmailView.swift */; };
+		2F07D40E2849661B005D60CC /* ChangeEmailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F07D40D2849661B005D60CC /* ChangeEmailVM.swift */; };
+		2F07D411284977C2005D60CC /* ChangePhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F07D410284977C2005D60CC /* ChangePhoneView.swift */; };
+		2F07D413284977CF005D60CC /* ChangePhoneVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F07D412284977CF005D60CC /* ChangePhoneVM.swift */; };
+		2F07D41628497A36005D60CC /* ComfirmChangePhoneVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F07D41528497A36005D60CC /* ComfirmChangePhoneVM.swift */; };
+		2F07D41828497A42005D60CC /* ComfirmChangePhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F07D41728497A42005D60CC /* ComfirmChangePhoneView.swift */; };
+		2F07D41A28497EBC005D60CC /* OTPViewChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F07D41928497EBC005D60CC /* OTPViewChange.swift */; };
 		2F2AA73F27DB57DB00AB6C57 /* CartRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2AA73E27DB57DB00AB6C57 /* CartRootView.swift */; };
 		2F2AA74127DB57E600AB6C57 /* CartRootVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2AA74027DB57E600AB6C57 /* CartRootVM.swift */; };
 		2F2AA74427DB580E00AB6C57 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2AA74327DB580E00AB6C57 /* CartView.swift */; };
@@ -280,6 +287,13 @@
 
 /* Begin PBXFileReference section */
 		2B8E4F9BA15DB60A64895A2C /* Pods-Weedar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weedar.release.xcconfig"; path = "Target Support Files/Pods-Weedar/Pods-Weedar.release.xcconfig"; sourceTree = "<group>"; };
+		2F07D40B28496614005D60CC /* ChangeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailView.swift; sourceTree = "<group>"; };
+		2F07D40D2849661B005D60CC /* ChangeEmailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailVM.swift; sourceTree = "<group>"; };
+		2F07D410284977C2005D60CC /* ChangePhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePhoneView.swift; sourceTree = "<group>"; };
+		2F07D412284977CF005D60CC /* ChangePhoneVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePhoneVM.swift; sourceTree = "<group>"; };
+		2F07D41528497A36005D60CC /* ComfirmChangePhoneVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComfirmChangePhoneVM.swift; sourceTree = "<group>"; };
+		2F07D41728497A42005D60CC /* ComfirmChangePhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComfirmChangePhoneView.swift; sourceTree = "<group>"; };
+		2F07D41928497EBC005D60CC /* OTPViewChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPViewChange.swift; sourceTree = "<group>"; };
 		2F2AA73E27DB57DB00AB6C57 /* CartRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRootView.swift; sourceTree = "<group>"; };
 		2F2AA74027DB57E600AB6C57 /* CartRootVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRootVM.swift; sourceTree = "<group>"; };
 		2F2AA74327DB580E00AB6C57 /* CartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; };
@@ -569,6 +583,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F07D40A284965FD005D60CC /* EmailChange */ = {
+			isa = PBXGroup;
+			children = (
+				2F07D40B28496614005D60CC /* ChangeEmailView.swift */,
+				2F07D40D2849661B005D60CC /* ChangeEmailVM.swift */,
+			);
+			path = EmailChange;
+			sourceTree = "<group>";
+		};
+		2F07D40F284977BA005D60CC /* PhoneChange */ = {
+			isa = PBXGroup;
+			children = (
+				2F07D41428497A2D005D60CC /* ComfirmChangePhone */,
+				2F07D410284977C2005D60CC /* ChangePhoneView.swift */,
+				2F07D412284977CF005D60CC /* ChangePhoneVM.swift */,
+			);
+			path = PhoneChange;
+			sourceTree = "<group>";
+		};
+		2F07D41428497A2D005D60CC /* ComfirmChangePhone */ = {
+			isa = PBXGroup;
+			children = (
+				2F07D41728497A42005D60CC /* ComfirmChangePhoneView.swift */,
+				2F07D41928497EBC005D60CC /* OTPViewChange.swift */,
+				2F07D41528497A36005D60CC /* ComfirmChangePhoneVM.swift */,
+			);
+			path = ComfirmChangePhone;
+			sourceTree = "<group>";
+		};
 		2F2AA74227DB57F900AB6C57 /* CartView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1069,6 +1112,8 @@
 		2FCF7F2127F4460B00DD425A /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				2F07D40F284977BA005D60CC /* PhoneChange */,
+				2F07D40A284965FD005D60CC /* EmailChange */,
 				84ED00E426DCF23100707D18 /* PasswordChangeView */,
 				2FF9996F28061D2F00F22BEB /* Contact us */,
 				2FF999682804B6FA00F22BEB /* DocumentCenter */,
@@ -1891,6 +1936,7 @@
 				B129D46026F22800004B7E00 /* Date+Extensions.swift in Sources */,
 				2FE21E3127FB9E89004B0057 /* FiltersView.swift in Sources */,
 				E336135C26C6AD1B00CC1585 /* Array+Extensions.swift in Sources */,
+				2F07D411284977C2005D60CC /* ChangePhoneView.swift in Sources */,
 				2F67C09427CD520600BE8518 /* CustomSecureTextField.swift in Sources */,
 				2F57087927DF4985004751BA /* ProductCompactRow.swift in Sources */,
 				B1FD5AE826FB3EF300F7A77F /* ImagePickerWrapper.swift in Sources */,
@@ -1908,6 +1954,7 @@
 				2F8B4FAE27DB9B6B006662D2 /* OrderCalculationsList.swift in Sources */,
 				2F67C09C27CD684F00BE8518 /* RegisterView.swift in Sources */,
 				2F43C382283FF2DC00606C88 /* OnboardingView.swift in Sources */,
+				2F07D41A28497EBC005D60CC /* OTPViewChange.swift in Sources */,
 				B1C2359527185C530067AD15 /* PasswordTextFieldWrapper.swift in Sources */,
 				2F4252DA27D8C3AE00DE2041 /* ComfirmPhoneVM.swift in Sources */,
 				2F3BEDAF27E27EC600298399 /* CustomTabBarView.swift in Sources */,
@@ -1949,6 +1996,9 @@
 				E350D9FB26B99E6C007B5265 /* ColorManager.swift in Sources */,
 				E3FBC64026C32A6E004402ED /* KeychainService.swift in Sources */,
 				E31D4FA926F0F5F400FA4AB2 /* TypeResponseModel.swift in Sources */,
+				2F07D413284977CF005D60CC /* ChangePhoneVM.swift in Sources */,
+				2F07D41628497A36005D60CC /* ComfirmChangePhoneVM.swift in Sources */,
+				2F07D40C28496614005D60CC /* ChangeEmailView.swift in Sources */,
 				81F835A92739B47800E2553F /* LineLoaderView.swift in Sources */,
 				4B1E54CF27A045BE008C0188 /* Amplitude+Extensions.swift in Sources */,
 				81F835A72739AEFE00E2553F /* LineDelayedView.swift in Sources */,
@@ -1998,8 +2048,10 @@
 				2F57088527DF4BA9004751BA /* OrderSuccessView.swift in Sources */,
 				8458BC0726FDECF500E1EDC5 /* ColorExtension.swift in Sources */,
 				2F3BEDB127E27EE000298399 /* TabBarManager.swift in Sources */,
+				2F07D41828497A42005D60CC /* ComfirmChangePhoneView.swift in Sources */,
 				2F60BA6B280F8348002B6670 /* OTPView.swift in Sources */,
 				E342897A26CD504A00F1EB6E /* UserDefaultsService.swift in Sources */,
+				2F07D40E2849661B005D60CC /* ChangeEmailVM.swift in Sources */,
 				2F60BA45280F7DB9002B6670 /* ZoomableOverlay.swift in Sources */,
 				2FCEFF0C2817683700D00AEE /* MainView.swift in Sources */,
 				8458BC0926FDED1900E1EDC5 /* TextExtension.swift in Sources */,

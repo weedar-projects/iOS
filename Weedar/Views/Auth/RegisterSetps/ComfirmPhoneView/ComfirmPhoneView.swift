@@ -21,7 +21,6 @@ struct ComfirmPhoneView: View {
     
     var body: some View{
         VStack{
-            
         //title
         Text("Verify your number")
           .lineSpacing(2.8)
