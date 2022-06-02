@@ -26,11 +26,19 @@ class AuthRootVM: ObservableObject {
             if currentPage == .registration{
                 emailTFState = email.isEmailValid ? .success : .def
             }
+            
+            validateLoginPageButton()
         }
     }
     @Published var emailTFState: TextFieldState = .def
    
-    @Published var password: String = ""
+    @Published var password: String = ""{
+        didSet{
+           validateLoginPageButton()
+        }
+    }
+    
+    
     @Published var passwordTFState: TextFieldState = .def
     
     @Published var nextButtonIsDisabled = true
@@ -72,6 +80,15 @@ class AuthRootVM: ObservableObject {
         showOnboarding = UserDefaultsService().get(fromKey: .showOnboarding) as? Bool ?? true
     }
     
+    
+    func validateLoginPageButton(){
+        if currentPage == .login && password.count > 0 && email.count > 0{
+            nextButtonIsDisabled = false
+        }else{
+            nextButtonIsDisabled = true
+        }
+    }
+    
     func validatePassword(_ password: String) {
         var errors = [PasswordError]()
         
@@ -95,7 +112,8 @@ class AuthRootVM: ObservableObject {
         }
         self.errors = errors
        
-        if errors.isEmpty && !email.isEmpty{
+        
+        if errors.isEmpty && !email.isEmpty && currentPage == .registration{
             nextButtonIsDisabled = false
         }else{
             nextButtonIsDisabled = true

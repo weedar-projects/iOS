@@ -76,7 +76,7 @@ struct Tutorial : View {
                             }
                             .foregroundColor(.black)
 //                            .background(Color.black.opacity(0.4))
-                            .background(ColorManager.Buttons.buttonActiveColor)
+                            .background(Image.bg_gradient_main)
                             .cornerRadius(10.0)
                             .onTapGesture {
                                 stage = .swipeLeftRight

@@ -30,6 +30,8 @@ class UserDefaultsService {
         case userIsLogged = "userIsLogged"
         case needToFillUserData = "needToFillUserData"
         case showOnboarding = "showOnboarding"
+        case animDoc = "animDoc"
+        
         
         // Delivery details
         case userFullName = "userFullName"

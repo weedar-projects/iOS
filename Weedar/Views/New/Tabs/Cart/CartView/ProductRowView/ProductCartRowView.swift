@@ -21,7 +21,6 @@ struct ProductCartRowView: View {
     
     var body: some View{
         ZStack{
-            //delete button
             ZStack {
                 RadialGradient(colors: [Color.col_gradient_pink_second,
                                         Color.col_gradient_pink_first],
@@ -30,29 +29,20 @@ struct ProductCartRowView: View {
                                endRadius: 150)
                 
                 Image.icon_trash
-                    .colorMultiply(Color.col_pink_button)       
+                    .colorMultiply(Color.col_pink_button)
             }
             .frame(width: 56, height: vm.itemViewHeight, alignment: .center)
-
             .cornerRadius(12)
             .hTrailing()
             .onTapGesture {
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                Amplitude.instance().logEvent("delete_product", withEventProperties: ["category" : item.type.name,
-                                                                                        "product_id" : item.id,
-                                                                                        "product_price" : item.price.formattedString(format: .percent)])
-                }
-                
                 cartManager.productQuantityInCart(productId: item.id, quantity: .removeAll)
+                if UserDefaults.standard.bool(forKey: "EnableTracking"){
+                    Amplitude.instance().logEvent("delete_product", withEventProperties: ["category" : item.type.name,
+                                                                                          "product_id" : item.id,
+                                                                                          "product_price" : item.price.formattedString(format: .percent)])
+                }
             }
-            
-//            Button {
-//                vm.startAnimation
-//            } label: {
-//                <#code#>
-//            }
 
-            
             HStack(spacing: 0){
                 //Item Image
                 WebImage(url: URL(string: "\(BaseRepository().baseURL)/img/" + item.imageLink))
@@ -155,7 +145,7 @@ struct ProductCartRowView: View {
             .background(Color.col_white.cornerRadius(12).padding(.trailing, -5))
             .offset(x: vm.offset)
             .gesture(DragGesture().onChanged(vm.onChanged(value:)).onEnded(vm.onEnd(value:)))
-            .onUIKitAppear {
+            .onAppear {
                 if needToAnim && UserDefaultsService().get(fromKey: .animCart) as? Bool ?? true{
                    DispatchQueue.main.asyncAfter(deadline: .now()+1) {
                         animView(start: true)

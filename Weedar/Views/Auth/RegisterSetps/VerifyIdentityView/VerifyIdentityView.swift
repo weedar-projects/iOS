@@ -160,7 +160,7 @@ struct VerifyIdentityView: View {
             .padding(.leading, 36)
             .padding(.top, 24)
         
-        LoadPhotoView(value: $vm.idUploadProgress, selectedImage: $vm.idImage, showLoader: $vm.idImageChanged) {
+        LoadPhotoView(value: $vm.idUploadProgress, selectedImage: $vm.idImage, showLoader: $vm.idImageChanged, needToAnim: true) {
             vm.selectedPhoto = .id
             vm.isActionSheetShow.toggle()
         } trashAction: {
@@ -218,6 +218,7 @@ struct LoadPhotoView: View {
     @State private var minHeight: CGFloat = 106
     @State private var maxHeight: CGFloat = 256
     
+    @State var needToAnim = true
     @State var offset: CGFloat = 0
     @State var isSwiped: Bool = false
     
@@ -237,7 +238,7 @@ struct LoadPhotoView: View {
                 Image.icon_trash
                     .colorMultiply(Color.col_pink_button)
             }
-            .frame(width: 54, height: selectedImage == nil ? 0 : maxHeight, alignment: .center)
+            .frame(width: 54, height: selectedImage == nil ? minHeight : maxHeight, alignment: .center)
             .cornerRadius(12)
             .hTrailing()
             .onTapGesture {
@@ -302,7 +303,32 @@ struct LoadPhotoView: View {
             }
             
         }
+        .onAppear {
+            print(UserDefaultsService().get(fromKey: .animDoc) as? Bool ?? true)
+            if needToAnim && UserDefaultsService().get(fromKey: .animDoc) as? Bool ?? true{
+               DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                    animView(start: true)
+                    DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                        animView(start: false)
+                        UserDefaultsService().set(value: false, forKey: .animDoc)
+                    }
+                }
+            }
+        }
     }
+    
+    func animView(start: Bool){
+        if start{
+            withAnimation(.easeInOut(duration: 0.5)) {
+                offset = -80
+            }
+        }else{
+            withAnimation(.easeInOut(duration: 0.5)) {
+                offset = 0
+            }
+        }
+    }
+
     
     //swipe gesture
     func onChanged(value: DragGesture.Value){

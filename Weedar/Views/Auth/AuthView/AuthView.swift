@@ -12,8 +12,6 @@ struct AuthView: View, KeyboardReadable {
     @StateObject var rootVM: AuthRootVM
     
     @State var isKeyboardShow: Bool = false
-    @State var menuTag = 0
-    
     
     var body: some View {
         ZStack{
@@ -87,13 +85,11 @@ struct AuthView: View, KeyboardReadable {
         }
         .onChange(of: rootVM.email, perform: { newValue in
             if rootVM.currentPage == .registration{
-            if !newValue.isEmpty && rootVM.errors.isEmpty && !rootVM.password.isEmpty{
-                rootVM.nextButtonIsDisabled = false
-            }else{
-                rootVM.nextButtonIsDisabled = true
-            }
-            }else{
-                rootVM.nextButtonIsDisabled = false
+                if !newValue.isEmpty && rootVM.errors.isEmpty && !rootVM.password.isEmpty{
+                    rootVM.nextButtonIsDisabled = false
+                }else{
+                    rootVM.nextButtonIsDisabled = true
+                }
             }
         })
         .onReceive(keyboardPublisher) { newIsKeyboardVisible in
@@ -144,9 +140,7 @@ struct AuthView: View, KeyboardReadable {
                     .onTapGesture {
                         withAnimation {
                             rootVM.currentPage = .login
-                            rootVM.nextButtonIsDisabled = false
                         }
-                        
                     }
             }
         }

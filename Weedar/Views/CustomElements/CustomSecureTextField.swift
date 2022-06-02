@@ -27,6 +27,9 @@ struct CustomSecureTextField: View {
                 .opacity(0.7)
             
             ZStack{
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(strokeColor, lineWidth: 2)
+                    .frame(height: 48)
                 //text placeholder
                 Text(placeholder)
                     .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
@@ -36,10 +39,10 @@ struct CustomSecureTextField: View {
                     .padding(.leading, 12)
                     .frame(height: 48)
                     .offset(y: 2)
+                    
                 
                 HStack{
-                    if showPassword{
-                        
+                    if showPassword{   
                         //show Text view
                         TextField("", text: $text, onEditingChanged: { focused in
                             withAnimation(.easeIn.speed(4)){
@@ -48,13 +51,13 @@ struct CustomSecureTextField: View {
                         })
                             .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
                             .padding(.leading, 12)
-                            .offset(y: 2)
+                            
                             
                     } else {
                         
                         //hide Text view
                         SecureField("", text: $text)
-                            .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
+                            .textDefault()
                             .padding(.leading, 12)
                             .onChange(of: text) { newValue in
                                 if newValue == ""{
@@ -63,7 +66,6 @@ struct CustomSecureTextField: View {
                                     self.focused = true
                                 }
                             }
-                            .offset(y: -2)
                     }
                     
                     Spacer()
@@ -80,13 +82,6 @@ struct CustomSecureTextField: View {
                 }
             }
             .frame(height: 48)
-            .overlay(
-                //color
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(strokeColor, lineWidth: 2)
-                    .frame(height: 48)
-                
-            )
         }
         .padding(.horizontal, 24)
         .onChange(of: state) { newValue in

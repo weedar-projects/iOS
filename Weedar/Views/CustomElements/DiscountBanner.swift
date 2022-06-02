@@ -92,6 +92,7 @@ struct DiscountBanner: View {
                 switch res{
                 case .success(_):
                     print("success bunner")
+                    self.sessionManager.userData(withUpdate: true)
                 case .failure(_):
                     print("error bunner")
                 }
