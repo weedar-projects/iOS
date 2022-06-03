@@ -30,6 +30,8 @@ class CatalogProductsListVM: ObservableObject {
     // filters settings
     @Published var filters: CatalogFilters = CatalogFilters()
     
+    @Published var canReset = false
+    
     @Published var categoryId: Int = 0{
         didSet{
             if lastCategory != categoryId{

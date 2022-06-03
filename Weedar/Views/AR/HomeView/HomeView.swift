@@ -100,12 +100,14 @@ struct HomeView: View {
                 .onDisappear() {
                     self.appear = false
                     carousel.pauseScene()
+                    tabbarManager.showTracker()
                 }
                 .onUIKitAppear {
                     carousel.showDescriptionCard()
                     statusBarStyle.currentStyle = .darkContent
                     //                tabbarManager.isCurrentOrderViewExtended = false
                     carousel.resumeScene()
+                    tabbarManager.hideTracker()
                     self.appear = true
                     withAnimation(Animation.spring().delay(0.5)) {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {

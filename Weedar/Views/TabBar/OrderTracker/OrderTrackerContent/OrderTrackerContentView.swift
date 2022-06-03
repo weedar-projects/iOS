@@ -147,7 +147,7 @@ struct OrderTrackerContentView: View {
         })
         .alert(isPresented: $vm.showCancelAlert, content: {
           Alert(title: Text("Cancel order?"),
-                message: Text("Are you sure?"),
+                message: Text("Do you confirm you want to cancel this order?"),
                 primaryButton: .default(Text("Close")),
                 secondaryButton: .destructive(Text("Cancel"),
                                               action: {

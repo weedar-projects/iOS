@@ -35,14 +35,32 @@ struct CatalogCategoryModel: Hashable {
         return ColorManager.Catalog.Category.vapeColor
     }
     
-    private let colors = [ColorManager.Catalog.Category.vapeColor,
-                          ColorManager.Catalog.Category.flowerColor,
-                          ColorManager.Catalog.Category.concentrateColor,
-                          ColorManager.Catalog.Category.edibleColor,
-                          ColorManager.Catalog.Category.tinctureColor,
-                          ColorManager.Catalog.Category.plantsColor,
-                          ColorManager.Catalog.Category.seedsColor,
-                          ColorManager.Catalog.Category.prerollColor]
+    var background: String {
+        if backgrounds.indices.contains(id - 1) {
+            return backgrounds[id - 1]
+        }
+        return ""
+    }
+    
+    private let colors = [ColorManager.Catalog.Category.vapeColor, //vapeColor
+                          Color.col_gradient_blue_first, //flowerColor
+                          Color.col_gradient_pink_first, //concentrateColor
+                          ColorManager.Catalog.Category.edibleColor, //edibleColor
+                          ColorManager.Catalog.Category.tinctureColor, //tinctureColor
+                          ColorManager.Catalog.Category.plantsColor, //plantsColor
+                          ColorManager.Catalog.Category.seedsColor, //seedsColor
+                          ColorManager.Catalog.Category.prerollColor //prerollColor
+    ]
+    
+    private let backgrounds = ["", //vapeColor
+                               "Flower", //flowerColor
+                               "", //concentrateColor
+                               "", //edibleColor
+                               "", //tinctureColor
+                               "", //plantsColor
+                               "", //seedsColor
+                               "Preroll" //prerollColor
+    ]
     
     private let emojies = ["😤", "🥀", "🍯", "🍭", "🥃", "🌴", "🌱", "🚬"]
     

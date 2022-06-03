@@ -41,7 +41,7 @@ struct MainView: View {
                     
                     OrderTrackerView(detailScrollValue: $tabBarManager.detailScrollValue)
                         .offset(y: tabBarManager.showOrderTracker ? 0 : tabBarManager.tabBarHeight + getSafeArea().bottom + 50)
-                        .opacity(tabBarManager.showARView ? 0 : 1)
+                        .opacity(tabBarManager.showOrderTracker ? 1 : 0)
                     
                     if tabBarManager.showOrderTracker{
                         Rectangle()

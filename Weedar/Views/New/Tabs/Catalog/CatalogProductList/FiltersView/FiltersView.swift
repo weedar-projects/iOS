@@ -75,11 +75,16 @@ struct FiltersView: View {
                     .cornerRadius(12)
                 }
                 .onTapGesture {
-                    rootVM.getProducts(categoryId: rootVM.categoryId, filters: CatalogFilters())
-                    rootVM.filters = CatalogFilters()
+                    if rootVM.canReset{
+                        rootVM.getProducts(categoryId: rootVM.categoryId, filters: CatalogFilters())
+                        rootVM.canReset = false
+                    }
+                    
                     withAnimation {
+                        rootVM.filters = CatalogFilters()
                         rootVM.showFilterView = false
                     }
+                    
                 }
                 .padding(.horizontal,24)
                 .padding(.top, 24)
@@ -87,6 +92,7 @@ struct FiltersView: View {
                 //comfirm button
                 MainButton(title: "Confirm", icon: "checkmark", iconSize: 14) {
                     rootVM.getProducts(categoryId: rootVM.categoryId, filters: rootVM.filters)
+                    rootVM.canReset = true
                     if UserDefaults.standard.bool(forKey: "EnableTracking"){
                     Amplitude.instance().logEvent("filters_apply", withEventProperties: ["category" : rootVM.categoryId,
                                                                                          "price_range" : "\(rootVM.filters.priceFrom?.formattedString(format: .percent)) - \(rootVM.filters.priceTo?.formattedString(format: .percent))",

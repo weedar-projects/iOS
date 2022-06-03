@@ -105,21 +105,24 @@ struct OrderDeliveryView: View {
                     
                     if showDelivery, vm.address != "", vm.placesCount != 0{
                     ScrollView(.vertical, showsIndicators: true, content: {
-                        ForEach(vm.places?.predictions ?? [], id: \.self) { item in
-                            VStack(alignment: .leading){
-                                Text("\(item.predictionDescription)")
-                                    .foregroundColor(.black)
-                                    .onTapGesture {
-                                        vm.selectionPlace = nil
-                                        vm.address = ""
-                                        vm.addressIsEditing = false
-                                        vm.selectionPlace = item
-                                        UIApplication.shared.endEditing()
-                                    }
-                                Divider()
+                        if let predictions = vm.places?.predictions{
+                            ForEach(predictions, id: \.self) { item in
+                                VStack(alignment: .leading){
+                                    Text("\(item.predictionDescription)")
+                                        .foregroundColor(.black)
+                                        .onTapGesture {
+                                            vm.selectionPlace = nil
+                                            vm.address = ""
+                                            vm.addressIsEditing = false
+                                            vm.selectionPlace = item
+                                            UIApplication.shared.endEditing()
+                                        }
+                                    Divider()
+                                }
+                                .padding(.horizontal, 36)
                             }
-                            .padding(.horizontal, 36)
                         }
+                        
                     })
                         .frame(height: getRect().height / 4, alignment: .top)
                         .animation(.linear(duration: 0.35))

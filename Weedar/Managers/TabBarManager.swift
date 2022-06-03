@@ -35,12 +35,19 @@ class TabBarManager: ObservableObject {
     
     @Published var isHidden = false
     
+    @Published var orderTrackerHidePage = false
+    
     @Published var showDiscountAlert = true
     
     @Published var navigationIds = [UUID().uuidString, UUID().uuidString,UUID().uuidString]
     
     //Order tracker
-    @Published var showOrderTracker = false
+    @Published var showOrderTracker = false{
+        didSet{
+            print("ORDER SHOWWWW: \(showOrderTracker)")
+        }
+    }
+    
     @Published var showOrderDetailView = false
     @Published var detailScrollValue: CGFloat = 0
     @Published var avaibleOrdersCount = 0
@@ -88,7 +95,7 @@ class TabBarManager: ObservableObject {
     }
     
     func showTracker() {
-        if avaibleOrdersCount > 0{
+        if avaibleOrdersCount > 0 && !orderTrackerHidePage{
             withAnimation(.linear.speed(1)) {
                 showOrderTracker = true
                 

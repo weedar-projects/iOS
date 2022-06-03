@@ -62,16 +62,16 @@ struct LoginView: View {
                         UserDefaultsService().set(value: true, forKey: .needToFillUserData)
                         UserDefaultsService().set(value: true, forKey: .userIsLogged)
                         cartManager.getCart()
-                        
+                        orderTrackerManager.connect()
                     }else{
                         UserDefaultsService().set(value: true, forKey: .userIsLogged)
                         sessionManager.userIsLogged = true
-                        orderTrackerManager.connect()
                         sessionManager.needToFillUserData = false
                         UserDefaultsService().set(value: false, forKey: .needToFillUserData)
                         coordinatorViewManager.currentRootView = .main
                         tabBarManager.currentTab = .catalog
                         cartManager.getCart()
+                        orderTrackerManager.connect()
                     }
   
                 }

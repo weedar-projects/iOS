@@ -16,6 +16,7 @@ struct RegisterView: View {
     @EnvironmentObject var tabBarManager: TabBarManager
     @EnvironmentObject var sessionManager: SessionManager
     @EnvironmentObject var cartManager: CartManager
+    @EnvironmentObject var orderTrackerManager: OrderTrackerManager
     
     var body: some View {
         VStack{
@@ -81,7 +82,9 @@ struct RegisterView: View {
                             UserDefaultsService().set(value: true, forKey: .needToFillUserData)
                             UserDefaultsService().set(value: true, forKey: .userIsLogged)
                             cartManager.getCart()
+                            
                         }
+                        orderTrackerManager.connect()
                     }
                 }
             }

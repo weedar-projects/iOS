@@ -127,6 +127,9 @@ struct CatalogProductsListView: View {
         })
         .navBarSettings(category.name)
         .onUIKitAppear {
+            
+            tabBarManager.orderTrackerHidePage = false
+            
             tabBarManager.showTracker()
             tabBarManager.show()
         }

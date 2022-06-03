@@ -16,6 +16,10 @@ struct Places: Codable {
             return lhs.placeID == rhs.placeID
         }
         
+        func hash(into hasher: inout Hasher) {
+               hasher.combine(placeID)
+           }
+        
         let predictionDescription: String
         let placeID, reference: String
         let structuredFormatting: StructuredFormatting

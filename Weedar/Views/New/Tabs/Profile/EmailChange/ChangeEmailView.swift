@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ChangeEmailView: View {
     
+    var needToUpdateEmail: ()-> Void
+    
     @StateObject var vm = ChangeEmailVM()
     @EnvironmentObject var sessionManager: SessionManager
     
@@ -44,6 +46,7 @@ struct ChangeEmailView: View {
                             sessionManager.userData(withUpdate: true) { user in
                                 self.vm.user = user
                                 self.vm.showSuccessAlert = true
+                                needToUpdateEmail()
                             }
                         }
                     }

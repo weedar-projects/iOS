@@ -10,6 +10,7 @@ import SwiftUI
 struct AuthRootView: View, KeyboardReadable {
     
     @ObservedObject var vm = AuthRootVM()
+    @EnvironmentObject var orderTrackerManager: OrderTrackerManager
         
     var body: some View {
         ZStack{
@@ -21,6 +22,9 @@ struct AuthRootView: View, KeyboardReadable {
                 })
             }else{
                 AuthView(rootVM: vm)
+                    .onAppear(){
+                        orderTrackerManager.disconnect()
+                    }
             }
 
         }

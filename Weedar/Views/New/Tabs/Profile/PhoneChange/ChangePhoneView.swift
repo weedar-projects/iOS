@@ -12,8 +12,8 @@ struct ChangePhoneView: View {
     var needToUpdatePhone: ()-> Void
     
     @StateObject var vm = ChangePhoneVM()
+    
     @EnvironmentObject var sessionManager: SessionManager
-    @Environment(\.presentationMode) var mode 
     
     var body: some View {
         ZStack{

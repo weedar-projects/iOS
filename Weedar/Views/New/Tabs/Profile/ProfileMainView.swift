@@ -32,13 +32,12 @@ struct ProfileMainView: View {
                         DocumentCenterView()
                             .navBarSettings("Document center")
                     case .email:
-                        ChangeEmailView()
+                        ChangeEmailView(){
+                            updateDataPhoneEmail()
+                        }
                     case .phone:
                         ChangePhoneView(){
-                            sessionManager.userData{user in
-                                guard let phone = user.phone else { return }
-                                vm.setData(email: user.email, phone: phone)
-                            }
+                            updateDataPhoneEmail()
                         }
                         .navBarSettings("Change phone \nnumber")
                     case .notification:
@@ -115,17 +114,12 @@ struct ProfileMainView: View {
         .id(tabBarManager.navigationIds[2])
         .onAppear {
             vm.notificationToggle = UserDefaultsService().isNotificationsEnabled
-            sessionManager.userData{user in
-                guard let phone = user.phone else { return }
-                vm.setData(email: user.email, phone: phone)
-            }
+            updateDataPhoneEmail()
         }
     }
     
     @ViewBuilder
     func LogOutButton() -> some View {
-        
-            
         ZStack{
             HStack{
                 Image("Profile-Logout")
@@ -221,11 +215,10 @@ struct ProfileMainView: View {
                                     UserDefaultsService().remove(key: .accessToken)
                                 }
                                 KeychainService.removePassword(serviceKey: .accessToken)
-            
+                                sessionManager.userIsLogged = false
                                 UserDefaultsService().set(value: false, forKey: .userVerified)
                                 UserDefaultsService().set(value: false, forKey: .userIsLogged)
                                 UserDefaultsService().set(value: true, forKey: .needToFillUserData)
-        
                                 coordinatorManager.currentRootView = .auth
                             }
                         }
@@ -236,8 +229,13 @@ struct ProfileMainView: View {
                     Logger.log(message: error.localizedDescription, event: .error)
                 }
             }
-        
-        
+    }
+    
+    private func updateDataPhoneEmail(){
+        sessionManager.userData{user in
+            guard let phone = user.phone else { return }
+            vm.setData(email: user.email, phone: phone)
+        }
     }
 }
 

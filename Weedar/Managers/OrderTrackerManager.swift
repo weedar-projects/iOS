@@ -98,7 +98,6 @@ class OrderTrackerManager: ObservableObject, WebSocketDelegate{
         if !isConnected{
             guard let token = self.token else { return }
             var request = URLRequest(url: URL(string: PKSettingsBundleHelper.shared.currentEnvironment.baseUrl.appending("/websocket"))!)
-            //        request.timeoutInterval = 5 // Sets the timeout for the connection
             request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             
             socket = WebSocket(request: request)

@@ -26,7 +26,7 @@ struct ProductDetailedView: View {
                         tabBarManager.show()
                     }
                     .onDisappear {
-//                        tabBarManager.hide()
+                        tabBarManager.showTracker()
                     }
             } label: {
                 EmptyView()
@@ -99,12 +99,19 @@ struct ProductDetailedView: View {
         }
         .onAppear{
             //add information values
+            tabBarManager.orderTrackerHidePage = true
             vm.productContentInfo.removeAll()
             vm.addProductContntInfo(title: "THC", value: product.thc, textColor: Color.col_pink_main, bgColor1: Color.col_gradient_pink_first, bgColor2: Color.col_gradient_pink_second)
             vm.addProductContntInfo(title: "CBD", value: product.cbd, textColor: Color.col_blue_main, bgColor1: Color.col_gradient_blue_first, bgColor2: Color.col_gradient_blue_second)
             vm.addProductContntInfo(title: "Canabioids", value: product.totalCannabinoids, textColor: Color.col_green_main, bgColor1: Color.col_gradient_green_first, bgColor2: Color.col_gradient_green_second)
         }
         .navBarSettings(backBtnIsHidden: vm.showImageFullScreen)
+        .onDisappear(){
+            tabBarManager.orderTrackerHidePage = false
+            if !vm.showAR{
+            tabBarManager.showTracker()
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -189,9 +196,10 @@ struct ProductDetailedView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(height: 13)
+                            .colorMultiply(Color.col_black)
                         
                         Text("Lab test")
-                            .textCustom(.coreSansC65Bold, 12,product.labTestLink?.isEmpty ?? true ? Color.col_black : Color.col_green_main)
+                            .textCustom(.coreSansC65Bold, 12,product.labTestLink?.isEmpty ?? true ? Color.col_black : Color.col_text_main)
                     }
                     .padding(.vertical, 6)
                     .padding(.horizontal, 12)
