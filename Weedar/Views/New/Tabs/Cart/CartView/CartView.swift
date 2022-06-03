@@ -61,14 +61,6 @@ struct CartView: View {
                             .padding(.top, 24)
                             .padding(.horizontal, 24)
                     
-                    if let data = cartManager.cartData, !data.priceCorresponds{
-                        //Minimum price info
-                        Text("Minimum order amount is $50.")
-                            .hLeading()
-                            .textSecond()
-                            .padding([.horizontal, .top], 24)
-                    }
-                    
                     //create order button
                     
                     if let cartData = cartManager.cartData{
@@ -85,7 +77,7 @@ struct CartView: View {
                             }
                         }
                     }
-                    .padding(.top, 24)
+                    .padding(.top, 32)
                     .padding(.horizontal, 24)
                     .padding(.bottom, 50)
                     .padding(.bottom, tabBarManager.showOrderTracker ? 95 : isSmallIPhone() ? 35 : 25)

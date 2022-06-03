@@ -31,6 +31,7 @@ class DiscontCodeVM: ObservableObject {
             case .success(let json):
                 let data = CartModel(json: json)
                 self.buttonState = .success
+                self.codeTFState = .success
                 success(data)
                 
             case .failure(let error):

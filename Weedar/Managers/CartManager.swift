@@ -184,6 +184,7 @@ struct CartModel{
     var deliverySum: Double
     var totalSum: Double
     var totalWeight: Double
+    var productsSum: Double
     var discount: DiscountModel
     var priceCorresponds: Bool
     var cartDetails: [CartDetails]
@@ -193,6 +194,7 @@ struct CartModel{
         self.deliverySum = json["deliverySum"].doubleValue
         self.totalSum = json["totalSum"].doubleValue
         self.totalWeight = json["totalWeight"].doubleValue
+        self.productsSum = json["productsSum"].doubleValue
         self.discount = DiscountModel(json: json["discount"])
         self.cartDetails = json["cartDetails"].arrayValue.map({CartDetails(json: $0)})
         self.priceCorresponds = json["priceCorresponds"].boolValue
