@@ -42,6 +42,7 @@ struct CustomTextField: View {
                         .stroke(strokeColor, lineWidth: 2)
                         .frame(height: 48)     
                 )
+            
         }
         .padding(.horizontal, 24)
         .onChange(of: state) { newValue in

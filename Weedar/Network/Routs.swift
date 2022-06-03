@@ -42,4 +42,5 @@ enum Routs: String {
     
     case cart = "/cart"
 
+    case resetPassword = "/user/resetPassword"
 }

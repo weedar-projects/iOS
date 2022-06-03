@@ -74,13 +74,11 @@ struct TextFieldWrapper: UIViewRepresentable {
         let uiView = textField
         uiView.delegate = context.coordinator
         uiView.placeholder = placeholder
-        uiView.tag = 0
         uiView.autocapitalizationType = .none
         uiView.setContentHuggingPriority(.defaultHigh, for: .vertical)
         uiView.setContentHuggingPriority(.defaultLow, for: .horizontal)
         uiView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         uiView.minimumFontSize = 16
-        PasswordTextFieldWrapper.tagIndex = 1
         uiView.keyboardType = keyboardType
         uiView.autocorrectionType = .no
         if let contentType = contentType {

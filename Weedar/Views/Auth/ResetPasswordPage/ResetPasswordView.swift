@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct ResetPasswordView: View {
+    
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var vm = ResetPasswordVM()
+    @StateObject var vm = ResetPasswordVM()
+    
     var body: some View {
         ZStack{
             //bg color
@@ -30,34 +32,33 @@ struct ResetPasswordView: View {
             VStack{
                 //Title
                 Text("resetpasswordview.reset_password_reset_password".localized)
-                    .lineLimit(0)
-                    .lineSpacing(12)
                     .modifier(TextModifier(font: .coreSansC65Bold, size: 32, foregroundColor: .lightOnSurfaceB, opacity: 1))
                     .padding(.top, 60)
                     .padding(.leading, 24)
                     .hLeading()
                 
                 //Email Textfield
-                CustomTextField(text: $vm.email, state: $vm.emailTFState, title: "resetpasswordview.reset_password_email".localized, placeholder: "resetpasswordview.reset_password_email_placeholder".localized)
+                CustomTextField(text: $vm.email,
+                                state: $vm.emailTFState,
+                                title: "resetpasswordview.reset_password_email".localized,
+                                placeholder: "resetpasswordview.reset_password_email_placeholder".localized,
+                                keyboardType: .emailAddress,
+                                contentType: .emailAddress)
                     .hLeading()
                     .padding(.top, 24)
-                    .onChange(of: vm.email) { newValue in
-                        if !newValue.isEmpty && newValue.isEmailValid{
-                            vm.buttonDisabled = false
-                        }else{
-                            vm.buttonDisabled = true
-                        }
+                    .onTapGesture {
+                        vm.errorAPI = nil
                     }
                 
                 //Error message
-                if vm.showError{
-                    Text("resetpasswordview.reset_password_error".localized)
-                        .lineSpacing(2.4)
+                if let messadge = vm.errorAPI?.message{
+                    Text(messadge)
                         .padding([.top, .leading], 8)
-                        .modifier(TextModifier(font: .coreSansC45Regular, size: 12, foregroundColor: Color.col_pink_main, opacity: 1))
+                        .modifier(TextModifier(font: .coreSansC45Regular, size: 14, foregroundColor: Color.col_pink_main, opacity: 1))
                         .hLeading()
                         .padding(.horizontal, 24)
                 }
+                
                 //Reset password Button
                 RequestButton(state: $vm.buttonState, isDisabled: $vm.buttonDisabled, title: "resetpasswordview.reset_password_reset_password".localized) {
                     vm.resetPassword()
