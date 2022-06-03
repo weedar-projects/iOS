@@ -42,7 +42,6 @@ struct ChangePhoneView: View {
                         }
                     }
                 
-                
                 // Phone number titlte
                 Text("New phone number")
                     .textCustom(.coreSansC45Regular, 14, Color.col_text_second)

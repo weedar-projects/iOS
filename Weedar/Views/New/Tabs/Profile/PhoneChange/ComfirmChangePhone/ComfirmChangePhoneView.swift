@@ -41,7 +41,7 @@ struct ComfirmChangePhoneView: View {
                 Text(vm.errorMessage)
                     .textCustom(.coreSansC45Regular, 12, Color.col_pink_main)
                     .hLeading()
-                    .padding(.horizontal, 14)
+                    .padding(.horizontal, 36)
                     .padding(.top, 6)
             }
             

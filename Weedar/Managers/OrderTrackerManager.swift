@@ -105,6 +105,7 @@ class OrderTrackerManager: ObservableObject, WebSocketDelegate{
             socket?.connect()
             isConnected = true
             update()
+            print("HEADER: \(request.headers)")
             print("socket connect")
         }
     }
