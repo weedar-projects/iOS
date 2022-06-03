@@ -23,6 +23,7 @@ class SessionManager: ObservableObject {
         userData(withUpdate: true)
         print("dafsdf")
     }
+    
     func userData(withUpdate: Bool = false, userModel: @escaping (UserModel) -> Void = {_ in}){
         if withUpdate{
         API.shared.request(rout: .getCurrentUserInfo) { result in

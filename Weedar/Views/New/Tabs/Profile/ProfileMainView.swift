@@ -34,8 +34,13 @@ struct ProfileMainView: View {
                     case .email:
                         ChangeEmailView()
                     case .phone:
-                        ChangePhoneView()
-                            .navBarSettings("Change phone number")
+                        ChangePhoneView(){
+                            sessionManager.userData{user in
+                                guard let phone = user.phone else { return }
+                                vm.setData(email: user.email, phone: phone)
+                            }
+                        }
+                        .navBarSettings("Change phone \nnumber")
                     case .notification:
                         EmptyView()
                     case .changePassword:
@@ -92,6 +97,7 @@ struct ProfileMainView: View {
                     }
                     
                 }
+ 
                 
                 if vm.showLoading{
                     Color.black.opacity(0.1)

@@ -9,23 +9,39 @@ import SwiftUI
 
 struct ChangePhoneView: View {
     
+    var needToUpdatePhone: ()-> Void
+    
     @StateObject var vm = ChangePhoneVM()
     @EnvironmentObject var sessionManager: SessionManager
+    @Environment(\.presentationMode) var mode 
     
     var body: some View {
         ZStack{
             NavigationLink("", isActive: $vm.showOTPView) {
-                ComfirmChangePhoneView(veritificationID: $vm.verificationID, phone: $vm.phoneEntered)
+                ComfirmChangePhoneView(veritificationID: $vm.verificationID, phone: $vm.phoneEntered){
+                    vm.phoneEntered = "+1"
+                    vm.buttonState = .def
+                    sessionManager.userData(withUpdate: true) { user in
+                        guard let userCurrentPhone = user.phone else { return }
+                        vm.userCurrentPhone = userCurrentPhone
+                        needToUpdatePhone()
+                    }
+                }
             }.isDetailLink(false)
             VStack{
                 //description
-                if let phone = sessionManager.user?.phone{
-                    Text("Current phone number \(format(with: "+X (XXX) XXX-XXXXXX", phone: phone))")
-                        .textSecond()
-                        .padding(.leading, 24)
-                        .padding(.top, 12)
-                        .hLeading()
-                }
+                Text("Current phone number \(format(with: "+X (XXX) XXX-XXXXXX", phone: vm.userCurrentPhone))")
+                    .textSecond()
+                    .padding(.leading, 24)
+                    .padding(.top, 12)
+                    .hLeading()
+                    .onAppear {
+                        sessionManager.userData() { user in
+                            guard let userCurrentPhone = user.phone else { return }
+                            vm.userCurrentPhone = userCurrentPhone
+                        }
+                    }
+                
                 
                 // Phone number titlte
                 Text("New phone number")
@@ -93,7 +109,6 @@ struct ChangePhoneView: View {
                 }
             }
         }
-        
     }
     
     func format(with mask: String, phone: String) -> String {

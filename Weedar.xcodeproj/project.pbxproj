@@ -606,8 +606,8 @@
 			isa = PBXGroup;
 			children = (
 				2F07D41728497A42005D60CC /* ComfirmChangePhoneView.swift */,
-				2F07D41928497EBC005D60CC /* OTPViewChange.swift */,
 				2F07D41528497A36005D60CC /* ComfirmChangePhoneVM.swift */,
+				2F07D41928497EBC005D60CC /* OTPViewChange.swift */,
 			);
 			path = ComfirmChangePhone;
 			sourceTree = "<group>";

@@ -30,6 +30,8 @@ class ChangePhoneVM: ObservableObject {
     @Published var buttonState: ButtonState = .def
     @Published var buttonIsDisabled = true
     
+    @Published var userCurrentPhone = ""
+    
     @Published var stepSuccess = false
     
     let ud = UserDefaultsService()
@@ -50,6 +52,11 @@ class ChangePhoneVM: ObservableObject {
                     self.showOTPView = true
                     //set button state
                     self.buttonState = .success
+                    DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                        self.buttonState = .def
+                    }
+                    self.isErrorShow = false
+                    self.errorMessage = ""
                     
                 case let .failure(error):
                     

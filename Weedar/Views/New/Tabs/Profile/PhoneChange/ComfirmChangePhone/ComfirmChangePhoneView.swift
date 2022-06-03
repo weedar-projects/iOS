@@ -15,6 +15,8 @@ struct ComfirmChangePhoneView: View {
     @EnvironmentObject var sessionManager: SessionManager
     @Environment(\.presentationMode) var mode 
     
+    var successAction: () -> Void
+    
     var body: some View{
         ZStack{
         VStack{
@@ -61,6 +63,7 @@ struct ComfirmChangePhoneView: View {
                     // Resend button
                     Button(action: {
                         vm.timerStart()
+                        vm.otpField = ""
                     }) {
                         Text("phonenumberview.phone_number_confirm_phone_resend_code".localized)
                             .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
@@ -74,6 +77,7 @@ struct ComfirmChangePhoneView: View {
         .customAlertOneBtn(title: "Congratulations!", message: "Your phone is successfully changed.", isPresented: $vm.showSuccessAlert, button: .default(Text("Okay"), action: {
             vm.showSuccessAlert = false
             mode.wrappedValue.dismiss()
+            successAction()
         }))
         }
         .navBarSettings("Confirm your number")

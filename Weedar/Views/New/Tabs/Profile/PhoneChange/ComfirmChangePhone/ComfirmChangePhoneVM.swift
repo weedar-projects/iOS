@@ -78,7 +78,6 @@ class ComfirmChangePhoneVM: ObservableObject {
                 self.formatPhone = userPhone
                 self.ud.set(value: userPhone, forKey: .phone)
                 self.verifyPhoneNumber()
-                self.showSuccessAlert = true
                 
             } else {
                 guard let error = error else { return }
@@ -101,7 +100,7 @@ class ComfirmChangePhoneVM: ObservableObject {
             switch result {
             case .success(_):
                 self.ud.set(value: self.phoneNumber, forKey: .phone)
-
+                self.showSuccessAlert = true
                 
             case let .failure(error):
                 self.errorMessage = error.message
