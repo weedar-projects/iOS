@@ -15,7 +15,8 @@ struct PasswordTextFieldWrapper: UIViewRepresentable {
 
     static var tagIndex = 1
     var placeholder: String
-
+    var contentType: UITextContentType?
+    var keyboardType: UIKeyboardType = .default
     let textField: UITextField = UITextField()
 
     var returnHandler: (() -> Void)?
@@ -86,11 +87,11 @@ struct PasswordTextFieldWrapper: UIViewRepresentable {
         uiTextField.setContentHuggingPriority(.defaultLow, for: .horizontal)
         uiTextField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         uiTextField.minimumFontSize = 16
-        uiTextField.keyboardType = .emailAddress
+        uiTextField.keyboardType = keyboardType
         uiTextField.autocorrectionType = .no
-        
+        uiTextField.textContentType = contentType
         uiTextField.isSecureTextEntry = isSecureTextEntry
-    
+        
         return uiTextField
     }
     

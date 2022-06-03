@@ -13,9 +13,13 @@ struct CustomSecureTextField: View {
     @Binding var state: TextFieldState
     @State var title: String = "Title"
     @State var placeholder: String = "PlaceHolder"
-    @State private var focused: Bool = false
+    @State var contentType: UITextContentType?
+    @State var keyboardType: UIKeyboardType = .default
+    
     @State var showPassword = false
     @State private var strokeColor = Color.col_borders
+    
+   
     
     var body: some View {
         VStack{
@@ -36,7 +40,7 @@ struct CustomSecureTextField: View {
                         PasswordTextFieldWrapper(text: $text,
                                                  isSecureTextEntry: .constant(false),
                                                  becomeFirstResponder: .constant(false),
-                                                 placeholder: placeholder)
+                                                 placeholder: placeholder,contentType: contentType ,keyboardType: keyboardType)
                         .padding(.leading, 12)
                             
                             
@@ -44,7 +48,7 @@ struct CustomSecureTextField: View {
                         PasswordTextFieldWrapper(text: $text,
                                                  isSecureTextEntry: .constant(true),
                                                  becomeFirstResponder: .constant(false),
-                                                 placeholder: placeholder)
+                                                 placeholder: placeholder,contentType: contentType ,keyboardType: keyboardType)
                         .padding(.leading, 12)
                     }
                     

@@ -92,7 +92,7 @@ struct ProfileMainView: View {
                                 .textSecond()
                                 .padding(.top, 14)
                                 .padding(.bottom, 35)
-                                .padding(.bottom, tabBarManager.showOrderTracker ? 125 : isSmallIPhone() ? 35 : 0)
+                                .padding(.bottom, tabBarManager.showOrderTracker ? 135 : isSmallIPhone() ? 45 : 35)
                         }
                     }
                     

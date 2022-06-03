@@ -12,7 +12,7 @@ struct TextFieldWrapper: UIViewRepresentable {
     @Binding var text: String
     var placeholder: String
     var keyboardType: UIKeyboardType = .default
-    
+    var contentType: UITextContentType?
     let textField: UITextField = UITextField()
 
     var isFirstResponder: ((Bool) -> Void)?
@@ -79,12 +79,14 @@ struct TextFieldWrapper: UIViewRepresentable {
         uiView.setContentHuggingPriority(.defaultHigh, for: .vertical)
         uiView.setContentHuggingPriority(.defaultLow, for: .horizontal)
         uiView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        
         uiView.minimumFontSize = 16
         PasswordTextFieldWrapper.tagIndex = 1
-
         uiView.keyboardType = keyboardType
         uiView.autocorrectionType = .no
+        if let contentType = contentType {
+            uiView.textContentType = contentType
+        }
+        
                 
         return uiView
     }
