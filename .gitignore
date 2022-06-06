@@ -1,200 +1,91 @@
-/Podfile.lock
-/Pods/Pods.xcodeproj/xcuserdata
-/Weedar.xcodeproj/xcuserdata
-/Weedar.xcworkspace/xcuserdata
-/Pods/
-Pods/FirebaseAuth/FirebaseAuth/CHANGELOG.md
-Pods/FirebaseAuth/FirebaseAuth/Sources/Auth/FIRAuth.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/Auth/FIRAuth_Internal.h
-Pods/FirebaseAuth/FirebaseAuth/Sources/AuthProvider/OAuth/FIROAuthProvider.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/Backend/FIRAuthBackend.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/Backend/FIRAuthRequestConfiguration.h
-Pods/FirebaseAuth/FirebaseAuth/Sources/Backend/FIRAuthRequestConfiguration.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/Backend/RPC/FIRSecureTokenRequest.h
-Pods/FirebaseAuth/FirebaseAuth/Sources/Backend/RPC/FIRSecureTokenRequest.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/Public/FirebaseAuth/FIRAuth.h
-Pods/FirebaseAuth/FirebaseAuth/Sources/SystemService/FIRAuthStoredUserManager.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/SystemService/FIRSecureTokenService.h
-Pods/FirebaseAuth/FirebaseAuth/Sources/SystemService/FIRSecureTokenService.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/User/FIRUser.m
-Pods/FirebaseCore/FirebaseCore/Sources/Public/FirebaseCore/FIROptions.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Components/FIRCLSContext.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Components/FIRCLSContext.m
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Controllers/FIRCLSMetricKitManager.m
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Controllers/FIRCLSReportManager_Private.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSException.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSException.mm
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSHandler.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSHandler.m
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSMachException.c
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSMachException.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Public/FirebaseCrashlytics/FIRStackFrame.h
-Pods/FirebaseMessaging/FirebaseMessaging/Sources/FIRMessaging.m
-Pods/FirebaseMessaging/FirebaseMessaging/Sources/Token/FIRMessagingTokenManager.m
-Pods/Introspect/Introspect/Introspect.swift
-Pods/Introspect/Introspect/ViewExtensions.swift
-Pods/Introspect/README.md
-Pods/Manifest.lock
-Pods/Pods.xcodeproj/project.pbxproj
-Pods/Target Support Files/Alamofire/Alamofire.debug.xcconfig
-Pods/Target Support Files/Alamofire/Alamofire.release.xcconfig
-Pods/Target Support Files/FirebaseAuth/FirebaseAuth-Info.plist
-Pods/Target Support Files/FirebaseAuth/FirebaseAuth.debug.xcconfig
-Pods/Target Support Files/FirebaseAuth/FirebaseAuth.release.xcconfig
-Pods/Target Support Files/FirebaseCore/FirebaseCore-Info.plist
-Pods/Target Support Files/FirebaseCore/FirebaseCore.debug.xcconfig
-Pods/Target Support Files/FirebaseCore/FirebaseCore.release.xcconfig
-Pods/Target Support Files/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics-Info.plist
-Pods/Target Support Files/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.debug.xcconfig
-Pods/Target Support Files/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.release.xcconfig
-Pods/Target Support Files/FirebaseCrashlytics/FirebaseCrashlytics-Info.plist
-Pods/Target Support Files/FirebaseCrashlytics/FirebaseCrashlytics.debug.xcconfig
-Pods/Target Support Files/FirebaseCrashlytics/FirebaseCrashlytics.release.xcconfig
-Pods/Target Support Files/FirebaseInstallations/FirebaseInstallations-Info.plist
-Pods/Target Support Files/FirebaseInstallations/FirebaseInstallations.debug.xcconfig
-Pods/Target Support Files/FirebaseInstallations/FirebaseInstallations.release.xcconfig
-Pods/Target Support Files/FirebaseMessaging/FirebaseMessaging-Info.plist
-Pods/Target Support Files/FirebaseMessaging/FirebaseMessaging.debug.xcconfig
-Pods/Target Support Files/FirebaseMessaging/FirebaseMessaging.release.xcconfig
-Pods/Target Support Files/GoogleDataTransport/GoogleDataTransport.debug.xcconfig
-Pods/Target Support Files/GoogleDataTransport/GoogleDataTransport.release.xcconfig
-Pods/Target Support Files/GoogleUtilities/GoogleUtilities.debug.xcconfig
-Pods/Target Support Files/GoogleUtilities/GoogleUtilities.release.xcconfig
-Pods/Target Support Files/Introspect/Introspect-Info.plist
-Pods/Target Support Files/Introspect/Introspect.debug.xcconfig
-Pods/Target Support Files/Introspect/Introspect.release.xcconfig
-Pods/Target Support Files/Kingfisher/Kingfisher.debug.xcconfig
-Pods/Target Support Files/Kingfisher/Kingfisher.release.xcconfig
-Pods/Target Support Files/Pods-Weelar/Pods-Weelar-frameworks.sh
-Pods/Target Support Files/Pods-Weelar/Pods-Weelar.debug.xcconfig
-Pods/Target Support Files/Pods-Weelar/Pods-Weelar.release.xcconfig
-Pods/FirebaseAuth/FirebaseAuth/CHANGELOG.md
-Pods/FirebaseAuth/FirebaseAuth/Sources/Auth/FIRAuth.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/Auth/FIRAuth_Internal.h
-Pods/FirebaseAuth/FirebaseAuth/Sources/AuthProvider/OAuth/FIROAuthProvider.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/Backend/FIRAuthBackend.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/Backend/FIRAuthRequestConfiguration.h
-Pods/FirebaseAuth/FirebaseAuth/Sources/Backend/FIRAuthRequestConfiguration.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/Backend/RPC/FIRSecureTokenRequest.h
-Pods/FirebaseAuth/FirebaseAuth/Sources/Backend/RPC/FIRSecureTokenRequest.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/Public/FirebaseAuth/FIRAuth.h
-Pods/FirebaseAuth/FirebaseAuth/Sources/SystemService/FIRAuthStoredUserManager.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/SystemService/FIRSecureTokenService.h
-Pods/FirebaseAuth/FirebaseAuth/Sources/SystemService/FIRSecureTokenService.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/User/FIRUser.m
-Pods/FirebaseCore/FirebaseCore/Sources/Public/FirebaseCore/FIROptions.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Components/FIRCLSContext.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Components/FIRCLSContext.m
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Controllers/FIRCLSMetricKitManager.m
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Controllers/FIRCLSReportManager_Private.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSException.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSException.mm
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSHandler.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSHandler.m
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSMachException.c
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSMachException.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Public/FirebaseCrashlytics/FIRStackFrame.h
-Pods/FirebaseMessaging/FirebaseMessaging/Sources/FIRMessaging.m
-Pods/FirebaseMessaging/FirebaseMessaging/Sources/Token/FIRMessagingTokenManager.m
-Pods/Introspect/Introspect/Introspect.swift
-Pods/Introspect/Introspect/ViewExtensions.swift
-Pods/Introspect/README.md
-Pods/Manifest.lock
-Pods/Pods.xcodeproj/project.pbxproj
-Pods/Target Support Files/Alamofire/Alamofire.debug.xcconfig
-Pods/Target Support Files/Alamofire/Alamofire.release.xcconfig
-Pods/Target Support Files/FirebaseAuth/FirebaseAuth-Info.plist
-Pods/Target Support Files/FirebaseAuth/FirebaseAuth.debug.xcconfig
-Pods/Target Support Files/FirebaseAuth/FirebaseAuth.release.xcconfig
-Pods/Target Support Files/FirebaseCore/FirebaseCore-Info.plist
-Pods/Target Support Files/FirebaseCore/FirebaseCore.debug.xcconfig
-Pods/Target Support Files/FirebaseCore/FirebaseCore.release.xcconfig
-Pods/Target Support Files/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics-Info.plist
-Pods/Target Support Files/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.debug.xcconfig
-Pods/Target Support Files/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.release.xcconfig
-Pods/Target Support Files/FirebaseCrashlytics/FirebaseCrashlytics-Info.plist
-Pods/Target Support Files/FirebaseCrashlytics/FirebaseCrashlytics.debug.xcconfig
-Pods/Target Support Files/FirebaseCrashlytics/FirebaseCrashlytics.release.xcconfig
-Pods/Target Support Files/FirebaseInstallations/FirebaseInstallations-Info.plist
-Pods/Target Support Files/FirebaseInstallations/FirebaseInstallations.debug.xcconfig
-Pods/Target Support Files/FirebaseInstallations/FirebaseInstallations.release.xcconfig
-Pods/Target Support Files/FirebaseMessaging/FirebaseMessaging-Info.plist
-Pods/Target Support Files/FirebaseMessaging/FirebaseMessaging.debug.xcconfig
-Pods/Target Support Files/FirebaseMessaging/FirebaseMessaging.release.xcconfig
-Pods/Target Support Files/GoogleDataTransport/GoogleDataTransport.debug.xcconfig
-Pods/Target Support Files/GoogleDataTransport/GoogleDataTransport.release.xcconfig
-Pods/Target Support Files/GoogleUtilities/GoogleUtilities.debug.xcconfig
-Pods/Target Support Files/GoogleUtilities/GoogleUtilities.release.xcconfig
-Pods/Target Support Files/Introspect/Introspect-Info.plist
-Pods/Target Support Files/Introspect/Introspect.debug.xcconfig
-Pods/Target Support Files/Introspect/Introspect.release.xcconfig
-Pods/Target Support Files/Kingfisher/Kingfisher.debug.xcconfig
-Pods/Target Support Files/Kingfisher/Kingfisher.release.xcconfig
-Pods/Target Support Files/Pods-Weelar/Pods-Weelar-frameworks.sh
-Pods/Target Support Files/Pods-Weelar/Pods-Weelar.debug.xcconfig
-Pods/Target Support Files/Pods-Weelar/Pods-Weelar.release.xcconfig
-Pods/FirebaseAuth/FirebaseAuth/CHANGELOG.md
-Pods/FirebaseAuth/FirebaseAuth/Sources/Auth/FIRAuth.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/Auth/FIRAuth_Internal.h
-Pods/FirebaseAuth/FirebaseAuth/Sources/AuthProvider/OAuth/FIROAuthProvider.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/Backend/FIRAuthBackend.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/Backend/FIRAuthRequestConfiguration.h
-Pods/FirebaseAuth/FirebaseAuth/Sources/Backend/FIRAuthRequestConfiguration.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/Backend/RPC/FIRSecureTokenRequest.h
-Pods/FirebaseAuth/FirebaseAuth/Sources/Backend/RPC/FIRSecureTokenRequest.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/Public/FirebaseAuth/FIRAuth.h
-Pods/FirebaseAuth/FirebaseAuth/Sources/SystemService/FIRAuthStoredUserManager.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/SystemService/FIRSecureTokenService.h
-Pods/FirebaseAuth/FirebaseAuth/Sources/SystemService/FIRSecureTokenService.m
-Pods/FirebaseAuth/FirebaseAuth/Sources/User/FIRUser.m
-Pods/FirebaseCore/FirebaseCore/Sources/Public/FirebaseCore/FIROptions.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Components/FIRCLSContext.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Components/FIRCLSContext.m
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Controllers/FIRCLSMetricKitManager.m
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Controllers/FIRCLSReportManager_Private.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSException.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSException.mm
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSHandler.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSHandler.m
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSMachException.c
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Handlers/FIRCLSMachException.h
-Pods/FirebaseCrashlytics/Crashlytics/Crashlytics/Public/FirebaseCrashlytics/FIRStackFrame.h
-Pods/FirebaseMessaging/FirebaseMessaging/Sources/FIRMessaging.m
-Pods/FirebaseMessaging/FirebaseMessaging/Sources/Token/FIRMessagingTokenManager.m
-Pods/Introspect/Introspect/Introspect.swift
-Pods/Introspect/Introspect/ViewExtensions.swift
-Pods/Introspect/README.md
-Pods/Manifest.lock
-Pods/Pods.xcodeproj/project.pbxproj
-Pods/Target Support Files/Alamofire/Alamofire.debug.xcconfig
-Pods/Target Support Files/Alamofire/Alamofire.release.xcconfig
-Pods/Target Support Files/FirebaseAuth/FirebaseAuth-Info.plist
-Pods/Target Support Files/FirebaseAuth/FirebaseAuth.debug.xcconfig
-Pods/Target Support Files/FirebaseAuth/FirebaseAuth.release.xcconfig
-Pods/Target Support Files/FirebaseCore/FirebaseCore-Info.plist
-Pods/Target Support Files/FirebaseCore/FirebaseCore.debug.xcconfig
-Pods/Target Support Files/FirebaseCore/FirebaseCore.release.xcconfig
-Pods/Target Support Files/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics-Info.plist
-Pods/Target Support Files/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.debug.xcconfig
-Pods/Target Support Files/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.release.xcconfig
-Pods/Target Support Files/FirebaseCrashlytics/FirebaseCrashlytics-Info.plist
-Pods/Target Support Files/FirebaseCrashlytics/FirebaseCrashlytics.debug.xcconfig
-Pods/Target Support Files/FirebaseCrashlytics/FirebaseCrashlytics.release.xcconfig
-Pods/Target Support Files/FirebaseInstallations/FirebaseInstallations-Info.plist
-Pods/Target Support Files/FirebaseInstallations/FirebaseInstallations.debug.xcconfig
-Pods/Target Support Files/FirebaseInstallations/FirebaseInstallations.release.xcconfig
-Pods/Target Support Files/FirebaseMessaging/FirebaseMessaging-Info.plist
-Pods/Target Support Files/FirebaseMessaging/FirebaseMessaging.debug.xcconfig
-Pods/Target Support Files/FirebaseMessaging/FirebaseMessaging.release.xcconfig
-Pods/Target Support Files/GoogleDataTransport/GoogleDataTransport.debug.xcconfig
-Pods/Target Support Files/GoogleDataTransport/GoogleDataTransport.release.xcconfig
-Pods/Target Support Files/GoogleUtilities/GoogleUtilities.debug.xcconfig
-Pods/Target Support Files/GoogleUtilities/GoogleUtilities.release.xcconfig
-Pods/Target Support Files/Introspect/Introspect-Info.plist
-Pods/Target Support Files/Introspect/Introspect.debug.xcconfig
-Pods/Target Support Files/Introspect/Introspect.release.xcconfig
-Pods/Target Support Files/Kingfisher/Kingfisher.debug.xcconfig
-Pods/Target Support Files/Kingfisher/Kingfisher.release.xcconfig
-Pods/Target Support Files/Pods-Weelar/Pods-Weelar-frameworks.sh
-Pods/Target Support Files/Pods-Weelar/Pods-Weelar.debug.xcconfig
-Pods/Target Support Files/Pods-Weelar/Pods-Weelar.release.xcconfig
+
+# Created by https://www.toptal.com/developers/gitignore/api/swift
+# Edit at https://www.toptal.com/developers/gitignore?templates=swift
+
+### Swift ###
+# Xcode
+#
+# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
+
+## User settings
+xcuserdata/
+
+## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
+*.xcscmblueprint
+*.xccheckout
+
+## compatibility with Xcode 3 and earlier (ignoring not required starting Xcode 4)
+build/
+DerivedData/
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+
+## Obj-C/Swift specific
+*.hmap
+
+## App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+# Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
+# Packages/
+# Package.pins
+# Package.resolved
+# *.xcodeproj
+# Xcode automatically generates this directory with a .xcworkspacedata file and xcuserdata
+# hence it is not needed unless you have added a package configuration file to your project
+# .swiftpm
+
+.build/
+
+# CocoaPods
+# We recommend against adding the Pods directory to your .gitignore. However
+# you should judge for yourself, the pros and cons are mentioned at:
+# https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
+# Pods/
+# Add this line if you want to avoid checking in source code from the Xcode workspace
+# *.xcworkspace
+
+# Carthage
+# Add this line if you want to avoid checking in source code from Carthage dependencies.
+# Carthage/Checkouts
+
+Carthage/Build/
+
+# Accio dependency management
+Dependencies/
+.accio/
+
+# fastlane
+# It is recommended to not store the screenshots in the git repo.
+# Instead, use fastlane to re-generate the screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/#source-control
+
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Code Injection
+# After new code Injection tools there's a generated folder /iOSInjectionProject
+# https://github.com/johnno1962/injectionforxcode
+
+iOSInjectionProject/
+
+# End of https://www.toptal.com/developers/gitignore/api/swift
+Weedar.xcworkspace/xcuserdata/vladyslavcondratiev.xcuserdatad/UserInterfaceState.xcuserstate
+*.xcuserstate
