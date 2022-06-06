@@ -52,7 +52,7 @@ struct RootCoordinator: View {
             if !networkConnection.isConnected{
                 NoInternetConnectionView()
                     .transition(.fade)
-            }
+            }vdvdva sd 
         }
         .environmentObject(sessionManager)
         .onAppear {
