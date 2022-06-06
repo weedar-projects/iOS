@@ -27,9 +27,9 @@ struct RegisterView: View {
                         vm.authServerError = nil
                     }
                 }
-            
+
             //Password TextField
-            CustomSecureTextField(text: $vm.password, state: $vm.passwordTFState,title: "Password", placeholder: "welcomeview.welcome_content_password_placeholder".localized)
+            CustomSecureTextField(text: $vm.password, state: $vm.passwordTFState,title: "Password", placeholder: "welcomeview.welcome_content_password_placeholder".localized,contentType: .newPassword)
                 .padding(.top, 24)
                 .onTapGesture {
                     if let _ = vm.authServerError {

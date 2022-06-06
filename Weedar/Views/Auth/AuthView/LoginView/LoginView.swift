@@ -22,7 +22,7 @@ struct LoginView: View {
             CustomTextField(text: $vm.email, state: $vm.emailTFState, title: "Email",placeholder: "welcomeview.welcome_content_email_placeholder".localized, keyboardType: .emailAddress, contentType: .username)
             
             //Password TextField
-            CustomSecureTextField(text: $vm.password, state: $vm.passwordTFState ,title: "Password", placeholder: "welcomeview.welcome_content_password_placeholder".localized)
+            CustomSecureTextField(text: $vm.password, state: $vm.passwordTFState ,title: "Password", placeholder: "welcomeview.welcome_content_password_placeholder".localized,contentType: .password, keyboardType: .default)
                 .padding(.top, 24)
             
             if let error = vm.authServerError {
