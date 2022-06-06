@@ -11,7 +11,10 @@ class MyOrdersListVM: ObservableObject {
   
     @Published var orderSections: [OrderSectionListModel] = []
     
+    @Published var loading = false
+    
     func getOrderList(comletion: @escaping ()->Void){
+        loading = true
         guard let id = UserDefaultsService().get(fromKey: .user) as? Int else {
           print("Can't get ID from Defaults")
           return
@@ -46,9 +49,8 @@ class MyOrdersListVM: ObservableObject {
                     } else {
                       orderLocal.append(OrderSectionListModel(date: createdAt, orders: [order]))
                     }
+                    
                 }
-                
-             
                 self.orderSections = orderLocal.sorted { s1, s2 in
                     if let d1 = s1.date.toDate(),
                        let d2 = s2.date.toDate() {
@@ -57,7 +59,8 @@ class MyOrdersListVM: ObservableObject {
                         return s1.date > s2.date
                     }
                 }
-            
+                
+                self.loading = false
                 
             case let .failure(error):
                 Logger.log(message: error.localizedDescription, event: .error)

@@ -21,13 +21,20 @@ struct UserInfoView: View {
                 .hLeading()
         }
         .frame(maxWidth: .infinity)
-        .background(Color.col_bg_second.cornerRadius(12))
+        .background(
+            RadialGradient(colors: [Color.col_gradient_blue_second,
+                                    Color.col_gradient_blue_first],
+                           center: .center,
+                           startRadius: 0,
+                           endRadius: 220)
+            .clipShape(CustomCorner(corners: .allCorners, radius: 12))
+            .opacity(0.25)
+        )
         .padding(.top,8)
         .padding(.horizontal, 24)
-        
         .onAppear {
-            sessionManager.getUserData {
-                self.user = sessionManager.user
+            sessionManager.userData(withUpdate: true) { user in
+                self.user = user
             }
         }
     }

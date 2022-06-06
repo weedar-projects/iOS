@@ -139,15 +139,15 @@ class DocumentCenterVM: ObservableObject {
         self.buttonIsDisabled = true
     }
     
-    func deleteRecImage(finished: @escaping () -> Void) {
+    func deleteImage(finished: @escaping () -> Void) {
         guard let id = userInfo?.id else {
             return
         }
         
         let url = "/user/\(id)/passportPhoto"
         let params = [
-            "passportPhotoLink": false,
-            "physicianRecPhotoLink": true
+            "passportPhotoLink": idImage == nil,
+            "physicianRecPhotoLink": recommendationImage == nil
         ]
         
         API.shared.request(endPoint: url,method: .delete ,parameters: params, encoding: JSONEncoding.default) { result in
@@ -167,7 +167,7 @@ class DocumentCenterVM: ObservableObject {
     func updateImages(success: @escaping () -> Void){
         guard let _ = idImage, let _ = recommendationImage else {
             print("guardlet")
-            self.deleteRecImage {
+            self.deleteImage {
                 print("deleteRecImage")
                 self.veryfiIdentity(updatePhusImage: false) { succses in
                     success()

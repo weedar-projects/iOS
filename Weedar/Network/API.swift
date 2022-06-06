@@ -23,7 +23,8 @@ class API{
     
     private var token : String?  { return KeychainService.loadPassword(serviceKey: .accessToken) }
     
-    func request(endPoint: String = "", rout: Routs = .empty,
+    func request(endPoint: String = "",
+                 rout: Routs = .empty,
                  method: HTTPMethod = .get,
                  parameters: [String: Any] = [:],
                  encoding: ParameterEncoding = URLEncoding.default,
@@ -90,8 +91,18 @@ class API{
                         completion(.failure(APIError(statusCode: statusCode,
                                                      message: message ?? "")))
                     }else{
-                        completion(.failure(APIError(statusCode: json["statusCode"].intValue,
-                                                     message: json["message"].arrayValue.first?.stringValue ?? "")))
+                        let error = APIError(statusCode: json["statusCode"].intValue,
+                                              message: json["message"].arrayValue.first?.stringValue ?? "")
+                        
+                        if error.message.isEmpty{
+                            let stringError = APIError(statusCode: json["statusCode"].intValue,
+                                                  message: json["message"].stringValue)
+                            completion(.failure(stringError))
+                        }else{
+                            completion(.failure(error))
+                        }
+                        
+                        print("ERROR: \n\(error)")
                     }
                 }
                 

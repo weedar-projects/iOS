@@ -11,8 +11,8 @@ import Amplitude
 
 struct ProductCartRowView: View {
     
-    @ObservedObject var vm = ProductCartRowVM()
-    
+    @StateObject var vm = ProductCartRowVM()
+    @State var needToAnim = false
     @EnvironmentObject var cartManager: CartManager
     
     var item: ProductModel
@@ -21,28 +21,28 @@ struct ProductCartRowView: View {
     
     var body: some View{
         ZStack{
-            //delete button
             ZStack {
-                RoundedRectangle(cornerRadius: 12.0)
-                    .fill(Color.col_red_second)
-                    .frame(width: 56, height: vm.itemViewHeight, alignment: .center)
-                    .overlay(Image("trash_red")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 18, alignment: .center))
-                    
+                RadialGradient(colors: [Color.col_gradient_pink_second,
+                                        Color.col_gradient_pink_first],
+                               center: .center,
+                               startRadius: 0,
+                               endRadius: 150)
+                
+                Image.icon_trash
+                    .colorMultiply(Color.col_pink_button)
             }
+            .frame(width: 56, height: vm.itemViewHeight, alignment: .center)
+            .cornerRadius(12)
             .hTrailing()
             .onTapGesture {
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                Amplitude.instance().logEvent("delete_product", withEventProperties: ["category" : item.type.name,
-                                                                                        "product_id" : item.id,
-                                                                                        "product_price" : item.price.formattedString(format: .percent)])
-                }
-                
                 cartManager.productQuantityInCart(productId: item.id, quantity: .removeAll)
+                if UserDefaults.standard.bool(forKey: "EnableTracking"){
+                    Amplitude.instance().logEvent("delete_product", withEventProperties: ["category" : item.type.name,
+                                                                                          "product_id" : item.id,
+                                                                                          "product_price" : item.price.formattedString(format: .percent)])
+                }
             }
-            
+
             HStack(spacing: 0){
                 //Item Image
                 WebImage(url: URL(string: "\(BaseRepository().baseURL)/img/" + item.imageLink))
@@ -67,6 +67,7 @@ struct ProductCartRowView: View {
                     //brand
                     Text(item.brand.name ?? "")
                         .textSecond()
+                    
                     Spacer()
                     
                     //title
@@ -80,7 +81,7 @@ struct ProductCartRowView: View {
                         
                         //price
                         Text("$\(item.price.formattedString(format: .percent))")
-                            .textCustom(.coreSansC65Bold, 16, Color.col_purple_main)
+                            .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
                         
                         //gram
                         Text("\(item.gramWeight.formattedString(format: .gramm))g / \(item.ounceWeight.formattedString(format: .ounce))oz")
@@ -144,6 +145,28 @@ struct ProductCartRowView: View {
             .background(Color.col_white.cornerRadius(12).padding(.trailing, -5))
             .offset(x: vm.offset)
             .gesture(DragGesture().onChanged(vm.onChanged(value:)).onEnded(vm.onEnd(value:)))
+            .onAppear {
+                if needToAnim && UserDefaultsService().get(fromKey: .animCart) as? Bool ?? true{
+                   DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                        animView(start: true)
+                        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                            animView(start: false)
+                            UserDefaultsService().set(value: false, forKey: .animCart)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    func animView(start: Bool){
+        if start{
+            withAnimation(.easeInOut(duration: 0.5)) {
+                vm.offset = -80
+            }
+        }else{
+            withAnimation(.easeInOut(duration: 0.5)) {
+                vm.offset = 0
+            }
         }
     }
 }

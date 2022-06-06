@@ -26,8 +26,8 @@ struct DocumentCenterView: MainLoadViewProtocol {
                 .hLeading()
                 
                 Text("Our courier will ask you to show your ID \nto verify your identity and age.")
-                    .foregroundColor(.red)
-                    .padding(.top,24)
+                    .textDefault()
+                    .padding(.top, 24)
                     .padding(.horizontal, 24)
                     .hLeading()
             
@@ -181,11 +181,12 @@ struct DocumentCenterView: MainLoadViewProtocol {
         .padding(.horizontal, 24)
         .onChange(of: vm.idImage) { newValue in
             vm.idImageChanged = true
-            if newValue != nil{
-                vm.buttonIsDisabled = false
-            }else{
-                vm.buttonIsDisabled = true
-            }
+            vm.buttonIsDisabled = false
+//            if newValue != nil{
+//                vm.buttonIsDisabled = false
+//            }else{
+//                vm.buttonIsDisabled = true
+//            }
         }
     }
     
@@ -209,11 +210,12 @@ struct DocumentCenterView: MainLoadViewProtocol {
         .padding(.horizontal, 24)
         .onChange(of: vm.recommendationImage) { newValue in
             vm.recommendationidImageChanged = true
-            if vm.idImage != nil{
-                vm.buttonIsDisabled = false
-            }else{
-                vm.buttonIsDisabled = true
-            }
+            vm.buttonIsDisabled = false
+//            if vm.idImage != nil{
+//                vm.buttonIsDisabled = false
+//            }else{
+//                vm.buttonIsDisabled = true
+//            }
         }
     }
     

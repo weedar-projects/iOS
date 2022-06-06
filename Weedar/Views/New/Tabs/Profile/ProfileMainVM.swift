@@ -10,7 +10,10 @@ import SwiftUI
 class ProfileMainVM: ObservableObject {
     
     @Published var myInfoItems = [ProfileMenuItemModel(icon: "Profile-Cart", title: "My orders", state: .orders),
-                                  ProfileMenuItemModel(icon: "Profile-Document", title: "Document center", state: .documents)]
+                                  ProfileMenuItemModel(icon: "Profile-Document", title: "Document center", state: .documents),
+                                  ProfileMenuItemModel(icon: "Profile-Email", title: "Email", state: .email, additionaLinfo: ""),
+                                  ProfileMenuItemModel(icon: "Profile-Phone", title: "Phone", state: .phone, additionaLinfo: "")
+    ]
     
     @Published var settingsItems = [ProfileMenuItemModel(icon: "Profile-Lock", title: "Change password", state: .changePassword)]
     
@@ -28,8 +31,19 @@ class ProfileMainVM: ObservableObject {
     @Published var showLogOutAler = false
     
     @Published var showLoading = false
+   
     
+    func setData(email: String, phone: String) {
+        print("Update items set")
+        self.myInfoItems = [ProfileMenuItemModel(icon: "Profile-Cart", title: "My orders", state: .orders),
+                                          ProfileMenuItemModel(icon: "Profile-Document", title: "Document center", state: .documents),
+                                          ProfileMenuItemModel(icon: "Profile-Email", title: "Email", state: .email, additionaLinfo: email),
+                            ProfileMenuItemModel(icon: "Profile-Phone", title: "Phone", state: .phone, additionaLinfo: phone)
+        ]
+    }
 }
+
+
 
 enum ProfileMenuCategory{
     case info

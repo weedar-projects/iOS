@@ -8,34 +8,61 @@
 import SwiftUI
 import Alamofire
 import Amplitude
+import SwiftyJSON
 
 class AuthRootVM: ObservableObject {
     
-    enum PasswordError: CaseIterable {
-        case charactersCount
-        case oneUppercaseLetter
-        case oneDigit
-        case oneLowercaseLetter
-    }
-    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    @Published var email: String = ""
+    @Published var email: String = ""{
+        didSet{
+            if currentPage == .registration{
+                emailTFState = email.isEmailValid ? .success : .def
+            }
+            
+            validateLoginPageButton()
+        }
+    }
     @Published var emailTFState: TextFieldState = .def
    
-    @Published var password: String = ""
+    @Published var password: String = ""{
+        didSet{
+           validateLoginPageButton()
+        }
+    }
+    
+    
     @Published var passwordTFState: TextFieldState = .def
     
     @Published var nextButtonIsDisabled = true
     @Published var nextButtonState: ButtonState = .def
     
-    @Published var showOnboardingSecondView = false
     @Published var showOnboarding = true
     
     @Published var showServerError = false
-    @Published var authServerError: ServerError?
+    @Published var authServerError: ServerError?{
+        didSet{
+            if !email.isEmpty && !password.isEmpty{
+                if let _ = authServerError {
+                    passwordTFState = .error
+                    emailTFState = .error
+                }else{
+                    passwordTFState = .def
+                    emailTFState = .def
+                }
+            }
+        }
+    }
     @Published var errors: [PasswordError] = [.charactersCount, .oneUppercaseLetter, .oneDigit, .oneLowercaseLetter]
     
+    
+    @Published var currentPage: AuthViewPages = .registration{
+        didSet{
+            self.errors = []
+            self.authServerError = nil
+            self.password = ""
+        }
+    }
     
     @Published var isResetPasswordSheetShow = false
     @Published var showRegisterSteps: Bool = false
@@ -44,6 +71,15 @@ class AuthRootVM: ObservableObject {
     
     init() {
         showOnboarding = UserDefaultsService().get(fromKey: .showOnboarding) as? Bool ?? true
+    }
+    
+    
+    func validateLoginPageButton(){
+        if currentPage == .login && password.count > 0 && email.count > 0{
+            nextButtonIsDisabled = false
+        }else{
+            nextButtonIsDisabled = true
+        }
     }
     
     func validatePassword(_ password: String) {
@@ -69,8 +105,11 @@ class AuthRootVM: ObservableObject {
         }
         self.errors = errors
        
-        if authServerError != nil && !errors.isEmpty {
-            authServerError = nil
+        
+        if errors.isEmpty && !email.isEmpty && currentPage == .registration{
+            nextButtonIsDisabled = false
+        }else{
+            nextButtonIsDisabled = true
         }
     }
     
@@ -100,6 +139,44 @@ class AuthRootVM: ObservableObject {
         }
     }
     
+    func userLogin(needToFillData: @escaping (Bool) -> Void){
+        let params = ["email" : email,
+                      "password" : password]
+        API.shared.request(rout: .userLogin, method: .post, parameters: params , encoding: JSONEncoding.default) { result in
+            switch result{
+            case let .success(json):
+                
+                let userData = UserLoginDataModel(json: json)
+                
+                UserDefaultsService().set(value: userData.accessToken, forKey: .accessToken)
+                KeychainService.updatePassword(userData.accessToken, serviceKey: .accessToken)
+                
+                self.appDelegate.saveTokenFCM()
+                self.appDelegate.updatePushNotificationState(true)
+                Amplitude.instance().logEvent("login_success")
+                print("PHOOONE \(userData.phone)")
+                //neet to fill data
+                if let phone = userData.phone, !phone.isEmpty{
+                    needToFillData(false)
+                    print("PHOOONE NEED TO FIL = false")
+                }else{
+                    needToFillData(true)
+                    print("PHOOONE NEED TO FIL = true")
+                }
+            case let .failure(error):
+                print("errorerrror \(error)")
+                if UserDefaults.standard.bool(forKey: "EnableTracking"){
+                    Amplitude.instance().logEvent("login_fail", withEventProperties: ["error_type" : error.message])
+                }
+                Logger.log(message: error.message, event: .error)
+                self.showServerError = true
+                self.nextButtonState = .def
+                self.authServerError = ServerError(statusCode: error.statusCode, message: error.message)
+            }
+        }
+    }
+    
+    
     /// Register user button action
     func userRegisterOld(completionHandler: @escaping () -> Void) {
         UserRepository().userRegister(email: self.email, password: self.password) { result in
@@ -127,12 +204,13 @@ class AuthRootVM: ObservableObject {
 
 
     /// Login user button action
-    func userLogin(asNewUser: Bool = false, isNewUserLogined: @escaping (Bool) -> Void) {
+    func userLoginOLD(asNewUser: Bool = false, isNewUserLogined: @escaping (Bool) -> Void) {
         if email.isEmailValid {
                 LoginRepository()
                     .login(email: self.email, password: self.password) { result in
                         switch result {
                             case .success(let loginData):
+                            print("loginData: \(loginData)")
                                 DispatchQueue.main.async {
                                     if loginData.phone != nil {
                                         UserDefaultsService().set(value: loginData.phone!, forKey: .phone)
@@ -140,9 +218,7 @@ class AuthRootVM: ObservableObject {
                                     
                                     UserDefaultsService().set(value: loginData.id, forKey: .user)
                                    
-                                    UserDefaultsService().set(value: loginData.accessToken, forKey: .accessToken)
-
-                                    KeychainService.updatePassword(loginData.accessToken, serviceKey: .accessToken)
+                                    
 
                                     let granded = UserDefaultsService().get(fromKey: .fcmGranted) as? Bool
                                  
@@ -161,8 +237,7 @@ class AuthRootVM: ObservableObject {
                                             if asNewUser{
                                                 isNewUserLogined(true)
                                             }else{
-                                                isNewUserLogined(false)
-                                                
+                                                isNewUserLogined(false)  
                                             }
                                         }
                                         UserDefaultsService().set(value: true, forKey: .userVerified)
@@ -191,11 +266,18 @@ class AuthRootVM: ObservableObject {
             }
         }
     }
+    
+    var isEmailValid: Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        
+        return emailPred.evaluate(with: self)
+    }
 }
 
 
 
-extension AuthRootVM.PasswordError {
+extension PasswordError {
     var errorMessage: String {
         switch self {
             case .charactersCount: return "Eight characters"
@@ -216,3 +298,28 @@ extension AuthRootVM.PasswordError {
 }
 
 
+
+struct UserLoginDataModel {
+    var id: Int
+    var email: String
+    var role: String
+    var state: String
+    var phone: String?
+    var accessToken: String
+    
+    init(json: JSON){
+        self.id = json["id"].intValue
+        self.email = json["email"].stringValue
+        self.role = json["role"].stringValue
+        self.state = json["state"].stringValue
+        self.phone = json["phone"].stringValue
+        self.accessToken = json["accessToken"].stringValue
+    }
+}
+
+enum PasswordError: CaseIterable {
+    case charactersCount
+    case oneUppercaseLetter
+    case oneDigit
+    case oneLowercaseLetter
+}

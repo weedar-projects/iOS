@@ -17,7 +17,7 @@ class CartVM: ObservableObject {
     @Published var totalNonConcentrated: Double = 0.0
     
     @Published var minimalSumForOrder: Double = 50
-    
+    @Published var showDiscontCodeView = false
     @Published var dailyConcentratedAllowance: Double = 8.0
     @Published var dailyNonConcentratedAllowance: Double = 28.5
     

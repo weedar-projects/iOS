@@ -79,7 +79,10 @@ struct HomeView: View {
                         }) // OVERLAY
                         .overlay(
                             Tutorial(stage: $carousel.tutorialStage)
-                                .padding(24))
+                                .padding(24)
+                                .padding(.bottom, 50)
+                        )
+                    
                         .zIndex(6)
                 } //AR VSTACK
                 .statusBar(hidden: true)
@@ -97,12 +100,14 @@ struct HomeView: View {
                 .onDisappear() {
                     self.appear = false
                     carousel.pauseScene()
+                    tabbarManager.showTracker()
                 }
                 .onUIKitAppear {
                     carousel.showDescriptionCard()
                     statusBarStyle.currentStyle = .darkContent
                     //                tabbarManager.isCurrentOrderViewExtended = false
                     carousel.resumeScene()
+                    tabbarManager.hideTracker()
                     self.appear = true
                     withAnimation(Animation.spring().delay(0.5)) {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -199,6 +204,8 @@ struct ARProductInfo : View {
                         }.padding(.top, 8)
                     } // VStack
                     Button(action: {
+                        UINotificationFeedbackGenerator().notificationOccurred(.success)
+                        
                         cartManager.productQuantityInCart(productId: product.id, quantity: .add)
                         if UserDefaults.standard.bool(forKey: "EnableTracking"){
                         Amplitude.instance().logEvent("add_cart_ar", withEventProperties: ["category" : product.type.name,
@@ -206,14 +213,17 @@ struct ARProductInfo : View {
                                                                                                 "product_price" : product.price.formattedString(format: .percent)])
                         }
                     }){
-                        ColorManager.Buttons.buttonActiveColor.frame(width: 56, height: 56)
-                            .clipShape(Circle())
-                            .overlay(
-                                Image("Item-Add-Button")
-                                    .renderingMode(.original)
-                                    .resizable()
-                                    .frame(width: 19, height: 19)
-                            )
+                        ZStack{
+                            Image.bg_gradient_main
+                                .resizable()
+                                .frame(width: 56, height: 56)
+                                .clipShape(Circle())
+                            
+                            Image("Item-Add-Button")
+                                .renderingMode(.original)
+                                .resizable()
+                                .frame(width: 19, height: 19)
+                        }
                     }.padding(.top, 6)
                 } // HStack
                 .padding(.top, 16)

@@ -43,18 +43,6 @@ class CartManager: ObservableObject {
         generator.notificationOccurred(.success)
     }
     
-    func getUserData(needToShowDiscount: @escaping (Bool) -> Void){
-        API.shared.request(rout: .getCurrentUserInfo) { result in
-            switch result{
-            case let .success(json):
-                let user = UserModel(json: json)
-                self.userData = user
-            case let .failure(error):
-                print("error to load user data: \(error)")
-            }
-        }
-    }
-    
     func getCart(){
         API.shared.request(rout: .cart, method: .get) { result in
             switch result{
@@ -127,16 +115,78 @@ class CartManager: ObservableObject {
             }
         }
     }
+    
+    func removePromocode() {
+        let params = [
+            "promoCode" : ""
+        ]
+        API.shared.request(rout: .cart, method: .put, parameters: params, encoding: JSONEncoding.default) { result in
+            switch result{
+            case .success(let json):
+                let data = CartModel(json: json)
+                self.cartData = data
+                
+            case .failure(let error):
+                print("\(error.message)")
+            }
+        }
+    }
 }
 
 
+struct DiscountModel: Codable, Identifiable{
+    enum DiscountMeasure: Codable{
+        case percent
+        case dollar
+    }
+
+    enum DiscountType: Codable{
+        case promoCode
+        case firstOrder
+      }
+
+    var id: Int
+    var type: DiscountType
+    var value: Double
+    var measure: DiscountMeasure
+    
+    init(json: JSON) {
+        self.value = json["value"].doubleValue
+        self.id = json["id"].intValue
+        self.type = {
+            let typeCode = json["type"].doubleValue
+            switch typeCode{
+            case 0:
+                return .promoCode
+            case 1:
+                return .firstOrder
+            default:
+                return .promoCode
+            }
+        }()
+        self.measure = {
+            let typeCode = json["measure"].doubleValue
+            switch typeCode{
+            case 0:
+                return .percent
+            case 1:
+                return .dollar
+            default:
+                return .dollar
+            }
+        }()
+    }
+}
 
 struct CartModel{
+    
     var sum: Double
     var deliverySum: Double
     var totalSum: Double
     var totalWeight: Double
-    var discount: Double
+    var productsSum: Double
+    var discount: DiscountModel
+    var priceCorresponds: Bool
     var cartDetails: [CartDetails]
     
     init(json: JSON) {
@@ -144,10 +194,11 @@ struct CartModel{
         self.deliverySum = json["deliverySum"].doubleValue
         self.totalSum = json["totalSum"].doubleValue
         self.totalWeight = json["totalWeight"].doubleValue
-        self.discount = json["discount"].doubleValue
+        self.productsSum = json["productsSum"].doubleValue
+        self.discount = DiscountModel(json: json["discount"])
         self.cartDetails = json["cartDetails"].arrayValue.map({CartDetails(json: $0)})
+        self.priceCorresponds = json["priceCorresponds"].boolValue
     }
-    
 }
 
 struct CartDetails: Hashable{

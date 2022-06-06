@@ -16,7 +16,7 @@ struct OrderCalculationsList: View {
     var body: some View{
         if let cartData = cartManager.cartData{
         VStack{
-            Text("Order calculations")
+            Text("Order details")
                 .textCustom(.coreSansC65Bold, 14, Color.col_text_second)
                 .hLeading()
                 .padding(.leading, 12)
@@ -32,9 +32,38 @@ struct OrderCalculationsList: View {
                             .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
                     }
                     .frame(height: rowHeingt)
+                    .padding(.horizontal, 15)
                     
                     CustomDivider()
                         
+                HStack{
+                    Text("Product price")
+                        .textDefault(size: 16)
+                    Spacer()
+                    
+                    Text("$\(cartData.productsSum.formattedString(format: .percent))")
+                        .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
+                }
+                .frame(height: rowHeingt)
+                .padding(.horizontal, 15)
+                
+                if cartData.discount.value > 0{
+                    CustomDivider()
+                    
+                    HStack{
+                        Text(cartData.discount.type == .firstOrder ? "First order discount" : "Promo code discount")
+                            .textCustom(.coreSansC45Regular, 16, Color.col_green_main)
+                        Spacer()
+                        
+                        Text("-\(cartData.discount.measure == .dollar ? "$" : "%")\(cartData.discount.value.formattedString(format: .percent))")
+                            .textCustom(.coreSansC65Bold, 16, Color.col_green_main)
+                    }
+                    .frame(height: rowHeingt)
+                    .padding(.horizontal, 15)
+                }
+                
+                CustomDivider()
+                
                     HStack{
                         Text("Subtotal")
                             .textDefault(size: 16)
@@ -44,43 +73,70 @@ struct OrderCalculationsList: View {
                             .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
                     }
                     .frame(height: rowHeingt)
-                    
-                    CustomDivider()
-                        
-                    HStack{
-                        Text("Delivery fee")
-                            .textDefault(size: 16)
-                        Spacer()
-                        
-                        Text("$\(cartData.deliverySum.formattedString(format: .percent))")
-                            .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
-                    }
-                    .frame(height: rowHeingt)
+                    .padding(.horizontal, 15)
+                
+            }   
+            .background(
+                RadialGradient(colors: [Color.col_gradient_blue_second,
+                                        Color.col_gradient_blue_first],
+                               center: .center,
+                               startRadius: 0,
+                               endRadius: 220)
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                                    .opacity(0.25)
+            )
+            
+            if !cartData.priceCorresponds{
+                //Minimum price info
+                Text("Minimum order amount is $50.")
+                    .hLeading()
+                    .textCustom(.coreSansC45Regular, 14, Color.col_pink_main)
+            }
+            
+            
+            HStack{
+                Text("Delivery fee")
+                    .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
+                
+                Spacer()
+                
+                Text("$\(cartData.deliverySum.formattedString(format: .percent))")
+                    .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
             }
             .padding(.horizontal, 15)
-            .background(Color.col_bg_second.cornerRadius(12))
+            .background(
+                RadialGradient(colors: [Color.col_gradient_blue_second,
+                                                Color.col_gradient_blue_first],
+                                       center: .center,
+                                       startRadius: 0,
+                                       endRadius: 220)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .opacity(0.25)
+                .frame(height: rowHeingt)
+            )
+            .frame(height: rowHeingt)
+            .padding(.top, 19)
             
-            if cartData.discount > 0{
-                Text("Your $\(cartData.discount.formattedString(format: .int)) discount is applied")
-                .textCustom(.coreSansC45Regular, 16, Color.col_green_main)
-                .frame(maxWidth: .infinity)
-                .frame(height: 48)
-                .background(Color.col_green_second.cornerRadius(12))
-            }
-
             HStack{
                 Text("Total")
                     .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
                 
                 Spacer()
                 
-                
                 Text("$\(cartData.totalSum.formattedString(format: .percent))")
                     .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
-                
             }
             .padding(.horizontal, 15)
-            .background(Color.col_bg_second.cornerRadius(12).frame(height: rowHeingt))
+            .background(
+                RadialGradient(colors: [Color.col_gradient_blue_second,
+                                                Color.col_gradient_blue_first],
+                                       center: .center,
+                                       startRadius: 0,
+                                       endRadius: 220)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .opacity(0.25)
+                .frame(height: rowHeingt)
+            )
             .padding(.top, 19)
         }
         }

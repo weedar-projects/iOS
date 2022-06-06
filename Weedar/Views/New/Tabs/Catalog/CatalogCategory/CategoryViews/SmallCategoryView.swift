@@ -13,9 +13,10 @@ struct SmallCategoryView: View {
     
     var body: some View{
         ZStack{
-            category.color
+            Image("\(category.background)")
+                .resizable()
                 .cornerRadius(16)
-                .frame(height: 96)
+                .frame(height: 110)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             
             HStack{
@@ -26,15 +27,15 @@ struct SmallCategoryView: View {
                 
                 Spacer()
                 
-                Image(category.imagePreview)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 96)
-                    .scaleEffect(1.2)
-                    .mask(Rectangle()
-                            .frame(width: 96, height: 96)
-                            .cornerRadius(16)
-                    )
+//                Image(category.imagePreview)
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(height: 96)
+//                    .scaleEffect(1.2)
+//                    .mask(Rectangle()
+//                            .frame(width: 96, height: 96)
+//                            .cornerRadius(16)
+//                    )
             }
         }
         

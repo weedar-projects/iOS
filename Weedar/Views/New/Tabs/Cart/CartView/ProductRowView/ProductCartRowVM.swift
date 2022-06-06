@@ -10,6 +10,7 @@ import SwiftUI
 class ProductCartRowVM: ObservableObject {
  
     @Published var offset: CGFloat = 0
+    @Published var animationOffset: CGFloat = 0
     @Published var isSwiped: Bool = false
     
     let itemViewHeight: CGFloat = 113
@@ -32,7 +33,6 @@ class ProductCartRowVM: ObservableObject {
     func onEnd(value: DragGesture.Value){
         
         withAnimation(.easeOut){
-            
             if value.translation.width < 0{
                 //swipe to show button
                 if -offset > 50{

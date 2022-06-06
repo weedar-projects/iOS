@@ -10,18 +10,18 @@ import SwiftUI
 class OrderTrackerContentVM: ObservableObject {
     let allState: [OrderTrackerStateModel] = [
         OrderTrackerStateModel(id: 0, state: .submited,
-                               color: Color.col_yellow_orderTracker,
+                               colors: [Color.col_gradient_orange_first, Color.col_gradient_orange_second],
                                deliveryText: "Delivery partner is reviewing your order."),
         OrderTrackerStateModel(id: 1, state: .packing,
-                               color: Color.col_blue_orderTracker,
+                               colors: [Color.col_violet_status_bg, Color.col_white],
                                deliveryText: "Delivery partner is preparing your order."),
         OrderTrackerStateModel(id: 2,
                                state: .inDelivery,
-                               color: Color.col_orange_orderTracker,
+                               colors: [Color.col_gradient_blue_first, Color.col_gradient_blue_second],
                                deliveryText: "The driver is on the way."),
         OrderTrackerStateModel(id: 3,
                                state: .delivered,
-                               color: Color.col_green_orderTracker,
+                               colors: [Color.col_gradient_green_first, Color.col_gradient_green_second],
                                deliveryText: "The order is delivered.Thank you for choosing WEEDAR.")
     ]
     
@@ -31,7 +31,7 @@ class OrderTrackerContentVM: ObservableObject {
     
     @Published var loading = false
     
-    let orderReview = OrderDetailsReview(orderId: 0, totalSum: 0, exciseTaxSum: 0, totalWeight: "", salesTaxSum: 0, localTaxSum: 0, discount: 0, taxSum: 0, state: 0)
+    let orderReview = OrderDetailsReview(orderId: 0, totalSum: 0, exciseTaxSum: 0, totalWeight: "", salesTaxSum: 0, localTaxSum: 0, discount: nil, taxSum: 0, sum: 0, state: 0)
     
     func cancelOrder(orderID: Int,completion: @escaping () -> Void){
         let endPoint = "/order/\(orderID)/cancel"

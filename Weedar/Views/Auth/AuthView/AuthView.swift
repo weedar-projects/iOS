@@ -12,43 +12,38 @@ struct AuthView: View, KeyboardReadable {
     @StateObject var rootVM: AuthRootVM
     
     @State var isKeyboardShow: Bool = false
-    @State var menuTag = 0
     
     var body: some View {
         ZStack{
             //color
-            Color.lightOnSurfaceB
-                .edgesIgnoringSafeArea(.all)
-            
-            //imgage
-            Image("splash-background-lines")
+            Image.bg_gradient_main
                 .resizable()
-                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3, alignment: .top)
-                .opacity(0.5)
-                .edgesIgnoringSafeArea(.top)
+                .frame(width: getRect().width, height: getRect().height / 1.7)
+                .edgesIgnoringSafeArea(.all)
                 .vTop()
-                
+            
             //Top View
-            VStack{
+            VStack(spacing: 0){
                 //Logo
-                Image("logo_new")
+                Image.logoDark
                     .resizable()
-                    .frame(width: 100, height: 100)
+                    .frame(width: 88, height: 96)
                     .hLeading()
                 
                 //Title
-                Text(String(format: "%@%@%@", "welcomeview.welcome_welcome".localized, "\n", "welcomeview.welcome_to_weel".localized))
+                Text("Welcome to")
                     .hLeading()
-                    .textCustom(.coreSansC65Bold, 40, Color.col_white)
+                    .textCustom(.coreSansC55Medium, 36, Color.col_text_main)
+                    .padding(.top, 18)
                 
-                //Description
-//                Text(menuTag == 0 ? "Sign up to create your account." : "Sign in to continue to your account.")
-//                    .hLeading()
-//                    .padding(.top)
-//                    .textCustom(.coreSansC45Regular, 16, Color.col_white.opacity(0.5))
-                    
+                Text("\nWEEDAR")
+                    .hLeading()
+                    .textCustom(.coreSansC65Bold, 52, Color.col_text_main)
+                    .offset(y: isSmallIPhone() ? -55 : -40)
+                
             }
             .padding(.leading, 24)
+            .padding(.top, 49)
             .vTop()
             .hLeading()
             .opacity(isKeyboardShow ? 0 : 1)
@@ -56,83 +51,46 @@ struct AuthView: View, KeyboardReadable {
             VStack{
                 //Title
                 VStack{
-                    
-                    Text(String(format: "%@%@%@", "welcomeview.welcome_welcome".localized, " ","welcomeview.welcome_to_weel".localized))
-                        .textCustom(.coreSansC65Bold, 24, Color.col_white)
+                    Text("Welcome to WEEDAR")
+                        .textCustom(.coreSansC65Bold, 24, Color.col_text_main)
                         .hLeading()
-     
-                    
-//                    Description
-//                    Text(menuTag == 0 ? "Sign up to create your account." : "Sign in to continue to your account.")
-//                        .textCustom(.coreSansC45Regular, 16, Color.col_white.opacity(0.5))
-//                        .padding(.top, 7)
-//                        .hLeading()
+                        .opacity(isSmallIPhone() ? 0 : 1)
                 }
                 .vBottom()
                 .padding(.leading, 24)
                 .opacity(isKeyboardShow ? 1 : 0)
                 
+                CustomPicker()
                 
-            VStack{
-                //Picker
-                Picker(selection: $menuTag) {
-
-                    Text("Registration")
-                      .modifier(
-                        TextModifier(font: .coreSansC65Bold,
-                                     size: 14,
-                                     foregroundColor: .black,
-                                     opacity: 1)
-                      )
-                      .tag(0)
-                    Text("Login")
-                      .modifier(
-                        TextModifier(font: .coreSansC65Bold,
-                                     size: 14,
-                                     foregroundColor: .black,
-                                     opacity: 1)
-                      )
-                      .tag(1)
-                    
-                } label: {
-                    Color.clear
+                VStack(spacing: 0){
+                    switch rootVM.currentPage{
+                    case .registration:
+                        RegisterView(vm: rootVM, keyboardIsShow: $isKeyboardShow)
+                            .padding(.top, 30)
+                        
+                        
+                    case .login:
+                        LoginView(vm: rootVM, keyboardIsShow: $isKeyboardShow)
+                            .padding(.top, 30)
+                        
+                    }
                 }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.top, 16)
-                .padding(.horizontal, 24)
-                
-                TabView(selection: $menuTag){
-                    RegisterView(vm: rootVM)
-                        .onAppear {
-                            rootVM.authServerError = nil
-                            rootVM.password = ""
-                        }
-                        .tag(0)
-                    
-                    LoginView(vm: rootVM)
-                        .onAppear {
-                            rootVM.authServerError = nil
-                            rootVM.password = ""
-                        }.tag(1)
-                }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                
-            }
-            .background(
-                Color.lightOnSurfaceA
-                    
-                    .clipShape(CustomCorner(corners: [.topLeft,.topRight], radius: 16))
-                    .ignoresSafeArea(.all, edges: .bottom)
-            )
-            .vBottom()
-            .frame(height: getRect().height / 2)
+                .background(
+                    Color.col_white
+                        .clipShape(CustomCorner(corners: [.topLeft,.topRight], radius: 16))
+                        .ignoresSafeArea(.all, edges: .bottom)
+                )
+                .vBottom()
+                .frame(height: getRect().height / (isSmallIPhone() ? 2 : 2.3))
             }
         }
         .onChange(of: rootVM.email, perform: { newValue in
-            if !newValue.isEmpty{
-                rootVM.nextButtonIsDisabled = false
-            }else{
-                rootVM.nextButtonIsDisabled = true
+            if rootVM.currentPage == .registration{
+                if !newValue.isEmpty && rootVM.errors.isEmpty && !rootVM.password.isEmpty{
+                    rootVM.nextButtonIsDisabled = false
+                }else{
+                    rootVM.nextButtonIsDisabled = true
+                }
             }
         })
         .onReceive(keyboardPublisher) { newIsKeyboardVisible in
@@ -144,4 +102,54 @@ struct AuthView: View, KeyboardReadable {
           ResetPasswordView()
         })
     }
+    
+    @ViewBuilder
+    func CustomPicker() -> some View {
+        ZStack(alignment: .leading){
+            ZStack(alignment: .leading){
+                Rectangle()
+                    .fill(Color.col_black)
+                    .frame(width: getRect().width / 3, height: 61)
+                    .cornerRadius(radius: 16, corners: [.topLeft, .topRight])
+                    .transition(.slide)
+                    .offset(x: rootVM.currentPage == .registration ? 0 : (getRect().width / 2 + getRect().width / 6) + 5, y: -7)
+                
+                
+                Rectangle()
+                    .fill(Color.col_white)
+                    .frame(width: getRect().width / 2, height: 61)
+                    .cornerRadius(radius: 16, corners: [.topLeft, .topRight])
+                    .transition(.slide)
+                    .offset(x: rootVM.currentPage == .registration ? 0 : (getRect().width / 2 + 5))
+            }
+            
+            HStack{
+                Text("Registration")
+                    .textCustom(rootVM.currentPage == .registration ? .coreSansC65Bold : .coreSansC45Regular, 16, Color.col_black)
+                    .frame(width: getRect().width / 2, height: 61)
+                    .onTapGesture {
+                        withAnimation{
+                            rootVM.currentPage = .registration
+                            rootVM.nextButtonIsDisabled = true
+                        }
+                    }
+                Spacer()
+                
+                Text("Login")
+                    .textCustom(rootVM.currentPage == .login ? .coreSansC65Bold : .coreSansC45Regular, 16, Color.col_black)
+                    .frame(width: getRect().width / 2, height: 61)
+                    .onTapGesture {
+                        withAnimation {
+                            rootVM.currentPage = .login
+                        }
+                    }
+            }
+        }
+        .offset(y: 16)
+    }
+}
+
+enum AuthViewPages{
+    case registration
+    case login
 }

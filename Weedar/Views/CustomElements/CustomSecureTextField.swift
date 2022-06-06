@@ -8,11 +8,19 @@
 import SwiftUI
 
 struct CustomSecureTextField: View {
+    
     @Binding var text: String
+    @Binding var state: TextFieldState
     @State var title: String = "Title"
     @State var placeholder: String = "PlaceHolder"
-    @State private var focused: Bool = false
+    @State var contentType: UITextContentType?
+    @State var keyboardType: UIKeyboardType = .default
+    
     @State var showPassword = false
+    @State private var strokeColor = Color.col_borders
+    
+   
+    
     var body: some View {
         VStack{
             //textfield placeholder
@@ -22,44 +30,26 @@ struct CustomSecureTextField: View {
                 .padding(.leading, 12)
                 .opacity(0.7)
             
+            
             ZStack{
-                //text placeholder
-                Text(placeholder)
-                    .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
-                    .opacity(0.3)
-                    .opacity(text == "" ? 1 : 0)
-                    .hLeading()
-                    .padding(.leading, 12)
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(strokeColor, lineWidth: 2)
                     .frame(height: 48)
-                    .offset(y: 2)
-                
                 HStack{
                     if showPassword{
-                        
-                        //show Text view
-                        TextField("", text: $text, onEditingChanged: { focused in
-                            withAnimation(.easeIn.speed(4)){
-                                self.focused = focused
-                            }
-                        })
-                            .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
-                            .padding(.leading, 12)
-                            .offset(y: 2)
+                        PasswordTextFieldWrapper(text: $text,
+                                                 isSecureTextEntry: .constant(false),
+                                                 becomeFirstResponder: .constant(false),
+                                                 placeholder: placeholder,contentType: contentType ,keyboardType: keyboardType)
+                        .padding(.leading, 12)
+                            
                             
                     } else {
-                        
-                        //hide Text view
-                        SecureField("", text: $text)
-                            .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
-                            .padding(.leading, 12)
-                            .onChange(of: text) { newValue in
-                                if newValue == ""{
-                                    self.focused = false
-                                }else{
-                                    self.focused = true
-                                }
-                            }
-                            .offset(y: -2)
+                        PasswordTextFieldWrapper(text: $text,
+                                                 isSecureTextEntry: .constant(true),
+                                                 becomeFirstResponder: .constant(false),
+                                                 placeholder: placeholder,contentType: contentType ,keyboardType: keyboardType)
+                        .padding(.leading, 12)
                     }
                     
                     Spacer()
@@ -76,14 +66,17 @@ struct CustomSecureTextField: View {
                 }
             }
             .frame(height: 48)
-            .overlay(
-                //color
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color.lightSecondaryE.opacity(0.1), lineWidth: 2)
-                    .frame(height: 48)
-            )
         }
         .padding(.horizontal, 24)
-        
+        .onChange(of: state) { newValue in
+            switch newValue{
+            case .def:
+                strokeColor = Color.col_borders
+            case .success:
+                strokeColor = Color.col_green_second
+            case .error:
+                strokeColor = Color.col_red_second
+            }
+        }
     }
 }

@@ -26,8 +26,8 @@ struct OrderReviewView: View {
             if orderNavigationManager.showOrderSuccessView{
                 OrderSuccessView()
             }else{
+                ZStack{
                 VStack{
-                    
                     //main scroll
                     ScrollView(.vertical, showsIndicators: false) {
                         
@@ -39,17 +39,28 @@ struct OrderReviewView: View {
                         
                         //items view
                         VStack(spacing: 0){
-                            if let productsInCart = cartManager.cartData?.cartDetails{
-                                ForEach(productsInCart, id: \.self) { product in
-                                    ProductCompactRow(data: OrderDetailModel(quanity: product.quantity, product: product.product))
-                                    
-                                    CustomDivider()
-                                        .opacity(productsInCart.last != product ? 1 : 0)
+                            VStack{
+                                if let productsInCart = cartManager.cartData?.cartDetails{
+                                    ForEach(productsInCart, id: \.self) { product in
+                                        ProductCompactRow(data: OrderDetailModel(quanity: product.quantity, product: product.product))
+                                        
+                                        CustomDivider()
+                                            .opacity(productsInCart.last != product ? 1 : 0)
+                                        
+                                    }
                                     
                                 }
-                                .background(Color.col_bg_second.cornerRadius(12))
-                                .padding(.horizontal, 24)
                             }
+                            .background(
+                                RadialGradient(colors: [Color.col_gradient_blue_second,
+                                                        Color.col_gradient_blue_first],
+                                               center: .center,
+                                               startRadius: 0,
+                                               endRadius: 220)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .opacity(0.25)
+                            )
+                            .padding(.horizontal, 24)
                         
                             
                             //Pricing view
@@ -57,59 +68,65 @@ struct OrderReviewView: View {
                                 .padding(.top, 24)
                                 .padding(.horizontal, 24)
                             
-                            if let cartData = cartManager.cartData{
-                                if cartData.discount > 0{
-                                    Text("Your $\(cartData.discount.formattedString(format: .int)) discount is applied")
-                                        .textCustom(.coreSansC45Regular, 16, Color.col_green_main)
-                                        .frame(maxWidth: .infinity)
-                                        .frame(height: 48)
-                                        .background(Color.col_green_second.cornerRadius(12))
-                                        .padding(.top, 10)
-                                        .padding(.horizontal, 24)
-                                }
+                            HStack{
+                                Text("Delivery details")
+                                    .textCustom(.coreSansC65Bold
+                                                , 14, Color.col_text_second)
+                                    .padding(.top, 24)
+                                    .padding(.leading, 35)
+                                    .hLeading()
+                                
+                                Image("edit_icon")
+                                    .onTapGesture {
+                                        if !vm.disableNavButton{
+                                            orderNavigationManager.showOrderReviewView = false
+                                        }
+                                    }
+                                    .padding(.trailing, 25)
+                                    .offset(y: 9)
+                                
                             }
-                            
-                            
-                            Text("Delivery details")
-                                .textCustom(.coreSansC65Bold
-                                            , 14, Color.col_text_second)
-                                .padding(.top, 24)
-                                .padding(.leading, 35)
-                                .hLeading()
                             
                             //delivery user data
                             UserInfoView()
                         }
                         .padding(.top, 8)
-                        
-                        Text("Our courier will ask you to show your ID \nto verify your identity and age.")
-                            .foregroundColor(ColorManager.Profile.lilacColor)
-                            .padding(.top, 24)
-                            .padding(.horizontal, 24)
-                            .hLeading()
-                        
-                        RequestButton(state: $vm.buttonState, isDisabled: $vm.buttonIsDisabled, showIcon: false, title: "Make order") {
+                    }
+                }
+                    
+                    
+                    RequestButton(state: $vm.buttonState,
+                                  isDisabled: $vm.buttonIsDisabled,
+                                  showIcon: false,
+                                  title: "Place order") {
+                        DispatchQueue.main.async {
+                            Logger.log(message: "start ____", event: .debug)
                             vm.disableNavButton = true
+                            vm.buttonState = .loading
                             print("tap button")
                             vm.confirmOrder(orderDetailsReview: data) { success in
                                 if success {
                                     print("succsess")
+                                    Logger.log(message: "end ____", event: .debug)
+                                    vm.buttonState = .success
                                     orderNavigationManager.showOrderSuccessView = true
                                     if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                                    Amplitude.instance().logEvent("make_order")
+                                        Amplitude.instance().logEvent("make_order")
                                     }
                                 } else {
-                                    print("errrrorrr")
                                     vm.buttonState = .def
                                     vm.showAlert = true
                                     vm.disableNavButton = false
                                 }
                             }
                         }
-                        .padding(.horizontal, 24)
-                        .padding(.top)
+                        
                     }
+                                  .padding(.horizontal, 24)
+                                  .background(Color.col_white)
+                                  .vBottom()
+                                  .padding(.bottom, isSmallIPhone() ? 16 : 0)
+                    
                 }
                 .alert(isPresented: self.$vm.showAlert, content: {
                     Alert(title: Text("Order creation failed"),
@@ -135,7 +152,7 @@ struct OrderReviewView: View {
                 }
                 .onTapGesture {
                     if !vm.disableNavButton{
-                        self.mode.wrappedValue.dismiss()
+                        orderNavigationManager.showOrderReviewView = false
                     }
                 }
                 .opacity(orderNavigationManager.showOrderSuccessView ? 0 : 1)

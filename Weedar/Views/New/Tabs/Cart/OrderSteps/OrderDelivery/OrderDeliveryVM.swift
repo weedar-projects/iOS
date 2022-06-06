@@ -99,11 +99,7 @@ class OrderDeliveryVM: ObservableObject {
             }
         }
     }
-    
-    init(){
-        getUserData()
-    }
-    
+
     func saveUserInfo() {
         saveAdressAndName(userId: userData?.id ?? 0,
                           username: name,
@@ -168,39 +164,30 @@ class OrderDeliveryVM: ObservableObject {
         }
     }
     
-    func getUserData() {
-        API.shared.request(rout: .getCurrentUserInfo, method: .get) { result in
-            switch result {
-            case let .success(json):
-                let userData = UserModel(json: json)
-                self.userData = userData
-                self.userInfo = UserInfo(name: userData.name,
-                                         phone: userData.phone,
-                                         city: userData.addresses.first?.city,
-                                         addressLine1: userData.addresses.first?.addressLine1,
-                                         addressLine2: userData.addresses.first?.addressLine2 ?? "",
-                                         zipCode: userData.addresses.first?.zipCode,
-                                         latitudeCoordinate: userData.addresses.first?.latitudeCoordinate ?? 0,
-                                         longitudeCoordinate: userData.addresses.first?.longitudeCoordinate ?? 0)
-               
-                if let address =  userData.addresses.first?.addressLine1{
-                    self.address = address
-                    self.lastAddress = address
-                    self.addressTFState = .success
-                }else{
-                }
-                
-                if  !userData.name.isEmpty {
-                    self.name = userData.name
-                    self.lastName = userData.name
-                    self.usernameTFState = .success
-                }
-                
-                self.zipcodeAndNameValidation()
-            case let .failure(error):
-                print("error to get user data \(error)")
-            }
+    func validateUserData(userData: UserModel) {
+        self.userData = userData
+        self.userInfo = UserInfo(name: userData.name,
+                                 phone: userData.phone,
+                                 city: userData.addresses.first?.city,
+                                 addressLine1: userData.addresses.first?.addressLine1,
+                                 addressLine2: userData.addresses.first?.addressLine2 ?? "",
+                                 zipCode: userData.addresses.first?.zipCode,
+                                 latitudeCoordinate: userData.addresses.first?.latitudeCoordinate ?? 0,
+                                 longitudeCoordinate: userData.addresses.first?.longitudeCoordinate ?? 0)
+        
+        if let address =  userData.addresses.first?.addressLine1{
+            self.address = address
+            self.lastAddress = address
+            self.addressTFState = .success
         }
+        
+        if  !userData.name.isEmpty {
+            self.name = userData.name
+            self.lastName = userData.name
+            self.usernameTFState = .success
+        }
+        
+        self.zipcodeAndNameValidation()
     }
     
     
@@ -304,10 +291,11 @@ class OrderDeliveryVM: ObservableObject {
                                    exciseTaxSum: orderResponse.exciseTaxSum,
                                    totalWeight:  self.totalGramWeight().formattedString(format: .percent),
                                    salesTaxSum: orderResponse.salesTaxSum,
-                                   localTaxSum: orderResponse.cityTaxSum, discount: orderResponse.discount,
+                                   localTaxSum: orderResponse.cityTaxSum,
+                                   discount: orderResponse.discount,
                                    taxSum: orderResponse.taxSum,
+                                   sum: orderResponse.sum,
                                    state: orderResponse.state)
-                self.saveUserInfo()
                 
                 print("order response \(orderResponse)")
                 finished(true, "Success")
@@ -335,7 +323,7 @@ class OrderDeliveryVM: ObservableObject {
             "zipCode" : area
         ]
         
-        API.shared.requestData(rout: .checkArea, method: .post, parameters: params,encoding: JSONEncoding.default) { result in
+        API.shared.requestData(rout: .checkArea, method: .post, parameters: params, encoding: JSONEncoding.default) { result in
             switch result{
             case let .success(data):
                 guard let value = self.boolValue(data: data) else { return }

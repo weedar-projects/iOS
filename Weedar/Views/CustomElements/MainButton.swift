@@ -25,17 +25,15 @@ struct MainButton: View {
                     Image(icon)
                         .resizable()
                         .frame(width: iconSize, height: iconSize)
-                        .foregroundColor(Color.lightOnSurfaceB.opacity(1.0))
+                        .foregroundColor(Color.col_text_white)
                 }
                 Text(title.localized)
-                    .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
-                //
-                //                    Image("welcome-content-arrow-right")
-                //                        .frame(width: 24, height: 24)
+                    .offset(y: 2)
+                    .textCustom(.coreSansC65Bold, 16, Color.col_text_white)
             }
             .frame(height: 48)
             .frame(maxWidth: .infinity)
-            .background(Color.col_yellow_main)
+            .background(Color.col_black)
             .cornerRadius(12)
             
         }

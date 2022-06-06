@@ -21,11 +21,11 @@ struct EffectButtonView: View {
         .overlay(
             //color
             RoundedRectangle(cornerRadius: 12)
-                .stroke(isSelected ? Color.col_purple_main : Color.col_borders, lineWidth: 2)
+                .stroke(isSelected ? Color.col_gradient_blue_first : Color.col_borders, lineWidth: 2)
                 .frame(height: 46)
         )
         .frame(height: 48)
-        .background(Color.col_purple_main.opacity(isSelected ? 0.05 : 0))
+        .background(Color.col_blue_main.opacity(isSelected ? 0.05 : 0).cornerRadius(12))
         .onAppear {
             if catalogFilters.effects == nil {
                 catalogFilters.effects = Set<Int>()

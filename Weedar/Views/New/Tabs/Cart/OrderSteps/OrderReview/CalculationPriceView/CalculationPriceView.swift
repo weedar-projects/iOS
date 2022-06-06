@@ -53,11 +53,17 @@ struct CalculationPriceView: View {
                         .padding(.trailing, 16)
                 }
                 
-                    
-
-                
             }
-            .background(lightText ? nil : Color.col_bg_second.clipShape(CustomCorner(corners: showCalculations ? [.topRight, .topLeft] : .allCorners, radius: 12)))
+            .background(
+                lightText ? nil :
+                RadialGradient(colors: [Color.col_gradient_blue_second,
+                                        Color.col_gradient_blue_first],
+                               center: .center,
+                               startRadius: 0,
+                               endRadius: 220)
+                .clipShape(CustomCorner(corners: showCalculations ? [.topRight, .topLeft] : .allCorners, radius: 12))
+                .opacity(0.25)
+            )
             .onTapGesture {
                 withAnimation(.spring()) {
                     showCalculations.toggle()
@@ -71,7 +77,7 @@ struct CalculationPriceView: View {
                 VStack(spacing: 13){
                     
                     CalculationRow(title: "Product price",
-                                   value:  $data.totalSum,
+                                   value:  $data.sum,
                                    lightText: lightText)
                     
                     CalculationRow(title: "Delivery fee",
@@ -79,7 +85,7 @@ struct CalculationPriceView: View {
                                    lightText: lightText)
                     
                     CalculationRow(title: "Excise tax",
-                                   value: $data.taxSum,
+                                   value: $data.exciseTaxSum,
                                    lightText: lightText)
                     
                     CalculationRow(title: "Sale tax",
@@ -89,15 +95,29 @@ struct CalculationPriceView: View {
                     CalculationRow(title: "Local tax",
                                    value: $data.localTaxSum,
                                    lightText: lightText )
-                    if data.discount > 0 && showDiscount{
-                    CalculationRow(title: "Discount",
-                                   value: $data.discount,
-                                   lightText: lightText,
-                                   isDiscount: true)
+                    
+                    if let discount = data.discount, discount.value > 0{
+                        HStack{
+                            Text(discount.type == .firstOrder ? "First order discount" : "Promo code discount")
+                                .textCustom(.coreSansC45Regular, 16, lightText ? Color.col_text_white : Color.col_green_main)
+                            
+                            Spacer()
+                            
+                            Text("-\(discount.measure == .dollar ? "$" : "%")\(discount.value.formattedString(format: .percent))")
+                                .textCustom(.coreSansC45Regular, 16, lightText ? Color.col_text_white : Color.col_green_main)
+                        }
                     }
                 }
                 .padding(15)
-                .background(lightText ? nil : Color.col_bg_second.clipShape(CustomCorner(corners: [.bottomLeft, .bottomRight], radius: 12)))
+                .background(
+                    lightText ? nil :
+                    RadialGradient(colors: [Color.col_gradient_blue_second,
+                                            Color.col_gradient_blue_first],
+                                   center: .center,
+                                   startRadius: 0,
+                                   endRadius: 220)
+                    .clipShape(CustomCorner(corners: [.bottomLeft, .bottomRight], radius: 12))                    .opacity(0.25)
+                )
             }
         }
         .onAppear {
