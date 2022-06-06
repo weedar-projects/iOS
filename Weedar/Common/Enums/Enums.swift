@@ -25,6 +25,7 @@ enum CustomFont: String {
     case coreSansC65Bold = "CoreSansC-65Bold"
     case coreSansC35Light = "CoreSansC-35Light"
     case coreSansC45Regular = "CoreSansC-45Regular"
+    case coreSansC55Medium = "CoreSansC-55Medium"
 }
 
 enum ActivityStatus: String {

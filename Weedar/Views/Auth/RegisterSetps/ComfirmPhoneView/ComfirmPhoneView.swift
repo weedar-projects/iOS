@@ -17,10 +17,10 @@ struct ComfirmPhoneView: View {
     @EnvironmentObject var sessionManager: SessionManager
     @EnvironmentObject var coordinatorViewManager: CoordinatorViewManager
     @EnvironmentObject var orderTrackerManager: OrderTrackerManager
+    @EnvironmentObject var tabBarManager: TabBarManager
     
     var body: some View{
         VStack{
-            
         //title
         Text("Verify your number")
           .lineSpacing(2.8)
@@ -52,11 +52,11 @@ struct ComfirmPhoneView: View {
                     .modifier(
                         TextModifier(font: .coreSansC45Regular,
                                      size: 12,
-                                     foregroundColor: .lightSecondaryB,
+                                     foregroundColor: Color.col_pink_main,
                                      opacity: 1.0)
                     )
                     .hLeading()
-                    .padding(.horizontal, 36)
+                    .padding(.horizontal, 14)
                     .padding(.top, 6)
             }
 
@@ -68,8 +68,8 @@ struct ComfirmPhoneView: View {
             .modifier(
               TextModifier(font: .coreSansC45Regular,
                            size: 16,
-                           foregroundColor: .lightOnSurfaceB,
-                           opacity: 0.4)
+                           foregroundColor: Color.col_text_second,
+                           opacity: 1)
             )
 
           Spacer()
@@ -84,8 +84,8 @@ struct ComfirmPhoneView: View {
               .modifier(
                 TextModifier(font: .coreSansC65Bold,
                              size: 16,
-                             foregroundColor: .lightSecondaryE,
-                             opacity: 0.4)
+                             foregroundColor: Color.col_text_main,
+                             opacity: 1)
               )
           } else {
 
@@ -99,7 +99,7 @@ struct ComfirmPhoneView: View {
                 .modifier(
                   TextModifier(font: .coreSansC65Bold,
                                size: 16,
-                               foregroundColor: .lightSecondaryE,
+                               foregroundColor: Color.col_text_main,
                                opacity: 1.0)
                 )
             }
@@ -112,16 +112,17 @@ struct ComfirmPhoneView: View {
 //            rootVM.currentPage =  2
 //            rootVM.updateIndicatorValue()
             print("show onchange register")
-            orderTrackerManager.connect()
+//            orderTrackerManager.connect()
             UserDefaultsService().set(value: false, forKey: .needToFillUserData)
             sessionManager.needToFillUserData = false
             coordinatorViewManager.currentRootView = .main
+            tabBarManager.currentTab = .catalog
         }
         .onAppear {
             vm.errorMessage = ""
             vm.isErrorShow = false
-            sessionManager.getUserData {
-                vm.userId = sessionManager.user?.id ?? 0
+            sessionManager.userData { user in
+                vm.userId = user.id
             }
         }
     }

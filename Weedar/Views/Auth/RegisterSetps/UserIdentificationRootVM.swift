@@ -49,7 +49,7 @@ class UserIdentificationRootVM: ObservableObject {
     }
     
     //preview step page
-    func backPage(){
+    func backPage(logout: @escaping () -> Void = {}){
         if currentPage > 0{
             if currentPage == 2{
                 currentPage = 0
@@ -58,6 +58,9 @@ class UserIdentificationRootVM: ObservableObject {
                 currentPage -= 1
                 updateIndicatorValue()
             }
+        }else{
+            logout()
         }
     }
 }
+

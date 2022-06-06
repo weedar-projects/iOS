@@ -61,11 +61,28 @@ struct ProductCatalogRowView: View {
                     Spacer()
                     
                     HStack(spacing: 4){
-                        Text("THC: \(item.thc.formattedString(format: .percent))%")
-                            .textCustom(.coreSansC65Bold, 12, Color.col_red_main)
+                        Text("THC: \(item.thc.formattedString(format: .int))%")
+                            .textCustom(.coreSansC65Bold, 12, Color.col_pink_main)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 5)
-                            .background(Color.col_red_second.cornerRadius(25))
+                            .background(
+                                ZStack{
+                                    Color.col_red_second
+                                    
+                                    Capsule()
+                                        .fill(Color.col_white)
+                                        .blur(radius: 9)
+                                        .scaleEffect(1.3)
+                                    
+                                    Capsule()
+                                        .fill(Color.col_white)
+                                        .blur(radius: 4)
+                                        .scaleEffect(0.4)
+                                        .opacity(0.5)
+                                        
+                                }
+                                .clipShape(Capsule())
+                            )
                         
                         Text("\(item.strain.name)")
                             .textCustom(.coreSansC65Bold, 12, Color.col_blue_main)
@@ -80,7 +97,7 @@ struct ProductCatalogRowView: View {
                     
                     //price
                     Text("$\(item.price.formattedString(format: .percent))")
-                        .textCustom(.coreSansC65Bold, 16, Color.col_purple_main)
+                        .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
                     
                     //gram
                     Text("\(item.gramWeight.formattedString(format: .gramm))g / \(item.ounceWeight.formattedString(format: .ounce))oz")
@@ -90,8 +107,6 @@ struct ProductCatalogRowView: View {
             .padding(.leading, 8)
             
             Spacer()
-            
-            
             
             ZStack{
                 if vm.productAddToCart{
@@ -105,6 +120,7 @@ struct ProductCatalogRowView: View {
                 productInCartAnimation = newValue
             }
             .onTapGesture {
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
                 cartManager.productQuantityInCart(productId: item.id, quantity: .add)
                 vm.product_qty += 1
                 if UserDefaults.standard.bool(forKey: "EnableTracking"){
@@ -122,23 +138,37 @@ struct ProductCatalogRowView: View {
     
     @ViewBuilder
     func addButton() -> some View {
-        Circle()
-            .fill(Color.col_yellow_main)
-            .frame(width: 40, height: 40)
-            .overlay(Image("plus_purple")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 14, height: 14))
+        ZStack{
+            RadialGradient(colors: [Color.col_gradient_blue_second,
+                                    Color.col_gradient_blue_first],
+                           center: .center,
+                           startRadius: 0,
+                           endRadius: 25)
+            
+            Image("icon_plus")
+                .colorInvert()
+            
+        }
+        .clipShape(Circle())
+        .frame(width: 40, height: 40)
+        
     }
     @ViewBuilder
     func successButton() -> some View {
-        Circle()
-            .fill(Color.col_green_main)
-            .frame(width: 40, height: 40)
-            .overlay(Image("checkmark")
+        
+        ZStack{
+            RadialGradient(colors: [Color.col_gradient_green_second,
+                                    Color.col_gradient_green_first],
+                           center: .center,
+                           startRadius: 0,
+                           endRadius: 25)
+            Image("checkmark")
                         .resizable()
-                        .foregroundColor(Color.col_white)
+                        .foregroundColor(Color.col_black)
                         .scaledToFit()
-                        .frame(width: 14, height: 14))
+                        .frame(width: 14, height: 14)
+        }
+        .clipShape(Circle())
+        .frame(width: 40, height: 40)
     }
 }

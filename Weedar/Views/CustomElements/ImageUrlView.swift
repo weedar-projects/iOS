@@ -24,6 +24,7 @@ struct ImageUrlView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: width)
+                    .scaleEffect(0.8)
             } else {
                 Image("Product_Detail_Placeholder")
                     .resizable()

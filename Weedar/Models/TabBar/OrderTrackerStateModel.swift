@@ -16,6 +16,6 @@ struct OrderTrackerStateModel: Hashable {
     }
     var id: Int
     var state: OrderTrackerState
-    var color: Color
+    var colors: [Color]
     var deliveryText: String
 }

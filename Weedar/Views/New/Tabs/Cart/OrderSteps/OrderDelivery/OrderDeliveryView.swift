@@ -28,7 +28,7 @@ struct OrderDeliveryView: View {
     var body: some View {
         ZStack{
             NavigationLink(isActive: $orderNavigationManager.showOrderReviewView) {
-                OrderReviewView(data: vm.orderDetailsReview ?? OrderDetailsReview(orderId: 0, totalSum: 0, exciseTaxSum: 0, salesTaxSum: 0, localTaxSum: 0, discount: 0, taxSum: 0, state: 0))
+                OrderReviewView(data: vm.orderDetailsReview ?? OrderDetailsReview(orderId: 0, totalSum: 0, exciseTaxSum: 0, salesTaxSum: 0, localTaxSum: 0, discount: nil, taxSum: 0, sum: 0, state: 0))
             } label: {
                 Color.clear
             }.isDetailLink(false)
@@ -87,10 +87,11 @@ struct OrderDeliveryView: View {
                             .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 14))
                             .padding(.leading, 12)
                             .opacity(0.7)
+                        
                         TextField("Enter your address", text: $vm.address) { isEditing in
                             showDelivery = isEditing
                         }
-                        .modifier(TextFieldStyles.TextFieldStyle(strokeColor: Binding<Color>.constant(vm.addressTFState == .success ? Color.col_green_main.opacity(0.6) : vm.addressTFState == .error ?  Color.col_red_main .opacity(0.6): vm.addressTFState == .def ?  Color.col_borders : Color.clear)))
+                        .modifier(TextFieldStyles.TextFieldStyle(strokeColor: Binding<Color>.constant(vm.addressTFState == .success ? Color.col_green_second : vm.addressTFState == .error ?  Color.col_red_second: vm.addressTFState == .def ?  Color.col_borders : Color.clear)))
                       
                     }
                     .padding(.horizontal, 24)
@@ -104,53 +105,73 @@ struct OrderDeliveryView: View {
                     
                     if showDelivery, vm.address != "", vm.placesCount != 0{
                     ScrollView(.vertical, showsIndicators: true, content: {
-                        ForEach(vm.places?.predictions ?? [], id: \.self) { item in
-                            VStack(alignment: .leading){
-                                Text("\(item.predictionDescription)")
-                                    .foregroundColor(.black)
-                                    .onTapGesture {
-                                        vm.selectionPlace = nil
-                                        vm.address = ""
-                                        vm.addressIsEditing = false
-                                        vm.selectionPlace = item
-                                        UIApplication.shared.endEditing()
-                                    }
-                                Divider()
+                        if let predictions = vm.places?.predictions{
+                            ForEach(predictions, id: \.self) { item in
+                                VStack(alignment: .leading){
+                                    Text("\(item.predictionDescription)")
+                                        .foregroundColor(.black)
+                                        .onTapGesture {
+                                            vm.selectionPlace = nil
+                                            vm.address = ""
+                                            vm.addressIsEditing = false
+                                            vm.selectionPlace = item
+                                            UIApplication.shared.endEditing()
+                                        }
+                                    Divider()
+                                }
+                                .padding(.horizontal, 36)
                             }
-                            .padding(.horizontal, 36)
                         }
+                        
                     })
                         .frame(height: getRect().height / 4, alignment: .top)
                         .animation(.linear(duration: 0.35))
+                        
                     }
                     
                     if !vm.addressErrorMessage.isEmpty{
                         Text(vm.addressErrorMessage)
-                            .textCustom(.coreSansC45Regular, 14, Color.col_red_main)
+                            .textCustom(.coreSansC45Regular, 14, Color.col_pink_main)
                             .padding(.leading, 36)
                             .padding(.top, 10)
                             
                             .hLeading()
                     }
                     
-                    RequestButton(state: $vm.buttonState, isDisabled: $vm.buttonIsDisabled, showIcon: false, title: "Review order") {
-                        vm.disableNavButton = true
-                        if vm.needToLoadDoc{
-                            vm.saveUserInfo()
-                            orderNavigationManager.needToShowDocumentCenter = true
-                            vm.disableNavButton = false
-                        }else{
-                            self.makeOrder()
-                            print("MAKE ORdeRrr")
-                        }
-                    }
-                    .padding(.top, 16)
-                    .ignoresSafeArea(.keyboard)
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 45)
+                    Rectangle()
+                        .fill(Color.clear)
+                        .frame(width: 10, height: 1)
+                        .padding(.bottom, 300)
                 }
+
             }
+            
+            VStack{
+                Text("Our courier will ask you to show your ID \nto verify your identity and age.")
+                    .textDefault()
+                    .multilineTextAlignment(.center)
+                
+                RequestButton(state: $vm.buttonState, isDisabled: $vm.buttonIsDisabled, showIcon: false, title: "Review order") {
+                    vm.disableNavButton = true
+                    if vm.needToLoadDoc{
+                        vm.saveUserInfo()
+                        orderNavigationManager.needToShowDocumentCenter = true
+                        vm.disableNavButton = false
+                    }else{
+                        self.makeOrder()
+                        print("MAKE ORdeRrr")
+                    }
+                }
+                .padding(.top, 8)
+                .padding(.horizontal, 24)
+            }
+            .background(Color.col_white)
+            .padding(.bottom, isSmallIPhone() ? 16 : 0)
+            .vBottom()
+            
+            
         }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .navigationTitle("Delivery details")
         .navigationBarBackButtonHidden(true)
         .toolbar(content: {
@@ -171,8 +192,8 @@ struct OrderDeliveryView: View {
         .onAppear {
             tabBarManager.hide()
             vm.validName = !vm.name.isEmpty
-            vm.zipcodeAndNameValidation()
-            sessionManager.userData { user in
+            sessionManager.userData(withUpdate: true) { user in
+                vm.validateUserData(userData: user)
                 if user.passportPhotoLink.isEmpty{
                     vm.needToLoadDoc = true
                 }else{

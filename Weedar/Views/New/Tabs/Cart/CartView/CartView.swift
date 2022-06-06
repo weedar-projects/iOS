@@ -47,25 +47,19 @@ struct CartView: View {
                     //product list view
                     if let productsInCart = cartManager.cartData?.cartDetails{
                         ForEach(productsInCart, id: \.self) { product in
-                                ProductCartRowView(item: product.product,
-                                                   quantityField: String(product.quantity))
+                            ProductCartRowView(needToAnim: productsInCart.first == product,
+                                               item: product.product,
+                                               quantityField: String(product.quantity))
                                     .padding(.horizontal, 24)
                                     .padding(.top, 24)
                             }
                     }
                     
+                        DiscountView()
                     //Prices
                         OrderCalculationsList()
                             .padding(.top, 24)
                             .padding(.horizontal, 24)
-                    
-                    if let data = cartManager.cartData, data.totalSum < 50{
-                        //Minimum price info
-                        Text("Minimum order amount is $50.")
-                            .hLeading()
-                            .textSecond()
-                            .padding([.horizontal, .top], 24)
-                    }
                     
                     //create order button
                     
@@ -83,12 +77,12 @@ struct CartView: View {
                             }
                         }
                     }
-                    .padding(.top, 24)
+                    .padding(.top, 32)
                     .padding(.horizontal, 24)
                     .padding(.bottom, 50)
                     .padding(.bottom, tabBarManager.showOrderTracker ? 95 : isSmallIPhone() ? 35 : 25)
-                    .opacity(cartData.totalSum < 50 ? 0.5 : 1)
-                    .disabled(cartData.totalSum < 50)
+                    .opacity(cartData.priceCorresponds ? 1 : 0.5)
+                    .disabled(!cartData.priceCorresponds)
                     }
                     Spacer()
                 }
@@ -96,13 +90,12 @@ struct CartView: View {
             }
             
         }
-        
         .navBarSettings("Cart", backBtnIsHidden: true)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 ZStack{
                     Text("Clear cart")
-                        .foregroundColor(Color.col_red_main)
+                        .foregroundColor(Color.col_pink_button)
                 }.onTapGesture {
                     showAlert = true
                 }
@@ -116,7 +109,9 @@ struct CartView: View {
                                     ))
             }
         }
-        
+        .sheet(isPresented: $vm.showDiscontCodeView, content: {
+            DiscontCodeView(showView: $vm.showDiscontCodeView)
+        })
 //        .onAppear() {
 //            cartManager.updateCalculations()
 //            vm.validateToNext(concentrated: cartManager.totalConcentrated,
@@ -126,6 +121,87 @@ struct CartView: View {
 //
 //            cartManager.checkDiscount()
 //        }
+    }
+    
+    
+    @ViewBuilder
+    func DiscountView() -> some View {
+        HStack{
+            ZStack{
+                ZStack{
+                    Color.col_gradient_green_first
+                    
+                    Capsule()
+                        .fill(Color.col_white)
+                        .blur(radius: 23)
+                        .scaleEffect(1.2)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                
+                
+                if let discount = cartManager.cartData?.discount, discount.value > 0{
+                    if discount.type == .firstOrder{
+                        Text("Your $\(discount.value.formattedString(format: .int)) discount is applied")
+                            .textCustom(.coreSansC45Regular, 16, Color.col_green_main)
+                            .offset(y: 2)
+                        
+                    }else{
+                        HStack{
+                            Text("Promo code applied")
+                                .textCustom(.coreSansC45Regular, 16, Color.col_green_main)
+                                .offset(y: 2)
+                            
+                            Spacer()
+                            
+                            Image("checkmark")
+                                .colorInvert()
+                                .colorMultiply(Color.col_green_main)
+                                .scaleEffect(0.5)
+                        }
+                        .padding(.horizontal, 18)
+                    }
+                    
+                }else{
+                    HStack{
+                        Image.ticket_discount
+                            .colorMultiply(Color.col_green_main)
+                        
+                        Text("Enter a promo code")
+                            .textCustom(.coreSansC65Bold, 16, Color.col_green_main)
+                    }
+                }
+            }
+            .frame(height: 48)
+            .padding(cartManager.cartData?.discount.type == .promoCode &&
+                     cartManager.cartData?.discount.value ?? 0 > 0 ? .leading : .horizontal, 24)
+            .padding(.top, 34)
+            .onTapGesture {
+                if let discount = cartManager.cartData?.discount, discount.type == .promoCode{
+                    vm.showDiscontCodeView = true
+                }
+            }
+            
+                if let discount = cartManager.cartData?.discount, discount.value > 0, discount.type == .promoCode{
+                    Button {
+                        self.cartManager.removePromocode()
+                    } label: {
+                        Image("xmark")
+                            .resizable()
+                            .frame(width: 10, height: 10)
+                            .padding(7)
+                            
+                            .overlay(
+                                Circle()
+                                    .stroke(Color.col_black, lineWidth: 1)
+                            )
+                            .padding(.trailing, 24)
+                            .padding(.top, 32)
+                            .padding(.leading, 7)
+                    }
+
+                }
+        }
+        
     }
 }
 

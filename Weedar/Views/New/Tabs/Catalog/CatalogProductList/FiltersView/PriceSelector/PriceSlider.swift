@@ -23,7 +23,7 @@ struct PriceSlider: View {
 
             Rectangle()
                 .fill(
-                    Color.col_purple_main
+                    Color.col_black
                 )
                 .frame(width: priceTo - priceFrom, height: 2)
                 .offset(x: priceFrom + 20)
@@ -31,7 +31,7 @@ struct PriceSlider: View {
             HStack(spacing: 0) {
                 Circle()
                     .fill(
-                        Color.col_purple_main
+                        Color.col_black
                     )
                     .frame(width: 20, height: 20)
                     .offset(x: priceFrom)
@@ -46,7 +46,7 @@ struct PriceSlider: View {
                 
                 Circle()
                     .fill(
-                        Color.col_purple_main
+                        Color.col_black
                     )
                     .frame(width: 20, height: 20)
                     .offset(x: priceTo)

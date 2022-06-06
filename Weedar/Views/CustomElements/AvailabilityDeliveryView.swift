@@ -35,17 +35,16 @@ struct AvailabilityDeliveryView: View {
                         
                 } else if deliveryState == .notFound{
                     Image(systemName: "xmark")
-                        .foregroundColor(Color.col_red_main)
+                        .foregroundColor(Color.col_pink_button)
                         .font(.system(size: 11))
                 }
                 
                 Text("Delivery")
-                    .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 14))
-                    .foregroundColor(textColorDelivery)
+                    .textCustom(.coreSansC45Regular, 14, textColorDelivery)
             }
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(borderColorDelivery.opacity(0.6), lineWidth: 2)
+                    .stroke(borderColorDelivery, lineWidth: 2)
                     .frame(width: (getRect().width / 2.4) ,height: 40)
             )
             .frame(width: (getRect().width / 2.4) ,height: 40)
@@ -68,11 +67,11 @@ struct AvailabilityDeliveryView: View {
                 self.borderColorDelivery = Color.textFieldGray
                 self.textColorDelivery = Color.textFieldGray
             case .success:
-                self.borderColorDelivery = Color.col_green_main
+                self.borderColorDelivery = Color.col_green_second
                 self.textColorDelivery = Color.col_green_main
             case .notFound:
-                self.borderColorDelivery = Color.col_red_main
-                self.textColorDelivery = Color.col_red_main
+                self.borderColorDelivery = Color.col_gradient_pink_first
+                self.textColorDelivery = Color.col_pink_button
             }
         }
         .onChange(of: pickUpState) { newValue in
@@ -94,11 +93,11 @@ struct AvailabilityDeliveryView: View {
                 self.borderColorDelivery = Color.textFieldGray
                 self.textColorDelivery = Color.textFieldGray
             case .success:
-                self.borderColorDelivery = Color.col_green_main
+                self.borderColorDelivery = Color.col_green_second
                 self.textColorDelivery = Color.col_green_main
             case .notFound:
                 self.borderColorDelivery = Color.textFieldGray
-                self.textColorDelivery = Color.col_red_main
+                self.textColorDelivery = Color.col_pink_button
             }
         }
     }

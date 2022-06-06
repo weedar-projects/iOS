@@ -30,6 +30,8 @@ class UserDefaultsService {
         case userIsLogged = "userIsLogged"
         case needToFillUserData = "needToFillUserData"
         case showOnboarding = "showOnboarding"
+        case animDoc = "animDoc"
+        
         
         // Delivery details
         case userFullName = "userFullName"
@@ -40,6 +42,8 @@ class UserDefaultsService {
         case addressLine2 = "addressLine2"
         case zipCode = "zipCode"
         case city = "city"
+        
+        case animCart = "animCart"
         
         case userDiscountBanner = "userDiscountBanner"
         

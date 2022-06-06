@@ -26,7 +26,7 @@ struct ProductDetailedView: View {
                         tabBarManager.show()
                     }
                     .onDisappear {
-                        tabBarManager.hide()
+                        tabBarManager.showTracker()
                     }
             } label: {
                 EmptyView()
@@ -79,27 +79,39 @@ struct ProductDetailedView: View {
                 
                 //Quantity View
                 QuantityView()
-                
-                AddToCartButton()
-                    .padding(.top, 25)
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 200)
+               
             }
+            
             
             if vm.showImageFullScreen{
                 ImagesFullScreenView(imageLink: product.imageLink,product: product ,showImageFullScreen: $vm.showImageFullScreen)
                     .transition(.fade)
                 
             }
+            VStack{
+                Spacer()
+            AddToCartButton()
+                .padding(.horizontal, 24)
+                .padding(.bottom, tabBarManager.tabBarHeight - 24)
+                .padding(.bottom, isSmallIPhone() ? 30 : 0)
+            }
+            .opacity(vm.showImageFullScreen ? 0 : 1)
         }
         .onAppear{
             //add information values
+            tabBarManager.orderTrackerHidePage = true
             vm.productContentInfo.removeAll()
-            vm.addProductContntInfo(title: "THC", value: product.thc, textColor: Color.col_red_main, bgColor: Color.col_red_second)
-            vm.addProductContntInfo(title: "CBD", value: product.cbd, textColor: Color.col_blue_main, bgColor: Color.col_blue_second)
-            vm.addProductContntInfo(title: "Canabioids", value: product.totalCannabinoids, textColor: Color.col_green_main, bgColor: Color.col_green_second)
+            vm.addProductContntInfo(title: "THC", value: product.thc, textColor: Color.col_pink_main, bgColor1: Color.col_gradient_pink_first, bgColor2: Color.col_gradient_pink_second)
+            vm.addProductContntInfo(title: "CBD", value: product.cbd, textColor: Color.col_blue_main, bgColor1: Color.col_gradient_blue_first, bgColor2: Color.col_gradient_blue_second)
+            vm.addProductContntInfo(title: "Canabioids", value: product.totalCannabinoids, textColor: Color.col_green_main, bgColor1: Color.col_gradient_green_first, bgColor2: Color.col_gradient_green_second)
         }
         .navBarSettings(backBtnIsHidden: vm.showImageFullScreen)
+        .onDisappear(){
+            tabBarManager.orderTrackerHidePage = false
+            if !vm.showAR{
+            tabBarManager.showTracker()
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -139,7 +151,6 @@ struct ProductDetailedView: View {
                                 .offset(y: -geo.size.width / 2 + 50))
                     .frame(alignment: .center)
                     .offset(x: CGFloat(-vm.imageSize/2))
-                
             }
         }
         .ignoresSafeArea(.all)
@@ -148,8 +159,8 @@ struct ProductDetailedView: View {
     @ViewBuilder
     func TopGradient() -> some View {
         VStack{
-            LinearGradient(gradient: Gradient(colors: [Color.col_white.opacity(0.9),
-                                                       Color.col_white.opacity(0.2),
+            LinearGradient(gradient: Gradient(colors: [Color.col_black.opacity(0.9),
+                                                       Color.col_black.opacity(0.2),
                                                        Color.clear]),
                            startPoint: .top,
                            endPoint: .bottom)
@@ -185,15 +196,14 @@ struct ProductDetailedView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(height: 13)
+                            .colorMultiply(Color.col_black)
                         
                         Text("Lab test")
-                            .textCustom(.coreSansC65Bold, 12, Color.col_green_main)
+                            .textCustom(.coreSansC65Bold, 12,product.labTestLink?.isEmpty ?? true ? Color.col_black : Color.col_text_main)
                     }
                     .padding(.vertical, 6)
                     .padding(.horizontal, 12)
-                    .background(Color.col_green_second.cornerRadius(12))
-                    // set black-white
-                    .saturation(product.labTestLink?.isEmpty ?? true ? 0 : 1)
+                    .background(Color.col_gradient_green_second.cornerRadius(12))
                 }
                 .disabled(product.labTestLink?.isEmpty ?? true)
                 .onTapGesture {
@@ -229,7 +239,7 @@ struct ProductDetailedView: View {
     func PriceAndGramsView() -> some View {
         HStack{
             Text("$\(product.price.percentsString())")
-                .textCustom(.coreSansC65Bold, 20, Color.col_purple_main)
+                .textCustom(.coreSansC65Bold, 20, Color.col_text_main)
             
             Text("\(product.gramWeight.formattedString(format: .gramm))g / \(product.ounceWeight.formattedString(format: .ounce))oz")
                 .textSecond()
@@ -242,10 +252,9 @@ struct ProductDetailedView: View {
         HStack{
             ForEach(vm.productContentInfo, id: \.self){ info in
                 //percents
-                
                 VStack(spacing: 7){
                     Text(info.value)
-                        .textCustom(.coreSansC45Regular, 28, info.textColor)
+                        .textCustom(.coreSansC35Light, 28, info.textColor)
                     
                     Text(info.title)
                         .textCustom(.coreSansC45Regular, 12, info.textColor)
@@ -253,7 +262,18 @@ struct ProductDetailedView: View {
                 .padding([.leading, .top, .trailing])
                 .padding(.bottom, 12)
                 .frame(maxWidth: .infinity)
-                .background(info.bgColor.cornerRadius(12))
+                
+                .background(
+                    ZStack{
+                        info.bgColor2
+                        
+                        Circle()
+                            .fill(Color.col_white)
+                            .blur(radius: 13)
+                            .scaleEffect(0.6)
+                    }
+                        .cornerRadius(12)
+                )
             }
         }
         .padding(.top, 12)
@@ -263,7 +283,7 @@ struct ProductDetailedView: View {
     @ViewBuilder
     func ProductEffectsView() -> some View {
         Text("Effects")
-            .textSecond()
+            .textCustom(.coreSansC45Regular, 14, Color.col_text_main.opacity(0.7))
             .padding(.leading , 36)
             .padding(.top, 16)
         
@@ -277,7 +297,7 @@ struct ProductDetailedView: View {
                         .overlay(
                             //color
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(Color.col_borders, lineWidth: 2)
+                                .stroke(Color.col_blue_main.opacity(0.05), lineWidth: 2)
                                 .frame(height: 46)
                         )
                         .frame(height: 48)
@@ -292,7 +312,7 @@ struct ProductDetailedView: View {
     @ViewBuilder
     func QuantityView() -> some View {
         Text("Quantity")
-            .textSecond()
+            .textCustom(.coreSansC45Regular, 14, Color.col_text_main.opacity(0.7))
             .padding(.leading , 36)
             .padding(.top, 16)
         
@@ -348,7 +368,6 @@ struct ProductDetailedView: View {
     
     @ViewBuilder
     func AddToCartButton() -> some View {
-
         ZStack{
             HStack{
                 Image("checkmark")
@@ -361,7 +380,7 @@ struct ProductDetailedView: View {
             }
             .frame(height: 48)
             .frame(maxWidth: .infinity)
-            .background(Color.col_green_main)
+            .background(Color.col_gray_button)
             .cornerRadius(12)
             .opacity(vm.animProductInCart ? 1 : 0)
             
@@ -370,13 +389,14 @@ struct ProductDetailedView: View {
                     .resizable()
                     .frame(width: 18, height: 18)
                     .foregroundColor(Color.col_text_main)
+                    .colorInvert()
                 
                 Text( "Add to cart - $\((product.price * Double(vm.quantity)).formattedString(format: .percent))")
-                    .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
+                    .textCustom(.coreSansC65Bold, 16, Color.col_text_white)
             }
             .frame(height: 48)
             .frame(maxWidth: .infinity)
-            .background(Color.col_yellow_main)
+            .background(Color.col_black)
             .cornerRadius(12)
             .opacity(vm.animProductInCart ? 0 : 1)
         }

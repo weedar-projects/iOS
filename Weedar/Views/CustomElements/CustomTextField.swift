@@ -18,6 +18,8 @@ struct CustomTextField: View {
     @Binding var state: TextFieldState
     @State var title: String = "Title"
     @State var placeholder: String = "PlaceHolder"
+    @State var keyboardType: UIKeyboardType = .default
+    @State var contentType: UITextContentType?
     @State var focused: Bool = false
     @State private var strokeColor = Color.col_borders
     
@@ -30,32 +32,17 @@ struct CustomTextField: View {
                 .opacity(0.7)
             
             ZStack{
-                Text(placeholder)
-                    .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
-                    .opacity(0.3)
-                    .opacity(text == "" ? 1 : 0)
-                    .hLeading()
-                    .padding(.leading, 12)
-                    .frame(height: 48)
-                    .offset(y: 2)
-                
-                TextField("", text: $text, onEditingChanged: { focused in
-                    withAnimation(.easeIn.speed(4)){
-                        self.focused = focused
-                    }
-                })
-                    .offset(y: 2)
-                    .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
+                TextFieldWrapper(text: $text, placeholder: placeholder, keyboardType: keyboardType, contentType: contentType)
                     .padding(.leading, 12)
             }
             .frame(height: 48)
             .overlay(
                 //color
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(strokeColor.opacity(state == .def ? 1 : 0.6), lineWidth: 2)
-                        .frame(height: 48)
-                        
+                        .stroke(strokeColor, lineWidth: 2)
+                        .frame(height: 48)     
                 )
+            
         }
         .padding(.horizontal, 24)
         .onChange(of: state) { newValue in
@@ -63,9 +50,9 @@ struct CustomTextField: View {
             case .def:
                 strokeColor = Color.col_borders
             case .success:
-                strokeColor = Color.col_green_main
+                strokeColor = Color.col_green_second
             case .error:
-                strokeColor = Color.col_red_main
+                strokeColor = Color.col_red_second
             }
         }
         

@@ -16,12 +16,12 @@ struct CalculationRow: View{
     var body: some View{
         HStack{
             Text(title)
-                .textCustom(.coreSansC45Regular, 16, lightText ? Color.col_text_white : Color.col_text_main)
+                .textCustom(.coreSansC45Regular, 16, lightText ? Color.col_text_white : Color.col_text_main.opacity(0.6))
             
             Spacer()
             
             Text("\(isDiscount ? "-" : "")$\(value.formattedString(format: .percent))")
-                .textCustom(.coreSansC45Regular, 16, lightText ? Color.col_text_white : Color.col_text_main)
+                .textCustom(.coreSansC45Regular, 16, lightText ? Color.col_text_white : Color.col_text_main.opacity(0.6))
         }
     }
 }

@@ -29,15 +29,12 @@ struct CatalogProductsListView: View {
                 if let product = vm.productDetail{
                     ProductDetailedView(product: product)
                         .onAppear(perform: {
-                            tabBarManager.hide()
+                            tabBarManager.hideTracker()
                             if UserDefaults.standard.bool(forKey: "EnableTracking"){
 
                             Amplitude.instance().logEvent("select_product", withEventProperties: ["category" : product.type.name, "product_id" : product.id, "price" : product.price])
                             }
                         })
-//                        .onDisappear(perform: {
-//                            tabBarManager.show()
-//                        })
                 }
             } label: {
                 EmptyView()
@@ -56,17 +53,20 @@ struct CatalogProductsListView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 11)
-                            .foregroundColor(Color.col_purple_main)
+                            .foregroundColor(Color.col_text_main)
                         
                         Text("filtersview.filters_filters".localized)
-                            .textCustom(.coreSansC45Regular, 14, Color.col_purple_main)
+                            .textCustom(.coreSansC45Regular, 14, Color.col_text_main)
                             .padding(.top,7)
                             .padding(.bottom,4)
                     }
                     .frame(maxWidth: .infinity)
-                    .padding(.horizontal)
-                    .padding(.top, 12)
-                }.onTapGesture {
+                    .frame(height: 28)
+//                    .background(Color.col_black.cornerRadius(8))
+//                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.col_black, lineWidth: 1))
+                }
+                .padding(.top, 12)
+                .onTapGesture {
                     withAnimation {
                         if UserDefaults.standard.bool(forKey: "EnableTracking"){
 
@@ -76,27 +76,47 @@ struct CatalogProductsListView: View {
                         vm.showFilterView = true
                     }
                 }
+                .padding(.horizontal)
+                
                 
                 //product view
                 ScrollView(.vertical, showsIndicators: false) {
                     //show products
+                    
                     VStack{
-                        ForEach(filteredProducts(searchText: vm.searchText), id: \.self){ product in
-                            
-                            ProductCatalogRowView(item: product, productInCartAnimation: $vm.productInCartAnimation)
-                                .padding(.horizontal)
-                                .padding(.vertical, 10)
-                                .padding(.bottom, product == vm.products.last ? 35 : 0)
-                                .onTapGesture {
-                                    vm.productDetail = product
-                                    vm.showProductDetail.toggle()
-                                }
-                                .disabled(vm.productInCartAnimation)
+                        if filteredProducts(searchText: vm.searchText).count > 0{
+                            ForEach(filteredProducts(searchText: vm.searchText), id: \.self){ product in
+                                
+                                ProductCatalogRowView(item: product, productInCartAnimation: $vm.productInCartAnimation)
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 10)
+                                    .padding(.bottom, product == vm.products.last ? 35 : 0)
+                                    .onTapGesture {
+                                        vm.productDetail = product
+                                        vm.showProductDetail.toggle()
+                                    }
+                                    .disabled(vm.productInCartAnimation)
+                            }
+                        } else {
+                            VStack{
+                                Image("productsnotfound")
+                                    .resizable()
+                                    .frame(width: 109, height: 109)
+                                    
+                                Text("No products found.")
+                                    .textDefault()
+                                    .padding(.top, 18)
+                            }
+                            .ignoresSafeArea(.keyboard, edges: .all)
+                            .padding(.top, 100)
+                            .opacity(vm.loading ? 0 : 1)
                         }
                     }
                     .padding(.bottom, tabBarManager.showOrderTracker ? 95 : isSmallIPhone() ? 30 : 0)
                 }
-                
+                .padding(.top, 12)
+                    
+      
                 Spacer()
             }
             //Filter View
@@ -107,6 +127,9 @@ struct CatalogProductsListView: View {
         })
         .navBarSettings(category.name)
         .onUIKitAppear {
+            
+            tabBarManager.orderTrackerHidePage = false
+            
             tabBarManager.showTracker()
             tabBarManager.show()
         }

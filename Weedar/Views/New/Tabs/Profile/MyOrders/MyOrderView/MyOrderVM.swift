@@ -28,7 +28,7 @@ class MyOrderVM: ObservableObject {
     @Published var orderProducts: [OrderDetailModel] = []
     @Published var order: OrderResponseModel?
     @Published var navTitle: String = ""
-    @Published var orderDetailsReview: OrderDetailsReview = OrderDetailsReview(orderId: 0, totalSum: 0, exciseTaxSum: 0, salesTaxSum: 0, localTaxSum: 0, discount: 0, taxSum: 0, state: 0)
+    @Published var orderDetailsReview: OrderDetailsReview = OrderDetailsReview(orderId: 0, totalSum: 0, exciseTaxSum: 0, salesTaxSum: 0, localTaxSum: 0, discount: nil, taxSum: 0, sum: 0, state: 0)
     
     @Published var showCancelAlert = false
    
@@ -82,9 +82,10 @@ class MyOrderVM: ObservableObject {
                 let salesTaxSum = json["salesTaxSum"].doubleValue
                 let cityTaxSum = json["cityTaxSum"].doubleValue
                 let taxSum = json["taxSum"].doubleValue
-                let discount = json["discount"].doubleValue
+                let discount = DiscountModel(json: json["discount"]) 
                 let state = json["state"].intValue
-                self.orderDetailsReview = OrderDetailsReview(orderId: id, totalSum: totalSum, exciseTaxSum: exciseTaxSum, totalWeight: self.totalGramWeight().formattedString(format: .percent), salesTaxSum: salesTaxSum, localTaxSum: cityTaxSum, discount: discount, taxSum: taxSum, state: state)
+                let sum = json["sum"].doubleValue
+                self.orderDetailsReview =  OrderDetailsReview(orderId: id, totalSum: totalSum, exciseTaxSum: exciseTaxSum, totalWeight: self.totalGramWeight().formattedString(format: .percent), salesTaxSum: salesTaxSum, localTaxSum: cityTaxSum, discount: discount, taxSum: taxSum, sum: sum, state: state)
                 
                 self.order = OrderResponseModel(json: json)
                 comletion()

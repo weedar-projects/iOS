@@ -54,7 +54,7 @@ struct VerifyIdentityView: View {
                 RequestButton(state: $vm.buttonState, isDisabled: $vm.buttonIsDisabled, title: "welcomeview.welcome_content_next".localized) {
                     vm.veryfiIdentity { success in
                         if success {
-                            orderTrackerManager.connect()
+//                            orderTrackerManager.connect()
                             UserDefaultsService().set(value: false, forKey: .needToFillUserData)
                             sessionManager.needToFillUserData = false
                             coordinatorViewManager.currentRootView = .main
@@ -160,7 +160,7 @@ struct VerifyIdentityView: View {
             .padding(.leading, 36)
             .padding(.top, 24)
         
-        LoadPhotoView(value: $vm.idUploadProgress, selectedImage: $vm.idImage, showLoader: $vm.idImageChanged) {
+        LoadPhotoView(value: $vm.idUploadProgress, selectedImage: $vm.idImage, showLoader: $vm.idImageChanged, needToAnim: true) {
             vm.selectedPhoto = .id
             vm.isActionSheetShow.toggle()
         } trashAction: {
@@ -218,6 +218,7 @@ struct LoadPhotoView: View {
     @State private var minHeight: CGFloat = 106
     @State private var maxHeight: CGFloat = 256
     
+    @State var needToAnim = true
     @State var offset: CGFloat = 0
     @State var isSwiped: Bool = false
     
@@ -228,14 +229,17 @@ struct LoadPhotoView: View {
         ZStack{
             //delete button
             ZStack{
-                RoundedRectangle(cornerRadius: 12.0)
-                    .fill(Color.col_red_second)
-                    .frame(width: 56, height: selectedImage == nil ? 0 : maxHeight, alignment: .center)
-                    .overlay(Image("trash_red")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 18, alignment: .center))
+                RadialGradient(colors: [Color.col_gradient_pink_second,
+                                        Color.col_gradient_pink_first],
+                               center: .center,
+                               startRadius: 0,
+                               endRadius: 150)
+                
+                Image.icon_trash
+                    .colorMultiply(Color.col_pink_button)
             }
+            .frame(width: 54, height: selectedImage == nil ? minHeight : maxHeight, alignment: .center)
+            .cornerRadius(12)
             .hTrailing()
             .onTapGesture {
                 withAnimation(.spring().speed(1.5)) {
@@ -246,11 +250,9 @@ struct LoadPhotoView: View {
 
             ZStack{
                 Color.col_white
-                    .padding(2)
                     .cornerRadius(12)
                 
                 Color.col_blue_second
-                    .padding(2)
                     .cornerRadius(12)
                 
                 
@@ -259,15 +261,11 @@ struct LoadPhotoView: View {
                         .resizable()
                         .scaledToFit()
                         .padding(2)
+                        .padding(.vertical, 4)
                 } else {
                     Text("phonenumberview.phone_number_verify_identity_upload_photo".localized)
-                        .textCustom(.coreSansC45Regular, 16, Color.col_purple_main)
+                        .textCustom(.coreSansC45Regular, 16, Color.col_black.opacity(0.6))
                 }
-                
-                RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(style: StrokeStyle(lineWidth: 2, lineCap: .square, dash: [0, 8]))
-                    .foregroundColor(Color.col_blue_main)
-                
                 VStack{
                     Spacer()
                     if value != 0{
@@ -279,7 +277,7 @@ struct LoadPhotoView: View {
                                     .foregroundColor(Color.col_white.opacity(0.5))
                                 
                                 Rectangle()
-                                    .fill(Color.col_purple_main)
+                                    .fill(Color.col_black)
                                     .cornerRadius(12)
                                     .frame(width: min(CGFloat(self.value)*geometry.size.width, geometry.size.width), height: geometry.size.height)
                                     .animation(.linear)
@@ -291,6 +289,8 @@ struct LoadPhotoView: View {
                 }
                 .opacity(showLoader && selectedImage != nil ? 1 : 0)
                 
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.col_borders, lineWidth: 2)
             }
             .frame(maxWidth: .infinity)
             .frame(height: selectedImage == nil ? minHeight : maxHeight)
@@ -303,7 +303,32 @@ struct LoadPhotoView: View {
             }
             
         }
+        .onAppear {
+            print(UserDefaultsService().get(fromKey: .animDoc) as? Bool ?? true)
+            if needToAnim && UserDefaultsService().get(fromKey: .animDoc) as? Bool ?? true{
+               DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                    animView(start: true)
+                    DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                        animView(start: false)
+                        UserDefaultsService().set(value: false, forKey: .animDoc)
+                    }
+                }
+            }
+        }
     }
+    
+    func animView(start: Bool){
+        if start{
+            withAnimation(.easeInOut(duration: 0.5)) {
+                offset = -80
+            }
+        }else{
+            withAnimation(.easeInOut(duration: 0.5)) {
+                offset = 0
+            }
+        }
+    }
+
     
     //swipe gesture
     func onChanged(value: DragGesture.Value){

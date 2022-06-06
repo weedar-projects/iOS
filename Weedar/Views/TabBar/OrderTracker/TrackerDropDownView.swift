@@ -16,7 +16,7 @@ struct TrackerDropDownView: View {
         VStack{
             HStack(spacing: 0){
                 Text("#\(orderTrackerManager.currentOrder?.number ?? "")")
-                    .textCustom(.coreSansC65Bold, 14, orderTrackerManager.currentState?.color ?? Color.clear)
+                    .textCustom(.coreSansC65Bold, 14, Color.col_white)
                     .padding(.leading, 12)
                     .padding(.trailing, 7)
                     .offset(y: 1)

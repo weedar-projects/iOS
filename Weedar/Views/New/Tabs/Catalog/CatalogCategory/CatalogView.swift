@@ -89,7 +89,8 @@ struct CatalogView: MainLoadViewProtocol {
                         
                                 
                     }
-                    .padding(.bottom, tabBarManager.showOrderTracker ? 95 : isSmallIPhone() ? 35 : 0)
+                    .padding(.bottom, tabBarManager.showOrderTracker ? 95 : 0)
+                    .padding(.bottom, isSmallIPhone() ? 40 : 0)
                     .padding(.top, 6)
             
                     }

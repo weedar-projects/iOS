@@ -38,9 +38,9 @@ struct TutorialsView: View {
                                        header: "Tap to put product to carousel",
                                        description: "To close detailed view",
                                        page: 4)
-        ]
+    ]
     
-
+    
     var body: some View {
         ZStack {
             Color.white.ignoresSafeArea(.all)
@@ -50,10 +50,10 @@ struct TutorialsView: View {
                     .scaledToFit()
                     .frame(width: 159, height: 336, alignment: .center)
                     .overlay(Image(content[currentPage].image)
-                                .resizable()
-                                .scaledToFit()
-                                .padding(.bottom, -20)
-                                .frame(width: 54, height: 54, alignment: .bottom))
+                        .resizable()
+                        .scaledToFit()
+                        .padding(.bottom, -20)
+                        .frame(width: 54, height: 54, alignment: .bottom))
                 Text("On Detailed View")
                     .foregroundColor(ColorManager.Catalog.Item.priceColor)
                     .padding(.top, 30)
@@ -65,7 +65,7 @@ struct TutorialsView: View {
                 Spacer()
                 HStack {
                     VStack {
-                    Button(action: { isShown = false })
+                        Button(action: { isShown = false })
                         {
                             if currentPage != 3 {
                                 Text("SKIP")
@@ -78,29 +78,29 @@ struct TutorialsView: View {
                     PageControl(current: currentPage)
                     Spacer()
                     VStack {
-                    Button(action: {
-                        if currentPage == 3 {
-                            isShown = false
-                        } else {
-                            self.currentPage += 1
+                        Button(action: {
+                            if currentPage == 3 {
+                                isShown = false
+                            } else {
+                                self.currentPage += 1
+                            }
+                        })
+                        {
+                            if currentPage != 3 {
+                                Text("NEXT")
+                                    .foregroundColor(.black)
+                                    .bold()
+                            } else {
+                                Text("FINISH")
+                                    .foregroundColor(.black)
+                                    .bold()
+                            }
                         }
-                    })
-                    {
-                        if currentPage != 3 {
-                        Text("NEXT")
-                            .foregroundColor(.black)
-                            .bold()
-                        } else {
-                        Text("FINISH")
-                            .foregroundColor(.black)
-                            .bold()
-                        }
-                    }
-                }.frame(width: 60, height: 24)
+                    }.frame(width: 60, height: 24)
                 }
             }.padding([.leading, .trailing], 16)
-            .padding([.top], 62)
-            .padding([.bottom], 24)
+                .padding([.top], 62)
+                .padding([.bottom], 24)
         }
     }
 }
