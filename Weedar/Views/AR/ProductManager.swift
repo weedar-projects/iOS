@@ -19,12 +19,11 @@ class ProductManager {
         for item in items {
             queueTemp.append(item.key)
         }
+//        while queueTemp.count < 12 {
+//            queueTemp += queueTemp
+//        }
         
-        while queueTemp.count < 12 {
-            queueTemp += queueTemp
-        }
-        
-        self.queue = queueTemp
+        self.queue = queueTemp.sorted(by: >)
         
         self.radius = radius
     }
@@ -36,21 +35,13 @@ class ProductManager {
     func monitorRotation(forAnchor anchor: ModelEntity, putBackModels: Bool = false) {
         let pie: Int
         
-        if !putBackModels {
-            pie = self.pie(forAnchor: anchor)
-        } else {
-            pie = 4
-        }
-        
-        if isInsideVisibleWindow(pie: pie) {
+               if isInsideVisibleWindow(pie: pie) {
             if isModelNeedsLoading(for: anchor) {
                 anchor.isEnabled = false
                 let modelID = getModelIDToLoad(forPie: pie)
-                
                 if let product = ProductsViewModel.shared.getProduct(id: modelID) {
                     print("--- --- ---")
                     print("modelID: \(modelID)")
-                    
                     if product.modelHighQualityLink.hasSuffix(".usdz") {
                         self.asyncLoad(name: product.modelHighQualityLink, id: modelID, for: anchor, product: product)
                     }
@@ -66,8 +57,31 @@ class ProductManager {
         }
     }
     
+    
+    func setFirstModelId(id: Int){
+        print("Queue: \(queue)")
+        if queue[3] != id{
+            queue.append(queue[3])
+            queue.insert(id, at: 3)
+            queue = uniq(source: queue).sorted(
+            print("Queue: \(queue)")
+        }
+    }
+    
+    private func uniq<S: Sequence, T: Hashable> (source: S) -> [T] where S.Iterator.Element == T {
+        var buffer = [T]() // возвращаемый массив
+        var added = Set<T>() // набор - уникальные значения
+        for elem in source {
+            if !added.contains(elem) {
+                buffer.append(elem)
+                added.insert(elem)
+            }
+        }
+        return buffer
+    }
+    
     private func isInsideVisibleWindow(pie: Int) -> Bool {
-        return (pie < 3 && pie > -3)
+        return (pie < 2 && pie > -2)
     }
     
     private func isModelNeedsLoading(for anchor: ModelEntity) -> Bool {

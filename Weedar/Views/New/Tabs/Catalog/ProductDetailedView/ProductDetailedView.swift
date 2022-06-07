@@ -21,7 +21,7 @@ struct ProductDetailedView: View {
         ZStack{
             
             NavigationLink(isActive: $vm.showAR) {
-                HomeView()
+                HomeView(openProductById: product.id)
                     .onAppear {
                         tabBarManager.show()
                     }

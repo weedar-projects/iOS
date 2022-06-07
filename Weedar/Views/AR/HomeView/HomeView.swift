@@ -36,6 +36,8 @@ struct HomeView: View {
     @State private var opacity = 1.0
     @State private var showDesctiption = true
     
+    @State var openProductById: Int = 0
+    
     // MARK: - View
     var body: some View {
         
@@ -104,6 +106,9 @@ struct HomeView: View {
                 }
                 .onUIKitAppear {
                     carousel.showDescriptionCard()
+                    if openProductById != 0{
+                        carousel.manager.setFirstModelId(id: openProductById)
+                    }
                     statusBarStyle.currentStyle = .darkContent
                     //                tabbarManager.isCurrentOrderViewExtended = false
                     carousel.resumeScene()

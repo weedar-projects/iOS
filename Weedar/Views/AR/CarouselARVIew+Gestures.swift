@@ -200,7 +200,7 @@ extension CarouselARView {
         switch state {
         case .overview:
             if (segmentCenter < 0.0001) && (segmentCenter > -0.0001) { return }
-            rotateCarousel(lastSpeedReduced + (segmentCenter * 20))
+            rotateCarousel(lastSpeedReduced + (segmentCenter * 10))
         case .detail(items: let objects):
             if (lastSpeedReduced < 0.001) && (lastSpeedReduced > -0.001) { return }
             for object in objects {

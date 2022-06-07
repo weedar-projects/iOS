@@ -108,7 +108,6 @@ class CarouselARView: ARView, ObservableObject {
         if !anchorFound {
             let productsAnchor = AnchorEntity()
             self.productsAnchor = productsAnchor
-            
             self.anchor.addChild(productsAnchor)
             
             if let angle = angle {
@@ -116,7 +115,9 @@ class CarouselARView: ARView, ObservableObject {
             }
             
             self.addEmptyAnchors()
+            
             self.shouldDoPerFrameUpdates = true
+            
         }
         anchorFound = true
     }

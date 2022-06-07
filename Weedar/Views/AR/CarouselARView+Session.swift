@@ -68,8 +68,6 @@ extension CarouselARView: ARSessionDelegate {
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         
 //        print("Product anchor: \(productsAnchor.transform)")
-//        print("")
-        
         if shouldDoPerFrameUpdates {
             monitorCarouselContent()
             monitorHighlightedProduct()
