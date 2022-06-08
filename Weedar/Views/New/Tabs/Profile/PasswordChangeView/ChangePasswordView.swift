@@ -35,7 +35,7 @@ struct ChangePasswordView: View {
                         .padding(.horizontal, 32)
                     
                     //new password
-                    CustomSecureTextField(text: $vm.newPassword, state: $vm.newPasswordTFState ,title: "New password", placeholder: "Confirm new password")
+                    CustomSecureTextField(text: $vm.newPassword, state: $vm.newPasswordTFState ,title: "New password", placeholder: "Confirm new password", contentType: .newPassword)
                         .padding(.top, 24)
                         .onTapGesture {
                             vm.newPasswordTFState = .def
@@ -62,7 +62,7 @@ struct ChangePasswordView: View {
                     }
                     
                     //new password repeat
-                    CustomSecureTextField(text: $vm.newPasswordRepeat, state: $vm.newPasswordRepeatTFState ,title: "Repeat new password", placeholder: "Confirm your new password")
+                    CustomSecureTextField(text: $vm.newPasswordRepeat, state: $vm.newPasswordRepeatTFState ,title: "Repeat new password", placeholder: "Confirm your new password", contentType: .newPassword)
                         .padding(.top, 24)
                         .onTapGesture {
                             vm.newPasswordRepeatTFState = .def
