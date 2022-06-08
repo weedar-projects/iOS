@@ -43,4 +43,6 @@ enum Routs: String {
     case cart = "/cart"
 
     case resetPassword = "/user/resetPassword"
+    
+    case refreshToken = "/auth/refresh-token"
 }

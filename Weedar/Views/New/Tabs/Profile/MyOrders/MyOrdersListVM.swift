@@ -10,7 +10,6 @@ import SwiftUI
 class MyOrdersListVM: ObservableObject {
   
     @Published var orderSections: [OrderSectionListModel] = []
-    
     @Published var loading = false
     
     func getOrderList(comletion: @escaping ()->Void){

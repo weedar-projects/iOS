@@ -26,18 +26,18 @@ class SessionManager: ObservableObject {
     
     func userData(withUpdate: Bool = false, userModel: @escaping (UserModel) -> Void = {_ in}){
         if withUpdate{
-        API.shared.request(rout: .getCurrentUserInfo) { result in
-            switch result{
-            case let .success(json):
-                let user = UserModel(json: json)
-                self.user = user
-                UserDefaultsService().set(value: user.id, forKey: .user)
-                print("useruser \(json)")
-                userModel(user)
-            case let .failure(error):
-                print("error to load user data: \(error)")
+            API.shared.request(rout: .getCurrentUserInfo) { result in
+                switch result{
+                case let .success(json):
+                    let user = UserModel(json: json)
+                    self.user = user
+                    UserDefaultsService().set(value: user.id, forKey: .user)
+                    print("useruser \(json)")
+                    userModel(user)
+                case let .failure(error):
+                    print("error to load user data: \(error)")
+                }
             }
-        }
         }else{
             guard let user = user else {
                 return
@@ -46,7 +46,6 @@ class SessionManager: ObservableObject {
         }
     }
 }
-
 
 struct UserModel: Identifiable {
     var id: Int

@@ -11,6 +11,7 @@ class KeychainService {
 
     enum KeychainWeelar: String {
         case accessToken = "accessToken"
+        case refreshToken = "refreshToken"
     }
     
     static func updatePassword(_ password: String, serviceKey: String) {

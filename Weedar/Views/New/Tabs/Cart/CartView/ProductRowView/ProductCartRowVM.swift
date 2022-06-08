@@ -18,8 +18,8 @@ class ProductCartRowVM: ObservableObject {
     
     //swipe gesture
     func onChanged(value: DragGesture.Value){
-        
-        if value.translation.width < 0{
+        print(value.translation.width)
+        if value.translation.width < 0 && offset > -91{
             
             if isSwiped{
                 offset = value.translation.width - 90

@@ -56,24 +56,27 @@ struct LoginView: View {
                     
                     sessionManager.userData(withUpdate: true)
                     if needToFillData{
-                        sessionManager.needToFillUserData = true
-                        sessionManager.userIsLogged = true
-                        coordinatorViewManager.currentRootView = .registerSetps
                         UserDefaultsService().set(value: true, forKey: .needToFillUserData)
                         UserDefaultsService().set(value: true, forKey: .userIsLogged)
+                        
+                        sessionManager.needToFillUserData = true
+                        sessionManager.userIsLogged = true
+                        
+                        coordinatorViewManager.currentRootView = .registerSetps
                         cartManager.getCart()
                         orderTrackerManager.connect()
                     }else{
                         UserDefaultsService().set(value: true, forKey: .userIsLogged)
+                        UserDefaultsService().set(value: false, forKey: .needToFillUserData)
+                        
                         sessionManager.userIsLogged = true
                         sessionManager.needToFillUserData = false
-                        UserDefaultsService().set(value: false, forKey: .needToFillUserData)
                         coordinatorViewManager.currentRootView = .main
+                        
                         tabBarManager.currentTab = .catalog
                         cartManager.getCart()
                         orderTrackerManager.connect()
                     }
-  
                 }
             }
             .padding(.horizontal, 24)

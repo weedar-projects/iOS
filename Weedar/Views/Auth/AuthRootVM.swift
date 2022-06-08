@@ -149,7 +149,9 @@ class AuthRootVM: ObservableObject {
                 let userData = UserLoginDataModel(json: json)
                 
                 UserDefaultsService().set(value: userData.accessToken, forKey: .accessToken)
+                
                 KeychainService.updatePassword(userData.accessToken, serviceKey: .accessToken)
+                KeychainService.updatePassword(userData.refreshToken, serviceKey: .refreshToken)
                 
                 self.appDelegate.saveTokenFCM()
                 self.appDelegate.updatePushNotificationState(true)
@@ -219,7 +221,6 @@ class AuthRootVM: ObservableObject {
                                     UserDefaultsService().set(value: loginData.id, forKey: .user)
                                    
                                     
-
                                     let granded = UserDefaultsService().get(fromKey: .fcmGranted) as? Bool
                                  
                                     self.appDelegate.saveTokenFCM()
@@ -306,6 +307,7 @@ struct UserLoginDataModel {
     var state: String
     var phone: String?
     var accessToken: String
+    var refreshToken: String
     
     init(json: JSON){
         self.id = json["id"].intValue
@@ -314,6 +316,7 @@ struct UserLoginDataModel {
         self.state = json["state"].stringValue
         self.phone = json["phone"].stringValue
         self.accessToken = json["accessToken"].stringValue
+        self.refreshToken = json["refreshToken"].stringValue
     }
 }
 

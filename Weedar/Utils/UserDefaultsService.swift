@@ -19,7 +19,9 @@ class UserDefaultsService {
         case userVerified = "userVerified"
         case userHasRecPhoto = "userHasRecPhoto"
         case productFilters = "productFilters"
+        
         case accessToken = "accessToken"
+        case refreshToken = "refreshToken"
         
         case showButtonShapeAlert = "showButtonShapeAlert"
         

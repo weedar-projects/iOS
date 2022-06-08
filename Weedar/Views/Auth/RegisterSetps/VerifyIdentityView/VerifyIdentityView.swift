@@ -333,7 +333,7 @@ struct LoadPhotoView: View {
     //swipe gesture
     func onChanged(value: DragGesture.Value){
         
-        if value.translation.width < 0{
+        if value.translation.width < 0 && offset > -91{
             
             if isSwiped{
                 offset = value.translation.width - 90

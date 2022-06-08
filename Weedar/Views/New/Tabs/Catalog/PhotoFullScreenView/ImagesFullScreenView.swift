@@ -59,6 +59,7 @@ struct ImagesFullScreenView: View {
                     .cornerRadius(12)
                     .opacity(animProductInCart ? 1 : 0)
                     
+                    
                     HStack{
                         Image("cart")
                             .resizable()
@@ -79,15 +80,17 @@ struct ImagesFullScreenView: View {
                 .padding(.horizontal, 24)
                 .padding(.bottom, 80 + getSafeArea().bottom)
                 .onTapGesture {
-                    vm.notification.notificationOccurred(.success)
-                    cartManager.productQuantityInCart(productId: product.id, quantity: .add)
-                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                    Amplitude.instance().logEvent("add_cart_prod_card", withEventProperties: ["category" : product.type.name,
-                                                                                              "product_id" : product.id,
-                                                                                              "product_qty" : 1,
-                                                                                              "product_price" : product.price.formattedString(format: .percent)])
+                    if !animProductInCart{
+                        vm.notification.notificationOccurred(.success)
+                        cartManager.productQuantityInCart(productId: product.id, quantity: .add)
+                        if UserDefaults.standard.bool(forKey: "EnableTracking"){
+                            Amplitude.instance().logEvent("add_cart_prod_card", withEventProperties: ["category" : product.type.name,
+                                                                                                      "product_id" : product.id,
+                                                                                                      "product_qty" : 1,
+                                                                                                      "product_price" : product.price.formattedString(format: .percent)])
+                        }
+                        chageAddButtonState()
                     }
-                    chageAddButtonState()
                 }
             }
         }
@@ -108,7 +111,7 @@ struct ImagesFullScreenView: View {
         
     }
     func chageAddButtonState(){
-        withAnimation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true)){
+        withAnimation(.easeInOut(duration: 0.2)){
             self.animProductInCart = true
             DispatchQueue.main.asyncAfter(deadline: .now()+1) {
                 self.animProductInCart = false
