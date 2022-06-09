@@ -31,27 +31,36 @@ struct CalculationPriceView: View {
                         .textCustom(.coreSansC45Regular, 12, lightText ? Color.col_text_white.opacity(0.7) : Color.col_text_second)
 
                         .hLeading()
-                        .padding(.top, 2)
+                        .padding(.top, 1)
                 }
                 .padding([.top, .bottom, .leading], 16)
                 
                 Spacer()
                 
-                Text("$\(data.totalSum.formattedString(format: .percent))")
-                    .textCustom(.coreSansC65Bold, 16, lightText ? Color.col_text_white : Color.col_text_main)
-                
-                if lightText{
-                    Image("arrow-top")
-                        .colorInvert()
-                        .rotationEffect(.radians(showCalculations ? .pi * 2 : .pi),
-                                        anchor: .center)
-                        .padding(.trailing, 16)
-                } else{
-                    Image("arrow-top")
-                        .rotationEffect(.radians(showCalculations ? .pi * 2 : .pi),
-                                        anchor: .center)
-                        .padding(.trailing, 16)
+                VStack{
+                    Text("$\(data.totalSum.formattedString(format: .percent))")
+                        .textCustom(.coreSansC65Bold, 16, lightText ? Color.col_text_white : Color.col_text_main)
+                        .hTrailing()
+                    
+                    Text("Tax included")
+                        .textCustom(.coreSansC45Regular, 12, lightText ? Color.col_text_white.opacity(0.7) : Color.col_text_second)
+                        .hTrailing()
+                        .padding(.top, 1)
                 }
+                
+                
+                    if lightText{
+                        Image("arrow-top")
+                            .colorInvert()
+                            .rotationEffect(.radians(showCalculations ? .pi * 2 : .pi),
+                                            anchor: .center)
+                            .padding(.trailing, 16)
+                    } else{
+                        Image("arrow-top")
+                            .rotationEffect(.radians(showCalculations ? .pi * 2 : .pi),
+                                            anchor: .center)
+                            .padding(.trailing, 16)
+                    }
                 
             }
             .background(

@@ -21,8 +21,9 @@ class API{
     
     private var baseURL: String = PKSettingsBundleHelper.shared.currentEnvironment.baseUrl
     
-    private var token : String?  { return KeychainService.loadPassword(serviceKey: .accessToken) }
-    
+    var accessToken : String?  { return KeychainService.loadPassword(serviceKey: .accessToken) }
+    var refreshToken : String?  { return KeychainService.loadPassword(serviceKey: .refreshToken) }
+
     func request(endPoint: String = "",
                  rout: Routs = .empty,
                  method: HTTPMethod = .get,
@@ -47,7 +48,7 @@ class API{
        
         headers.forEach({heads.add(name: $0.name, value: $0.value)})
 
-        if let token = token {
+        if let token = accessToken {
             heads.add(name: "Authorization", value: "Bearer \(token)")
         }
         
@@ -57,12 +58,15 @@ class API{
             return
         }
         
-        AF.request(reqUrl, method: method,
+        let interceptor = APIRequestInterceptor()
+        
+        AF.request(reqUrl,
+                   method: method,
                    parameters: parameters,
                    encoding: encoding,
-                   headers: heads)
-        { $0.timeoutInterval = 120 }
-        
+                   headers: heads,
+                   interceptor: interceptor)
+        .customValidation()
         .response { response in
             let statusCode = response.response?.statusCode ?? 0
                 print("\n\n-------API-------\n\(reqUrl)  \(statusCode)\n")
@@ -140,7 +144,7 @@ class API{
        
         headers.forEach({heads.add(name: $0.name, value: $0.value)})
 
-        if let token = token {
+        if let token = accessToken {
             heads.add(name: "Authorization", value: "Bearer \(token)")
         }
         
@@ -149,11 +153,14 @@ class API{
         guard let reqUrl = reqUrl else {
             return
         }
+        let interceptor = APIRequestInterceptor()
         
         AF.request(reqUrl, method: method,
                    parameters: parameters,
                    encoding: encoding,
-                   headers: heads)
+                   headers: heads,
+                   interceptor: interceptor)
+        .customValidation()
             .response { response in
             
             let statusCode = response.response?.statusCode ?? 0
@@ -184,11 +191,12 @@ class API{
             }
         }
     }
+//
+//    enum VersionError: Error {
+//        case invalidResponse, invalidBundleInfo
+//    }
+//
     
-    
-    enum VersionError: Error {
-        case invalidResponse, invalidBundleInfo
-    }
     
 //MARK: CHECK VERSION FROM APPSTORE
 //    func isUpdateAvailable(completion: @escaping (Bool?, Error?) -> Void) throws -> URLSessionDataTask {
@@ -230,4 +238,119 @@ class API{
 //        task.resume()
 //        return task
 //    }
+}
+
+
+class APIRequestInterceptor: RequestInterceptor {
+    
+    var retryLimit = 2
+    
+    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+        var request = urlRequest
+        guard let token = KeychainService.loadPassword(serviceKey: .accessToken) else {
+            completion(.success(urlRequest))
+            return
+        }
+        let bearerToken = "Bearer \(token)"
+        request.setValue(bearerToken, forHTTPHeaderField: "Authorization")
+        print("\nadapted; token added to the header field is: \(bearerToken)\n")
+        completion(.success(request))
+    }
+    
+    func retry(_ request: Request, for session: Session, dueTo error: Error,
+               completion: @escaping (RetryResult) -> Void) {
+        guard request.retryCount < retryLimit else {
+            completion(.doNotRetry)
+            return
+        }
+        print("\nretried; retry count: \(request.retryCount)\n")
+        tokenRefresh { isSuccess in
+            isSuccess ? completion(.retry) : completion(.doNotRetry)
+        }
+    }
+    
+//    func refreshToken(completion: @escaping (_ isSuccess: Bool) -> Void) {
+//        guard let apiKey = UserDefaultsManager.shared.getUserCredentials().apiKey,
+//            let secretKey = UserDefaultsManager.shared.getUserCredentials().secretKey else { return }
+//
+//        let parameters = ["grant_type": "client_credentials", "client_id": apiKey, "client_secret": secretKey]
+//
+//        AF.request(authorize, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+//            if let data = response.data, let token = (try? JSONSerialization.jsonObject(with: data, options: [])
+//                as? [String: Any])?["access_token"] as? String {
+//                UserDefaultsManager.shared.setToken(token: token)
+//                print("\nRefresh token completed successfully. New token is: \(token)\n")
+//                completion(true)
+//            } else {
+//                completion(false)
+//            }
+//        }
+//    }
+    
+    func tokenRefresh(completion: @escaping (_ isSuccess: Bool) -> Void){
+        guard let refreshToken = KeychainService.loadPassword(serviceKey: .refreshToken) else {
+            return
+        }
+        print("TOKEN TO UPDATE refreshToken: \(refreshToken)")
+        let params = [
+            "refreshToken" : refreshToken
+        ]
+        
+        let url = URL(string: PKSettingsBundleHelper.shared.currentEnvironment.baseUrl.appending(Routs.refreshToken.rawValue))!
+        
+        AF.request(url, method: .post,
+                   parameters: params,
+                   encoding: JSONEncoding.default)
+            .response {  result in
+                switch result.result{
+                case let .success(data):
+                    guard let data = data else { return }
+                    
+                    let json = JSON(data)
+                    print(json)
+                    let accessToken = json["accessToken"].stringValue
+                    let refreshToken = json["refreshToken"].stringValue
+                    print("accessToken: \(accessToken)")
+                    print("refreshToken: \(refreshToken)")
+                    
+                    if !accessToken.isEmpty, !refreshToken.isEmpty{
+                        KeychainService.updatePassword(accessToken, serviceKey: .accessToken)
+                        KeychainService.updatePassword(refreshToken, serviceKey: .refreshToken)
+                    }
+                    
+                    completion(true)
+                case let .failure(error):
+                    print("ERROR TO REFRESH TOKEN: \(error.localizedDescription)")
+                    completion(false)
+                }
+
+            }
+    }
+}
+
+
+extension DataRequest {
+    public func customValidation() -> Self {
+        
+        return validate { request,response,data in
+            
+            do {
+                let statusCode = response.statusCode
+                if statusCode != 401{
+                    print("STATUS CODE NOT 401")
+                    return .success({}())
+                }else{
+                    print("STATUS CODE 401")
+                    let reason:AFError.ResponseValidationFailureReason = .unacceptableStatusCode(code: response.statusCode)
+                    return .failure(AFError.responseValidationFailed(reason: reason))
+                }
+            } catch let error {
+                
+                print("Json serialization error \(error)")
+                let reason:AFError.ResponseValidationFailureReason = .unacceptableStatusCode(code: response.statusCode)
+                return .failure(AFError.responseValidationFailed(reason: reason))
+                
+            }
+        }
+    }
 }

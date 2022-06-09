@@ -9,7 +9,6 @@ import ARKit
 import SwiftUI
 import RealityKit
 import FocusEntity
-
  
 struct ARMainCarouselView: View {
     var body: some View {
