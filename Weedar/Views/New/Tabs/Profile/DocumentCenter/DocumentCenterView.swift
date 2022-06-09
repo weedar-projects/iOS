@@ -182,11 +182,11 @@ struct DocumentCenterView: MainLoadViewProtocol {
         .onChange(of: vm.idImage) { newValue in
             vm.idImageChanged = true
             vm.buttonIsDisabled = false
-//            if newValue != nil{
-//                vm.buttonIsDisabled = false
-//            }else{
-//                vm.buttonIsDisabled = true
-//            }
+            if newValue != nil{
+                vm.buttonIsDisabled = false
+            }else{
+                vm.buttonIsDisabled = true
+            }
         }
     }
     
@@ -211,11 +211,11 @@ struct DocumentCenterView: MainLoadViewProtocol {
         .onChange(of: vm.recommendationImage) { newValue in
             vm.recommendationidImageChanged = true
             vm.buttonIsDisabled = false
-//            if vm.idImage != nil{
-//                vm.buttonIsDisabled = false
-//            }else{
-//                vm.buttonIsDisabled = true
-//            }
+            if vm.idImage != nil{
+                vm.buttonIsDisabled = false
+            }else{
+                vm.buttonIsDisabled = true
+            }
         }
     }
     
