@@ -15,7 +15,6 @@
 		2F07D41828497A42005D60CC /* ComfirmChangePhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F07D41728497A42005D60CC /* ComfirmChangePhoneView.swift */; };
 		2F07D41A28497EBC005D60CC /* OTPViewChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F07D41928497EBC005D60CC /* OTPViewChange.swift */; };
 		2F07D41D284A327D005D60CC /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F07D41B284A3207005D60CC /* AuthenticationServices.framework */; };
-		2F07D421284A6BF2005D60CC /* updateScreenBg_gif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2F07D420284A6BF2005D60CC /* updateScreenBg_gif.gif */; };
 		2F2AA73F27DB57DB00AB6C57 /* CartRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2AA73E27DB57DB00AB6C57 /* CartRootView.swift */; };
 		2F2AA74127DB57E600AB6C57 /* CartRootVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2AA74027DB57E600AB6C57 /* CartRootVM.swift */; };
 		2F2AA74427DB580E00AB6C57 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2AA74327DB580E00AB6C57 /* CartView.swift */; };
@@ -297,7 +296,6 @@
 		2F07D41728497A42005D60CC /* ComfirmChangePhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComfirmChangePhoneView.swift; sourceTree = "<group>"; };
 		2F07D41928497EBC005D60CC /* OTPViewChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPViewChange.swift; sourceTree = "<group>"; };
 		2F07D41B284A3207005D60CC /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
-		2F07D420284A6BF2005D60CC /* updateScreenBg_gif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = updateScreenBg_gif.gif; sourceTree = "<group>"; };
 		2F2AA73E27DB57DB00AB6C57 /* CartRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRootView.swift; sourceTree = "<group>"; };
 		2F2AA74027DB57E600AB6C57 /* CartRootVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRootVM.swift; sourceTree = "<group>"; };
 		2F2AA74327DB580E00AB6C57 /* CartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; };
@@ -1304,7 +1302,6 @@
 			children = (
 				2F8B4FF927DD0CC7006662D2 /* catalog_ar_gif.gif */,
 				2FC63CEE281BDEBE00A5EE18 /* loader_gif.gif */,
-				2F07D420284A6BF2005D60CC /* updateScreenBg_gif.gif */,
 				E3733C5526FE1F9900ED3A2A /* Info.plist */,
 				810D612426D39CD800E69E7A /* Weelar.entitlements */,
 				E350D9DA26B99807007B5265 /* Views */,
@@ -1764,7 +1761,6 @@
 				E3F4C33A26F2720600876F27 /* CoreSansC-45Regular.ttf in Resources */,
 				2FEFFFAE284408BF00D25F11 /* GoogleService-Info.plist in Resources */,
 				2F8B4FFA27DD0CC7006662D2 /* catalog_ar_gif.gif in Resources */,
-				2F07D421284A6BF2005D60CC /* updateScreenBg_gif.gif in Resources */,
 				E3F4C34D26F2765B00876F27 /* CoreSansC-65Bold.ttf in Resources */,
 				E3F4C34A26F2765B00876F27 /* CoreSansC-55Medium.ttf in Resources */,
 				2FC63CE22818687A00A5EE18 /* Settings.bundle in Resources */,
@@ -2244,7 +2240,7 @@
 				CODE_SIGN_ENTITLEMENTS = Weedar/Weelar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Weedar/Preview Content\"";
 				DEVELOPMENT_TEAM = KP728Q64HW;
@@ -2255,7 +2251,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.weel.ar;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2273,7 +2269,7 @@
 				CODE_SIGN_ENTITLEMENTS = Weedar/Weelar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Weedar/Preview Content\"";
 				DEVELOPMENT_TEAM = KP728Q64HW;
 				ENABLE_PREVIEWS = YES;
@@ -2283,7 +2279,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.weel.ar;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

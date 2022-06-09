@@ -32,6 +32,7 @@ class DocumentCenterVM: ObservableObject {
     @Published var idImage: UIImage?
     @Published var idUploadProgress: Float = 0
     @Published var idImageChanged = false
+    @Published var showIdEmptyError = false
     
     
     @Published var recommendationImage: UIImage?

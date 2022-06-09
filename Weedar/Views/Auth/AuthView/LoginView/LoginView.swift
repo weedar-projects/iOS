@@ -22,7 +22,7 @@ struct LoginView: View {
             CustomTextField(text: $vm.email, state: $vm.emailTFState, title: "Email",placeholder: "welcomeview.welcome_content_email_placeholder".localized, keyboardType: .emailAddress, contentType: .username)
             
             //Password TextField
-            CustomSecureTextField(text: $vm.password, state: $vm.passwordTFState ,title: "Password", placeholder: "welcomeview.welcome_content_password_placeholder".localized)
+            CustomSecureTextField(text: $vm.password, state: $vm.passwordTFState ,title: "Password", placeholder: "welcomeview.welcome_content_password_placeholder".localized,contentType: .password, keyboardType: .default)
                 .padding(.top, 24)
             
             if let error = vm.authServerError {
@@ -56,24 +56,27 @@ struct LoginView: View {
                     
                     sessionManager.userData(withUpdate: true)
                     if needToFillData{
-                        sessionManager.needToFillUserData = true
-                        sessionManager.userIsLogged = true
-                        coordinatorViewManager.currentRootView = .registerSetps
                         UserDefaultsService().set(value: true, forKey: .needToFillUserData)
                         UserDefaultsService().set(value: true, forKey: .userIsLogged)
+                        
+                        sessionManager.needToFillUserData = true
+                        sessionManager.userIsLogged = true
+                        
+                        coordinatorViewManager.currentRootView = .registerSetps
                         cartManager.getCart()
                         orderTrackerManager.connect()
                     }else{
                         UserDefaultsService().set(value: true, forKey: .userIsLogged)
+                        UserDefaultsService().set(value: false, forKey: .needToFillUserData)
+                        
                         sessionManager.userIsLogged = true
                         sessionManager.needToFillUserData = false
-                        UserDefaultsService().set(value: false, forKey: .needToFillUserData)
                         coordinatorViewManager.currentRootView = .main
+                        
                         tabBarManager.currentTab = .catalog
                         cartManager.getCart()
                         orderTrackerManager.connect()
                     }
-  
                 }
             }
             .padding(.horizontal, 24)

@@ -220,7 +220,7 @@ struct OrderDeliveryView: View {
         .fullScreenCover(isPresented: $orderNavigationManager.needToShowDocumentCenter, onDismiss: {
                }, content: {
                    NavigationView{
-                       DocumentCenterView { documentLoaded in
+                       DocumentCenterView(requiredToFillId: true) { documentLoaded in
                            if documentLoaded{
                                makeOrder()
                            }

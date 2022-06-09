@@ -12,7 +12,6 @@ import Firebase
 struct UserIdentificationRootView: View, KeyboardReadable {
     
     @StateObject var vm: UserIdentificationRootVM
-    @EnvironmentObject var sessionManager: SessionManager
     @EnvironmentObject var coordinatorViewManager: CoordinatorViewManager
     @EnvironmentObject var orderTrackerManager: OrderTrackerManager
     
@@ -105,7 +104,9 @@ struct UserIdentificationRootView: View, KeyboardReadable {
                     if let _ = UserDefaultsService().get(fromKey: .accessToken){
                         UserDefaultsService().remove(key: .accessToken)
                     }
+                    
                     KeychainService.removePassword(serviceKey: .accessToken)
+                    KeychainService.removePassword(serviceKey: .refreshToken)
                     
                     UserDefaultsService().set(value: false, forKey: .userVerified)
                     UserDefaultsService().set(value: false, forKey: .userIsLogged)

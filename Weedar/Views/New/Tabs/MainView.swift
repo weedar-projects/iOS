@@ -35,7 +35,9 @@ struct MainView: View {
                         .onTapGesture {
                             NotificationCenter.default.post(name: .closeOrderTrackerView, object: nil)
                         }
-                }.opacity(tabBarManager.detailScrollValue)
+                }
+                .opacity(tabBarManager.showOrderTracker ? tabBarManager.detailScrollValue : 0)
+                
 
                 VStack(spacing: 0){
                     
