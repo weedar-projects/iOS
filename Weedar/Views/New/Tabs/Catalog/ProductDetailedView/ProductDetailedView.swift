@@ -375,7 +375,7 @@ struct ProductDetailedView: View {
                     .frame(width: 13, height: 13)
                     .foregroundColor(Color.col_white)
                 
-                Text("Added to cart")
+                Text("Added to Cart")
                     .textCustom(.coreSansC65Bold, 16,Color.col_white)
             }
             .frame(height: 48)
@@ -391,7 +391,7 @@ struct ProductDetailedView: View {
                     .foregroundColor(Color.col_text_main)
                     .colorInvert()
                 
-                Text( "Add to cart - $\((product.price * Double(vm.quantity)).formattedString(format: .percent))")
+                Text( "Add to Cart - $\((product.price * Double(vm.quantity)).formattedString(format: .percent))")
                     .textCustom(.coreSansC65Bold, 16, Color.col_text_white)
             }
             .frame(height: 48)
