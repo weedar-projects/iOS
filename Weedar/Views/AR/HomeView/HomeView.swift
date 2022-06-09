@@ -174,7 +174,7 @@ struct ARProductInfo : View {
                             .foregroundColor(.white)
                             .padding([.top], 4)
                         HStack {
-                            ProductInfoCapsule(text: "THC: \(product.thc.formattedString(format: .percent))%")
+                            ProductInfoCapsule(text: "THC: \(product.thc.formattedString(format: .int))%")
                             ProductInfoCapsule(text: product.strain.name)
                             //                      ProductInfoCapsule(text: "Lab test", labTest: true)
                         }

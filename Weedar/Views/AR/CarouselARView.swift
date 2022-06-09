@@ -86,6 +86,8 @@ class CarouselARView: ARView, ObservableObject {
         
         highlightedProduct = nil
         
+        finishAnimation()
+        
         switch state {
         case .overview:
             break

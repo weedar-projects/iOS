@@ -10,6 +10,7 @@ import Amplitude
 
 struct DocumentCenterView: MainLoadViewProtocol {
     
+    @State var requiredToFillId = false
     @StateObject var vm = DocumentCenterVM()
     @EnvironmentObject var orderNavigationManager: OrderNavigationManager
     @State var showLoader = true
@@ -32,6 +33,13 @@ struct DocumentCenterView: MainLoadViewProtocol {
                     .hLeading()
             
                 PassportView()
+                
+                if vm.showIdEmptyError{
+                    Text("ID cannot be blank.")
+                        .textCustom(.coreSansC45Regular, 14, Color.col_pink_main)
+                        .hLeading()
+                        .padding(.horizontal, 32)
+                }
   
                 RecomendationView()
                 
@@ -42,16 +50,20 @@ struct DocumentCenterView: MainLoadViewProtocol {
                     .multilineTextAlignment(.center)
                     
                 RequestButton(state: $vm.buttonState, isDisabled: $vm.buttonIsDisabled,showIcon: false ,title: "Save") {
-                    print("LOADING IMAGE")
-                    vm.updateImages {
-                        self.showLoader = true
-                        print("LOADED IMAGE")
-                        vm.updateScreen()
-                        if orderNavigationManager.needToShowDocumentCenter{
-                            orderNavigationManager.needToShowDocumentCenter = false
-                            documenLoaded(true)
+                    if requiredToFillId && vm.idImage == nil{
+                        vm.showIdEmptyError = true
+                        vm.buttonState = .def
+                    }else{
+                        print("LOADING IMAGE")
+                        vm.updateImages {
+                            self.showLoader = true
+                            print("LOADED IMAGE")
+                            vm.updateScreen()
+                            if orderNavigationManager.needToShowDocumentCenter{
+                                orderNavigationManager.needToShowDocumentCenter = false
+                                documenLoaded(true)
+                            }
                         }
-                        
                     }
                 }
                 .padding(.top)
@@ -182,6 +194,7 @@ struct DocumentCenterView: MainLoadViewProtocol {
         .onChange(of: vm.idImage) { newValue in
             vm.idImageChanged = true
             vm.buttonIsDisabled = false
+            vm.showIdEmptyError = false
 //            if newValue != nil{
 //                vm.buttonIsDisabled = false
 //            }else{

@@ -152,7 +152,7 @@ extension CarouselARView {
         }
     }
     
-    fileprivate func finishAnimation() {
+    func finishAnimation() {
         switch state {
         case .detail(items: let objects):
             let object = objects.last!
