@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F03BCEC2852019B00F16F5E /* PickUpRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F03BCEB2852019B00F16F5E /* PickUpRootView.swift */; };
 		2F07D40C28496614005D60CC /* ChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F07D40B28496614005D60CC /* ChangeEmailView.swift */; };
 		2F07D40E2849661B005D60CC /* ChangeEmailVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F07D40D2849661B005D60CC /* ChangeEmailVM.swift */; };
 		2F07D411284977C2005D60CC /* ChangePhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F07D410284977C2005D60CC /* ChangePhoneView.swift */; };
@@ -288,6 +289,7 @@
 
 /* Begin PBXFileReference section */
 		2B8E4F9BA15DB60A64895A2C /* Pods-Weedar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weedar.release.xcconfig"; path = "Target Support Files/Pods-Weedar/Pods-Weedar.release.xcconfig"; sourceTree = "<group>"; };
+		2F03BCEB2852019B00F16F5E /* PickUpRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickUpRootView.swift; sourceTree = "<group>"; };
 		2F07D40B28496614005D60CC /* ChangeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailView.swift; sourceTree = "<group>"; };
 		2F07D40D2849661B005D60CC /* ChangeEmailVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailVM.swift; sourceTree = "<group>"; };
 		2F07D410284977C2005D60CC /* ChangePhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePhoneView.swift; sourceTree = "<group>"; };
@@ -586,6 +588,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F03BCEA2852018900F16F5E /* PickUp */ = {
+			isa = PBXGroup;
+			children = (
+				2F03BCEB2852019B00F16F5E /* PickUpRootView.swift */,
+			);
+			path = PickUp;
+			sourceTree = "<group>";
+		};
 		2F07D40A284965FD005D60CC /* EmailChange */ = {
 			isa = PBXGroup;
 			children = (
@@ -744,6 +754,7 @@
 		2F4252ED27DA8DFD00DE2041 /* Cart */ = {
 			isa = PBXGroup;
 			children = (
+				2F03BCEA2852018900F16F5E /* PickUp */,
 				2FEFFFA62840EF6A00D25F11 /* PromoCode */,
 				2F3BEDAA27E21E0400298399 /* OrderSteps */,
 				2F2AA74727DB638000AB6C57 /* EmptyCartView */,
@@ -1897,6 +1908,7 @@
 				2F60BA79281048E1002B6670 /* ProductsViewModel.swift in Sources */,
 				2F60BA3A280F7C39002B6670 /* EffectsRowView.swift in Sources */,
 				2FCEFF002813EC4B00D00AEE /* OrderTrackerStatusTopView.swift in Sources */,
+				2F03BCEC2852019B00F16F5E /* PickUpRootView.swift in Sources */,
 				2FE34C372847CE760097BBFA /* LoadingCatalogProductsListView.swift in Sources */,
 				2FF9996728045DA800F22BEB /* OrderListModel.swift in Sources */,
 				2F60BA4F280F7EA8002B6670 /* AddressModel.swift in Sources */,
