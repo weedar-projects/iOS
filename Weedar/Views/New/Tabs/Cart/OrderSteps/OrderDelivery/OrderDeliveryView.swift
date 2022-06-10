@@ -10,7 +10,6 @@ import Amplitude
 
 struct OrderDeliveryView: View {
     
-    
     @StateObject var vm: OrderDeliveryVM
     
     @EnvironmentObject var cartManager: CartManager
@@ -208,8 +207,8 @@ struct OrderDeliveryView: View {
             vm.disableNavButton = newValue
         })
         .onDisappear(perform: {
-            if !orderNavigationManager.showOrderReviewView{
-                tabBarManager.show()
+            if !orderNavigationManager.showOrderReviewView {
+//                tabBarManager.show()
             }
         })
         .alert(isPresented: $vm.checkoutAlertShow, content: {
