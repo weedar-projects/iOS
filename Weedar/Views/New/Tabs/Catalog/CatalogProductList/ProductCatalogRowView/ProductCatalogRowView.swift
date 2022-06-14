@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-import Amplitude
+ 
 
 struct ProductCatalogRowView: View {
     
@@ -123,13 +123,12 @@ struct ProductCatalogRowView: View {
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
                 cartManager.productQuantityInCart(productId: item.id, quantity: .add)
                 vm.product_qty += 1
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                Amplitude.instance().logEvent("add_cart_catalog", withEventProperties: ["category" : item.type.name,
-                                                                                        "product_id" : item.id,
-                                                                                        "product_qty" : vm.product_qty,
-                                                                                        "product_price" : item.price.formattedString(format: .percent)])
-                }
+                
+                AnalyticsManager.instance.event(key: .filters_apply,
+                                                properties: [AMPropertieKey.category : item.type.name,
+                                                             AMPropertieKey.product_id: item.id,
+                                                             AMPropertieKey.product_qty: vm.product_qty,
+                                                             AMPropertieKey.product_price: item.price.formattedString(format: .percent)])
                 vm.chageAddButtonState()
             }
         }

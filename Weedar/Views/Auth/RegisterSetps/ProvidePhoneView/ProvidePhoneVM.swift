@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 
 class ProvidePhoneVM: ObservableObject {
     
@@ -49,9 +49,7 @@ class ProvidePhoneVM: ObservableObject {
                    
                     //set button state
                     self.buttonState = .success
-                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                    Amplitude.instance().logEvent("number_success")
-                    }
+                    AnalyticsManager.instance.event(key: .number_success)
                     //show button state
                     DispatchQueue.main.asyncAfter(deadline: .now()+1) {
                         self.stepSuccess.toggle()
@@ -61,9 +59,7 @@ class ProvidePhoneVM: ObservableObject {
                     
                     //log
                     Logger.log(message: error.localizedDescription, event: .error)
-                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                    Amplitude.instance().logEvent("number_fail", withEventProperties: ["error_type": error.localizedDescription])
-                    }
+                    AnalyticsManager.instance.event(key: .number_fail, properties: [.error_type : error.localizedDescription])
                     //error found
                     self.isErrorShow = true
                     self.errorMessage = error.localizedDescription

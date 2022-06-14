@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 
 struct OrderDeliveryView: View {
     
@@ -247,19 +247,16 @@ struct OrderDeliveryView: View {
                         if !result {
                             self.vm.errorMessage = message
                             self.vm.checkoutAlertShow = true
-                            if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                            Amplitude.instance().logEvent("order_creation_fail", withEventProperties: ["order_creation_fail" : vm.errorMessage])
-                            }
+                            AnalyticsManager.instance.event(key: .order_creation_fail,
+                                                            properties: [.order_creation_fail : vm.errorMessage])
                             vm.disableNavButton = false
                             vm.addressTFState = .success
                             
                         } else {
                             orderNavigationManager.showOrderReviewView = true
                             vm.addressTFState = .success
-                            if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                            Amplitude.instance().logEvent("review_order_success")
-                            }
+                            AnalyticsManager.instance.event(key: .review_order_success)
+                            
                             vm.disableNavButton = false
                         }
                         vm.buttonState = .def
@@ -267,10 +264,8 @@ struct OrderDeliveryView: View {
                 case false :
                     vm.disableNavButton = false
                     vm.errorMessage = "Please provide more detailed address."
-                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                    Amplitude.instance().logEvent("order_creation_fail", withEventProperties: ["order_creation_fail" : vm.errorMessage])
-                    }
+                    AnalyticsManager.instance.event(key: .order_creation_fail,
+                                                    properties: [.order_creation_fail : "Please provide more detailed address."])
                     self.vm.checkoutAlertShow = true
                     vm.buttonState = .def
                     vm.addressTFState = .error

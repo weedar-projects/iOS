@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 
 struct VerifyIdentityView: View {
     
@@ -98,14 +98,10 @@ struct VerifyIdentityView: View {
               ImagePickerView(sourceType: vm.sourceType) { image in
                   switch vm.selectedPhoto {
                   case .id:
-                      if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                      Amplitude.instance().logEvent("id_upload", withEventProperties: ["method_id" :"choose an image"])
-                      }
+                      AnalyticsManager.instance.event(key: .id_upload, properties:  [.method_id :"choose an image"])
                       vm.idImage = image
                   case .rec:
-                      if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                      Amplitude.instance().logEvent("recommend_upload", withEventProperties: ["method_id" : "choose an image"])
-                      }
+                      AnalyticsManager.instance.event(key: .recommend_upload, properties:  [.method_id :"choose an image"])
                       vm.recommendationImage = image
                   }
               }
@@ -128,14 +124,10 @@ struct VerifyIdentityView: View {
                   switch vm.selectedPhoto {
                   case .id:
                       vm.idImage = image
-                      if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                      Amplitude.instance().logEvent("id_upload", withEventProperties: ["method_id" : "take a photo"])
-                      }
+                      AnalyticsManager.instance.event(key: .id_upload, properties:  [.method_id :"take a photo"])
                   case .rec:
                       vm.recommendationImage = image
-                      if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                      Amplitude.instance().logEvent("recommend_upload", withEventProperties: ["method_id" : "take a photo"])
-                      }
+                      AnalyticsManager.instance.event(key: .recommend_id, properties:  [.method_id :"take a photo"])
                   }
               }
             .navigationTitle("Take a photo")
@@ -165,9 +157,7 @@ struct VerifyIdentityView: View {
             vm.isActionSheetShow.toggle()
         } trashAction: {
             vm.idImage = nil
-            if UserDefaults.standard.bool(forKey: "EnableTracking"){
-            Amplitude.instance().logEvent("delete_id_upload")
-            }
+            AnalyticsManager.instance.event(key: .delete_id_upload)
         }
         .padding(.horizontal, 24)
         .onChange(of: vm.idImage) { newValue in
@@ -193,9 +183,7 @@ struct VerifyIdentityView: View {
             vm.isActionSheetShow.toggle()
         }trashAction: {
             vm.recommendationImage = nil
-            if UserDefaults.standard.bool(forKey: "EnableTracking"){
-            Amplitude.instance().logEvent("delete_recommens_upload")
-            }
+            AnalyticsManager.instance.event(key: .delete_recommens_upload)
         }
         .padding(.horizontal, 24)
         .onChange(of: vm.recommendationImage) { newValue in

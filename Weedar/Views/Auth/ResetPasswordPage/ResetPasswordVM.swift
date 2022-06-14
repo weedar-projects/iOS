@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 import Alamofire
 
 class ResetPasswordVM: ObservableObject {

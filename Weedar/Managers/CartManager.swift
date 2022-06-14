@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 import SwiftyJSON
 import Alamofire
 
@@ -107,9 +107,7 @@ class CartManager: ObservableObject {
             case .success(let json):
                 let cart = CartModel(json: json)
                 self.cartData = cart
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                    Amplitude.instance().logEvent("clear_cart")
-                }
+                AnalyticsManager.instance.event(key: .clear_cart)
             case .failure(let error):
                 print("Error to clear cart \(error)")
             }

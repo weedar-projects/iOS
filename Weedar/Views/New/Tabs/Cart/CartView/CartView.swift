@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 import SDWebImageSwiftUI
 
 struct CartView: View {
@@ -69,11 +69,10 @@ struct CartView: View {
                         tabBarManager.hide()
                         if let productsInCart = cartManager.cartData?.cartDetails{
                             for product in productsInCart {
-                                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                                    Amplitude.instance().logEvent("proceed_checkout", withEventProperties: ["category" : product.product.type,
-                                                                                                            "product_id" : product.product.id,
-                                                                                                            "product_price" : product.product.price.formattedString(format: .percent)])
-                                }
+                                AnalyticsManager.instance.event(key: .delete_product, properties: [.category : product.product.type.name,
+                                                                                                   .product_id : product.product.id,
+                                                                                                   .product_price : product.product.price.formattedString(format: .percent)])
+    
                             }
                         }
                     }

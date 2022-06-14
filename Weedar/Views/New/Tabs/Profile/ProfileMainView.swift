@@ -7,7 +7,7 @@
 
 import SwiftUI
 import FirebaseMessaging
-import Amplitude
+ 
 
 struct ProfileMainView: View {
     
@@ -161,9 +161,7 @@ struct ProfileMainView: View {
                 
                 CustomToggle(isOn: $vm.notificationToggle){
                     self.checkUserAnswerAPNS(with: vm.notificationToggle)
-                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                    Amplitude.instance().logEvent("notification_toogle", withEventProperties: ["notifications_allowance" : vm.notificationToggle])
-                    }
+                    AnalyticsManager.instance.event(key: .notification_toogle,properties:  [.notifications_allowance : vm.notificationToggle])
                 }
             }
             .padding(.horizontal, 18)
@@ -209,9 +207,7 @@ struct ProfileMainView: View {
                             print("TOKEN WAS REMOVE")
                             DispatchQueue.main.async {
                                 orderTrackerManager.disconnect()
-                                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                                Amplitude.instance().logEvent("logout_success")
-                                }
+                                AnalyticsManager.instance.event(key: .logout_success)
                                 if let _ = UserDefaultsService().get(fromKey: .accessToken){
                                     UserDefaultsService().remove(key: .accessToken)
                                 }

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+
 
 struct CatalogView: MainLoadViewProtocol {
     
@@ -36,10 +36,8 @@ struct CatalogView: MainLoadViewProtocol {
                         NavigationLink(isActive: $tabBarManager.showARView) {
                             HomeView()
                                 .onAppear {
-                                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                                        print("worktraking")
-                                    Amplitude.instance().logEvent("select_catalog", withEventProperties: ["item_catalog" : "AR Catalog"])
-                                    }
+                                    AnalyticsManager.instance.event(key: .select_catalog,
+                                                                    properties: [AMPropertieKey.item_catalog : "AR Catalog"])
                                 }
                         } label: {
                             EmptyView()
@@ -59,10 +57,8 @@ struct CatalogView: MainLoadViewProtocol {
                                 NavigationLink {
                                     CatalogProductsListView(category: category)
                                         .onAppear {
-                                            if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                                            Amplitude.instance().logEvent("select_catalog", withEventProperties: ["item_catalog" : category.name])
-                                            }
+                                            AnalyticsManager.instance.event(key: .select_catalog,
+                                                                            properties: [AMPropertieKey.item_catalog : category.name])
                                         }
                                 } label: {
                                     SmallCategoryView(category: category)
@@ -79,10 +75,10 @@ struct CatalogView: MainLoadViewProtocol {
                             .cornerRadius(16)
                             .onTapGesture {
                                 vm.showWebView.toggle()
-                                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                                Amplitude.instance().logEvent("select_catalog", withEventProperties: ["item_catalog" : "Coming soon"])
-                                }
+                                
+                                AnalyticsManager.instance.event(key: .select_catalog,
+                                                                properties: [AMPropertieKey.item_catalog : "Coming soon"])
+                                
                             }
                             .padding(.horizontal)
                             .padding(.bottom, 25)

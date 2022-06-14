@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 
 // MARK: - PasswordChangeView
 struct PasswordChangeView: View {
@@ -405,10 +405,7 @@ struct PasswordChangeContent: View {
                 loadingIndicatorShow = true
                 
                 viewModel.changePassword(passwordCurrent, newPassword: passwordNew) { isSuccess in
-                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                    Amplitude.instance().logEvent("change_pass_success")
-                    }
+                    AnalyticsManager.instance.event(key: .change_pass_success)
                     isPasswordCurrentChange = isSuccess
                     isPasswordCurrentRegexWrong = !isSuccess
                 }
@@ -481,7 +478,7 @@ class PasswordChangeViewModel: ObservableObject {
             case .success(_):
                 finished(true)
             case .failure(let error):
-                Amplitude.instance().logEvent("change_pass_success", withEventProperties: ["error_type" : error.localizedDescription])
+                AnalyticsManager.instance.event(key: .change_pass_fail, properties: [.error_type : error.localizedDescription])
                 finished(false)
             }
         }

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 
 struct MyOrdersListView: View {
     
@@ -30,9 +30,7 @@ struct MyOrdersListView: View {
                                 MyOrderView(id: order.id)
                                     .navBarSettings("Order #\(order.number)")
                                     .onAppear{
-                                        if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                                        Amplitude.instance().logEvent("select_order", withEventProperties: ["order_number" : order.number, "order_status" : order.state])
-                                        }
+                                        AnalyticsManager.instance.event(key: .select_order,properties:  [.order_number : order.number, .order_status : order.state])
                                     }
                             } label: {
                                 ZStack{

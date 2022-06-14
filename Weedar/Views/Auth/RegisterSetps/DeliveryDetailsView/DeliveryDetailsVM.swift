@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Alamofire
-import Amplitude
+ 
 
 class DeliveryDetailsVM: ObservableObject {
     
@@ -133,10 +133,6 @@ class DeliveryDetailsVM: ObservableObject {
         API.shared.request(endPoint: url, method: .put, parameters: params, encoding: JSONEncoding.default) { result in
             switch result{
             case .success(_):
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                Amplitude.instance().logEvent("name_signup")
-                Amplitude.instance().logEvent("address_signup_success")
-                }
                 self.stepSuccess.toggle()
                 print("Address sended")
             case let .failure(error):
@@ -161,9 +157,7 @@ class DeliveryDetailsVM: ObservableObject {
             case .failure(_):
                 validArea(false)
                 self.addressFailQty += 1
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                Amplitude.instance().logEvent("address_signup_fail", withEventProperties: ["adress_fail_qty" : self.addressFailQty])
-                }
+                AnalyticsManager.instance.event(key: .address_signup_fail, properties: [.adress_fail_qty : self.addressFailQty])
             }
         }
     }

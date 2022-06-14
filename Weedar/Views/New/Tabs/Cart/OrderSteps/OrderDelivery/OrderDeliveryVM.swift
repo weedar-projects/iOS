@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 import Alamofire
 
 class OrderDeliveryVM: ObservableObject {
@@ -111,17 +111,12 @@ class OrderDeliveryVM: ObservableObject {
                           zipCode: userInfo.zipCode ?? "")
        
         if lastName != name{
-            if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-            Amplitude.instance().logEvent("name_change")
-            }
+                AnalyticsManager.instance.event(key: .name_change)
+       
         }
         
         if lastAddress != address{
-            if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-            Amplitude.instance().logEvent("address_change")
-            }
+            AnalyticsManager.instance.event(key: .address_change_success)
         }
 
     }
@@ -149,16 +144,11 @@ class OrderDeliveryVM: ObservableObject {
             case .success(_):
                 self.stepSuccess.toggle()
                 print("Address sended")
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                Amplitude.instance().logEvent("address_change_success")
-                }
+                AnalyticsManager.instance.event(key: .address_change_success)
             case let .failure(error):
                 print("Error to send data \(error)")
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                Amplitude.instance().logEvent("address_change_fail", withEventProperties: ["error_type" : error.localizedDescription])
-                }
+                AnalyticsManager.instance.event(key: .address_change_fail, properties: [.error_type : error.localizedDescription])
+ 
                 break
             }
         }

@@ -44,7 +44,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        Amplitude.instance().logEvent("app_close")
+        AnalyticsManager.instance.event(key: .app_close)
     }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
@@ -104,8 +104,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
             if id != 0{
                 DeepLinks.shared.data = DeeplinkModel(id: id, type: type)
                 NotificationCenter.default.post(name: .showDeeplinkOrderTracker, object: nil)
-                Amplitude.instance().logEvent("app_start", withEventProperties: ["source" : "push notifs"])
-                
+                AnalyticsManager.instance.event(key: .app_start, properties: [.source: "push notification"])
             }
         }
 

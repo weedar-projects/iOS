@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 
 struct CatalogProductsListView: View {
     
@@ -30,10 +30,13 @@ struct CatalogProductsListView: View {
                     ProductDetailedView(product: product)
                         .onAppear(perform: {
                             tabBarManager.hideTracker()
-                            if UserDefaults.standard.bool(forKey: "EnableTracking"){
+                            AnalyticsManager.instance.event(key: .select_product,
+                                                            properties: [AMPropertieKey.category : product.type.name,
+                                                                         AMPropertieKey.product_id: product.id,
+                                                                         AMPropertieKey.product_price: product.price.formattedString(format: .percent)])
 
-                            Amplitude.instance().logEvent("select_product", withEventProperties: ["category" : product.type.name, "product_id" : product.id, "price" : product.price])
-                            }
+        
+                            
                         })
                 }
             } label: {
@@ -62,16 +65,12 @@ struct CatalogProductsListView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .frame(height: 28)
-//                    .background(Color.col_black.cornerRadius(8))
-//                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.col_black, lineWidth: 1))
+
                 }
                 .padding(.top, 12)
                 .onTapGesture {
                     withAnimation {
-                        if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                        Amplitude.instance().logEvent("click_filters")
-                        }
+                        AnalyticsManager.instance.event(key: .click_filters)
                         UIApplication.shared.endEditing()
                         vm.showFilterView = true
                     }
@@ -193,10 +192,7 @@ struct CatalogProductsListView: View {
                 .transition(.move(edge: .bottom))
                 .edgesIgnoringSafeArea(.bottom)
                 .onDisappear {
-                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                    Amplitude.instance().logEvent("filter_close")
-                    }
+                    AnalyticsManager.instance.event(key: .filter_close)
                 }
         }
     }
