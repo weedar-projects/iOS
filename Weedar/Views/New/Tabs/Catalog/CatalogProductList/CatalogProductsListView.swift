@@ -31,9 +31,9 @@ struct CatalogProductsListView: View {
                         .onAppear(perform: {
                             tabBarManager.hideTracker()
                             AnalyticsManager.instance.event(key: .select_product,
-                                                            properties: [AMPropertieKey.category : product.type.name,
-                                                                         AMPropertieKey.product_id: product.id,
-                                                                         AMPropertieKey.product_price: product.price.formattedString(format: .percent)])
+                                                            properties: [.category : product.type.name,
+                                                                         .product_id: product.id,
+                                                                         .product_price: product.price.formattedString(format: .percent)])
 
         
                             

@@ -95,10 +95,10 @@ struct FiltersView: View {
                     rootVM.canReset = true
                     
                     AnalyticsManager.instance.event(key: .filters_apply,
-                                                    properties: [AMPropertieKey.category : rootVM.categoryId,
-                                                                 AMPropertieKey.price_range: "\(rootVM.filters.priceFrom?.formattedString(format: .percent)) - \(rootVM.filters.priceTo?.formattedString(format: .percent))",
-                                                                 AMPropertieKey.brand_name: rootVM.filters.brands ?? 0,
-                                                                 AMPropertieKey.effects: rootVM.filters.effects ?? 0])
+                                                    properties: [.category : rootVM.categoryId,
+                                                                 .price_range: "\(rootVM.filters.priceFrom?.formattedString(format: .percent)) - \(rootVM.filters.priceTo?.formattedString(format: .percent))",
+                                                                 .brand_name: rootVM.filters.brands ?? 0,
+                                                                 .effects: rootVM.filters.effects ?? 0])
                     withAnimation {
                         rootVM.showFilterView = false
                     }

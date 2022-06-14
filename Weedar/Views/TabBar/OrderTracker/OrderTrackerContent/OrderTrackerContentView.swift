@@ -153,8 +153,8 @@ struct OrderTrackerContentView: View {
                                               action: {
               vm.loading = true
               
-              AnalyticsManager.instance.event(key: AMEventKeys.cancel_order,
-                                              properties: [AMPropertieKey.current_status : orderTrackerManager.currentState?.state.rawValue])
+              AnalyticsManager.instance.event(key: .cancel_order,
+                                              properties: [.current_status : orderTrackerManager.currentState?.state.rawValue])
               
               vm.cancelOrder(orderID: orderTrackerManager.currentOrder?.id ?? 0) {
 //                  if let firstOrder = orderTrackerManager.aviableOrders.first{

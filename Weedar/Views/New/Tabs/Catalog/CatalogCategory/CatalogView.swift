@@ -37,7 +37,7 @@ struct CatalogView: MainLoadViewProtocol {
                             HomeView()
                                 .onAppear {
                                     AnalyticsManager.instance.event(key: .select_catalog,
-                                                                    properties: [AMPropertieKey.item_catalog : "AR Catalog"])
+                                                                    properties: [.item_catalog : "AR Catalog"])
                                 }
                         } label: {
                             EmptyView()
@@ -58,7 +58,7 @@ struct CatalogView: MainLoadViewProtocol {
                                     CatalogProductsListView(category: category)
                                         .onAppear {
                                             AnalyticsManager.instance.event(key: .select_catalog,
-                                                                            properties: [AMPropertieKey.item_catalog : category.name])
+                                                                            properties: [.item_catalog : category.name])
                                         }
                                 } label: {
                                     SmallCategoryView(category: category)
@@ -77,7 +77,7 @@ struct CatalogView: MainLoadViewProtocol {
                                 vm.showWebView.toggle()
                                 
                                 AnalyticsManager.instance.event(key: .select_catalog,
-                                                                properties: [AMPropertieKey.item_catalog : "Coming soon"])
+                                                                properties: [.item_catalog : "Coming soon"])
                                 
                             }
                             .padding(.horizontal)

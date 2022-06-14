@@ -125,10 +125,10 @@ struct ProductCatalogRowView: View {
                 vm.product_qty += 1
                 
                 AnalyticsManager.instance.event(key: .filters_apply,
-                                                properties: [AMPropertieKey.category : item.type.name,
-                                                             AMPropertieKey.product_id: item.id,
-                                                             AMPropertieKey.product_qty: vm.product_qty,
-                                                             AMPropertieKey.product_price: item.price.formattedString(format: .percent)])
+                                                properties: [.category : item.type.name,
+                                                             .product_id: item.id,
+                                                             .product_qty: vm.product_qty,
+                                                             .product_price: item.price.formattedString(format: .percent)])
                 vm.chageAddButtonState()
             }
         }
