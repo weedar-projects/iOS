@@ -67,14 +67,6 @@ struct CartView: View {
                     MainButton(title: "Proceed to checkout") {
                         orderNavigationManager.showDeliveryView = true
                         tabBarManager.hide()
-                        if let productsInCart = cartManager.cartData?.cartDetails{
-                            for product in productsInCart {
-                                AnalyticsManager.instance.event(key: .delete_product, properties: [.category : product.product.type.name,
-                                                                                                   .product_id : product.product.id,
-                                                                                                   .product_price : product.product.price.formattedString(format: .percent)])
-    
-                            }
-                        }
                     }
                     .padding(.top, 32)
                     .padding(.horizontal, 24)
@@ -104,6 +96,14 @@ struct CartView: View {
                                         Text("Clear"),
                                         action: {
                                             self.cartManager.clearAllProductCart()
+                                            if let productsInCart = cartManager.cartData?.cartDetails{
+                                                for product in productsInCart {
+                                                    AnalyticsManager.instance.event(key: .delete_product, properties: [.category : product.product.type.name,
+                                                                                                                       .product_id : product.product.id,
+                                                                                                                       .product_price : product.product.price.formattedString(format: .percent)])
+                        
+                                                }
+                                            }
                                         }
                                     ))
             }

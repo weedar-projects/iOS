@@ -10,13 +10,10 @@ import Amplitude
  
 
 class AnalyticsManager {
-    
     static let instance = AnalyticsManager()
-    
     func event(key: AMEventKeys, properties: [AMPropertieKey : Any] = [:]){
-        let key = String(reflecting: key)
         if UserDefaults.standard.bool(forKey: "EnableTracking"){
-            Amplitude.instance().logEvent(key, withEventProperties: properties)
+            Amplitude.instance().logEvent(key.eventKey, withEventProperties: properties)
         }
     }
 }
@@ -100,7 +97,7 @@ enum AMEventKeys{
         case view_delivery_signup_screen
         case name_signup
         case address_signup_success
-        case address_signup_fail
+        case address_fail
         case address_signup_next
         case deliver_signup_return
         case view_verify_id_screen
@@ -213,7 +210,6 @@ enum AMEventKeys{
                 return "app_start"
             case .app_close:
                 return "app_close"
-                
             //Splash
             case .view_age_screen:
                 return "view_age_screen"
@@ -289,8 +285,8 @@ enum AMEventKeys{
                 return "name_signup"
             case .address_signup_success:
                 return "address_signup_success"
-            case .address_signup_fail:
-                return "address_signup_fail"
+            case .address_fail:
+                return "address_fail"
             case .address_signup_next:
                 return "address_signup_next"
             case .deliver_signup_return:

@@ -7,13 +7,20 @@
 
 import SwiftUI
 import SwiftyJSON
+import Amplitude
 
 class SessionManager: ObservableObject {
     
     @Published var userIsLogged: Bool
     @Published var needToFillUserData: Bool
     
-    @Published var user: UserModel?
+    @Published var user: UserModel?{
+        didSet{
+            if let user = user {
+                Amplitude.instance().setUserId(user.phone)
+            }
+        }
+    }
     
     let udf = UserDefaultsService()
         

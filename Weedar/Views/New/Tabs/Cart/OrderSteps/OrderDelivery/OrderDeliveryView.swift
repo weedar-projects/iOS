@@ -205,7 +205,11 @@ struct OrderDeliveryView: View {
             hideKeyboard()
         }
         .onChange(of: vm.buttonIsDisabled, perform: { newValue in
-            vm.disableNavButton = newValue
+            if vm.buttonState == .loading{
+                vm.disableNavButton = true
+            }else{
+                vm.disableNavButton = false
+            }
         })
         .onDisappear(perform: {
             if !orderNavigationManager.showOrderReviewView{

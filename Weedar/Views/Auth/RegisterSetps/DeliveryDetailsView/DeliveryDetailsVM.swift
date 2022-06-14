@@ -152,12 +152,15 @@ class DeliveryDetailsVM: ObservableObject {
             switch result{
             case let .success(data):
                 guard let value = self.boolValue(data: data) else { return }
+                if value == false{
+                    AnalyticsManager.instance.event(key: .address_fail, properties: [.adress_fail_qty : self.addressFailQty])
+                }
                 validArea(value)
                 print("response area \(value)")
             case .failure(_):
                 validArea(false)
                 self.addressFailQty += 1
-                AnalyticsManager.instance.event(key: .address_signup_fail, properties: [.adress_fail_qty : self.addressFailQty])
+                AnalyticsManager.instance.event(key: .address_fail, properties: [.adress_fail_qty : self.addressFailQty])
             }
         }
     }
