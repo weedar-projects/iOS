@@ -23,12 +23,14 @@ struct CustomSearch: View {
                 
                 
                 TextField("Search", text: $searchText, onEditingChanged: { focused in
-                    AnalyticsManager.instance.event(key: .click_search)
                     withAnimation {
                         self.showCancel = focused
                         self.isEditing = focused
                     }
                 })
+                .onTapGesture {
+                    AnalyticsManager.instance.event(key: .click_search)
+                }
                 
                 Spacer(minLength: 0)
                 

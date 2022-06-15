@@ -161,6 +161,8 @@ struct ProfileMainView: View {
                 
                 CustomToggle(isOn: $vm.notificationToggle){
                     self.checkUserAnswerAPNS(with: vm.notificationToggle)
+                }
+                .onTapGesture {
                     AnalyticsManager.instance.event(key: .notification_toogle,properties:  [.notifications_allowance : vm.notificationToggle])
                 }
             }

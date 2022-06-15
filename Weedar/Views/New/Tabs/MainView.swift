@@ -44,6 +44,11 @@ struct MainView: View {
                     OrderTrackerView(detailScrollValue: $tabBarManager.detailScrollValue)
                         .offset(y: tabBarManager.showOrderTracker ? 0 : tabBarManager.tabBarHeight + getSafeArea().bottom + 50)
                         .opacity(tabBarManager.showOrderTracker ? 1 : 0)
+                        .onChange(of: tabBarManager.showOrderTracker) { value in
+                            if value{
+                                AnalyticsManager.instance.event(key: .order_trackbar_view)
+                            }
+                        }
                     
                     if tabBarManager.showOrderTracker{
                         Rectangle()

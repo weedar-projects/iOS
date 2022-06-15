@@ -124,7 +124,7 @@ struct ProductCatalogRowView: View {
                 cartManager.productQuantityInCart(productId: item.id, quantity: .add)
                 vm.product_qty += 1
                 
-                AnalyticsManager.instance.event(key: .filters_apply,
+                AnalyticsManager.instance.event(key: .add_cart_catalog,
                                                 properties: [.category : item.type.name,
                                                              .product_id: item.id,
                                                              .product_qty: vm.product_qty,

@@ -14,6 +14,7 @@ class AnalyticsManager {
     func event(key: AMEventKeys, properties: [AMPropertieKey : Any] = [:]){
         
         if UserDefaults.standard.bool(forKey: "EnableTracking"){
+            print("AnalyticsManager: event: \(key.eventKey)  properties: \(properties)")
             Amplitude.instance().logEvent(key.eventKey, withEventProperties: properties)
         }
     }
@@ -50,6 +51,7 @@ enum AMPropertieKey: String{
     case order_creation_fail = "order_creation_fail"
     case order_status = "order_status"
     case order_number = "order_number"
+    case status_id = "status_id"
 }
 
 enum AMEventKeys{
@@ -177,6 +179,7 @@ enum AMEventKeys{
         case switch_order
         case cancel_order
         case minimize_trackbar
+        case changeOrderStatus
     
     
     //Profile
@@ -425,6 +428,8 @@ enum AMEventKeys{
                 return "cancel_order"
             case .minimize_trackbar:
                 return "minimize_trackbar"
+            case .changeOrderStatus:
+                return "changeOrderStatus"
                 
             //Profile
             case .profile_view:
@@ -470,6 +475,7 @@ enum AMEventKeys{
             case .notification_toogle:
                 return "notification_toogle"
                 
+   
             }
         }
     }

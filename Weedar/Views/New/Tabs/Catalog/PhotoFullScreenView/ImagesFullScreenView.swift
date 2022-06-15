@@ -83,7 +83,7 @@ struct ImagesFullScreenView: View {
                     if !animProductInCart{
                         vm.notification.notificationOccurred(.success)
                         cartManager.productQuantityInCart(productId: product.id, quantity: .add)
-                        AnalyticsManager.instance.event(key: .select_product,
+                        AnalyticsManager.instance.event(key: .add_cart_prod_card,
                                                         properties: [.category : product.type.name,
                                                                      .product_id: product.id,
                                                                      .product_qty: 1,

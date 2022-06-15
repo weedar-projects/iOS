@@ -38,12 +38,14 @@ class ResetPasswordVM: ObservableObject {
             case .success(_):
                 self.isAlertShow = true
                 self.buttonState = .success
+                AnalyticsManager.instance.event(key: .reset_password_success)
                 DispatchQueue.main.asyncAfter(deadline: .now()+2) {
                     self.buttonState = .def
                 }
             case let .failure(error):
                 self.errorAPI = error
                 self.buttonState = .def
+                AnalyticsManager.instance.event(key: .reset_password_fail, properties: [.error_type : error.message])
             }
         }
     }
