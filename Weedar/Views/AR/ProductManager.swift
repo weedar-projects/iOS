@@ -13,29 +13,52 @@ import AudioToolbox
 class ProductManager {
     init(items: [Int: ModelTuple], scale: Float, radius: Float) {
         self.scale = scale
-      
+        self.radius = radius
+        
         var queueTemp: [Int] = []
      
         for item in items {
             queueTemp.append(item.key)
         }
-//        while queueTemp.count < 12 {
-//            queueTemp += queueTemp
-//        }
         
-        self.queue = queueTemp.sorted(by: >)
+        while queueTemp.count < 12 {
+            queueTemp += queueTemp
+        }
         
-        self.radius = radius
+        self.queue = queueTemp
+       
     }
     
     var queue: [Int]
     var scale: Float
     var radius: Float
     
+    func loadModels(items: [Int: ModelTuple]){
+        self.queue.removeAll()
+        
+        var queueTemp: [Int] = []
+     
+        for item in items {
+            queueTemp.append(item.key)
+        }
+        
+        while queueTemp.count < 12 {
+            queueTemp += queueTemp
+        }
+        
+        self.queue = queueTemp
+    }
+    
     func monitorRotation(forAnchor anchor: ModelEntity, putBackModels: Bool = false) {
         let pie: Int
         
-               if isInsideVisibleWindow(pie: pie) {
+        if !putBackModels {
+            pie = self.pie(forAnchor: anchor)
+        } else {
+            pie = 4
+        }
+        
+        if isInsideVisibleWindow(pie: pie) {
             if isModelNeedsLoading(for: anchor) {
                 anchor.isEnabled = false
                 let modelID = getModelIDToLoad(forPie: pie)
@@ -63,7 +86,7 @@ class ProductManager {
         if queue[3] != id{
             queue.append(queue[3])
             queue.insert(id, at: 3)
-            queue = uniq(source: queue).sorted(
+            queue = uniq(source: queue)
             print("Queue: \(queue)")
         }
     }
@@ -110,8 +133,10 @@ class ProductManager {
         // gives model id to load depending on
         // what side user is turing the carousel to
         if pie > 0 {
+            print("queue.removeLast \(queue.last)")
             return queue.removeLast()
         } else {
+            print("queue.removeLast \(queue.last)")
             return queue.removeFirst()
         }
     }
@@ -121,7 +146,6 @@ class ProductManager {
             queue.append(modelID)
         } else {
             queue.insert(modelID, at: 0)
-            
         }
     }
     

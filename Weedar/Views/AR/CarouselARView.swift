@@ -66,7 +66,7 @@ class CarouselARView: ARView, ObservableObject {
     
     var lastScrollSpeed: CGFloat = 0
     
-    let manager: ProductManager
+    var manager: ProductManager
     
     var selectionGenerator: UISelectionFeedbackGenerator? = nil
     var feedbackGenerator: UIImpactFeedbackGenerator? = nil
@@ -162,6 +162,22 @@ class CarouselARView: ARView, ObservableObject {
         feedbackGenerator = UIImpactFeedbackGenerator()
         selectionGenerator = UISelectionFeedbackGenerator()
         notificationFeedbackGenerator = UINotificationFeedbackGenerator()
+    }
+    
+    func updateProducts(items: [Int: ModelTuple]){
+//        manager = ProductManager(items: items,
+//                                 scale: Scale.overview,
+//                                 radius: radius)
+        pauseScene()
+        
+        print("UPDATE PRODUCTS: \(items)")
+        var  itemsToLoad = items
+        print("itemsToLoad: \(itemsToLoad)")
+        manager.loadModels(items: itemsToLoad)
+        if let id = items.first?.key{
+            manager.setFirstModelId(id: id)
+        }
+        self.resumeScene()
     }
     
     func pauseScene() {

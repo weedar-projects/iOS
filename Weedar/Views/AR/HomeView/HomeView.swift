@@ -38,6 +38,9 @@ struct HomeView: View {
     
     @State var openProductById: Int = 0
     
+    
+    @StateObject var filtersVM = ARFiltersVM()
+    
     // MARK: - View
     var body: some View {
         
@@ -108,6 +111,7 @@ struct HomeView: View {
                     carousel.showDescriptionCard()
                     if openProductById != 0{
                         carousel.manager.setFirstModelId(id: openProductById)
+                        print("IDDDDDPRODUUCT: \(openProductById)")
                     }
                     statusBarStyle.currentStyle = .darkContent
                     //                tabbarManager.isCurrentOrderViewExtended = false
@@ -145,6 +149,13 @@ struct HomeView: View {
                                 Image("navbar-refresh")
                                     .frame(width: 24, height: 24, alignment: .leading)
                             }
+                            
+                            Button {
+                                filtersVM.showFilterView = true
+                            } label: {
+                                Image("navbar-refresh")
+                                    .frame(width: 24, height: 24, alignment: .leading)
+                            }
                         }) // HStack
                         .foregroundColor(.lightOnSurfaceA.opacity(1.0))
                 )
@@ -153,7 +164,20 @@ struct HomeView: View {
                     TutorialsView(isShown: $tutorialsIsActive)
                 }
             }// MAIN VSTACK
+            
+            
+            if filtersVM.showFilterView{
+                ARFiltersView(rootVM: filtersVM,carousel: carousel)
+                    .transition(.move(edge: .bottom))
+            }
         } //zstack
+        .onChange(of: filtersVM.showFilterView) { newValue in
+            if newValue{
+                tabbarManager.hide()
+            }else{
+                tabbarManager.show()
+            }
+        }
     }
 }
 
