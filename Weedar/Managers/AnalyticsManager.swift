@@ -13,10 +13,10 @@ class AnalyticsManager {
     static let instance = AnalyticsManager()
     func event(key: AMEventKeys, properties: [AMPropertieKey : Any] = [:]){
         
-        if UserDefaults.standard.bool(forKey: "EnableTracking"){
+//        if UserDefaults.standard.bool(forKey: "EnableTracking"){
             print("AnalyticsManager: event: \(key.eventKey)  properties: \(properties)")
             Amplitude.instance().logEvent(key.eventKey, withEventProperties: properties)
-        }
+//        }
     }
 }
 
