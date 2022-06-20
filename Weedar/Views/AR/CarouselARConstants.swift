@@ -128,6 +128,7 @@ class ARModelsManager: ObservableObject {
     
     private func composeFilters(categoryId: Int, catalogFilters: CatalogFilters) -> [String: Any] {
         var filters: [String : Any] = [:]
+        
         if categoryId != -1{
             filters = [CatalogFilterKey.type.rawValue : categoryId]
         }

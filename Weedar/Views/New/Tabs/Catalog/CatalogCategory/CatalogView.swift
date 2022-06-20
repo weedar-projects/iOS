@@ -34,7 +34,7 @@ struct CatalogView: MainLoadViewProtocol {
                     ZStack{
                         //AR Catalog view
                         NavigationLink(isActive: $tabBarManager.showARView) {
-                            HomeView()
+                            HomeView(openProductById: 0, openByCategoryId: 0)
                                 .onAppear {
                                     if UserDefaults.standard.bool(forKey: "EnableTracking"){
                                         print("worktraking")

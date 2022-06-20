@@ -102,7 +102,7 @@ class CarouselARView: ARView, ObservableObject {
 #endif
     }
 
-    func toTrackingState() {
+    func toTrackingState(itemsCount: Int) {
         print("tracking")
         
         if !anchorFound {
@@ -113,8 +113,8 @@ class CarouselARView: ARView, ObservableObject {
             if let angle = angle {
                 productsAnchor.transform.rotation = simd_quatf(angle: angle, axis: SIMD3<Float>(0, 1, 0))
             }
-            
-            self.addEmptyAnchors()
+                
+            self.addEmptyAnchors(itemsCount: itemsCount)
             
             self.shouldDoPerFrameUpdates = true
             
@@ -150,7 +150,7 @@ class CarouselARView: ARView, ObservableObject {
         self.anchor.components.set(directionLight)
         self.anchor.components.set(spotLight)
         
-        toTrackingState()
+        toTrackingState(itemsCount: ARModelsManager.shared.itemNamesDemo.count)
         
 #if !targetEnvironment(simulator)
         self.addGestureRecognizers()
@@ -165,19 +165,15 @@ class CarouselARView: ARView, ObservableObject {
     }
     
     func updateProducts(items: [Int: ModelTuple]){
-//        manager = ProductManager(items: items,
-//                                 scale: Scale.overview,
-//                                 radius: radius)
         pauseScene()
-        
-        print("UPDATE PRODUCTS: \(items)")
-        var  itemsToLoad = items
-        print("itemsToLoad: \(itemsToLoad)")
-        manager.loadModels(items: itemsToLoad)
-        if let id = items.first?.key{
-            manager.setFirstModelId(id: id)
-        }
+        manager = ProductManager(items: items,
+                                 scale: Scale.overview,
+                                 radius: radius)
+        anchor.removeChild(productsAnchor)
+        self.anchorFound = false
+        toTrackingState(itemsCount: items.count)
         self.resumeScene()
+        showDescriptionCard()
     }
     
     func pauseScene() {
@@ -276,15 +272,25 @@ class CarouselARView: ARView, ObservableObject {
         
     }
     
-    func addEmptyAnchors() {
-        let anchorCount = 12
-        for index in 1...anchorCount {
+    func addEmptyAnchors(itemsCount: Int) {
+        
+        
+        let items = itemsCount == 1 ? itemsCount : 12
+        
+        print("ITEMS COUNT: \(items)")
+        for index in 1...12 {
             let containerModel = ModelEntity()
             
             self.productsAnchor.addChild(containerModel)
             
             containerModel.position = [0, 0, -2]//returnCursorPosition(for: containerAnchor)
-            containerModel.transform.rotation *= simd_quatf(angle: (.pi/Float((anchorCount/2))) * Float(index), axis: SIMD3<Float>(0, -1, 0))
+            containerModel.transform.rotation *= simd_quatf(angle: (.pi/Float((12/2))) * Float(index), axis: SIMD3<Float>(0, -1, 0))
         }
     }
+}
+
+
+extension BinaryInteger {
+    var isEven: Bool { isMultiple(of: 2) }
+    var isOdd:  Bool { !isEven }
 }

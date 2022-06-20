@@ -20,7 +20,7 @@ struct CatalogProductsListView: View {
         ZStack{
             
             NavigationLink(isActive: $vm.showAR) {
-                
+                HomeView(openProductById: 0, openByCategoryId: category.id)
             } label: {
                 EmptyView()
             }
@@ -134,23 +134,24 @@ struct CatalogProductsListView: View {
             tabBarManager.show()
         }
         .toolbar {
-//            ToolbarItem(placement: .navigationBarTrailing) {
-//                Button {
-//                    vm.showAR.toggle()
-//                } label: {
-//                    HStack{
-//                    Image("Catalog-AR-White-Icon")
-//                        .resizable()
-//                        .frame(width: 13, height: 13)
-//
-//                        Text("AR")
-//                            .textCustom(.coreSansC65Bold, 12, Color.col_text_white)
-//                    }
-//                    .padding(.horizontal, 13)
-//                    .padding(.vertical, 5)
-//                    .background(Color.col_purple_main.cornerRadius(12))
-//                }
-//            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    vm.showAR.toggle()
+                } label: {
+                    HStack{
+                    Image("Catalog-AR-White-Icon")
+                        .resizable()
+                        .frame(width: 13, height: 13)
+                        .colorInvert()
+
+                        Text("AR")
+                            .textCustom(.coreSansC65Bold, 12, Color.col_text_main)
+                    }
+                    .padding(.horizontal, 13)
+                    .padding(.vertical, 5)
+                    .background(Image.bg_gradient_main.resizable().frame(width: 60, height: 24).clipShape(Capsule()))
+                }
+            }
         }
     }
     
