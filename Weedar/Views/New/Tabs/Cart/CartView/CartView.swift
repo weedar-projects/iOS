@@ -22,13 +22,13 @@ struct CartView: View {
     
     @EnvironmentObject var orderNavigationManager: OrderNavigationManager
     
-    @ObservedObject var vmDelivery = OrderDeliveryVM()
+    @ObservedObject var vmDelivery = OrderDeliveryVMNew()
     
     var body: some View {
         ZStack{
             
             NavigationLink(isActive: $orderNavigationManager.showDeliveryView) {
-                OrderDeliveryView(vm: vmDelivery)
+                OrderDeliveryViewNew(vm: vmDelivery)
             } label: {
                 Color.clear
             }.isDetailLink(false)

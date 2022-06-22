@@ -12,6 +12,8 @@ struct OrderDeliveryView: View {
     
     @StateObject var vm: OrderDeliveryVM
     
+    @StateObject var locationManager = LocationManager()
+    
     @EnvironmentObject var cartManager: CartManager
     
     @EnvironmentObject var tabBarManager: TabBarManager
@@ -87,10 +89,17 @@ struct OrderDeliveryView: View {
                             .padding(.leading, 12)
                             .opacity(0.7)
                         
+                        ZStack{
+                            if let address = vm.currentAddress{
+                                Text(address)
+                                    .textCustom(.coreSansC45Regular, 16, Color.col_text_main)
+                                    
+                            }
                         TextField("Enter your address", text: $vm.address) { isEditing in
                             showDelivery = isEditing
                         }
                         .modifier(TextFieldStyles.TextFieldStyle(strokeColor: Binding<Color>.constant(vm.addressTFState == .success ? Color.col_green_second : vm.addressTFState == .error ?  Color.col_red_second: vm.addressTFState == .def ?  Color.col_borders : Color.clear)))
+                        }
                       
                     }
                     .padding(.horizontal, 24)
@@ -125,7 +134,6 @@ struct OrderDeliveryView: View {
                     })
                         .frame(height: getRect().height / 4, alignment: .top)
                         .animation(.linear(duration: 0.35))
-                        
                     }
                     
                     if !vm.addressErrorMessage.isEmpty{
@@ -135,6 +143,22 @@ struct OrderDeliveryView: View {
                             .padding(.top, 10)
                             
                             .hLeading()
+                    }
+                    
+                    Text("Use my location")
+                        .onTapGesture {
+                            locationManager.requestAuthorisation(always: true)
+//                            locationManager.requestLocation()
+                        }
+                        .onChange(of: locationManager.currentAddressName ?? "") { newValue in
+                            if newValue != ""{
+                                vm.currentAddress = newValue
+                                vm.address = ""
+                            }
+                        }
+                    
+                    if let location = locationManager.userLocation{
+//                        Text("\(location.latitude)\n\(location.longitude)")
                     }
                     
                     Rectangle()

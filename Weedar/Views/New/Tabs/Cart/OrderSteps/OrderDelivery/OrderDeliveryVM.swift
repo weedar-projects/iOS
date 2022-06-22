@@ -50,6 +50,8 @@ class OrderDeliveryVM: ObservableObject {
         }
     }
     
+    @Published var currentAddress: String?
+    
     @Published var deliveryState: AvailabityDeliveryState = .def
     
     @Published var pickUpState: AvailabityDeliveryState = .def
