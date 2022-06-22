@@ -34,7 +34,6 @@ struct OrderDeliveryView: View {
                 Color.clear
             }.isDetailLink(false)
             
-            
             Color.white
             
             VStack{

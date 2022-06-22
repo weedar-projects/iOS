@@ -56,6 +56,8 @@ class OrderDeliveryVMNew: ObservableObject {
     @Published var createOrderButtonState: ButtonState = .def
     @Published var createOrderButtonIsDisabled = false
     
+    @Published var createdOrder: OrderResponseModel?
+    
     @Published var userData: UserModel?{
         didSet{
             if let userData = userData {
@@ -140,13 +142,13 @@ class OrderDeliveryVMNew: ObservableObject {
     
     private func validationAddress(){
         if !userAddress.isEmpty{
-            checkPickupAvailable()
             if oldZipCode != zipCode{
                 checkZipCode(zipCode: zipCode, validArea: { value in
                     if value{
                         self.addressError = ""
                         self.userAddressTFState = .success
                         self.deliveryAvailable = true
+                        self.checkPickupAvailable()
                     }else{
                         self.addressError = "We do not deliver to this zip-code yet."
                         self.userAddressTFState = .error
@@ -191,12 +193,39 @@ class OrderDeliveryVMNew: ObservableObject {
         }
     }
     
+    func getCreatedOrder() -> OrderDetailsReview {
+        guard let createdOrder = createdOrder else {
+            return OrderDetailsReview(orderId: 0,
+                                      totalSum: 0,
+                                      exciseTaxSum: 0,
+                                      salesTaxSum: 0,
+                                      localTaxSum: 0,
+                                      taxSum: 0,
+                                      sum: 0,
+                                      state: 0)
+        }
+        
+        
+        return OrderDetailsReview(orderId: createdOrder.id, totalSum: createdOrder.totalSum, exciseTaxSum: createdOrder.exciseTaxSum, salesTaxSum: createdOrder.salesTaxSum, localTaxSum: createdOrder.taxSum,discount: createdOrder.discount , taxSum: createdOrder.taxSum, sum: createdOrder.sum, state: createdOrder.state)
+    }
+    
+    func tapToAddressField() {
+        if !userAddress.isEmpty{
+            deliveryAvailable = false
+            pickUpAvailable = false
+            currentOrderType = .none
+            userAddress = ""
+            zipCode = ""
+            addressError = ""
+            userAddressTFState = .def
+        }
+    }
 }
 
 
 extension OrderDeliveryVMNew{
     
-    func saveDataCreateOrder(success: @escaping (OrderModel)->Void){
+    func saveDataCreateOrder(success: @escaping (OrderResponseModel)->Void){
         guard let id = userData?.id else { return }
         
         let url = Routs.user.rawValue.appending("/\(id)")
@@ -226,11 +255,12 @@ extension OrderDeliveryVMNew{
                 self.messageAlertError = error.message
                 self.showAlertError = true
                 self.createOrderButtonState = .def
+                self.disableNavButton = false
             }
         }
     }
     
-    func makeOrder(success: @escaping (OrderModel)->Void) {
+    func makeOrder(success: @escaping (OrderResponseModel)->Void) {
         //{ delivery = 0, pickUp = 1 }
         guard let user = userData else { return  }
         
@@ -250,13 +280,15 @@ extension OrderDeliveryVMNew{
         API.shared.request(rout: .getOrderById, method: .post, parameters: params, encoding: JSONEncoding.default) { result in
             switch result{
             case let .success(json):
-                let order = OrderModel(json: json)
+                let order = OrderResponseModel(json: json)
                 success(order)
                 self.createOrderButtonState = .def
+                self.disableNavButton = false
             case let .failure(error):
                 self.createOrderButtonState = .def
                 self.messageAlertError = error.message
                 self.showAlertError = true
+                self.disableNavButton = false
             }
         }
     }

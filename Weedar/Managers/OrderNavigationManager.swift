@@ -38,6 +38,11 @@ class OrderNavigationManager: ObservableObject {
         }
     }
     
+    @Published var showPickUpView = false{
+        didSet{
+            print("showPickUpView: \(showPickUpView)")
+        }
+    }
     
     func hideAll() {
         showDeliveryView = false

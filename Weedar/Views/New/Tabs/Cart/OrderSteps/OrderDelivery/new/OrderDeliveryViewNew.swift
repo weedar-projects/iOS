@@ -15,9 +15,25 @@ struct OrderDeliveryViewNew: View {
     @Namespace var bottomID
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @EnvironmentObject var sessionManager: SessionManager
+    @EnvironmentObject var orderNavigationManager: OrderNavigationManager
+    @EnvironmentObject var tabBarManager: TabBarManager
     
     var body: some View {
         ZStack{
+            NavigationLink(isActive: $orderNavigationManager.showOrderReviewView) {
+                OrderReviewView(data: vm.getCreatedOrder())
+            } label: {
+                Color.clear
+            }.isDetailLink(false)
+            
+            NavigationLink(isActive: $orderNavigationManager.showPickUpView) {
+                PickUpRootView()
+            } label: {
+                Color.clear
+            }.isDetailLink(false)
+            
+            Color.white
+            
             ScrollView(.vertical, showsIndicators: false) {
                 ScrollViewReader { reader in
                     VStack{
@@ -46,10 +62,7 @@ struct OrderDeliveryViewNew: View {
                                         keyboardType: .default,
                                         contentType: .name)
                         .padding(.top, 24)
-                        .onTapGesture {
-                            vm.userNameError = ""
-                            vm.userNameTFState = .def
-                        }
+                        
                         if !vm.userNameError.isEmpty{
                             Text(vm.userNameError)
                                 .textCustom(.coreSansC45Regular, 14, Color.col_pink_main)
@@ -62,8 +75,7 @@ struct OrderDeliveryViewNew: View {
                         AddressTextField()
                             .padding(.top, 24)
                             .onTapGesture {
-                                vm.addressError = ""
-                                vm.userAddressTFState = .def
+                                vm.tapToAddressField()
                             }
                         
                         if !vm.addressError.isEmpty{
@@ -85,31 +97,47 @@ struct OrderDeliveryViewNew: View {
                     }
                 }
             }
-            VStack{
-                Text("Our courier will ask you to show your ID \nto verify your identity and age.")
-                    .textDefault()
-                    .multilineTextAlignment(.center)
-                
-                RequestButton(state: $vm.createOrderButtonState, isDisabled: $vm.createOrderButtonIsDisabled, showIcon: false, title: "Review order") {
-                    vm.disableNavButton = true
-                    vm.saveDataCreateOrder{ order in
-                        
+            ZStack{
+                VStack{
+                    Text("Our courier will ask you to show your ID \nto verify your identity and age.")
+                        .textDefault()
+                        .multilineTextAlignment(.center)
+                    if vm.currentOrderType == .delivery{
+                        RequestButton(state: $vm.createOrderButtonState, isDisabled: $vm.createOrderButtonIsDisabled, showIcon: false, title: "Review order") {
+                            vm.disableNavButton = true
+                            if vm.needToUploadDocuments(){
+                                orderNavigationManager.needToShowDocumentCenter = true
+                                vm.disableNavButton = false
+                            }else{
+                                self.vm.saveDataCreateOrder { order in
+                                    vm.createdOrder = order
+                                    orderNavigationManager.showOrderReviewView = true
+                                }
+                                
+                            }
+                        }
+                        .padding(.top, 8)
+                        .padding(.horizontal, 24)
+                    } else{
+                        RequestButton(state: $vm.createOrderButtonState, isDisabled: $vm.createOrderButtonIsDisabled, showIcon: false, title: "Select store") {
+                            vm.disableNavButton = true
+                            if vm.needToUploadDocuments(){
+                                orderNavigationManager.needToShowDocumentCenter = true
+                                vm.disableNavButton = false
+                            }else{
+                                orderNavigationManager.showPickUpView = true
+                                vm.disableNavButton = false
+                            }
+                        }
+                        .padding(.top, 8)
+                        .padding(.horizontal, 24)
                     }
-//                    if vm.needToUploadDocuments(){
-//
-//                        vm.disableNavButton = false
-//                    }else{
-//                        self.makeOrder()
-//                        print("MAKE ORdeRrr")
-//                    }
                 }
-                .padding(.top, 8)
-                .padding(.horizontal, 24)
+                .background(Color.col_white)
+                .padding(.bottom, isSmallIPhone() ? 16 : 0)
+                .vBottom()
             }
-            .background(Color.col_white)
             .ignoresSafeArea(.keyboard, edges: .bottom)
-            .padding(.bottom, isSmallIPhone() ? 16 : 0)
-            .vBottom()
         }
         .navigationTitle("Delivery details")
         .navigationBarBackButtonHidden(true)
@@ -122,18 +150,41 @@ struct OrderDeliveryViewNew: View {
                 }
                 .onTapGesture {
                     if !vm.disableNavButton{
+                        tabBarManager.show()
                         self.mode.wrappedValue.dismiss()
                     }
                 }
             }
         })
         .customErrorAlert(title: "Error", message: vm.messageAlertError, isPresented: $vm.showAlertError)
+        .fullScreenCover(isPresented: $orderNavigationManager.needToShowDocumentCenter, onDismiss: {
+               }, content: {
+                   NavigationView{
+                       DocumentCenterView { documentLoaded in
+                           if documentLoaded{
+                               sessionManager.userData(withUpdate: true) { user in
+                                   vm.userData = user
+                               }
+                               vm.createOrderButtonState = .success
+                               vm.saveDataCreateOrder { order in
+                                   vm.createdOrder = order
+                                   orderNavigationManager.showOrderReviewView = true
+                               }
+                           }
+                       }
+                       .navBarSettings("Document center", backBtnIsHidden: true)
+                       .onDisappear {
+                           vm.createOrderButtonState = .def
+                       }
+                   }
+               })
         .onAppear{
             sessionManager.userData(withUpdate: true) { user in
                 vm.userData = user
                 vm.validation()
             }
         }
+        
     }
     
     //MARK: ORDER TYPE PICKER
