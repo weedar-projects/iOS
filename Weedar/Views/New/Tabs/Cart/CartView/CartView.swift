@@ -112,6 +112,10 @@ struct CartView: View {
         .sheet(isPresented: $vm.showDiscontCodeView, content: {
             DiscontCodeView(showView: $vm.showDiscontCodeView)
         })
+        .onUIKitAppear {
+            tabBarManager.show()
+        }
+     
 //        .onAppear() {
 //            cartManager.updateCalculations()
 //            vm.validateToNext(concentrated: cartManager.totalConcentrated,

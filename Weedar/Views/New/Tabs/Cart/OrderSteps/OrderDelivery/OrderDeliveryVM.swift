@@ -297,7 +297,13 @@ class OrderDeliveryVM: ObservableObject {
                                    discount: orderResponse.discount,
                                    taxSum: orderResponse.taxSum,
                                    sum: orderResponse.sum,
-                                   state: orderResponse.state)
+                                   state: orderResponse.state,
+                                   fullAdress: orderResponse.addressLine1,
+                                   username: orderResponse.name,
+                                   phone: orderResponse.phone,
+                                   partnerPhone: "",
+                                   partnerName: "",
+                                   partnerAdress: "")
                 
                 print("order response \(orderResponse)")
                 finished(true, "Success")

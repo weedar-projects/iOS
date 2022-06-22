@@ -13,7 +13,7 @@ struct PickUpListView: View {
     var body: some View{
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading,spacing: 17){
-                ForEach(rootVM.avaibleStores){store in
+                ForEach(rootVM.availableStores){store in
                     HStack(spacing: 0){
                         Image("mapMarker_icon")
                             .scaleEffect(0.8)

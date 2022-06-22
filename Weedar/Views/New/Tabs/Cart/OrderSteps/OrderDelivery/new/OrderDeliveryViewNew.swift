@@ -21,7 +21,7 @@ struct OrderDeliveryViewNew: View {
     var body: some View {
         ZStack{
             NavigationLink(isActive: $orderNavigationManager.showOrderReviewView) {
-                OrderReviewView(data: vm.getCreatedOrder())
+                OrderReviewView()
             } label: {
                 Color.clear
             }.isDetailLink(false)
@@ -87,13 +87,18 @@ struct OrderDeliveryViewNew: View {
                         }
                         
                         AddressList()
-                            .id(bottomID)
                             
+                        Rectangle()
+                            .fill(Color.clear)
+                            .frame(width: 1, height: 5)
+                            .id(bottomID)
                         
                         Spacer()
                     }
-                    .onChange(of: vm.addressListPlacesCount) { _ in
-                        reader.scrollTo(bottomID)
+                    .onChange(of: vm.userAddress) { address in
+                        if address.count >= 3{
+                            reader.scrollTo(bottomID)
+                        }
                     }
                 }
             }
@@ -102,7 +107,7 @@ struct OrderDeliveryViewNew: View {
                     Text("Our courier will ask you to show your ID \nto verify your identity and age.")
                         .textDefault()
                         .multilineTextAlignment(.center)
-                    if vm.currentOrderType == .delivery{
+                    if vm.currentOrderType == .delivery || vm.currentOrderType == .none{
                         RequestButton(state: $vm.createOrderButtonState, isDisabled: $vm.createOrderButtonIsDisabled, showIcon: false, title: "Review order") {
                             vm.disableNavButton = true
                             if vm.needToUploadDocuments(){
@@ -110,23 +115,23 @@ struct OrderDeliveryViewNew: View {
                                 vm.disableNavButton = false
                             }else{
                                 self.vm.saveDataCreateOrder { order in
-                                    vm.createdOrder = order
+                                    sessionManager.userData(withUpdate: true)
+                                    orderNavigationManager.currentCreatedOrder = vm.getCreatedOrder(order: order)
+                                    orderNavigationManager.orderType = .delivery
                                     orderNavigationManager.showOrderReviewView = true
                                 }
-                                
                             }
                         }
                         .padding(.top, 8)
                         .padding(.horizontal, 24)
-                    } else{
-                        RequestButton(state: $vm.createOrderButtonState, isDisabled: $vm.createOrderButtonIsDisabled, showIcon: false, title: "Select store") {
-                            vm.disableNavButton = true
+                    } else {
+                        MainButton(title: "Select store") {
                             if vm.needToUploadDocuments(){
                                 orderNavigationManager.needToShowDocumentCenter = true
-                                vm.disableNavButton = false
                             }else{
-                                orderNavigationManager.showPickUpView = true
-                                vm.disableNavButton = false
+                                vm.saveUserData(){
+                                    orderNavigationManager.showPickUpView = true
+                                }
                             }
                         }
                         .padding(.top, 8)
@@ -167,7 +172,9 @@ struct OrderDeliveryViewNew: View {
                                }
                                vm.createOrderButtonState = .success
                                vm.saveDataCreateOrder { order in
-                                   vm.createdOrder = order
+                                   sessionManager.userData(withUpdate: true)
+                                   orderNavigationManager.currentCreatedOrder = vm.getCreatedOrder(order: order)
+                                   orderNavigationManager.orderType = .delivery
                                    orderNavigationManager.showOrderReviewView = true
                                }
                            }
@@ -225,12 +232,11 @@ struct OrderDeliveryViewNew: View {
                     vm.pickerSelectorBackgroudColor
                         .frame(width: (getRect().width / 2 - 24) - 0.5, height: 44)
                         .cornerRadius(radius: 12, corners: vm.pickerSelectoreCornerShape)
-                        .offset(x: vm.pickerSelectoreCurrentXLocation)
                         .animation(vm.currentOrderType == .none ? .none : .interactiveSpring(response: 0.15,
                                                       dampingFraction: 0.65,
-                                                      blendDuration: 1),
+                                                                                             blendDuration: 1.5),
                                    value: vm.currentOrderType != .none)
-                                   
+                        .offset(x: vm.pickerSelectoreCurrentXLocation)
                         .hLeading()
                 }
         )

@@ -10,45 +10,41 @@ import MapKit
 import SwiftyJSON
 
 struct StoreModel: Identifiable {
-    let id: Int
-    let name: String
-    let address: String
-    var weedMapsLink: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 51.501, longitude: -0.141)
-    var contactEmail: String
-    var deliveryEmail: String
-    var license: String
+    var id: Int
+    var address: String
     var phone: String
+    var latitudeCoordinate: Double
+    var longitudeCoordinate: Double
+    var timeWork: String
+    var daysWork: String
     var close: Bool
     
     init(json: JSON){
         self.id = json["id"].intValue
-        self.name = json["name"].stringValue
-        self.address = json["address"].stringValue
-//        self.weedMapsLink = json["weedMapsLink"].stringValue
-        self.contactEmail = json["contactEmail"].stringValue
-        self.deliveryEmail = json["deliveryEmail"].stringValue
-        self.license = json["license"].stringValue
+        self.address = json["addressLine1"].stringValue
         self.phone = json["phone"].stringValue
+        self.latitudeCoordinate = json["latitudeCoordinate"].doubleValue
+        self.longitudeCoordinate = json["longitudeCoordinate"].doubleValue
+        self.timeWork = json["timeWork"].stringValue
+        self.daysWork = json["daysWork"].stringValue
         self.close = json["close"].boolValue
     }
-    
-    init( id: Int,
-          name: String,
-          address: String,
-//          weedMapsLink: String,
-          contactEmail: String,
-          deliveryEmail: String,
-          license: String,
-          phone: String,
-          close: Bool){
+    init(
+    id: Int,
+    address: String,
+    phone: String,
+    latitudeCoordinate: Double,
+    longitudeCoordinate: Double,
+    timeWork: String,
+    daysWork: String,
+    close: Bool){
         self.id = id
-        self.name = name
         self.address = address
-//        self.weedMapsLink = weedMapsLink
-        self.contactEmail = contactEmail
-        self.deliveryEmail = deliveryEmail
-        self.license = license
         self.phone = phone
+        self.latitudeCoordinate = latitudeCoordinate
+        self.longitudeCoordinate = longitudeCoordinate
+        self.timeWork = timeWork
+        self.daysWork = daysWork
         self.close = close
     }
 }

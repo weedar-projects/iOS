@@ -55,7 +55,7 @@ struct MyOrdersListView: View {
                                         
                                         Spacer()
                                         
-                                        OrderStatusView(status: order.state)
+                                        OrderStatusView(status: order.state, isPickup: order.partner.isPickUp)
                                         
                                         Image("arrowRight")
                                     }

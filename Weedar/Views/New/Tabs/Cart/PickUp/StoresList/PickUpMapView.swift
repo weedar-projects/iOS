@@ -7,18 +7,17 @@
 
 import SwiftUI
 import MapKit
+import CoreLocation
 
 struct PickUpMapView: View {
     @StateObject var rootVM: PickUpRootVM
-    
-    
+        
     @State private var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 51.5, longitude: -0.12), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
-    
     
     var body: some View{
         VStack{
-            Map(coordinateRegion: $mapRegion, annotationItems: rootVM.avaibleStores) { store in
-                MapAnnotation(coordinate: store.weedMapsLink) {
+            Map(coordinateRegion: $mapRegion, annotationItems: rootVM.availableStores) { store in
+                MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: store.latitudeCoordinate, longitude: store.longitudeCoordinate)) {
                     ZStack{
                         Image(store.id == rootVM.selectedStore?.id ?? 0 ? "selected_mapMarker_icon" : "mapMarker_icon")
                             .offset(y: store.id == rootVM.selectedStore?.id ?? 0 ? -22 : -11)
@@ -26,11 +25,18 @@ struct PickUpMapView: View {
                                 rootVM.selectedStore = store
                             }
                     }
+              
                 }
             }
             .frame(height: 338)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .padding(.horizontal, 24)
+            .onAppear(){
+                self.mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: rootVM.latitudeCoordinate,
+                                                                                   longitude: rootVM.longitudeCoordinate),
+                                                    span: MKCoordinateSpan(latitudeDelta: 0.1,
+                                                                           longitudeDelta: 0.1))
+            }
             
             if let store = rootVM.selectedStore{
                 HStack(spacing: 0){

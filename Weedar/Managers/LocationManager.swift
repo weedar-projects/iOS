@@ -70,6 +70,12 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
             }
       }
     
+    func checkDistance(coord1: CLLocation, coord2: CLLocation) -> Double{
+        let distanceInMiles = coord1.distance(from: coord2) / 1609
+        print("DISTANCE: \(distanceInMiles)")
+        return distanceInMiles
+    }
+    
     public func requestAuthorisation(always: Bool = false) {
         if always {
             self.locationManager.requestAlwaysAuthorization()

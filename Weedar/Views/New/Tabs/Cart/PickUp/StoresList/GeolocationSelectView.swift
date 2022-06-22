@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct GeolocationSelectView: View {
-    @Binding var selectedRadius: Int
+    @Binding var selectedRadius: Double
     
-    var radiusValues = [5, 10, 15, 25]
+    var radiusValues: [Double] = [5, 10, 15, 20]
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View{
@@ -20,7 +20,7 @@ struct GeolocationSelectView: View {
                     Image("location_icon")
                         .opacity(selectedRadius == value ? 1 : 0.22)
                     
-                    Text("Within \(value) miles")
+                    Text("Within \(value.formattedString(format: .int)) miles")
                         .textCustom(selectedRadius == value ? .coreSansC55Medium : .coreSansC45Regular, 16, Color.col_text_main)
                     
                     Spacer()

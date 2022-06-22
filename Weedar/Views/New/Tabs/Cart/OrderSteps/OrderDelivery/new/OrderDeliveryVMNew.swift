@@ -9,6 +9,7 @@ import SwiftUI
 import RealityKit
 import SwiftyJSON
 import Alamofire
+import CoreLocation
 
 class OrderDeliveryVMNew: ObservableObject {
     
@@ -131,8 +132,8 @@ class OrderDeliveryVMNew: ObservableObject {
     
     func validation(){
         if userName.isEmpty{
-            userNameTFState = .error
-            userNameError = "Please enter full name."
+//            userNameTFState = .error
+//            userNameError = "Please enter full name."
         }else{
             userNameTFState = .success
             userNameError = ""
@@ -171,9 +172,20 @@ class OrderDeliveryVMNew: ObservableObject {
         API.shared.request(rout: .getAllStores, method: .get) { result in
             switch result{
             case let .success(json):
-                let stores = json.arrayValue
-                if stores.count > 0{
+                let stores = json.arrayValue.map({StoreModel(json: $0)})
+                var availableStores: [StoreModel] = []
+                for store in stores{
+                    if LocationManager().checkDistance(coord1: CLLocation(latitude: store.latitudeCoordinate,
+                                                                          longitude: store.longitudeCoordinate),
+                                                       coord2: CLLocation(latitude: self.latitudeCoordinate,
+                                                                          longitude: self.longitudeCoordinate)) < 20{
+                        availableStores.append(store)
+                    }
+                }
+                if availableStores.count > 0{
                     self.pickUpAvailable = true
+                }else{
+                    self.pickUpAvailable = false
                 }
             case let .failure(error):
                 self.pickUpAvailable = false
@@ -193,8 +205,8 @@ class OrderDeliveryVMNew: ObservableObject {
         }
     }
     
-    func getCreatedOrder() -> OrderDetailsReview {
-        guard let createdOrder = createdOrder else {
+    func getCreatedOrder(order: OrderResponseModel?) -> OrderDetailsReview {
+        guard let createdOrder = order else {
             return OrderDetailsReview(orderId: 0,
                                       totalSum: 0,
                                       exciseTaxSum: 0,
@@ -202,11 +214,17 @@ class OrderDeliveryVMNew: ObservableObject {
                                       localTaxSum: 0,
                                       taxSum: 0,
                                       sum: 0,
-                                      state: 0)
+                                      state: 0,
+                                      fullAdress: "",
+                                      username: "",
+                                      phone: "",
+                                      partnerPhone: "",
+                                      partnerName: "",
+                                      partnerAdress: "")
         }
         
         
-        return OrderDetailsReview(orderId: createdOrder.id, totalSum: createdOrder.totalSum, exciseTaxSum: createdOrder.exciseTaxSum, salesTaxSum: createdOrder.salesTaxSum, localTaxSum: createdOrder.taxSum,discount: createdOrder.discount , taxSum: createdOrder.taxSum, sum: createdOrder.sum, state: createdOrder.state)
+        return OrderDetailsReview(orderId: createdOrder.id, totalSum: createdOrder.totalSum, exciseTaxSum: createdOrder.exciseTaxSum, totalWeight: createdOrder.gramWeight.formattedString(format: .gramm),salesTaxSum: createdOrder.salesTaxSum, localTaxSum: createdOrder.taxSum,discount: createdOrder.discount , taxSum: createdOrder.taxSum, sum: createdOrder.sum, state: createdOrder.state,fullAdress: createdOrder.addressLine1,username: createdOrder.name,phone: createdOrder.phone,partnerPhone: createdOrder.partner.phone, partnerName: createdOrder.partner.name, partnerAdress: createdOrder.partner.address)
     }
     
     func tapToAddressField() {
@@ -248,6 +266,7 @@ extension OrderDeliveryVMNew{
             switch result{
             case .success(_):
                 print("Save user info")
+                
                 self.makeOrder { order in
                     success(order)
                 }
@@ -261,17 +280,11 @@ extension OrderDeliveryVMNew{
     }
     
     func makeOrder(success: @escaping (OrderResponseModel)->Void) {
-        //{ delivery = 0, pickUp = 1 }
-        guard let user = userData else { return  }
-        
         let params: Parameters = [
-            "name": user.name,
-            "phone": user.phone ?? "phone error",
+            "name": userName,
             "addressLine1": userAddress,
             "zipCode": zipCode,
-            "user": user.id,
             "city": " ",
-            "addressLine2" : " ",
             "latitudeCoordinate": latitudeCoordinate,
             "longitudeCoordinate": longitudeCoordinate,
             "type": 0
@@ -308,9 +321,44 @@ extension OrderDeliveryVMNew{
         }
     }
     
+    func saveUserData(finish: @escaping ()->Void){
+        guard let id = userData?.id else { return }
+        
+        let url = Routs.user.rawValue.appending("/\(id)")
+        
+        let params: Parameters = [
+            "name" : userName,
+            "addresses" : [
+                [
+                    "city": " ",
+                    "addressLine1" : userAddress,
+                    "addressLine2" : " ",
+                    "latitudeCoordinate" : latitudeCoordinate,
+                    "longitudeCoordinate" : longitudeCoordinate,
+                    "zipCode" : zipCode
+                ]
+            ]
+        ]
+        
+        API.shared.request(endPoint: url, method: .put, parameters: params, encoding: JSONEncoding.default) { result in
+            switch result{
+            case .success(_):
+                print("Save user info")
+                finish()
+            case let .failure(error):
+                self.messageAlertError = error.message
+                self.showAlertError = true
+                self.createOrderButtonState = .def
+                self.disableNavButton = false
+            }
+        }
+    }
+    
     private func boolValue(data: Data) -> Bool? {
          return String(data: data, encoding: .utf8).flatMap(Bool.init)
      }
+    
+    
     
 }
 

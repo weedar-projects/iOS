@@ -12,7 +12,7 @@ import SwiftyJSON
 
 struct PickUpRootView: View {
     @StateObject var vm = PickUpRootVM()
-    
+    @EnvironmentObject var sessionManager: SessionManager
     var body: some View {
         ZStack{
             NavigationLink(isActive: $vm.showRaduisPicker) {
@@ -26,14 +26,13 @@ struct PickUpRootView: View {
             VStack{
                 PickUpShopListPiker(selected: $vm.selectedTab)
                 
-                
                 RadiusSelectBtn()
                     .padding(.top, 24)
                     .onTapGesture {
                         vm.showRaduisPicker = true
                     }
                 
-                Text("Stores available: \(vm.avaibleStores.count)")
+                Text("Stores available: \(vm.availableStores.count)")
                     .textSecond()
                     .padding([.horizontal,.top], 24)
                     .hLeading()
@@ -65,6 +64,12 @@ struct PickUpRootView: View {
             }
         }
         .navBarSettings("Choose store")
+        .onAppear{
+            sessionManager.userData(withUpdate: true) { user in
+                vm.userData = user
+                vm.getStores(radius: vm.selectedRadius)
+            }
+        }
     }
     
     
@@ -76,7 +81,7 @@ struct PickUpRootView: View {
                 .scaleEffect(0.8)
                 .padding(.leading , 16)
             
-            Text("Within \(vm.selectedRadius) miles")
+            Text("Within \(vm.selectedRadius.formattedString(format: .int)) miles")
                 .textCustom(.coreSansC45Regular, 16, Color.col_text_main)
             Spacer()
             Image("arrowRight")

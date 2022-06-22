@@ -38,7 +38,7 @@ struct MyOrderView: MainLoadViewProtocol {
                             .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
                             Spacer()
                         
-                        OrderStatusView(status: vm.order?.state ?? 0)
+                        OrderStatusView(status: vm.order?.state ?? 0, isPickup: vm.order?.partner.isPickUp ?? false)
                     }
                     .padding(.horizontal, 16)
                     .frame(height: 48)
@@ -87,12 +87,14 @@ struct MyOrderView: MainLoadViewProtocol {
                             .padding(.top, 24)
                             .padding(.horizontal, 24)
                         
-                        Text("Delivery details")
-                            .textCustom(.coreSansC65Bold
-                                        , 14, Color.col_text_second)
-                            .padding(.top, 24)
-                            .padding(.leading, 35)
-                            .hLeading()
+                        if let isPickUp = vm.order?.partner.isPickUp{
+                            Text(isPickUp ? "Pick up at" : "Delivery details")
+                                .textCustom(.coreSansC65Bold
+                                            , 14, Color.col_text_second)
+                                .padding(.top, 24)
+                                .padding(.leading, 35)
+                                .hLeading()
+                        }
                         
                         //delivery user data
                         ZStack{
@@ -106,17 +108,39 @@ struct MyOrderView: MainLoadViewProtocol {
                             
                             
                             VStack(alignment: .leading,spacing: 10){
-                                Text("\(vm.order?.name ?? "")")
-                                    .textDefault()
                                 
-                                Text("\(vm.order?.addressLine1 ?? "")")
-                                    .textDefault()
+                                if let partner = vm.order?.partner, partner.isPickUp == true{
+                                    Text(partner.name)
+                                        .textDefault()
+                                }else{
+                                    Text("\(vm.order?.name ?? "")")
+                                        .textDefault()
+                                }
                                 
+                                
+                                if let userAddress = vm.order?.addressLine1{
+                                    if !userAddress.isEmpty{
+                                    Text(userAddress)
+                                        .textDefault()
+                                    }
+                                }
+                                
+                                if let partner = vm.order?.partner, partner.isPickUp == true{
+                                    Text(partner.address)
+                                        .textDefault()
+                                }
+                                                                
                                // Text("\(vm.order?.zipCode ?? "")")
                                  //   .textDefault()
                                 
-                                Text("\(vm.order?.phone ?? "")")
-                                    .textDefault()
+                                if let partner = vm.order?.partner, partner.isPickUp == true{
+                                    Text(partner.phone)
+                                        .textDefault()
+                                }else{
+                                    Text("\(vm.order?.phone ?? "")")
+                                        .textDefault()
+                                }
+                             
                             }
                             .padding()
                             .hLeading()

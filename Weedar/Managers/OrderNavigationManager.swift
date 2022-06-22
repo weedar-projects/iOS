@@ -14,6 +14,14 @@ class OrderNavigationManager: ObservableObject {
         case orderReviewView
         case successView
     }
+    enum OrderType{
+        case delivery
+        case pickup
+    }
+    
+    @Published var orderType: OrderType = .delivery
+    
+    @Published var currentCreatedOrder: OrderDetailsReview =  OrderDetailsReview(orderId: 0, totalSum: 0, exciseTaxSum: 0, salesTaxSum: 0, localTaxSum: 0, taxSum: 0, sum: 0, state: 0, fullAdress: "",username: "",phone: "",partnerPhone: "", partnerName: "", partnerAdress: "")
     
     @Published var showDeliveryView = false{
         didSet{

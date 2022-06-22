@@ -10,8 +10,11 @@ import SwiftUI
 struct StoreInfo: View{
     
     @StateObject var rootVM: PickUpRootVM
-    
+    @EnvironmentObject var orderNavigationManager: OrderNavigationManager
     var body: some View{
+        ZStack{
+      
+            
         if let store = rootVM.selectedStore {
             VStack{
                 
@@ -38,13 +41,14 @@ struct StoreInfo: View{
                             .textCustom(.coreSansC45Regular, 28, Color.col_text_main)
                             .hLeading()
                             .padding(24)
+                            .padding(.top, 14)
                         
                         VStack(alignment: .leading, spacing: 0){
-                            Row(icon: "calendar_icon", value: "Monday - Sunday")
+                            Row(icon: "calendar_icon", value: store.daysWork)
                             CustomDivider()
-                            Row(icon: "clock_icon", value: "10AM - 8PM")
+                            Row(icon: "clock_icon", value: store.timeWork, closed: store.close)
                             CustomDivider()
-                            Row(icon: "phone_icon", value: format(phone: "3414231231"))
+                            Row(icon: "phone_icon", value: format(phone: store.phone))
                         }
                         .background(
                             RadialGradient(colors: [Color.col_gradient_blue_second,
@@ -58,7 +62,7 @@ struct StoreInfo: View{
                         )
                         .padding(.horizontal, 24)
                         
-                        
+                        Spacer()
                         ZStack{
                             RadialGradient(colors: [Color.col_gradient_blue_second,
                                                     Color.col_gradient_blue_first],
@@ -76,28 +80,40 @@ struct StoreInfo: View{
                         .onTapGesture {
                             
                         }
-                        .padding(24)
+                        .padding([.horizontal,.bottom], 24)
                         
                         MainButton(title: "Done") {
-                            
+                            rootVM.makeOrder { order in
+                                orderNavigationManager.currentCreatedOrder = rootVM.getCreatedOrder(order: order)
+                                orderNavigationManager.orderType = .pickup
+                                orderNavigationManager.showOrderReviewView = true
+                            }
                         }
                         .padding([.bottom,.horizontal],24)
+                        .padding(.bottom, 12)
                     }
                 }
-                .frame(height: 458)
+                .frame(height: 512)
             }
             .edgesIgnoringSafeArea(.all)
+        }
         }
     }
     
     @ViewBuilder
-    func Row(icon: String, value: String) -> some View {
+    func Row(icon: String, value: String, closed: Bool = false) -> some View {
         HStack(spacing: 0){
             Image(icon)
                 .padding(.horizontal, 18)
             
             Text(value)
                 .textDefault()
+            Spacer()
+            if closed{
+                Text("Closed")
+                    .textCustom(.coreSansC45Regular, 16, Color.col_pink_main)
+                    .padding(.trailing, 18)
+            }
         }
         .frame(height: 48)
     }
