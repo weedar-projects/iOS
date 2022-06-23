@@ -62,6 +62,10 @@ struct OrderDeliveryViewNew: View {
                                         keyboardType: .default,
                                         contentType: .name)
                         .padding(.top, 24)
+                        .onChange(of: vm.userName) { newValue in
+                            vm.validation()
+                        }
+                        
                         
                         if !vm.userNameError.isEmpty{
                             Text(vm.userNameError)
@@ -104,9 +108,12 @@ struct OrderDeliveryViewNew: View {
             }
             ZStack{
                 VStack{
-                    Text("Our courier will ask you to show your ID \nto verify your identity and age.")
-                        .textDefault()
-                        .multilineTextAlignment(.center)
+                    if vm.currentOrderType == .delivery{
+                        Text("Our budtender will ask you to show your ID \nto verify your identity and age.")
+                            .textDefault()
+                            .multilineTextAlignment(.center)
+                    }
+                    
                     if vm.currentOrderType == .delivery || vm.currentOrderType == .none{
                         RequestButton(state: $vm.createOrderButtonState, isDisabled: $vm.createOrderButtonIsDisabled, showIcon: false, title: "Review order") {
                             vm.disableNavButton = true
@@ -125,7 +132,7 @@ struct OrderDeliveryViewNew: View {
                         .padding(.top, 8)
                         .padding(.horizontal, 24)
                     } else {
-                        MainButton(title: "Select store") {
+                        MainButton(title: "Choose store") {
                             if vm.needToUploadDocuments(){
                                 orderNavigationManager.needToShowDocumentCenter = true
                             }else{
@@ -175,7 +182,12 @@ struct OrderDeliveryViewNew: View {
                                    sessionManager.userData(withUpdate: true)
                                    orderNavigationManager.currentCreatedOrder = vm.getCreatedOrder(order: order)
                                    orderNavigationManager.orderType = .delivery
-                                   orderNavigationManager.showOrderReviewView = true
+                                   if vm.currentOrderType == .delivery{
+                                       orderNavigationManager.showOrderReviewView = true
+                                   } else {
+                                       orderNavigationManager.showPickUpView = true
+                                   }
+                                   
                                }
                            }
                        }
@@ -188,7 +200,7 @@ struct OrderDeliveryViewNew: View {
         .onAppear{
             sessionManager.userData(withUpdate: true) { user in
                 vm.userData = user
-                vm.validation()
+                vm.validation(validateName: false)
             }
         }
         

@@ -64,7 +64,7 @@ struct OrderReviewView: View {
                                 
                                 //Pricing view
                                 
-                                CalculationPriceView(data: $orderNavigationManager.currentCreatedOrder)
+                                CalculationPriceView(data: $orderNavigationManager.currentCreatedOrder, showDelivery: orderNavigationManager.orderType == . delivery ? true : false)
                                     .padding(.top, 24)
                                     .padding(.horizontal, 24)
                                     
@@ -89,9 +89,9 @@ struct OrderReviewView: View {
                                 }
                                 
                                 if orderNavigationManager.orderType == .delivery{
-                                //delivery user data
-                                UserInfoView(name: $orderNavigationManager.currentCreatedOrder.username, address: $orderNavigationManager.currentCreatedOrder.fullAdress, phone: $orderNavigationManager.currentCreatedOrder.phone)
-                                    .padding(.bottom, 20)
+                                    //delivery user data
+                                    UserInfoView(name: $orderNavigationManager.currentCreatedOrder.username, address: $orderNavigationManager.currentCreatedOrder.fullAdress, phone: $orderNavigationManager.currentCreatedOrder.phone)
+                                        .padding(.bottom, 20)
                                 }else{
                                     UserInfoView(name: $orderNavigationManager.currentCreatedOrder.partnerName, address: $orderNavigationManager.currentCreatedOrder.partnerAdress, phone: $orderNavigationManager.currentCreatedOrder.partnerPhone)
                                         .padding(.bottom, 20)
@@ -159,7 +159,13 @@ struct OrderReviewView: View {
                 }
                 .onTapGesture {
                     if !vm.disableNavButton{
-                        orderNavigationManager.showOrderReviewView = false
+                        
+                        if orderNavigationManager.orderType == .delivery{
+                            orderNavigationManager.showOrderReviewView = false
+                        }else{
+                            orderNavigationManager.showOrderReviewView = false
+                            orderNavigationManager.showPickUpView = true
+                        }
                     }
                 }
                 .opacity(orderNavigationManager.showOrderSuccessView ? 0 : 1)

@@ -25,8 +25,8 @@ struct PickUpMapView: View {
                                 rootVM.selectedStore = store
                             }
                     }
-              
                 }
+                
             }
             .frame(height: 338)
             .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -76,4 +76,3 @@ struct PickUpMapView: View {
         }
     }
 }
-

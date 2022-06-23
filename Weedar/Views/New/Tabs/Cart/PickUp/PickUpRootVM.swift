@@ -22,9 +22,12 @@ class PickUpRootVM: ObservableObject{
     @Published var showStoreInfo = false
     
     @Published var availableStores: [StoreModel] = []
+    
     @Published var error = ""
     
     @Published var showRaduisPicker = false
+    
+    @Published var emptyStores = false
     
     @Published var createdOrder: OrderResponseModel?
     
@@ -46,21 +49,24 @@ class PickUpRootVM: ObservableObject{
     @Published var showDirectionsView = false
     
     func getStores(radius: Double){
-        self.availableStores.removeAll()
         API.shared.request(rout: .getAllStores, method: .get) { result in
             switch result{
             case let .success(json):
+                self.availableStores.removeAll()
                 let stores = json.arrayValue.map({StoreModel(json: $0)})
                 for store in stores{
+                    
                     if LocationManager().checkDistance(coord1: CLLocation(latitude: store.latitudeCoordinate,
                                                                           longitude: store.longitudeCoordinate),
                                                        coord2: CLLocation(latitude: self.latitudeCoordinate,
                                                                           longitude: self.longitudeCoordinate)) <= radius{
-                        self.availableStores.append(store)
+                        
                         let distance = LocationManager().checkDistance(coord1: CLLocation(latitude: store.latitudeCoordinate,
                                                                                           longitude: store.longitudeCoordinate),
                                                                        coord2: CLLocation(latitude: self.latitudeCoordinate,
                                                                                           longitude: self.longitudeCoordinate))
+                        let storeWithDistance = StoreModel(id: store.id, address: store.address, phone: store.phone, latitudeCoordinate: store.latitudeCoordinate, longitudeCoordinate: store.longitudeCoordinate, timeWork: store.timeWork, daysWork: store.daysWork, close: store.close, distance: distance)
+                        self.availableStores.append(storeWithDistance)
                         print("Distans from address to store: \(distance)")
                     }
                 }
@@ -106,11 +112,12 @@ class PickUpRootVM: ObservableObject{
                                       phone: "",
                                       partnerPhone: "",
                                       partnerName: "",
-                                      partnerAdress: ""
+                                      partnerAdress: "",
+                                      orderNumber: ""
             )
         }
         
         
-        return OrderDetailsReview(orderId: createdOrder.id, totalSum: createdOrder.totalSum, exciseTaxSum: createdOrder.exciseTaxSum,totalWeight: createdOrder.gramWeight.formattedString(format: .gramm), salesTaxSum: createdOrder.salesTaxSum, localTaxSum: createdOrder.taxSum,discount: createdOrder.discount , taxSum: createdOrder.taxSum, sum: createdOrder.sum, state: createdOrder.state, fullAdress: createdOrder.partner.address, username: createdOrder.name, phone: createdOrder.phone,partnerPhone: createdOrder.partner.phone, partnerName: createdOrder.partner.name, partnerAdress: createdOrder.partner.address)
+        return OrderDetailsReview(orderId: createdOrder.id, totalSum: createdOrder.totalSum, exciseTaxSum: createdOrder.exciseTaxSum,totalWeight: createdOrder.gramWeight.formattedString(format: .gramm), salesTaxSum: createdOrder.salesTaxSum, localTaxSum: createdOrder.taxSum,discount: createdOrder.discount , taxSum: createdOrder.taxSum, sum: createdOrder.sum, state: createdOrder.state, fullAdress: createdOrder.partner.address, username: createdOrder.name, phone: createdOrder.phone,partnerPhone: createdOrder.partner.phone, partnerName: createdOrder.partner.name, partnerAdress: createdOrder.partner.address, orderNumber: createdOrder.number)
     }
 }

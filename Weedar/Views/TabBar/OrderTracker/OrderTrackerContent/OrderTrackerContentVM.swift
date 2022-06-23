@@ -31,7 +31,7 @@ class OrderTrackerContentVM: ObservableObject {
     
     @Published var loading = false
     
-    let orderReview = OrderDetailsReview(orderId: 0, totalSum: 0, exciseTaxSum: 0, totalWeight: "", salesTaxSum: 0, localTaxSum: 0, discount: nil, taxSum: 0, sum: 0, state: 0, fullAdress: "",username: "",phone: "",partnerPhone: "", partnerName: "", partnerAdress: "")
+    let orderReview = OrderDetailsReview(orderId: 0, totalSum: 0, exciseTaxSum: 0, totalWeight: "", salesTaxSum: 0, localTaxSum: 0, discount: nil, taxSum: 0, sum: 0, state: 0, fullAdress: "",username: "",phone: "",partnerPhone: "", partnerName: "", partnerAdress: "", orderNumber: "")
     
     func cancelOrder(orderID: Int,completion: @escaping () -> Void){
         let endPoint = "/order/\(orderID)/cancel"

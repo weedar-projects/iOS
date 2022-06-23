@@ -30,11 +30,7 @@ class OrderDeliveryVMNew: ObservableObject {
     @Published var deliveryAvailable = false
     @Published var pickUpAvailable = false
     
-    @Published var userName = ""{
-        didSet{
-            validation()
-        }
-    }
+    @Published var userName = ""
     @Published var userNameTFState: TextFieldState = .def{
         didSet{
             validateButton()
@@ -104,9 +100,9 @@ class OrderDeliveryVMNew: ObservableObject {
         case .none:
             return "Enter your address or select 'Use my location'. Available options will be shown - delivery, pick up, or both. Then choose an option you want."
         case .pickup:
-            return "Incorrectly entered address  may delay your order, so please double check for misprints. Do not enter specific dispatch instruction in any of address fields."
-        case .delivery:
             return "Order will be ready in 15 minutes for pick up in the store. Budtender will ask you to show your ID and tell them your order number."
+        case .delivery:
+            return "Incorrectly entered address  may delay your order, so please double check for misprints. Do not enter specific dispatch instruction in any of address fields."
         }
     }
     
@@ -132,10 +128,12 @@ class OrderDeliveryVMNew: ObservableObject {
         }
     }
     
-    func validation(){
+    func validation(validateName: Bool = true){
         if userName.isEmpty{
-//            userNameTFState = .error
-//            userNameError = "Please enter full name."
+            if validateName{
+                userNameTFState = .error
+                userNameError = "Please enter full name."
+            }
         }else{
             userNameTFState = .success
             userNameError = ""
@@ -222,11 +220,12 @@ class OrderDeliveryVMNew: ObservableObject {
                                       phone: "",
                                       partnerPhone: "",
                                       partnerName: "",
-                                      partnerAdress: "")
+                                      partnerAdress: "",
+            orderNumber: "")
         }
         
         
-        return OrderDetailsReview(orderId: createdOrder.id, totalSum: createdOrder.totalSum, exciseTaxSum: createdOrder.exciseTaxSum, totalWeight: createdOrder.gramWeight.formattedString(format: .gramm),salesTaxSum: createdOrder.salesTaxSum, localTaxSum: createdOrder.taxSum,discount: createdOrder.discount , taxSum: createdOrder.taxSum, sum: createdOrder.sum, state: createdOrder.state,fullAdress: createdOrder.addressLine1,username: createdOrder.name,phone: createdOrder.phone,partnerPhone: createdOrder.partner.phone, partnerName: createdOrder.partner.name, partnerAdress: createdOrder.partner.address)
+        return OrderDetailsReview(orderId: createdOrder.id, totalSum: createdOrder.totalSum, exciseTaxSum: createdOrder.exciseTaxSum, totalWeight: createdOrder.gramWeight.formattedString(format: .gramm),salesTaxSum: createdOrder.salesTaxSum, localTaxSum: createdOrder.taxSum,discount: createdOrder.discount , taxSum: createdOrder.taxSum, sum: createdOrder.sum, state: createdOrder.state,fullAdress: createdOrder.addressLine1,username: createdOrder.name,phone: createdOrder.phone,partnerPhone: createdOrder.partner.phone, partnerName: createdOrder.partner.name, partnerAdress: createdOrder.partner.address,orderNumber: createdOrder.number)
     }
     
     func tapToAddressField() {

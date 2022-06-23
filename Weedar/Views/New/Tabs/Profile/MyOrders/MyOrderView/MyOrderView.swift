@@ -158,6 +158,27 @@ struct MyOrderView: MainLoadViewProtocol {
                         
                     }
                     .padding(.top, 8)
+                    if let isPickUp = vm.order?.partner.isPickUp, isPickUp{
+                        ZStack{
+                            RadialGradient(colors: [Color.col_gradient_blue_second,
+                                                    Color.col_gradient_blue_first],
+                                           center: .center,
+                                           startRadius: 0,
+                                           endRadius: 220)
+                            .opacity(0.25)
+                            .clipShape(CustomCorner(corners: .allCorners,
+                                                    radius: 12))
+                            .frame(height: 48)
+                            
+                            Text("Directions")
+                                .textCustom(.coreSansC55Medium, 16, Color.col_blue_main)
+                        }
+                        .padding([.horizontal,.bottom], 24)
+                        .onTapGesture {
+                            vm.showDirectionsView = true
+                        }
+                    }
+                    
                     if let state = vm.order?.state{
                         if  state != 10 && state != 7{
                             Button {
@@ -189,6 +210,28 @@ struct MyOrderView: MainLoadViewProtocol {
                 }
                 .opacity(showDeeplink ? 1 : 0)
             }
+        }
+        .actionSheet(isPresented: $vm.showDirectionsView) {
+            ActionSheet(title: Text("Select apps"),
+                        buttons: [
+                            .default(
+                                Text("Google Maps")
+                                    .foregroundColor(Color.lightSecondaryE.opacity(1.0))
+                                    .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
+                            ) {
+                                guard let store = vm.order else {return}
+                                Utils.shared.openGoogleMap(address: store.addressLine1,lat: store.latitudeCoordinate, lon: store.longitudeCoordinate)
+                            },
+                            .default(
+                                Text("Apple Maps")
+                                    .foregroundColor(Color.lightSecondaryE.opacity(1.0))
+                                    .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
+                            ) {
+                                guard let store = vm.order else {return}
+                                Utils.shared.openAppleMap(address: store.addressLine1,lat: store.latitudeCoordinate, lon: store.longitudeCoordinate)
+                            },
+                            .cancel()
+                        ])
         }
         .alert(isPresented: $vm.showCancelAlert, content: {
           Alert(title: Text("Cancel order?"),

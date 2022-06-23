@@ -169,7 +169,7 @@ struct OrderDeliveryView: View {
             }
             
             VStack{
-                Text("Our courier will ask you to show your ID \nto verify your identity and age.")
+                Text("Our budtender will ask you to show your ID \nto verify your identity and age.")
                     .textDefault()
                     .multilineTextAlignment(.center)
                 

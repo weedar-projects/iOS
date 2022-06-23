@@ -13,8 +13,6 @@ struct StoreInfo: View{
     @EnvironmentObject var orderNavigationManager: OrderNavigationManager
     var body: some View{
         ZStack{
-            
-            
             if let store = rootVM.selectedStore {
                 VStack{
                     
@@ -61,6 +59,13 @@ struct StoreInfo: View{
                                                         radius: 12))
                             )
                             .padding(.horizontal, 24)
+                            if store.close{
+                            Text("The store is closed, but you can leave an order, we will process it in the morning.")
+                                .textSecond()
+                                .padding(.top, 10)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 24)
+                            }
                             
                             Spacer()
                             ZStack{
@@ -93,7 +98,7 @@ struct StoreInfo: View{
                             .padding(.bottom, 12)
                         }
                     }
-                    .frame(height: 512)
+                    .frame(height: store.close ? 545 : 512)
                 }
                 .edgesIgnoringSafeArea(.all)
             }

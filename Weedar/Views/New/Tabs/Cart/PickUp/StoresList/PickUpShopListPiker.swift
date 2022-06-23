@@ -13,7 +13,7 @@ struct PickUpShopListPiker: View {
     
     var body: some View {
         HStack(spacing: 0){
-            Text("See list")
+            Text("See List")
                 .textCustom(.coreSansC65Bold, 16, selected == .list ? Color.col_text_white : Color.col_text_main)
                 .frame(width: (getRect().width / 2 - 24), height: 44)
                 .background(Color.col_white.opacity(0.01))
@@ -23,7 +23,7 @@ struct PickUpShopListPiker: View {
                     }
                 }
             
-            Text("See on map")
+            Text("See on Map")
                 .textCustom(.coreSansC65Bold, 16, selected == .map ? Color.col_text_white : Color.col_text_main)
                 .frame(width: (getRect().width / 2 - 24), height: 44)
                 .background(Color.col_white.opacity(0.01))

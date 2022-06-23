@@ -303,7 +303,8 @@ class OrderDeliveryVM: ObservableObject {
                                    phone: orderResponse.phone,
                                    partnerPhone: "",
                                    partnerName: "",
-                                   partnerAdress: "")
+                                   partnerAdress: "",
+                                   orderNumber: orderResponse.number)
                 
                 print("order response \(orderResponse)")
                 finished(true, "Success")

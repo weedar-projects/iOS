@@ -19,6 +19,7 @@ struct MyOrdersListView: View {
             VStack{
                 
                 OrderTypePicker()
+                    .padding(.top, 24)
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack{

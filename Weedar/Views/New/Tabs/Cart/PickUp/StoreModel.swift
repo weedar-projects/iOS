@@ -18,8 +18,9 @@ struct StoreModel: Identifiable {
     var timeWork: String
     var daysWork: String
     var close: Bool
-    
-    init(json: JSON){
+    var distance: Double
+    init(json: JSON, distance: Double = -1){
+        self.distance = distance
         self.id = json["id"].intValue
         self.address = json["addressLine1"].stringValue
         self.phone = json["phone"].stringValue
@@ -29,6 +30,7 @@ struct StoreModel: Identifiable {
         self.daysWork = json["daysWork"].stringValue
         self.close = json["close"].boolValue
     }
+    
     init(
     id: Int,
     address: String,
@@ -37,7 +39,8 @@ struct StoreModel: Identifiable {
     longitudeCoordinate: Double,
     timeWork: String,
     daysWork: String,
-    close: Bool){
+    close: Bool,
+    distance: Double = -1){
         self.id = id
         self.address = address
         self.phone = phone
@@ -46,5 +49,6 @@ struct StoreModel: Identifiable {
         self.timeWork = timeWork
         self.daysWork = daysWork
         self.close = close
+        self.distance = distance
     }
 }

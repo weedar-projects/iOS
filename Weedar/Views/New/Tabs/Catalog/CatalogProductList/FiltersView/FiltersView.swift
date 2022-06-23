@@ -89,7 +89,7 @@ struct FiltersView: View {
                 .padding(.horizontal,24)
                 .padding(.top, 24)
                 
-                //comfirm button
+                //confirm button
                 MainButton(title: "Confirm", icon: "checkmark", iconSize: 14) {
                     rootVM.getProducts(categoryId: rootVM.categoryId, filters: rootVM.filters)
                     rootVM.canReset = true

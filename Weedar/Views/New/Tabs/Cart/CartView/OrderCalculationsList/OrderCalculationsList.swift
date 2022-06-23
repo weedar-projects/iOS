@@ -94,50 +94,50 @@ struct OrderCalculationsList: View {
             }
             
             
-            HStack{
-                Text("Delivery fee")
-                    .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
-                
-                Spacer()
-                
-                Text("$\(cartData.deliverySum.formattedString(format: .percent))")
-                    .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
-            }
-            .padding(.horizontal, 15)
-            .background(
-                RadialGradient(colors: [Color.col_gradient_blue_second,
-                                                Color.col_gradient_blue_first],
-                                       center: .center,
-                                       startRadius: 0,
-                                       endRadius: 220)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                .opacity(0.25)
-                .frame(height: rowHeingt)
-            )
-            .frame(height: rowHeingt)
-            .padding(.top, 19)
+//            HStack{
+//                Text("Delivery fee")
+//                    .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
+//                
+//                Spacer()
+//                
+//                Text("$\(cartData.deliverySum.formattedString(format: .percent))")
+//                    .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
+//            }
+//            .padding(.horizontal, 15)
+//            .background(
+//                RadialGradient(colors: [Color.col_gradient_blue_second,
+//                                                Color.col_gradient_blue_first],
+//                                       center: .center,
+//                                       startRadius: 0,
+//                                       endRadius: 220)
+//                .clipShape(RoundedRectangle(cornerRadius: 12))
+//                .opacity(0.25)
+//                .frame(height: rowHeingt)
+//            )
+//            .frame(height: rowHeingt)
+//            .padding(.top, 19)
             
-            HStack{
-                Text("Total")
-                    .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
-                
-                Spacer()
-                
-                Text("$\(cartData.totalSum.formattedString(format: .percent))")
-                    .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
-            }
-            .padding(.horizontal, 15)
-            .background(
-                RadialGradient(colors: [Color.col_gradient_blue_second,
-                                                Color.col_gradient_blue_first],
-                                       center: .center,
-                                       startRadius: 0,
-                                       endRadius: 220)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-                .opacity(0.25)
-                .frame(height: rowHeingt)
-            )
-            .padding(.top, 19)
+//            HStack{
+//                Text("Total")
+//                    .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
+//
+//                Spacer()
+//
+//                Text("$\(cartData.totalSum.formattedString(format: .percent))")
+//                    .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
+//            }
+//            .padding(.horizontal, 15)
+//            .background(
+//                RadialGradient(colors: [Color.col_gradient_blue_second,
+//                                                Color.col_gradient_blue_first],
+//                                       center: .center,
+//                                       startRadius: 0,
+//                                       endRadius: 220)
+//                .clipShape(RoundedRectangle(cornerRadius: 12))
+//                .opacity(0.25)
+//                .frame(height: rowHeingt)
+//            )
+//            .padding(.top, 19)
         }
         }
     }

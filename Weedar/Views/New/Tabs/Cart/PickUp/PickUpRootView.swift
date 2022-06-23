@@ -13,6 +13,8 @@ import SwiftyJSON
 struct PickUpRootView: View {
     @StateObject var vm = PickUpRootVM()
     @EnvironmentObject var sessionManager: SessionManager
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         ZStack{
             NavigationLink(isActive: $vm.showRaduisPicker) {
@@ -25,9 +27,33 @@ struct PickUpRootView: View {
             
             VStack{
                 PickUpShopListPiker(selected: $vm.selectedTab)
+                    .padding(.top, 24)
+                
+                Text("My address:")
+                    .textSecond()
+                    .padding(.horizontal, 24)
+                    .hLeading()
+                    .padding(.top, 17)
+                HStack{
+                    Text(vm.address)
+                        .textDefault()
+                        .padding(.leading, 24)
+                        .padding(.trailing, 10)
+                        .hLeading()
+                    
+                    Image("edit_icon2")
+                        .padding(.trailing, 24)
+                }
+                .onTapGesture {
+                    presentationMode.wrappedValue.dismiss()
+                }
+                
+                Divider()
+                    .padding(.horizontal, 24)
+                    .padding(.top, 21)
                 
                 RadiusSelectBtn()
-                    .padding(.top, 24)
+                    .padding(.top, 15)
                     .onTapGesture {
                         vm.showRaduisPicker = true
                     }
@@ -63,7 +89,7 @@ struct PickUpRootView: View {
                     .transition(.move(edge: .bottom))
             }
         }
-        .navBarSettings("Choose store")
+        .navBarSettings("Choose a store")
         .onAppear{
             sessionManager.userData(withUpdate: true) { user in
                 vm.userData = user

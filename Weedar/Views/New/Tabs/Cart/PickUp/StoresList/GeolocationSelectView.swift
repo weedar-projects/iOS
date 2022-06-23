@@ -53,7 +53,7 @@ struct GeolocationSelectView: View {
             
             Spacer()
             
-            MainButton(title: "Comfirm") {
+            MainButton(title: "Confirm") {
                 mode.wrappedValue.dismiss()
             }
         }
