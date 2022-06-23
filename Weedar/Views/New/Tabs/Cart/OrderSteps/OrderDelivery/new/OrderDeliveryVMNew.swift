@@ -31,6 +31,7 @@ class OrderDeliveryVMNew: ObservableObject {
     @Published var pickUpAvailable = false
     
     @Published var userName = ""
+    @Published var nameStrokeColor = Color.col_borders
     @Published var userNameTFState: TextFieldState = .def{
         didSet{
             validateButton()
@@ -45,6 +46,7 @@ class OrderDeliveryVMNew: ObservableObject {
             validateButton()
         }
     }
+    
     @Published var addressStrokeColor = Color.col_borders
     @Published var addressError = ""
     @Published var zipCode = ""
@@ -98,7 +100,7 @@ class OrderDeliveryVMNew: ObservableObject {
     var descriptionText: String {
         switch currentOrderType {
         case .none:
-            return "Enter your address or select 'Use my location'. Available options will be shown - delivery, pick up, or both. Then choose an option you want."
+            return "Enter your address or select 'Use my current location'. Available options will be shown - delivery, pick up, or both. Then choose an option you want."
         case .pickup:
             return "Order will be ready in 15 minutes for pick up in the store. Budtender will ask you to show your ID and tell them your order number."
         case .delivery:
@@ -128,16 +130,19 @@ class OrderDeliveryVMNew: ObservableObject {
         }
     }
     
-    func validation(validateName: Bool = true){
+    func validation(appear: Bool = false){
         if userName.isEmpty{
-            if validateName{
+            if !appear{
                 userNameTFState = .error
-                userNameError = "Please enter full name."
+                userNameError = "Please enter Full name."
+                createOrderButtonIsDisabled = true
             }
         }else{
             userNameTFState = .success
             userNameError = ""
+            createOrderButtonIsDisabled = false
         }
+        validateButton()
         self.validationAddress()
     }
     

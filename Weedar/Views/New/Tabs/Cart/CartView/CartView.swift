@@ -63,7 +63,7 @@ struct CartView: View {
                     
                     //create order button
                     
-                    Text("The total amount may differ if you choose delivery. Delivery fee is not included.")
+                    Text("The total amount may differ if you choose delivery. \nDelivery fee is not included.")
                         .textSecond()
                         .multilineTextAlignment(.center)
                         .padding(.top, 25)

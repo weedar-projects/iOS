@@ -38,6 +38,7 @@ struct OrderSuccessView: View {
                 
                 
                 Text(orderNavigationManager.orderType == .pickup ? "Order will be ready in 15 minutes for pick up in the store. Budtender will ask you to show your ID and tell them your order number #\(orderNavigationManager.currentCreatedOrder.orderNumber)" :  "ordersuccessview.description".localized)
+                    .lineSpacing(8)
                     .textCustom(.coreSansC45Regular, 16, Color.col_text_main)
                     .hLeading()
                     .padding(.top, 8)

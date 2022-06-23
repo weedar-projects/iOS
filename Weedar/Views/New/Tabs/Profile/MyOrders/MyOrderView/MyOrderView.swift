@@ -91,7 +91,7 @@ struct MyOrderView: MainLoadViewProtocol {
                         .padding(.horizontal, 24)
                         
                         //Pricing view
-                        CalculationPriceView(data: $vm.orderDetailsReview, showDiscount: true)
+                        CalculationPriceView(data: $vm.orderDetailsReview,showDelivery: vm.order?.partner.isPickUp ?? true ,showDiscount: true)
                             .padding(.top, 24)
                             .padding(.horizontal, 24)
                         

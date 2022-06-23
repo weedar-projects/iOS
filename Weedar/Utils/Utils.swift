@@ -24,7 +24,7 @@ class Utils {
     func openAppleMap(address: String,lat: Double, lon: Double){
         let formatedAddress = address.replacingOccurrences(of: " ", with: "+")
         if (UIApplication.shared.canOpenURL(URL(string:"http://maps.apple.com")!)) {
-            UIApplication.shared.openURL(URL(string:"http://maps.apple.com/?daddr=\(formatedAddress)")!)
+            UIApplication.shared.openURL(URL(string:"http://maps.apple.com/?q=\(formatedAddress)&sll=\(lat),\(lon)&z=10&t=s")!)
         } else {
           print("Can't use Apple Maps");
         }

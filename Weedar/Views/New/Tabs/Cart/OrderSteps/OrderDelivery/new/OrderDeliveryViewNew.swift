@@ -55,17 +55,8 @@ struct OrderDeliveryViewNew: View {
                             .padding(.top, 7)
                         
                         //User name text field
-                        CustomTextField(text: $vm.userName,
-                                        state: $vm.userNameTFState,
-                                        title: "Full Name",
-                                        placeholder: "Enter your Full name",
-                                        keyboardType: .default,
-                                        contentType: .name)
-                        .padding(.top, 24)
-                        .onChange(of: vm.userName) { newValue in
-                            vm.validation()
-                        }
-                        
+                        NameTextField()
+                            .padding(.top, 24)
                         
                         if !vm.userNameError.isEmpty{
                             Text(vm.userNameError)
@@ -118,8 +109,10 @@ struct OrderDeliveryViewNew: View {
                         RequestButton(state: $vm.createOrderButtonState, isDisabled: $vm.createOrderButtonIsDisabled, showIcon: false, title: "Review order") {
                             vm.disableNavButton = true
                             if vm.needToUploadDocuments(){
-                                orderNavigationManager.needToShowDocumentCenter = true
-                                vm.disableNavButton = false
+                                vm.saveUserData {
+                                    orderNavigationManager.needToShowDocumentCenter = true
+                                    vm.disableNavButton = false
+                                }
                             }else{
                                 self.vm.saveDataCreateOrder { order in
                                     sessionManager.userData(withUpdate: true)
@@ -134,7 +127,9 @@ struct OrderDeliveryViewNew: View {
                     } else {
                         MainButton(title: "Choose store") {
                             if vm.needToUploadDocuments(){
-                                orderNavigationManager.needToShowDocumentCenter = true
+                                vm.saveUserData {
+                                    orderNavigationManager.needToShowDocumentCenter = true
+                                }
                             }else{
                                 vm.saveUserData(){
                                     orderNavigationManager.showPickUpView = true
@@ -200,7 +195,7 @@ struct OrderDeliveryViewNew: View {
         .onAppear{
             sessionManager.userData(withUpdate: true) { user in
                 vm.userData = user
-                vm.validation(validateName: false)
+                vm.validation(appear: true)
             }
         }
         
@@ -258,6 +253,46 @@ struct OrderDeliveryViewNew: View {
                 .foregroundColor(Color.col_borders)
         )
         .padding(.horizontal, 24)
+        
+    }
+    
+    
+    @ViewBuilder
+    func NameTextField() -> some View {
+        VStack{
+            Text("Full name")
+                .hLeading()
+                .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 14))
+                .padding(.leading, 12)
+                .opacity(0.7)
+        ZStack{
+            TextField("Enter your name", text: $vm.userName) { isEditing in
+                if !isEditing{
+                    vm.validation()
+                }
+            }
+            .padding(.horizontal, 12)
+        }
+        .frame(height: 48)
+        .overlay(
+            //color
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(vm.nameStrokeColor, lineWidth: 2)
+                    .frame(height: 48)
+            )
+        }
+        .padding(.horizontal,24)
+        .onChange(of: vm.userNameTFState) { newValue in
+            switch newValue{
+            case .def:
+                vm.nameStrokeColor = Color.col_borders
+            case .success:
+                vm.nameStrokeColor = Color.col_green_second
+            case .error:
+                vm.nameStrokeColor = Color.col_red_second
+            }
+        }
+
         
     }
     
