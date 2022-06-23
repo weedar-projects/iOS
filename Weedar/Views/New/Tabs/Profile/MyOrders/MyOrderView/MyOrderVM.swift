@@ -52,23 +52,6 @@ class MyOrderVM: ObservableObject {
             }
         }
     }
-//    func getOrderDetailsOld(_ orderId: Int, comletion: @escaping ()->Void) {
-//        OrderRepository.shared.getOrderDetails(orderId: orderId) { result in
-//            switch result {
-//                case .success(let item):
-//                self.orderProducts = []
-//                    item.forEach { details in
-//                        self.orderProducts.append(CartProduct(id: orderId, item: details.product, quantity: details.quantity,imageLink: details.product.imageLink))
-//                    }
-//
-//                self.getOrder(id: orderId, comletion: {
-//                    comletion()
-//                })
-//                case .failure(let error):
-//                    print(error)
-//            }
-//        }
-//    }
     
     func getOrder(id: Int, comletion: @escaping ()->Void) {
         let endpoint = Routs.getOrderById.rawValue.appending("/\(id)")
@@ -89,8 +72,8 @@ class MyOrderVM: ObservableObject {
                 let name = json["name"].stringValue
                 let phone = json["phone"].stringValue
                 let addressLine1 = json["addressLine1"].stringValue
-
-                self.orderDetailsReview =  OrderDetailsReview(orderId: id, totalSum: totalSum, exciseTaxSum: exciseTaxSum, totalWeight: self.totalGramWeight().formattedString(format: .percent), salesTaxSum: salesTaxSum, localTaxSum: cityTaxSum, discount: discount, taxSum: taxSum, sum: sum, state: state,fullAdress: addressLine1,username: name,phone: phone,partnerPhone: "", partnerName: "", partnerAdress: "")
+                let licence = json["license"].stringValue
+                self.orderDetailsReview =  OrderDetailsReview(orderId: id, totalSum: totalSum, exciseTaxSum: exciseTaxSum, totalWeight: self.totalGramWeight().formattedString(format: .percent), salesTaxSum: salesTaxSum, localTaxSum: cityTaxSum, discount: discount, taxSum: taxSum, sum: sum, state: state,fullAdress: addressLine1,username: name,phone: phone,partnerPhone: "", partnerName: "", partnerAdress: "", licence: licence)
                 
                 self.order = OrderResponseModel(json: json)
                 comletion()

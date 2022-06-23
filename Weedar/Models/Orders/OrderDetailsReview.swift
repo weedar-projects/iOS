@@ -25,4 +25,6 @@ struct OrderDetailsReview {
     var partnerPhone: String
     var partnerName: String
     var partnerAdress: String
+    
+    var licence: String = ""
 }

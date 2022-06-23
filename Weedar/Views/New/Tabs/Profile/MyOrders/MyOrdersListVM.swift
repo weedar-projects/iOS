@@ -6,11 +6,20 @@
 //
 
 import SwiftUI
+import Alamofire
 
 class MyOrdersListVM: ObservableObject {
-  
+    enum OrderType {
+        case delivery
+        case pickup
+    }
     @Published var orderSections: [OrderSectionListModel] = []
     @Published var loading = false
+    @Published var selectedTab: OrderType = .delivery{
+        didSet{
+            getOrderList {}
+        }
+    }
     
     func getOrderList(comletion: @escaping ()->Void){
         loading = true
@@ -18,8 +27,9 @@ class MyOrdersListVM: ObservableObject {
           print("Can't get ID from Defaults")
           return
         }
-        
-        let endpoint = Routs.getOrdersList.rawValue.appending("\(id)")
+        let type = selectedTab == .delivery ? 0 : 1
+                
+        let endpoint = Routs.getOrdersList.rawValue.appending("\(id)/\(type)")
         
         API.shared.request(endPoint: endpoint) { result in
             

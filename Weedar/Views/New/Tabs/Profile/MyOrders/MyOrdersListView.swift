@@ -11,11 +11,15 @@ import Amplitude
 struct MyOrdersListView: View {
     
     @StateObject var vm = MyOrdersListVM()
+    
     @EnvironmentObject var tabBarManager: TabBarManager
     
     var body: some View {
         ZStack{
-            VStack{    
+            VStack{
+                
+                OrderTypePicker()
+                
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack{
                         if !vm.orderSections.isEmpty{
@@ -81,7 +85,7 @@ struct MyOrdersListView: View {
         }
         .navBarSettings("My orders")
         .onAppear(){
-            vm.getOrderList {}
+            vm.getOrderList() {}
         }
     }
     
@@ -109,8 +113,53 @@ struct MyOrdersListView: View {
                     .padding(.top, 12)
             }
         }
-        
-        
+    }
+    
+    @ViewBuilder
+    func OrderTypePicker() -> some View {
+        HStack(spacing: 0){
+            Text("Delivery")
+                .textCustom(.coreSansC65Bold, 16, vm.selectedTab == .delivery ? Color.col_text_white : Color.col_text_main)
+                .frame(width: (getRect().width / 2 - 24), height: 44)
+                .background(Color.col_white.opacity(0.01))
+                .onTapGesture {
+                    withAnimation {
+                        vm.selectedTab = .delivery
+                    }
+                }
+            
+            Text("Pick Up")
+                .textCustom(.coreSansC65Bold, 16, vm.selectedTab == .pickup ? Color.col_text_white : Color.col_text_main)
+                .frame(width: (getRect().width / 2 - 24), height: 44)
+                .background(Color.col_white.opacity(0.01))
+                .onTapGesture {
+                    withAnimation {
+                        vm.selectedTab = .pickup
+                    }
+                    
+                }
+        }
+        .frame(maxWidth: .infinity)
+        .background(
+            HStack{
+                Color.col_black
+                    .frame(width: (getRect().width / 2 - 24), height: 44)
+                    .cornerRadius(radius: 12, corners: vm.selectedTab == .pickup ? [.bottomRight, .topRight] : [.bottomLeft, .topLeft])
+                    .animation(.interactiveSpring(response: 0.15,
+                                                  dampingFraction: 0.65,
+                                                  blendDuration: 1.5),
+                               value: vm.selectedTab == .pickup)
+                    .offset(x: vm.selectedTab == .pickup ? (getRect().width / 2 - 24) : 0)
+                    .hLeading()
+            }
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .strokeBorder()
+                .foregroundColor(Color.col_borders)
+            
+        )
+        .padding(.horizontal, 24)
     }
 }
 

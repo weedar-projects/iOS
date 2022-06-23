@@ -174,9 +174,10 @@ struct OrderResponseModel: Identifiable {
     var area: AreaModel
 //    var detail: [OrderDetail]?
     var userId, detailCount: Int?
-    
+    var license: String
     
     init(json: JSON) {
+        self.license = json["license"].stringValue
         self.gramWeight = json["gramWeight"].doubleValue
         self.id = json["id"].intValue
         self.number = json["number"].stringValue

@@ -52,9 +52,17 @@ struct MyOrderView: MainLoadViewProtocol {
                                 )
                     .padding([.horizontal, .top],24)
                     
+                    if let license = vm.order?.license{
+                        Text("Order fulfilled by: \(license)")
+                            .textCustom(.coreSansC45Regular, 14, Color.col_text_second)
+                            .hLeading()
+                            .padding(.top,6)
+                            .padding(.horizontal, 24)
+                    }
+                    
                     Text("List of items")
                         .textCustom(.coreSansC65Bold, 14, Color.col_text_second)
-                        .padding(.top, 24)
+                        .padding(.top, 12)
                         .padding(.leading, 35)
                         .hLeading()
                     

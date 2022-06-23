@@ -203,9 +203,9 @@ struct OrderTrackerModel: Identifiable{
     var userId: Int?
     var detailCount: Int?
     var orderDetails: [OrderDetailsModel]
-    
+    var license: String
     init(json: JSON) {
-        
+        self.license = json["license"].stringValue
         self.id = json["id"].intValue
         self.number = json["number"].stringValue
         self.name = json["name"].stringValue

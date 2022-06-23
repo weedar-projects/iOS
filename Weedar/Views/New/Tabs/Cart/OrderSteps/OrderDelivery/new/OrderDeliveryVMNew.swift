@@ -49,7 +49,6 @@ class OrderDeliveryVMNew: ObservableObject {
             validateButton()
         }
     }
-    
     @Published var addressStrokeColor = Color.col_borders
     @Published var addressError = ""
     @Published var zipCode = ""
@@ -360,9 +359,6 @@ extension OrderDeliveryVMNew{
     private func boolValue(data: Data) -> Bool? {
          return String(data: data, encoding: .utf8).flatMap(Bool.init)
      }
-    
-    
-    
 }
 
 
