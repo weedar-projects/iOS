@@ -97,7 +97,7 @@ struct PickUpRootView: View {
             }
         }
         .actionSheet(isPresented: $vm.showDirectionsView) {
-            ActionSheet(title: Text("Select apps"),
+            ActionSheet(title: Text("Select app"),
                         buttons: [
                             .default(
                                 Text("Google Maps")
