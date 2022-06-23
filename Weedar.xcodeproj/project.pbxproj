@@ -126,6 +126,7 @@
 		2FA5C21227E7DD6100289756 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5C21127E7DD6100289756 /* AddressView.swift */; };
 		2FA5C21627E8C71E00289756 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5C21527E8C71E00289756 /* SessionManager.swift */; };
 		2FAAFD5127C4E827008D4729 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2FAAFD5027C4E827008D4729 /* SDWebImageSwiftUI */; };
+		2FAFF85A2864761A009BA347 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAFF8592864761A009BA347 /* Utils.swift */; };
 		2FC63CE22818687A00A5EE18 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2FC63CE12818687A00A5EE18 /* Settings.bundle */; };
 		2FC63CE428186A0100A5EE18 /* PKSettingsBundleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC63CE328186A0100A5EE18 /* PKSettingsBundleHelper.swift */; };
 		2FC63CE8281AA1EC00A5EE18 /* OrderTrackerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC63CE7281AA1EC00A5EE18 /* OrderTrackerManager.swift */; };
@@ -414,6 +415,7 @@
 		2FA59F782832F224001597C2 /* LoadingScreenCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreenCart.swift; sourceTree = "<group>"; };
 		2FA5C21127E7DD6100289756 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		2FA5C21527E8C71E00289756 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
+		2FAFF8592864761A009BA347 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		2FC63CE12818687A00A5EE18 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		2FC63CE328186A0100A5EE18 /* PKSettingsBundleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKSettingsBundleHelper.swift; sourceTree = "<group>"; };
 		2FC63CE7281AA1EC00A5EE18 /* OrderTrackerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTrackerManager.swift; sourceTree = "<group>"; };
@@ -1647,6 +1649,7 @@
 				B17D58F726FE19AB0094364A /* StringExtension.swift */,
 				8458BC0826FDED1900E1EDC5 /* TextExtension.swift */,
 				E342897926CD504A00F1EB6E /* UserDefaultsService.swift */,
+				2FAFF8592864761A009BA347 /* Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1993,6 +1996,7 @@
 				2FCEFEFA281340C200D00AEE /* TrackerDropDownView.swift in Sources */,
 				2F60BA59280F7F71002B6670 /* ProfileListButton.swift in Sources */,
 				2F60BA7B281049A9002B6670 /* TabBarViewModel.swift in Sources */,
+				2FAFF85A2864761A009BA347 /* Utils.swift in Sources */,
 				2F60BA43280F7DA2002B6670 /* Zoomable.swift in Sources */,
 				4D91930E27478B550090E731 /* CarouselARView+Session.swift in Sources */,
 				B1FD5ADF26FB029700F7A77F /* WebView.swift in Sources */,

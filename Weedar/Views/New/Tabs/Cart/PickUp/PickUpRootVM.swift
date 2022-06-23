@@ -43,6 +43,8 @@ class PickUpRootVM: ObservableObject{
     @Published var longitudeCoordinate: Double = 0
     @Published var zipCode = ""
     
+    @Published var showDirectionsView = false
+    
     func getStores(radius: Double){
         self.availableStores.removeAll()
         API.shared.request(rout: .getAllStores, method: .get) { result in

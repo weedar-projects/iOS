@@ -275,7 +275,12 @@ struct OrderDeliveryViewNew: View {
                         .stroke(vm.addressStrokeColor, lineWidth: 2)
                         .frame(height: 48)
                 )
-            
+            .overlay(
+                ProgressView()
+                    .frame(width: 16, height: 16)
+                    .padding(.trailing, 12)
+                    .opacity(vm.locationIsLoading ? 1 : 0)
+                , alignment: .trailing)
         }
         .padding(.horizontal, 24)
         .onChange(of: vm.userAddressTFState) { newValue in
@@ -308,12 +313,16 @@ struct OrderDeliveryViewNew: View {
                 .padding(.horizontal, 26)
                 .background(Color.white.frame(width: getRect().width))
                 .onTapGesture {
+                    if locationManager.authorisationStatus != .notDetermined{
+                        vm.locationIsLoading = true
+                    }
                     locationManager.requestAuthorisation(always: true)
-                    DispatchQueue.main.asyncAfter(deadline: .now()+1.5) {
+                    DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
                         locationManager.requestLocation { currentAddress, zipcode in
                             vm.userAddress = currentAddress
                             vm.zipCode = zipcode
                             vm.validation()
+                            vm.locationIsLoading = false
                             hideKeyboard()
                         }
                     }
@@ -340,4 +349,3 @@ struct OrderDeliveryViewNew: View {
         .frame(height: getRect().height / 4, alignment: .top)
     }
 }
-

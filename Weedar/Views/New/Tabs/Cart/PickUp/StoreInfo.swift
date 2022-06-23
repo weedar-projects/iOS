@@ -13,90 +13,90 @@ struct StoreInfo: View{
     @EnvironmentObject var orderNavigationManager: OrderNavigationManager
     var body: some View{
         ZStack{
-      
             
-        if let store = rootVM.selectedStore {
-            VStack{
-                
-                Spacer()
-                
-                ZStack{
-                    Color.col_white.cornerRadius(radius: 12, corners: [.topLeft,.topRight])
+            
+            if let store = rootVM.selectedStore {
+                VStack{
                     
-                    Button(action: {
-                        withAnimation {
-                            rootVM.showStoreInfo = false
-                        }
-                    }, label: {
-                        Image("xmark")
-                            .resizable()
-                            .frame(width: 12, height: 12, alignment: .center)
-                    })
-                    .vTop()
-                    .hTrailing()
-                    .padding(19)
+                    Spacer()
                     
-                    VStack{
-                        Text(store.address)
-                            .textCustom(.coreSansC45Regular, 28, Color.col_text_main)
-                            .hLeading()
-                            .padding(24)
-                            .padding(.top, 14)
+                    ZStack{
+                        Color.col_white.cornerRadius(radius: 12, corners: [.topLeft,.topRight])
                         
-                        VStack(alignment: .leading, spacing: 0){
-                            Row(icon: "calendar_icon", value: store.daysWork)
-                            CustomDivider()
-                            Row(icon: "clock_icon", value: store.timeWork, closed: store.close)
-                            CustomDivider()
-                            Row(icon: "phone_icon", value: format(phone: store.phone))
-                        }
-                        .background(
-                            RadialGradient(colors: [Color.col_gradient_blue_second,
-                                                    Color.col_gradient_blue_first],
-                                           center: .center,
-                                           startRadius: 0,
-                                           endRadius: 220)
-                            .opacity(0.25)
-                            .clipShape(CustomCorner(corners: .allCorners,
-                                                    radius: 12))
-                        )
-                        .padding(.horizontal, 24)
-                        
-                        Spacer()
-                        ZStack{
-                            RadialGradient(colors: [Color.col_gradient_blue_second,
-                                                    Color.col_gradient_blue_first],
-                                           center: .center,
-                                           startRadius: 0,
-                                           endRadius: 220)
-                            .opacity(0.25)
-                            .clipShape(CustomCorner(corners: .allCorners,
-                                                    radius: 12))
-                            .frame(height: 48)
-                            
-                            Text("Directions")
-                                .textCustom(.coreSansC55Medium, 16, Color.col_blue_main)
-                        }
-                        .onTapGesture {
-                            
-                        }
-                        .padding([.horizontal,.bottom], 24)
-                        
-                        MainButton(title: "Done") {
-                            rootVM.makeOrder { order in
-                                orderNavigationManager.currentCreatedOrder = rootVM.getCreatedOrder(order: order)
-                                orderNavigationManager.orderType = .pickup
-                                orderNavigationManager.showOrderReviewView = true
+                        Button(action: {
+                            withAnimation {
+                                rootVM.showStoreInfo = false
                             }
+                        }, label: {
+                            Image("xmark")
+                                .resizable()
+                                .frame(width: 12, height: 12, alignment: .center)
+                        })
+                        .vTop()
+                        .hTrailing()
+                        .padding(19)
+                        
+                        VStack{
+                            Text(store.address)
+                                .textCustom(.coreSansC45Regular, 28, Color.col_text_main)
+                                .hLeading()
+                                .padding(24)
+                                .padding(.top, 14)
+                            
+                            VStack(alignment: .leading, spacing: 0){
+                                Row(icon: "calendar_icon", value: store.daysWork)
+                                CustomDivider()
+                                Row(icon: "clock_icon", value: store.timeWork, closed: store.close)
+                                CustomDivider()
+                                Row(icon: "phone_icon", value: format(phone: store.phone))
+                            }
+                            .background(
+                                RadialGradient(colors: [Color.col_gradient_blue_second,
+                                                        Color.col_gradient_blue_first],
+                                               center: .center,
+                                               startRadius: 0,
+                                               endRadius: 220)
+                                .opacity(0.25)
+                                .clipShape(CustomCorner(corners: .allCorners,
+                                                        radius: 12))
+                            )
+                            .padding(.horizontal, 24)
+                            
+                            Spacer()
+                            ZStack{
+                                RadialGradient(colors: [Color.col_gradient_blue_second,
+                                                        Color.col_gradient_blue_first],
+                                               center: .center,
+                                               startRadius: 0,
+                                               endRadius: 220)
+                                .opacity(0.25)
+                                .clipShape(CustomCorner(corners: .allCorners,
+                                                        radius: 12))
+                                .frame(height: 48)
+                                
+                                Text("Directions")
+                                    .textCustom(.coreSansC55Medium, 16, Color.col_blue_main)
+                            }
+                            .padding([.horizontal,.bottom], 24)
+                            .onTapGesture {
+                                rootVM.showDirectionsView = true
+                            }
+                            
+                            MainButton(title: "Done") {
+                                rootVM.makeOrder { order in
+                                    orderNavigationManager.currentCreatedOrder = rootVM.getCreatedOrder(order: order)
+                                    orderNavigationManager.orderType = .pickup
+                                    orderNavigationManager.showOrderReviewView = true
+                                }
+                            }
+                            .padding([.bottom,.horizontal],24)
+                            .padding(.bottom, 12)
                         }
-                        .padding([.bottom,.horizontal],24)
-                        .padding(.bottom, 12)
                     }
+                    .frame(height: 512)
                 }
-                .frame(height: 512)
+                .edgesIgnoringSafeArea(.all)
             }
-            .edgesIgnoringSafeArea(.all)
-        }
         }
     }
     

@@ -93,6 +93,9 @@ class OrderDeliveryVMNew: ObservableObject {
     @Published var showAlertError = false
     @Published var messageAlertError = ""
     
+    
+    @Published var locationIsLoading = false
+    
     private var oldZipCode = ""
     private var latitudeCoordinate: Double = 0
     private var longitudeCoordinate: Double = 0

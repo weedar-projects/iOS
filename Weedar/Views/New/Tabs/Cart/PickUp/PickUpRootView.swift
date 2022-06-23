@@ -70,6 +70,28 @@ struct PickUpRootView: View {
                 vm.getStores(radius: vm.selectedRadius)
             }
         }
+        .actionSheet(isPresented: $vm.showDirectionsView) {
+            ActionSheet(title: Text("Select apps"),
+                        buttons: [
+                            .default(
+                                Text("Google Maps")
+                                    .foregroundColor(Color.lightSecondaryE.opacity(1.0))
+                                    .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
+                            ) {
+                                guard let store = vm.selectedStore else {return}
+                                Utils.shared.openGoogleMap(address: store.address,lat: store.latitudeCoordinate, lon: store.longitudeCoordinate)
+                            },
+                            .default(
+                                Text("Apple Maps")
+                                    .foregroundColor(Color.lightSecondaryE.opacity(1.0))
+                                    .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
+                            ) {
+                                guard let store = vm.selectedStore else {return}
+                                Utils.shared.openAppleMap(address: store.address,lat: store.latitudeCoordinate, lon: store.longitudeCoordinate)
+                            },
+                            .cancel()
+                        ])
+        }
     }
     
     
