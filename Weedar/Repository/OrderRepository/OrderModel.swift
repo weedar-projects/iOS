@@ -55,6 +55,8 @@ struct PartnerModel: Identifiable {
     var deliveryEmail: String
     var isPickUp: Bool
     var phone: String
+    var latitudeCoordinate: Double
+    var longitudeCoordinate: Double
     init(json:JSON){
         self.id = json["id"].intValue
         self.name = json["name"].stringValue
@@ -64,6 +66,8 @@ struct PartnerModel: Identifiable {
         self.deliveryEmail = json["deliveryEmail"].stringValue
         self.isPickUp = json["isPickUp"].boolValue
         self.phone = json["phone"].stringValue
+        self.latitudeCoordinate = json["latitudeCoordinate"].doubleValue
+        self.longitudeCoordinate = json["longitudeCoordinate"].doubleValue
     }
 }
 

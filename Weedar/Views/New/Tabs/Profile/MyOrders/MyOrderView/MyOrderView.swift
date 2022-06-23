@@ -173,10 +173,12 @@ struct MyOrderView: MainLoadViewProtocol {
                             Text("Directions")
                                 .textCustom(.coreSansC55Medium, 16, Color.col_blue_main)
                         }
-                        .padding([.horizontal,.bottom], 24)
+                        .padding(.horizontal, 24)
+                        .padding(.top, 32)
                         .onTapGesture {
                             vm.showDirectionsView = true
                         }
+                        
                     }
                     
                     if let state = vm.order?.state{
@@ -191,7 +193,7 @@ struct MyOrderView: MainLoadViewProtocol {
                                     .background(Color.col_bg_second.cornerRadius(12))
                                     .padding(.horizontal, 24)
                             }
-                            .padding(.top, 24)
+                            .padding(.top, 15)
                         }
                     }
                 }
@@ -220,7 +222,7 @@ struct MyOrderView: MainLoadViewProtocol {
                                     .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
                             ) {
                                 guard let store = vm.order else {return}
-                                Utils.shared.openGoogleMap(address: store.addressLine1,lat: store.latitudeCoordinate, lon: store.longitudeCoordinate)
+                                Utils.shared.openGoogleMap(address: store.partner.address,lat: store.partner.latitudeCoordinate, lon: store.partner.longitudeCoordinate)
                             },
                             .default(
                                 Text("Apple Maps")
@@ -228,7 +230,7 @@ struct MyOrderView: MainLoadViewProtocol {
                                     .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
                             ) {
                                 guard let store = vm.order else {return}
-                                Utils.shared.openAppleMap(address: store.addressLine1,lat: store.latitudeCoordinate, lon: store.longitudeCoordinate)
+                                Utils.shared.openAppleMap(address: store.partner.address,lat: store.partner.latitudeCoordinate, lon: store.partner.longitudeCoordinate)
                             },
                             .cancel()
                         ])
