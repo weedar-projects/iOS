@@ -21,7 +21,16 @@ class PickUpRootVM: ObservableObject{
     }
     @Published var showStoreInfo = false
     
-    @Published var availableStores: [StoreModel] = []
+    @Published var availableStores: [StoreModel] = []{
+        didSet{
+            print("qwerqwer: \(availableStores)")
+            
+        }
+    }
+    
+    @Published var availableStoresList: [StoreModel] = []
+    
+    @Published var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
     
     @Published var error = ""
     
@@ -53,9 +62,9 @@ class PickUpRootVM: ObservableObject{
             switch result{
             case let .success(json):
                 self.availableStores.removeAll()
+                self.availableStoresList.removeAll()
                 let stores = json.arrayValue.map({StoreModel(json: $0)})
                 for store in stores{
-                    
                     if LocationManager().checkDistance(coord1: CLLocation(latitude: store.latitudeCoordinate,
                                                                           longitude: store.longitudeCoordinate),
                                                        coord2: CLLocation(latitude: self.latitudeCoordinate,
@@ -67,9 +76,11 @@ class PickUpRootVM: ObservableObject{
                                                                                           longitude: self.longitudeCoordinate))
                         let storeWithDistance = StoreModel(id: store.id, address: store.address, phone: store.phone, latitudeCoordinate: store.latitudeCoordinate, longitudeCoordinate: store.longitudeCoordinate, timeWork: store.timeWork, daysWork: store.daysWork, close: store.close, distance: distance)
                         self.availableStores.append(storeWithDistance)
-                        print("Distans from address to store: \(distance)")
+                        self.availableStoresList.append(storeWithDistance)
                     }
                 }
+                self.availableStores.append(StoreModel(id: Int.random(in: 0...9999), address: self.address, phone: "", latitudeCoordinate: self.latitudeCoordinate, longitudeCoordinate: self.longitudeCoordinate, timeWork: "", daysWork: "", close: true, isMyLocation: true, radius: radius))
+                self.mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: self.latitudeCoordinate, longitude: self.longitudeCoordinate), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
             case let .failure(error):
                 self.error = error.message
             }

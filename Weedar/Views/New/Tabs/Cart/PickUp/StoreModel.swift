@@ -19,7 +19,11 @@ struct StoreModel: Identifiable {
     var daysWork: String
     var close: Bool
     var distance: Double
-    init(json: JSON, distance: Double = -1){
+    var isMyLocation: Bool
+    var radius: Double
+    init(json: JSON, distance: Double = -1, isMyLocation: Bool = false, radius: Double = 0){
+        self.radius = radius
+        self.isMyLocation = isMyLocation
         self.distance = distance
         self.id = json["id"].intValue
         self.address = json["addressLine1"].stringValue
@@ -40,7 +44,11 @@ struct StoreModel: Identifiable {
     timeWork: String,
     daysWork: String,
     close: Bool,
-    distance: Double = -1){
+    distance: Double = -1,
+    isMyLocation: Bool = false,
+    radius: Double = 0){
+        self.radius = radius
+        self.isMyLocation = isMyLocation
         self.id = id
         self.address = address
         self.phone = phone

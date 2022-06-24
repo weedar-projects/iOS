@@ -100,7 +100,7 @@ struct OrderDeliveryViewNew: View {
             ZStack{
                 VStack{
                     if vm.currentOrderType == .delivery{
-                        Text("Our budtender will ask you to show your ID \nto verify your identity and age.")
+                        Text("Our cur will ask you to show your ID \nto verify your identity and age.")
                             .textDefault()
                             .multilineTextAlignment(.center)
                     }

@@ -58,7 +58,7 @@ struct PickUpRootView: View {
                         vm.showRaduisPicker = true
                     }
                 
-                Text("Stores available: \(vm.availableStores.count)")
+                Text("Stores available: \(vm.availableStoresList.count)")
                     .textSecond()
                     .padding([.horizontal,.top], 24)
                     .hLeading()

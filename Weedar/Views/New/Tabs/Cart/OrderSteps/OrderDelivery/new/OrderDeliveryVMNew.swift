@@ -439,4 +439,15 @@ extension OrderDeliveryVMNew{
             return [.topLeft, .bottomLeft]
         }
     }
+    
+    var infoText: String{
+        switch currentOrderType{
+        case.none:
+            return ""
+        case .pickup:
+            return "Our budtender will ask you to show your ID card to verify your identity and age"
+        case .delivery:
+            return "Our courier will ask you to show your ID card\nto verify your identity and age"
+        }
+    }
 }
