@@ -29,9 +29,11 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
 
     func requestLocation(currentAddress: @escaping (String,String) -> Void) {
         locationManager.requestLocation()
-        guard let userLocation = userLocation else {return}
-        getAdressName(coords: userLocation){address, zipcode in
-            currentAddress(address,zipcode)
+        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+            guard let userLocation = self.userLocation else {return}
+            self.getAdressName(coords: userLocation){address, zipcode in
+                currentAddress(address,zipcode)
+            }
         }
     }
     

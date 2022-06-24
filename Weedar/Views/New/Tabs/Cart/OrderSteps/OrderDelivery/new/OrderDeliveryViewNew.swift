@@ -197,8 +197,10 @@ struct OrderDeliveryViewNew: View {
                 vm.userData = user
                 vm.validation(appear: true)
             }
+            if locationManager.authorisationStatus != .authorizedAlways{
+                locationManager.requestAuthorisation(always: true)
+            }
         }
-        
     }
     
     //MARK: ORDER TYPE PICKER
@@ -360,19 +362,19 @@ struct OrderDeliveryViewNew: View {
                 .padding(.horizontal, 26)
                 .background(Color.white.frame(width: getRect().width))
                 .onTapGesture {
-                    if locationManager.authorisationStatus != .notDetermined{
-                        vm.locationIsLoading = true
+                    vm.locationIsLoading = true
+                    if locationManager.authorisationStatus == .denied{
+                        UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
+                        vm.locationIsLoading = false
                     }
-                    locationManager.requestAuthorisation(always: true)
-                    DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-                        locationManager.requestLocation { currentAddress, zipcode in
-                            vm.userAddress = currentAddress
-                            vm.zipCode = zipcode
-                            vm.validation()
-                            vm.locationIsLoading = false
-                            hideKeyboard()
-                        }
+                    locationManager.requestLocation { currentAddress, zipcode in
+                        vm.userAddress = currentAddress
+                        vm.zipCode = zipcode
+                        vm.validation()
+                        vm.locationIsLoading = false
+                        hideKeyboard()
                     }
+                        
                 }
             }
             if let predictions = vm.addressListPlaces?.predictions, vm.userAddress.count>=3, vm.showAddressList {
