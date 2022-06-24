@@ -28,7 +28,7 @@ struct PickUpRootView: View {
             VStack{
                 PickUpShopListPiker(selected: $vm.selectedTab)
                     .padding(.top, 24)
-                
+                ScrollView(.vertical, showsIndicators: false) {
                 Text("My address:")
                     .textSecond()
                     .padding(.horizontal, 24)
@@ -67,8 +67,9 @@ struct PickUpRootView: View {
                     PickUpListView(rootVM: vm)
                         .transition(.fade)
                 }else{
+                    
                     PickUpMapView(rootVM: vm)
-                        .transition(.fade)
+                }
                 }
                 
                 Spacer()
