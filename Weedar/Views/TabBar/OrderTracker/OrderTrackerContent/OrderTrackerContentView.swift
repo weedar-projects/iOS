@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-import Amplitude
+
 
 struct OrderTrackerContentView: View {
     
@@ -152,11 +152,10 @@ struct OrderTrackerContentView: View {
                 secondaryButton: .destructive(Text("Cancel"),
                                               action: {
               vm.loading = true
-              if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-              Amplitude.instance().logEvent("cancel_order",
-                                            withEventProperties: ["current_status" : orderTrackerManager.currentState?.state.rawValue])
-              }
+              
+              AnalyticsManager.instance.event(key: .cancel_order,
+                                              properties: [.current_status : orderTrackerManager.currentState?.state.rawValue])
+              
               vm.cancelOrder(orderID: orderTrackerManager.currentOrder?.id ?? 0) {
 //                  if let firstOrder = orderTrackerManager.aviableOrders.first{
 //                      orderTrackerManager.currentOrder = firstOrder

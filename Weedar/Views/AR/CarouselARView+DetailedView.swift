@@ -8,7 +8,7 @@
 import ARKit
 import SwiftUI
 import RealityKit
-import Amplitude
+ 
 
 struct DetailedViewProperties {
     var selectedProduct: Product?
@@ -49,9 +49,7 @@ extension CarouselARView {
         
         properties.selectedItemScale = detailedProductScale
         object.scale = [detailedProductScale, detailedProductScale, detailedProductScale]
-        if UserDefaults.standard.bool(forKey: "EnableTracking"){
-        Amplitude.instance().logEvent("3D_product_select", withEventProperties: ["product_id" : object.id])
-        }
+        AnalyticsManager.instance.event(key: .product_select_3D, properties: [.product_id : object.id])
         properties.anchorEntityPosition = parent.position
         properties.anchorEntityTransform = parent.transform
         properties.modelEntityPosition = object.position

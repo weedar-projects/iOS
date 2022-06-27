@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-import Amplitude
+ 
 
 struct ProductDetailedView: View {
     @StateObject var vm  = ProductDetailedVM()
@@ -220,13 +220,11 @@ struct ProductDetailedView: View {
                 .onTapGesture {
                     tabBarManager.hideTracker()
                     vm.showAR.toggle()
-                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                    Amplitude.instance().logEvent("product_card_ar", withEventProperties: ["category" : product.type.name,
-                                                                                           "product_id" : product.id,
-                                                                                           "product_qty" : vm.quantity,
-                                                                                           "product_price" : product.price.formattedString(format: .percent)])
-                    }
+                    AnalyticsManager.instance.event(key: .select_product,
+                                                    properties: [.category : product.type.name,
+                                                                 .product_id: product.id,
+                                                                 .product_qty: vm.quantity,
+                                                        .product_price: product.price.formattedString(format: .percent)])
                 }
             
         }
@@ -402,13 +400,11 @@ struct ProductDetailedView: View {
         .onTapGesture {
             vm.notification.notificationOccurred(.success)
             cartManager.productQuantityInCart(productId: product.id, quantity: .custom(vm.quantity))
-            if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-            Amplitude.instance().logEvent("add_cart_prod_card", withEventProperties: ["category" : product.type.name,
-                                                                                      "product_id" : product.id,
-                                                                                      "product_qty" : vm.quantity,
-                                                                                      "product_price" : product.price.formattedString(format: .percent)])
-            }
+            AnalyticsManager.instance.event(key: .add_cart_prod_card,
+                                            properties: [.category : product.type.name,
+                                                         .product_id: product.id,
+                                                         .product_qty: vm.quantity,
+                                                         .product_price: product.price.formattedString(format: .percent)])
             vm.chageAddButtonState()
         }.disabled(vm.animProductInCart)
     }

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+
 
 enum OrderTrackerPosition{
     case notUse
@@ -91,11 +91,8 @@ struct OrderTrackerView: View{
                                 }
                                 vm.lastOffset = vm.offset
                                 orderTrackerManager.showPosition = .notUse
-                                
-                                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                                Amplitude.instance().logEvent("order_trackbar_view",
-                                                              withEventProperties: ["current_status" : orderTrackerManager.currentState?.state.rawValue])
-                                }
+                                AnalyticsManager.instance.event(key: .order_trackbar_view,
+                                                                properties: [.current_status : orderTrackerManager.currentState?.state.rawValue])
                             case .notUse:
                                 break
                             }

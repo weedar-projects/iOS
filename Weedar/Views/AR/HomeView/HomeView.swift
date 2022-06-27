@@ -8,7 +8,7 @@
 import SwiftUI
 import RealityKit
 import SDWebImageSwiftUI
-import Amplitude
+ 
 
 struct LoadingAnimateView: View {
     @State var animation = true
@@ -279,11 +279,9 @@ struct ARProductInfo : View {
                         UINotificationFeedbackGenerator().notificationOccurred(.success)
                         
                         cartManager.productQuantityInCart(productId: product.id, quantity: .add)
-                        if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                        Amplitude.instance().logEvent("add_cart_ar", withEventProperties: ["category" : product.type.name,
-                                                                                                "product_id" : product.id,
-                                                                                                "product_price" : product.price.formattedString(format: .percent)])
-                        }
+                        AnalyticsManager.instance.event(key: .add_cart_ar, properties: [.category : product.type.name,
+                                                                                        .product_id : product.id,
+                                                                                        .product_price : product.price.formattedString(format: .percent)])
                     }){
                         ZStack{
                             Image.bg_gradient_main

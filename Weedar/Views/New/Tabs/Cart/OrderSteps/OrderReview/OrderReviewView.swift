@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-import Amplitude
+ 
 
 struct OrderReviewView: View {
     
@@ -110,9 +110,7 @@ struct OrderReviewView: View {
                                     Logger.log(message: "end ____", event: .debug)
                                     vm.buttonState = .success
                                     orderNavigationManager.showOrderSuccessView = true
-                                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                                        Amplitude.instance().logEvent("make_order")
-                                    }
+                                    AnalyticsManager.instance.event(key: .make_order)
                                 } else {
                                     vm.buttonState = .def
                                     vm.showAlert = true

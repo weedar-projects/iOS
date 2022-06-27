@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 
 struct OnboardingView: View {
     @State var page = 1
@@ -44,9 +44,7 @@ struct OnboardingView: View {
                                                                        action: {
                         if let url = URL(string: "https://cannabis.ca.gov/consumers/whats-legal") {
                             openURL(url)
-                            if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                                Amplitude.instance().logEvent("site_age_alert")
-                            }
+                            AnalyticsManager.instance.event(key: .site_age_alert)
                         }
                     }))
                     

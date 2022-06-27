@@ -15,6 +15,7 @@
 		2F07D41828497A42005D60CC /* ComfirmChangePhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F07D41728497A42005D60CC /* ComfirmChangePhoneView.swift */; };
 		2F07D41A28497EBC005D60CC /* OTPViewChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F07D41928497EBC005D60CC /* OTPViewChange.swift */; };
 		2F07D41D284A327D005D60CC /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F07D41B284A3207005D60CC /* AuthenticationServices.framework */; };
+		2F1BBC6A2853730000E5E9D7 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1BBC692853730000E5E9D7 /* AnalyticsManager.swift */; };
 		2F2AA73F27DB57DB00AB6C57 /* CartRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2AA73E27DB57DB00AB6C57 /* CartRootView.swift */; };
 		2F2AA74127DB57E600AB6C57 /* CartRootVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2AA74027DB57E600AB6C57 /* CartRootVM.swift */; };
 		2F2AA74427DB580E00AB6C57 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2AA74327DB580E00AB6C57 /* CartView.swift */; };
@@ -296,6 +297,7 @@
 		2F07D41728497A42005D60CC /* ComfirmChangePhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComfirmChangePhoneView.swift; sourceTree = "<group>"; };
 		2F07D41928497EBC005D60CC /* OTPViewChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPViewChange.swift; sourceTree = "<group>"; };
 		2F07D41B284A3207005D60CC /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
+		2F1BBC692853730000E5E9D7 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		2F2AA73E27DB57DB00AB6C57 /* CartRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRootView.swift; sourceTree = "<group>"; };
 		2F2AA74027DB57E600AB6C57 /* CartRootVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRootVM.swift; sourceTree = "<group>"; };
 		2F2AA74327DB580E00AB6C57 /* CartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; };
@@ -675,6 +677,7 @@
 				2F3BEDB227E2893700298399 /* CoordinatorManager.swift */,
 				2FA5C21527E8C71E00289756 /* SessionManager.swift */,
 				2FC63CE7281AA1EC00A5EE18 /* OrderTrackerManager.swift */,
+				2F1BBC692853730000E5E9D7 /* AnalyticsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -2003,6 +2006,7 @@
 				2F07D413284977CF005D60CC /* ChangePhoneVM.swift in Sources */,
 				2F07D41628497A36005D60CC /* ComfirmChangePhoneVM.swift in Sources */,
 				2F07D40C28496614005D60CC /* ChangeEmailView.swift in Sources */,
+				2F1BBC6A2853730000E5E9D7 /* AnalyticsManager.swift in Sources */,
 				81F835A92739B47800E2553F /* LineLoaderView.swift in Sources */,
 				4B1E54CF27A045BE008C0188 /* Amplitude+Extensions.swift in Sources */,
 				81F835A72739AEFE00E2553F /* LineDelayedView.swift in Sources */,
@@ -2251,7 +2255,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.weel.ar;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2279,7 +2283,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.weel.ar;
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

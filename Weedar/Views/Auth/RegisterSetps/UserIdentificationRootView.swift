@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 import Firebase
 
 struct UserIdentificationRootView: View, KeyboardReadable {
@@ -98,9 +98,8 @@ struct UserIdentificationRootView: View, KeyboardReadable {
                 case .success:
                     
                     orderTrackerManager.disconnect()
-                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                    Amplitude.instance().logEvent("logout_success")
-                    }
+                    AnalyticsManager.instance.event(key: .logout_success)
+
                     if let _ = UserDefaultsService().get(fromKey: .accessToken){
                         UserDefaultsService().remove(key: .accessToken)
                     }

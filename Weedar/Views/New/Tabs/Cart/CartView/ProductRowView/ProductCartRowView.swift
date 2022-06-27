@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-import Amplitude
+ 
 
 struct ProductCartRowView: View {
     
@@ -36,11 +36,9 @@ struct ProductCartRowView: View {
             .hTrailing()
             .onTapGesture {
                 cartManager.productQuantityInCart(productId: item.id, quantity: .removeAll)
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                    Amplitude.instance().logEvent("delete_product", withEventProperties: ["category" : item.type.name,
-                                                                                          "product_id" : item.id,
-                                                                                          "product_price" : item.price.formattedString(format: .percent)])
-                }
+                AnalyticsManager.instance.event(key: .delete_product, properties: [.category : item.type.name,
+                                                                                   .product_id : item.id,
+                                                                                   .product_price : item.price.formattedString(format: .percent)])
             }
 
             HStack(spacing: 0){

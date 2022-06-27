@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Alamofire
-import Amplitude
+ 
 import SwiftyJSON
 
 class AuthRootVM: ObservableObject {
@@ -122,14 +122,10 @@ class AuthRootVM: ObservableObject {
             case .success(_):
                 self.nextButtonState = .success
                 self.showServerError = false
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                    Amplitude.instance().logEvent("email_pass_success")
-                }
+                AnalyticsManager.instance.event(key: .email_pass_success)
                 completionHandler()
             case .failure(let error):
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                    Amplitude.instance().logEvent("email_pass_fail", withEventProperties: ["error_type" : error.message])
-                }
+                AnalyticsManager.instance.event(key: .email_pass_fail, properties: [.error_type : error.localizedDescription])
                 self.showServerError = true
                 self.nextButtonState = .def
                 self.authServerError = ServerError(statusCode: error.statusCode, message: error.message)
@@ -155,7 +151,9 @@ class AuthRootVM: ObservableObject {
                 
                 self.appDelegate.saveTokenFCM()
                 self.appDelegate.updatePushNotificationState(true)
-                Amplitude.instance().logEvent("login_success")
+                
+                AnalyticsManager.instance.event(key: .login_success)
+                
                 print("PHOOONE \(userData.phone)")
                 //neet to fill data
                 if let phone = userData.phone, !phone.isEmpty{
@@ -167,9 +165,7 @@ class AuthRootVM: ObservableObject {
                 }
             case let .failure(error):
                 print("errorerrror \(error)")
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                    Amplitude.instance().logEvent("login_fail", withEventProperties: ["error_type" : error.message])
-                }
+                AnalyticsManager.instance.event(key: .login_fail, properties: [.error_type : error.message])
                 Logger.log(message: error.message, event: .error)
                 self.showServerError = true
                 self.nextButtonState = .def
@@ -186,14 +182,11 @@ class AuthRootVM: ObservableObject {
             case .success(_):
                 self.nextButtonState = .success
                 self.showServerError = false
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                Amplitude.instance().logEvent("email_pass_success")
-                }
+                AnalyticsManager.instance.event(key: .email_pass_success)
+  
                 completionHandler()
             case .failure(let errorAPI):
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                Amplitude.instance().logEvent("email_pass_fail", withEventProperties: ["error_type" : errorAPI.localizedDescription])
-                }
+                AnalyticsManager.instance.event(key: .email_pass_fail, properties: [.error_type : errorAPI.message])
                 self.showServerError = true
                 self.nextButtonState = .def
                 self.authServerError = errorAPI
@@ -231,8 +224,7 @@ class AuthRootVM: ObservableObject {
 
                                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.0) {
                                         self.nextButtonState = .success
-                                        
-                                        Amplitude.instance().logEvent("login_success")
+                                        AnalyticsManager.instance.event(key: .login_success)
                                         
                                         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.0) {
                                             if asNewUser{
@@ -246,9 +238,8 @@ class AuthRootVM: ObservableObject {
                                 }
                                 
                             case .failure(let errorAPI):
-                            if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                            Amplitude.instance().logEvent("login_fail", withEventProperties: ["error_type" : errorAPI.localizedDescription])
-                            }
+                            AnalyticsManager.instance.event(key: .login_fail, properties: [.error_type : errorAPI.message])
+              
                                 Logger.log(message: errorAPI.localizedDescription, event: .error)
                                 DispatchQueue.main.async {
                                     self.authServerError = errorAPI //errorAPI

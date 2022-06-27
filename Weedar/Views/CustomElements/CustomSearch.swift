@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 struct CustomSearch: View {
     
     @Binding var searchText: String
@@ -23,14 +23,14 @@ struct CustomSearch: View {
                 
                 
                 TextField("Search", text: $searchText, onEditingChanged: { focused in
-                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                    Amplitude.instance().logEvent("click_search")
-                    }
                     withAnimation {
                         self.showCancel = focused
                         self.isEditing = focused
                     }
                 })
+                .onTapGesture {
+                    AnalyticsManager.instance.event(key: .click_search)
+                }
                 
                 Spacer(minLength: 0)
                 
@@ -61,9 +61,7 @@ struct CustomSearch: View {
             if showCancel{
                 Button {
                     UIApplication.shared.endEditing()
-                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                    Amplitude.instance().logEvent("search_cancel")
-                    }
+                    AnalyticsManager.instance.event(key: .search_cancel)
                     withAnimation {
                         showCancel = false
                     }

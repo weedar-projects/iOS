@@ -118,9 +118,11 @@ class ChangePasswordVM: ObservableObject {
             case .success(_):
                 finish()
                 self.buttonState = .success
+                AnalyticsManager.instance.event(key: .change_pass_success)
             case .failure(let error):
                 self.serverError = error.message
                 self.buttonState = .def
+                AnalyticsManager.instance.event(key: .change_pass_fail, properties: [.error_type : error.message])
             }
         }
     }

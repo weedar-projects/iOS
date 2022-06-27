@@ -46,6 +46,8 @@ class OrderTrackerManager: ObservableObject, WebSocketDelegate{
                     hideProgressPoints = false
                 }
             }
+            
+            AnalyticsManager.instance.event(key: .changeOrderStatus, properties: [.order_id: currentOrder?.id ?? 0, .status_id: currentOrder?.state ?? 0])
         }
     }
     
