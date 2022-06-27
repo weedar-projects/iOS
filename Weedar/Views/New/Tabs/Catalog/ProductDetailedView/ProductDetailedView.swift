@@ -21,7 +21,7 @@ struct ProductDetailedView: View {
         ZStack{
             
             NavigationLink(isActive: $vm.showAR) {
-                HomeView()
+                HomeView(openProductById: product.id, openByCategoryId: 0)
                     .onAppear {
                         tabBarManager.show()
                     }
@@ -86,7 +86,6 @@ struct ProductDetailedView: View {
             if vm.showImageFullScreen{
                 ImagesFullScreenView(imageLink: product.imageLink,product: product ,showImageFullScreen: $vm.showImageFullScreen)
                     .transition(.fade)
-                
             }
             VStack{
                 Spacer()

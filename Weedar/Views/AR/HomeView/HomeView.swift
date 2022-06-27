@@ -36,6 +36,13 @@ struct HomeView: View {
     @State private var opacity = 1.0
     @State private var showDesctiption = true
     
+    @State var openProductById: Int = 0
+    @State var openByCategoryId: Int = 0
+    
+    @State var disableFilterButton = true
+    
+    @StateObject var filtersVM = ARFiltersVM()
+    
     // MARK: - View
     var body: some View {
         
@@ -63,7 +70,8 @@ struct HomeView: View {
 //                .vTop()
 //                .zIndex(3)
 //                .edgesIgnoringSafeArea(.top)
-//            
+            
+            
             VStack {
                 VStack {
                     ARViewContainer(carousel: carousel, appear: $appear)
@@ -82,8 +90,8 @@ struct HomeView: View {
                                 .padding(24)
                                 .padding(.bottom, 50)
                         )
-                    
                         .zIndex(6)
+                    
                 } //AR VSTACK
                 .statusBar(hidden: true)
                 .navigationBarBackButtonHidden(true)
@@ -101,12 +109,44 @@ struct HomeView: View {
                     self.appear = false
                     carousel.pauseScene()
                     tabbarManager.showTracker()
+                    openByCategoryId = 0
+                    openProductById = 0
                 }
                 .onUIKitAppear {
                     carousel.showDescriptionCard()
+                    if openByCategoryId != 0 {
+                        ARModelsManager.shared.getProducts(categoryId: openByCategoryId,filters: CatalogFilters()){
+                            ARModelsManager.shared.updateModels(){ items in
+                                carousel.updateProducts(items: items)
+                            }
+                        }
+                    }
+                    
+                    if openProductById != 0{
+                        carousel.pauseScene()
+                        ARModelsManager.shared.getProducts(filters: CatalogFilters()){
+                            ARModelsManager.shared.updateModels(){ items in
+                                carousel.updateProducts(items: items)
+                                carousel.manager.setFirstModelId(id: openProductById)
+                            }
+                        }
+                        carousel.resumeScene()
+                        carousel.shouldShowDescriptionCard = true
+                        print("IDDDDDPRODUUCT: \(openProductById)")
+                    }else{
+                        carousel.resumeScene()
+                    }
+                    
+                    if openProductById == 0 && openByCategoryId == 0{
+                        ARModelsManager.shared.getProducts(filters: CatalogFilters()){
+                            ARModelsManager.shared.updateModels(){ items in
+                                carousel.updateProducts(items: items)
+                            }
+                        }
+                    }
+                    
                     statusBarStyle.currentStyle = .darkContent
                     //                tabbarManager.isCurrentOrderViewExtended = false
-                    carousel.resumeScene()
                     tabbarManager.hideTracker()
                     self.appear = true
                     withAnimation(Animation.spring().delay(0.5)) {
@@ -140,6 +180,19 @@ struct HomeView: View {
                                 Image("navbar-refresh")
                                     .frame(width: 24, height: 24, alignment: .leading)
                             }
+                            
+//                            Button {
+//                                filtersVM.showFilterView = true
+//                            } label: {
+//                                Image("navbar-filter")
+//                                    .frame(width: 24, height: 24, alignment: .leading)
+//                            }
+//                            .disabled(disableFilterButton)
+//                            .onAppear(){
+//                                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+//                                    self.disableFilterButton = false
+//                                }
+//                            }
                         }) // HStack
                         .foregroundColor(.lightOnSurfaceA.opacity(1.0))
                 )
@@ -148,7 +201,26 @@ struct HomeView: View {
                     TutorialsView(isShown: $tutorialsIsActive)
                 }
             }// MAIN VSTACK
+            
+            
+            if filtersVM.showFilterView{
+                ZStack{
+                    Color.black.opacity(0.2)
+                        .edgesIgnoringSafeArea(.all)
+                        .transition(.fade)
+                ARFiltersView(rootVM: filtersVM,
+                              carousel: carousel)
+                    .transition(.move(edge: .bottom))
+                }
+            }
         } //zstack
+        .onChange(of: filtersVM.showFilterView) { newValue in
+            if newValue{
+                tabbarManager.hide()
+            }else{
+                tabbarManager.show()
+            }
+        }
     }
 }
 

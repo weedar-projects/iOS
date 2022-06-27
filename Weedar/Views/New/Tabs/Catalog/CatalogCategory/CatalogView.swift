@@ -34,7 +34,7 @@ struct CatalogView: MainLoadViewProtocol {
                     ZStack{
                         //AR Catalog view
                         NavigationLink(isActive: $tabBarManager.showARView) {
-                            HomeView()
+                            HomeView(openProductById: 0, openByCategoryId: 0)
                                 .onAppear {
                                     if UserDefaults.standard.bool(forKey: "EnableTracking"){
                                         print("worktraking")
@@ -142,10 +142,10 @@ struct CatalogView: MainLoadViewProtocol {
                     if vm.categories.isEmpty{
                         self.vm.loadCategories { val in
                             self.vm.fetchProducts {
-                                self.localModels.fetchProducts {
-                                    self.localModels.getAllModels()
+//                                self.localModels.fetchProducts {
+//                                    self.localModels.getAllModels()
                                     self.showLoader = false
-                                }
+//                                }
                             }
                         }
                     }else{
@@ -158,7 +158,7 @@ struct CatalogView: MainLoadViewProtocol {
                     if vm.categories.isEmpty{
                         self.vm.loadCategories { val in
                             self.vm.fetchProducts {
-                                self.localModels.fetchProducts {
+                                self.localModels.getProducts(filters: nil) {
                                     self.localModels.getAllModels()
                                     self.showLoader = false
                                 }
