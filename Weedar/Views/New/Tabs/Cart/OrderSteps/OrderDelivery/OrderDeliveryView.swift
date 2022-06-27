@@ -10,8 +10,9 @@ import SwiftUI
 
 struct OrderDeliveryView: View {
     
-    
     @StateObject var vm: OrderDeliveryVM
+    
+    @StateObject var locationManager = LocationManager()
     
     @EnvironmentObject var cartManager: CartManager
     
@@ -27,12 +28,11 @@ struct OrderDeliveryView: View {
     
     var body: some View {
         ZStack{
-            NavigationLink(isActive: $orderNavigationManager.showOrderReviewView) {
-                OrderReviewView(data: vm.orderDetailsReview ?? OrderDetailsReview(orderId: 0, totalSum: 0, exciseTaxSum: 0, salesTaxSum: 0, localTaxSum: 0, discount: nil, taxSum: 0, sum: 0, state: 0))
-            } label: {
-                Color.clear
-            }.isDetailLink(false)
-            
+//            NavigationLink(isActive: $orderNavigationManager.showOrderReviewView) {
+//                OrderReviewView(data: vm.orderDetailsReview ?? OrderDetailsReview(orderId: 0, totalSum: 0, exciseTaxSum: 0, salesTaxSum: 0, localTaxSum: 0, discount: nil, taxSum: 0, sum: 0, state: 0,fullAdress: "",username: "",phone: "phone"))
+//            } label: {
+//                Color.clear
+//            }.isDetailLink(false)
             
             Color.white
             
@@ -88,10 +88,17 @@ struct OrderDeliveryView: View {
                             .padding(.leading, 12)
                             .opacity(0.7)
                         
+                        ZStack{
+                            if let address = vm.currentAddress{
+                                Text(address)
+                                    .textCustom(.coreSansC45Regular, 16, Color.col_text_main)
+                                    
+                            }
                         TextField("Enter your address", text: $vm.address) { isEditing in
                             showDelivery = isEditing
                         }
                         .modifier(TextFieldStyles.TextFieldStyle(strokeColor: Binding<Color>.constant(vm.addressTFState == .success ? Color.col_green_second : vm.addressTFState == .error ?  Color.col_red_second: vm.addressTFState == .def ?  Color.col_borders : Color.clear)))
+                        }
                       
                     }
                     .padding(.horizontal, 24)
@@ -126,7 +133,6 @@ struct OrderDeliveryView: View {
                     })
                         .frame(height: getRect().height / 4, alignment: .top)
                         .animation(.linear(duration: 0.35))
-                        
                     }
                     
                     if !vm.addressErrorMessage.isEmpty{
@@ -138,6 +144,22 @@ struct OrderDeliveryView: View {
                             .hLeading()
                     }
                     
+                    Text("Use my location")
+                        .onTapGesture {
+                            locationManager.requestAuthorisation(always: true)
+//                            locationManager.requestLocation()
+                        }
+                        .onChange(of: locationManager.currentAddressName ?? "") { newValue in
+                            if newValue != ""{
+                                vm.currentAddress = newValue
+                                vm.address = ""
+                            }
+                        }
+                    
+                    if let location = locationManager.userLocation{
+//                        Text("\(location.latitude)\n\(location.longitude)")
+                    }
+                    
                     Rectangle()
                         .fill(Color.clear)
                         .frame(width: 10, height: 1)
@@ -147,7 +169,7 @@ struct OrderDeliveryView: View {
             }
             
             VStack{
-                Text("Our courier will ask you to show your ID \nto verify your identity and age.")
+                Text("Our budtender will ask you to show your ID \nto verify your identity and age.")
                     .textDefault()
                     .multilineTextAlignment(.center)
                 
@@ -212,8 +234,8 @@ struct OrderDeliveryView: View {
             }
         })
         .onDisappear(perform: {
-            if !orderNavigationManager.showOrderReviewView{
-                tabBarManager.show()
+            if !orderNavigationManager.showOrderReviewView {
+//                tabBarManager.show()
             }
         })
         .alert(isPresented: $vm.checkoutAlertShow, content: {

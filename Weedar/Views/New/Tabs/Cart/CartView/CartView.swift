@@ -22,13 +22,13 @@ struct CartView: View {
     
     @EnvironmentObject var orderNavigationManager: OrderNavigationManager
     
-    @ObservedObject var vmDelivery = OrderDeliveryVM()
+    @ObservedObject var vmDelivery = OrderDeliveryVMNew()
     
     var body: some View {
         ZStack{
             
             NavigationLink(isActive: $orderNavigationManager.showDeliveryView) {
-                OrderDeliveryView(vm: vmDelivery)
+                OrderDeliveryViewNew(vm: vmDelivery)
             } label: {
                 Color.clear
             }.isDetailLink(false)
@@ -63,6 +63,11 @@ struct CartView: View {
                     
                     //create order button
                     
+                    Text("The total amount may differ if you choose delivery. \nDelivery fee is not included.")
+                        .textSecond()
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 25)
+                    
                     if let cartData = cartManager.cartData{
                     MainButton(title: "Proceed to checkout") {
                         orderNavigationManager.showDeliveryView = true
@@ -76,7 +81,7 @@ struct CartView: View {
                         }
                         AnalyticsManager.instance.event(key: .proceed_checkout, properties: properties)
                     }
-                    .padding(.top, 32)
+                    .padding(.top, 17)
                     .padding(.horizontal, 24)
                     .padding(.bottom, 50)
                     .padding(.bottom, tabBarManager.showOrderTracker ? 95 : isSmallIPhone() ? 35 : 25)
@@ -112,6 +117,10 @@ struct CartView: View {
         .sheet(isPresented: $vm.showDiscontCodeView, content: {
             DiscontCodeView(showView: $vm.showDiscontCodeView)
         })
+        .onUIKitAppear {
+            tabBarManager.show()
+        }
+     
 //        .onAppear() {
 //            cartManager.updateCalculations()
 //            vm.validateToNext(concentrated: cartManager.totalConcentrated,

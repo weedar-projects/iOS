@@ -46,6 +46,34 @@ struct OrderRequestModel: Codable {
     }
 }
 
+struct PartnerModel: Identifiable {
+    var id: Int
+    var name: String
+    var address: String
+    var weedMapsLink: String
+    var contactEmail: String
+    var deliveryEmail: String
+    var isPickUp: Bool
+    var phone: String
+    var latitudeCoordinate: Double
+    var longitudeCoordinate: Double
+    init(json:JSON){
+        self.id = json["id"].intValue
+        self.name = json["name"].stringValue
+        self.address = json["address"].stringValue
+        self.weedMapsLink = json["weedMapsLink"].stringValue
+        self.contactEmail = json["contactEmail"].stringValue
+        self.deliveryEmail = json["deliveryEmail"].stringValue
+        self.isPickUp = json["isPickUp"].boolValue
+        self.phone = json["phone"].stringValue
+        self.latitudeCoordinate = json["latitudeCoordinate"].doubleValue
+        self.longitudeCoordinate = json["longitudeCoordinate"].doubleValue
+    }
+}
+
+
+
+
 struct OrderDetailOLD: Codable, Identifiable {
     var id, quantity: Int
     var createdAt: String
@@ -68,7 +96,7 @@ struct OrderResponseModelOLD: Codable, Identifiable, Hashable {
     var comment: String?
     var updatedAt: String
     var latitudeCoordinate, longitudeCoordinate: Double
-    var partner: Partner? // not used yet
+//    var partner: PartnerModel
     var area: Area
     var detail: [OrderDetailOLD]?
     var userId, detailCount: Int?
@@ -107,17 +135,7 @@ struct OrderResponseModelOLD: Codable, Identifiable, Hashable {
         var name: String
     }
 
-    struct Partner: Codable, Identifiable {
-        var id: Int
-        var name, address, contactEmail: String
-        var weedMapsLink: String?
-        var deliveryEmail: String
-        var exciseTax: Double
-        var salesTax: Double
-        var cityTax: Double
-        var priority: Int
-        var settings: Settings? // not used yet
-    }
+  
 
     struct Settings: Codable, Hashable {
         var minSupplyQuantity, defaultSupplyQuantity: Int?
@@ -139,7 +157,7 @@ struct OrderResponseModelOLD: Codable, Identifiable, Hashable {
 
 
 
-struct OrderResponseModel: Codable, Identifiable {
+struct OrderResponseModel: Identifiable {
     var id: Int
     var number, name, phone, city: String
     var addressLine1: String
@@ -152,16 +170,19 @@ struct OrderResponseModel: Codable, Identifiable {
     var createdAt: String
     var state: Int
     var comment: String?
+    var gramWeight: Double
     var discount: DiscountModel?
     var updatedAt: String
     var latitudeCoordinate, longitudeCoordinate: Double
-//    var partner: Partner? // not used yet
+    var partner: PartnerModel
     var area: AreaModel
 //    var detail: [OrderDetail]?
     var userId, detailCount: Int?
-    
+    var license: String
     
     init(json: JSON) {
+        self.license = json["license"].stringValue
+        self.gramWeight = json["gramWeight"].doubleValue
         self.id = json["id"].intValue
         self.number = json["number"].stringValue
         self.name = json["name"].stringValue
@@ -188,6 +209,7 @@ struct OrderResponseModel: Codable, Identifiable {
         self.userId = json["userId"].intValue
         self.detailCount = json["detailCount"].intValue
         self.area = AreaModel(json: json["area"])
+        self.partner = PartnerModel(json: json["partner"])
     }
 }
 

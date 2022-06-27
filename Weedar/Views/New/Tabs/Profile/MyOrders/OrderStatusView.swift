@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OrderStatusView: View {
     @State var status = 0
-    
+    @State var isPickup = false
     var body: some View{
         ZStack{
             Text(getTextTitle())
@@ -30,17 +30,27 @@ struct OrderStatusView: View {
                 )
         }
     }
+
+
     
     private func getTextTitle() -> String {
         switch status {
         case 1...4:
             return "Processing"
         case 5:
-            return "Packing"
+            if isPickup{
+                return "Preparing"
+            }else{
+                return "Packing"
+            }
         case 6:
             return "In delivery"
         case 7...8:
-            return "Delivered"
+            if isPickup{
+                return "Completed"
+            }else{
+                return "Delivered"
+            }
         case 10:
             return "Canceled"
         default:

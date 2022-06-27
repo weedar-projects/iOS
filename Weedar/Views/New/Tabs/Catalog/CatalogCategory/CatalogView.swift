@@ -102,7 +102,6 @@ struct CatalogView: MainLoadViewProtocol {
                 }
                 .onAppear {
                     appDelegate.requestAuthorization()
-                    
                 }
                     if vm.showDiscountAlert{
                         ZStack{

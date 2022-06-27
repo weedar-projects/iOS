@@ -42,7 +42,7 @@ extension String {
 
 extension Double {
   enum TextFormat {
-    case ounce, percent, gramm, rounded, int
+    case ounce, percent, gramm, rounded, int, miles
   }
   
   func formattedString(format: TextFormat) -> String {
@@ -57,6 +57,8 @@ extension Double {
         return String(Int(self.rounded()))
     case .int:
         return String(format: "%.0f", self)
+    case .miles:
+        return String(format: "%.1f", self)
     }
   }
     

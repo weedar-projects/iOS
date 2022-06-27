@@ -26,7 +26,7 @@ struct DocumentCenterView: MainLoadViewProtocol {
                 .padding(.top, 12)
                 .hLeading()
                 
-                Text("Our courier will ask you to show your ID \nto verify your identity and age.")
+                Text("Our budtender will ask you to show your ID \nto verify your identity and age.")
                     .textDefault()
                     .padding(.top, 24)
                     .padding(.horizontal, 24)

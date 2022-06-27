@@ -52,10 +52,18 @@ struct OrderTrackerContentView: View {
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack{
+                        if let license = orderTrackerManager.currentOrder?.license{
+                            Text("Order fulfilled by: \(license)")
+                                .textCustom(.coreSansC45Regular, 14, Color.col_white.opacity(0.8))
+                                .hLeading()
+                                .padding(.top,12)
+                        }
+                        
                         Text("List of items")
                             .textCustom(.coreSansC65Bold, 14, Color.col_text_white.opacity(0.7))
                             .padding(.leading, 11)
-                            .padding(.top,12)
+                            .padding(.top, 12)
+                            
                             .hLeading()
                         if let products = orderTrackerManager.currentOrder?.orderDetails{
                         VStack{

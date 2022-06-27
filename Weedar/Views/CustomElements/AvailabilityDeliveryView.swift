@@ -24,6 +24,8 @@ struct AvailabilityDeliveryView: View {
     @State private var borderColorPickUp = Color.textFieldGray
     @State private var textColorPickUp = Color.textFieldGray
     
+    @EnvironmentObject var tabbarManager: TabBarManager
+    
     var body: some View{
         HStack{
             HStack{
@@ -51,15 +53,20 @@ struct AvailabilityDeliveryView: View {
             
             Spacer()
             
-            Text("Pick up")
-                .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 14))
-                .foregroundColor(textColorPickUp)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(borderColorPickUp, lineWidth: 2)
-                        .frame(width: (getRect().width / 2.4) ,height: 40)
-                )
-                .frame(width: (getRect().width / 2.4) ,height: 40)
+            NavigationLink {
+                PickUpRootView()
+            } label: {
+                Text("Pick up")
+                    .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 14))
+                    .foregroundColor(textColorPickUp)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(borderColorPickUp, lineWidth: 2)
+                            .frame(width: (getRect().width / 2.4) ,height: 40)
+                    )
+                    .frame(width: (getRect().width / 2.4) ,height: 40)
+            }
+            .isDetailLink(false)
         }
         .onChange(of: deliveryState) { newValue in
             switch newValue {

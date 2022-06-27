@@ -113,31 +113,26 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
     
     // Remote Push Notifications
     func requestAuthorization() {
-        let granded = UserDefaultsService().get(fromKey: .fcmGranted) as? Bool
-
-        // Request Authorizathion
-        if granded == nil {
-            UNUserNotificationCenter
-                .current()
-                .requestAuthorization(options: [.alert, .badge, .sound],
-                                      completionHandler: { granted, error in
-                    guard
-                        error == nil
-                    else {
-                        Logger.log(message: error!.localizedDescription, event: .error)
-                        return
-                    }
-                    Messaging.messaging().isAutoInitEnabled = granted
-                    UserDefaultsService().set(value: granted, forKey: .fcmGranted)
-                    
-                    if granted {
-                        self.saveTokenFCM()
-
-                        /// API `User Enable/Disable Remote Push Notifications`
-                        self.updatePushNotificationState(true)
-                    }
-                })
-        }
+        
+        UNUserNotificationCenter
+            .current()
+            .requestAuthorization(options: [.alert, .badge, .sound],
+                                  completionHandler: { granted, error in
+                guard
+                    error == nil
+                else {
+                    Logger.log(message: error!.localizedDescription, event: .error)
+                    return
+                }
+                Messaging.messaging().isAutoInitEnabled = true
+                
+                self.saveTokenFCM()
+                
+                /// API `User Enable/Disable Remote Push Notifications`
+                self.updatePushNotificationState(true)
+                
+            })
+        
     }
     
     func requestDataPermission() {

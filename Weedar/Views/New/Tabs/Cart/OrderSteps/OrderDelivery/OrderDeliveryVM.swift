@@ -50,6 +50,8 @@ class OrderDeliveryVM: ObservableObject {
         }
     }
     
+    @Published var currentAddress: String?
+    
     @Published var deliveryState: AvailabityDeliveryState = .def
     
     @Published var pickUpState: AvailabityDeliveryState = .def
@@ -285,7 +287,14 @@ class OrderDeliveryVM: ObservableObject {
                                    discount: orderResponse.discount,
                                    taxSum: orderResponse.taxSum,
                                    sum: orderResponse.sum,
-                                   state: orderResponse.state)
+                                   state: orderResponse.state,
+                                   fullAdress: orderResponse.addressLine1,
+                                   username: orderResponse.name,
+                                   phone: orderResponse.phone,
+                                   partnerPhone: "",
+                                   partnerName: "",
+                                   partnerAdress: "",
+                                   orderNumber: orderResponse.number)
                 
                 print("order response \(orderResponse)")
                 finished(true, "Success")

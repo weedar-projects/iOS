@@ -13,6 +13,8 @@ struct CalculationPriceView: View {
     
     @Binding var data: OrderDetailsReview
     
+    @State var showDelivery: Bool = true
+    
     @State var lightText = false
     
     @State private var showCalculations = false
@@ -88,11 +90,11 @@ struct CalculationPriceView: View {
                     CalculationRow(title: "Product price",
                                    value:  $data.sum,
                                    lightText: lightText)
-                    
-                    CalculationRow(title: "Delivery fee",
-                                   value: Binding<Double>.constant(10),
-                                   lightText: lightText)
-                    
+                    if showDelivery{
+                        CalculationRow(title: "Delivery fee",
+                                       value: Binding<Double>.constant(10),
+                                       lightText: lightText)
+                    }
                     CalculationRow(title: "Excise tax",
                                    value: $data.exciseTaxSum,
                                    lightText: lightText)

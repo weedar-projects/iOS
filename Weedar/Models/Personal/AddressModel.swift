@@ -26,4 +26,20 @@ struct AddressModel {
         self.longitudeCoordinate = json["longitudeCoordinate"].doubleValue
         self.zipCode = json["zipCode"].stringValue
     }
+    init(
+        id: Int,
+        city: String,
+        addressLine1: String,
+        addressLine2: String,
+        latitudeCoordinate: Double,
+        longitudeCoordinate: Double,
+        zipCode: String){
+            self.id = Int.random(in: 0...9999)
+            self.city = city
+            self.addressLine1 = addressLine1
+            self.addressLine2 = addressLine2
+            self.latitudeCoordinate = latitudeCoordinate
+            self.longitudeCoordinate = longitudeCoordinate
+            self.zipCode = zipCode
+    }
 }
