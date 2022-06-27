@@ -23,8 +23,11 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     @Published var currentAddressName: String?
     
     override init() {
+        authorisationStatus = locationManager.authorizationStatus
         super.init()
         locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
     }
 
     func requestLocation(currentAddress: @escaping (String,String) -> Void) {
@@ -87,6 +90,20 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     }
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .notDetermined:
+            print("DEBUG: notDetermined")
+        case .restricted:
+            print("DEBUG: restricted")
+        case .denied:
+            print("DEBUG: denied")
+        case .authorizedAlways:
+            print("DEBUG: authorizedAlways")
+        case .authorizedWhenInUse:
+            print("DEBUG: authorizedWhenInUse")
+        case .authorized:
+            print("DEBUG: authorized")
+        }
         self.authorisationStatus = status
     }
     

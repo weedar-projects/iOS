@@ -17,63 +17,67 @@ struct MyOrdersListView: View {
     var body: some View {
         ZStack{
             VStack{
-                
                 OrderTypePicker()
                     .padding(.top, 24)
                 
                 ScrollView(.vertical, showsIndicators: false) {
+                    
+                    PullToRefresh(coordinateSpaceName: "pullToRefresh") {
+                        vm.getOrderList {}
+                        }
                     VStack{
                         if !vm.orderSections.isEmpty{
-                    ForEach(vm.orderSections) { section in
-                        Text(section.date)
-                            .textCustom(.coreSansC65Bold, 14, Color.col_text_second)
-                            .padding(.leading,36)
-                            .hLeading()
-                            .padding(.top, 24)
-                        ForEach(section.orders, id: \.id) { order in
-                            NavigationLink {
-                                MyOrderView(id: order.id)
-                                    .navBarSettings("Order #\(order.number)")
-                                    .onAppear{
-                                        if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                                        Amplitude.instance().logEvent("select_order", withEventProperties: ["order_number" : order.number, "order_status" : order.state])
-                                        }
-                                    }
-                            } label: {
-                                ZStack{
-                                    RadialGradient(colors: [Color.col_gradient_blue_second,
-                                                            Color.col_gradient_blue_first],
-                                                   center: .center,
-                                                   startRadius: 0,
-                                                   endRadius: 220)
-                                    .clipShape(CustomCorner(corners: .allCorners, radius: 12))
-                                    .opacity(0.25)
-                                    
-                                    HStack{
-                                        VStack(alignment: .leading,spacing: 5){
-                                            Text("$\(String(format: "%.2f",order.totalSum))")
-                                                .textCustom(.coreSansC65Bold, 16, Color.col_black)
+                            ForEach(vm.orderSections) { section in
+                                Text(section.date)
+                                    .textCustom(.coreSansC65Bold, 14, Color.col_text_second)
+                                    .padding(.leading,36)
+                                    .hLeading()
+                                    .padding(.top, 24)
+                                ForEach(section.orders, id: \.id) { order in
+                                    NavigationLink {
+                                        MyOrderView(id: order.id)
+                                            .navBarSettings("Order #\(order.number)")
+                                            .onAppear{
+                                                if UserDefaults.standard.bool(forKey: "EnableTracking"){
+                                                    Amplitude.instance().logEvent("select_order", withEventProperties: ["order_number" : order.number, "order_status" : order.state])
+                                                }
+                                            }
+                                    } label: {
+                                        ZStack{
+                                            RadialGradient(colors: [Color.col_gradient_blue_second,
+                                                                    Color.col_gradient_blue_first],
+                                                           center: .center,
+                                                           startRadius: 0,
+                                                           endRadius: 220)
+                                            .clipShape(CustomCorner(corners: .allCorners, radius: 12))
+                                            .opacity(0.25)
+                                            
+                                            HStack{
+                                                VStack(alignment: .leading,spacing: 5){
+                                                    Text("$\(String(format: "%.2f",order.totalSum))")
+                                                        .textCustom(.coreSansC65Bold, 16, Color.col_black)
+                                                    
+                                                    Text("#\(order.number)")
+                                                        .textCustom(.coreSansC45Regular, 12, Color.col_text_second)
+                                                }.offset(y: 2)
                                                 
-                                            Text("#\(order.number)")
-                                                .textCustom(.coreSansC45Regular, 12, Color.col_text_second)
-                                        }.offset(y: 2)
-                                        
-                                        Spacer()
-                                        
-                                        OrderStatusView(status: order.state, isPickup: order.partner.isPickUp)
-                                        
-                                        Image("arrowRight")
+                                                Spacer()
+                                                
+                                                OrderStatusView(status: order.state, isPickup: order.partner.isPickUp)
+                                                
+                                                Image("arrowRight")
+                                            }
+                                            .padding(.horizontal, 16)
+                                        }
+                                        .frame(height: 48)
                                     }
-                                    .padding(.horizontal, 16)
+                                    .isDetailLink(false)
+                                    //     .padding(.top, 4)
+                                    .padding(.horizontal, 24)
+                                    
                                 }
-                                .frame(height: 48)
                             }
-                            .isDetailLink(false)
-                       //     .padding(.top, 4)
-                            .padding(.horizontal, 24)
-
-                        }
-                    }
+                            
                         }else{
                             EmptyOrderList()
                                 .opacity(vm.loading ? 0 : 1)
@@ -82,6 +86,7 @@ struct MyOrdersListView: View {
                     }
                     .padding(.bottom, tabBarManager.tabBarHeight)
                 }
+                .coordinateSpace(name: "pullToRefresh")
             }
         }
         .navBarSettings("My orders")
@@ -99,11 +104,11 @@ struct MyOrdersListView: View {
                            startRadius: 0,
                            endRadius: 220)
             .clipShape(CustomCorner(corners: .allCorners, radius: 12))
-                .frame(maxWidth: .infinity)
-                .frame(height: 150)
-                .padding(.horizontal, 53)
-                
-                .opacity(0.25)
+            .frame(maxWidth: .infinity)
+            .frame(height: 150)
+            .padding(.horizontal, 53)
+            
+            .opacity(0.25)
             
             
             VStack{
@@ -170,3 +175,44 @@ struct MyOrdersListView_Previews: PreviewProvider {
     }
 }
 
+
+
+struct PullToRefresh: View {
+    
+    var coordinateSpaceName: String
+    var onRefresh: ()->Void
+    
+    @State var needRefresh: Bool = false
+    
+    var body: some View {
+        GeometryReader { geo in
+            if (geo.frame(in: .named(coordinateSpaceName)).midY > 50) {
+                Spacer()
+                    .onAppear {
+                        needRefresh = true
+                    }
+            } else if (geo.frame(in: .named(coordinateSpaceName)).maxY < 10) {
+                Spacer()
+                    .onAppear {
+                        if needRefresh {
+                            needRefresh = false
+                            onRefresh()
+                        }
+                    }
+            }
+            HStack {
+                Spacer()
+                if needRefresh {
+                    LoadingAnimateView()
+                        .colorInvert()
+                        .scaleEffect(0.45)
+                        .offset(y: -15)
+                } else {
+                    Image("OrderReview-Hide-Icon")
+                        .rotationEffect(.degrees(180))
+                }
+                Spacer()
+            }
+        }.padding(.top, -50)
+    }
+}

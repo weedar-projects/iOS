@@ -99,11 +99,13 @@ struct OrderDeliveryViewNew: View {
             }
             ZStack{
                 VStack{
-                    if vm.currentOrderType == .delivery{
-                        Text("Our cur will ask you to show your ID \nto verify your identity and age.")
-                            .textDefault()
-                            .multilineTextAlignment(.center)
-                    }
+                    
+                    Text(vm.infoText)
+                        .textDefault()
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 24)
+                        .animation(.none, value: vm.infoText)
+                    
                     
                     if vm.currentOrderType == .delivery || vm.currentOrderType == .none{
                         RequestButton(state: $vm.createOrderButtonState, isDisabled: $vm.createOrderButtonIsDisabled, showIcon: false, title: "Review order") {
@@ -330,6 +332,9 @@ struct OrderDeliveryViewNew: View {
                     .padding(.trailing, 12)
                     .opacity(vm.locationIsLoading ? 1 : 0)
                 , alignment: .trailing)
+            .onTapGesture {
+                vm.locationIsLoading = false
+            }
         }
         .padding(.horizontal, 24)
         .onChange(of: vm.userAddressTFState) { newValue in

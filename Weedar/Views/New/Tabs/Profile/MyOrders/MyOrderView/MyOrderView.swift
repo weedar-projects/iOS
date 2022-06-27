@@ -57,7 +57,7 @@ struct MyOrderView: MainLoadViewProtocol {
                             .textCustom(.coreSansC45Regular, 14, Color.col_text_second)
                             .hLeading()
                             .padding(.top,6)
-                            .padding(.horizontal, 24)
+                            .padding(.horizontal, 35)
                     }
                     
                     Text("List of items")
@@ -90,10 +90,15 @@ struct MyOrderView: MainLoadViewProtocol {
                         
                         .padding(.horizontal, 24)
                         
+                        if let order = vm.order{
                         //Pricing view
-                        CalculationPriceView(data: $vm.orderDetailsReview,showDelivery: vm.order?.partner.isPickUp ?? true ,showDiscount: true)
+                            CalculationPriceView(data: $vm.orderDetailsReview,showDelivery: !order.partner.isPickUp,showDiscount: true)
                             .padding(.top, 24)
                             .padding(.horizontal, 24)
+                            .onAppear {
+                                print("is pickup \(order.partner.isPickUp)")
+                            }
+                        }
                         
                         if let isPickUp = vm.order?.partner.isPickUp{
                             Text(isPickUp ? "Pick up at" : "Delivery details")
@@ -126,7 +131,7 @@ struct MyOrderView: MainLoadViewProtocol {
                                 }
                                 
                                 
-                                if let userAddress = vm.order?.addressLine1{
+                                if let userAddress = vm.order?.addressLine1, let partner = vm.order?.partner, partner.isPickUp == false{
                                     if !userAddress.isEmpty{
                                     Text(userAddress)
                                         .textDefault()
@@ -138,12 +143,10 @@ struct MyOrderView: MainLoadViewProtocol {
                                         .textDefault()
                                 }
                                                                 
-                               // Text("\(vm.order?.zipCode ?? "")")
-                                 //   .textDefault()
-                                
                                 if let partner = vm.order?.partner, partner.isPickUp == true{
                                     Text(partner.phone)
                                         .textDefault()
+                                    
                                 }else{
                                     Text("\(vm.order?.phone ?? "")")
                                         .textDefault()

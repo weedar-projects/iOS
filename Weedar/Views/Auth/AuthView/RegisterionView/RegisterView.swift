@@ -82,7 +82,6 @@ struct RegisterView: View {
                             UserDefaultsService().set(value: true, forKey: .needToFillUserData)
                             UserDefaultsService().set(value: true, forKey: .userIsLogged)
                             cartManager.getCart()
-                            
                         }
                         orderTrackerManager.connect()
                     }

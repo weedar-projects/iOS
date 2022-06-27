@@ -91,9 +91,9 @@ struct CalculationPriceView: View {
                                    value:  $data.sum,
                                    lightText: lightText)
                     if showDelivery{
-                    CalculationRow(title: "Delivery fee",
-                                   value: Binding<Double>.constant(10),
-                                   lightText: lightText)
+                        CalculationRow(title: "Delivery fee",
+                                       value: Binding<Double>.constant(10),
+                                       lightText: lightText)
                     }
                     CalculationRow(title: "Excise tax",
                                    value: $data.exciseTaxSum,
