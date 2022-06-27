@@ -12,7 +12,7 @@ import SwiftUI
 import RealityKit
 
 struct QuickLookView: View {
-    var product: Product
+    var product: ProductModel
 
     var body: some View {
         ZStack {
@@ -25,7 +25,7 @@ struct QuickLookView: View {
 struct QuickLookViewContent: UIViewRepresentable {
     typealias UIViewType = ARView
     
-    var product: Product
+    var product: ProductModel
 
     func makeUIView(context: Context) -> ARView {
         let view = ARView()
@@ -53,10 +53,10 @@ struct QuickLookViewContent: UIViewRepresentable {
     class Coordinator: NSObject, ARSessionDelegate, ARCoachingOverlayViewDelegate {
         weak var view: ARView?
         var manager =  ProductManager(items: ARModelsManager.shared.itemNamesDemo, scale: 3.0, radius: 1.0)
-        var product: Product
+        var product: ProductModel
         var isModelBeganLoading: Bool = false
 
-        init(product: Product) {
+        init(product: ProductModel) {
             self.product = product
             
         }

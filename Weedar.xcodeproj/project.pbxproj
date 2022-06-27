@@ -127,6 +127,9 @@
 		2FA5C21627E8C71E00289756 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5C21527E8C71E00289756 /* SessionManager.swift */; };
 		2FAAFD5127C4E827008D4729 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2FAAFD5027C4E827008D4729 /* SDWebImageSwiftUI */; };
 		2FAFF85A2864761A009BA347 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAFF8592864761A009BA347 /* Utils.swift */; };
+		2FAFF85C2869E5C6009BA347 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAFF85B2869E5C6009BA347 /* AnalyticsManager.swift */; };
+		2FAFF85E2869E608009BA347 /* ARFiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAFF85D2869E608009BA347 /* ARFiltersView.swift */; };
+		2FAFF8602869E60E009BA347 /* ARFiltersVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAFF85F2869E60E009BA347 /* ARFiltersVM.swift */; };
 		2FC63CE22818687A00A5EE18 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2FC63CE12818687A00A5EE18 /* Settings.bundle */; };
 		2FC63CE428186A0100A5EE18 /* PKSettingsBundleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC63CE328186A0100A5EE18 /* PKSettingsBundleHelper.swift */; };
 		2FC63CE8281AA1EC00A5EE18 /* OrderTrackerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC63CE7281AA1EC00A5EE18 /* OrderTrackerManager.swift */; };
@@ -416,6 +419,9 @@
 		2FA5C21127E7DD6100289756 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		2FA5C21527E8C71E00289756 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		2FAFF8592864761A009BA347 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		2FAFF85B2869E5C6009BA347 /* AnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
+		2FAFF85D2869E608009BA347 /* ARFiltersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ARFiltersView.swift; path = Filters/ARFiltersView.swift; sourceTree = "<group>"; };
+		2FAFF85F2869E60E009BA347 /* ARFiltersVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ARFiltersVM.swift; path = Filters/ARFiltersVM.swift; sourceTree = "<group>"; };
 		2FC63CE12818687A00A5EE18 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		2FC63CE328186A0100A5EE18 /* PKSettingsBundleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKSettingsBundleHelper.swift; sourceTree = "<group>"; };
 		2FC63CE7281AA1EC00A5EE18 /* OrderTrackerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTrackerManager.swift; sourceTree = "<group>"; };
@@ -716,6 +722,7 @@
 		2F3BEDAB27E22F9A00298399 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				2FAFF85B2869E5C6009BA347 /* AnalyticsManager.swift */,
 				2F3BEDC327E49DC100298399 /* OrderNavigationManager.swift */,
 				2F3BEDAC27E22FB100298399 /* CartManager.swift */,
 				2F3BEDB027E27EE000298399 /* TabBarManager.swift */,
@@ -1321,6 +1328,8 @@
 		4D28A50F26C55048007D5ACC /* AR */ = {
 			isa = PBXGroup;
 			children = (
+				2FAFF85F2869E60E009BA347 /* ARFiltersVM.swift */,
+				2FAFF85D2869E608009BA347 /* ARFiltersView.swift */,
 				E3630CE426D8F4170085FD90 /* Tutorials */,
 				E350D9FF26B9A0B3007B5265 /* HomeView */,
 				4D0C855026D3FED4004141DC /* CarouselARConstants.swift */,
@@ -1983,6 +1992,7 @@
 				E350DA0126B9A0C0007B5265 /* HomeView.swift in Sources */,
 				2FE21E5A2800559C004B0057 /* CustomNavigationBackBtn.swift in Sources */,
 				2F3BEDBD27E3624E00298399 /* CatalogProductsListVM.swift in Sources */,
+				2FAFF85C2869E5C6009BA347 /* AnalyticsManager.swift in Sources */,
 				2FCEFF0A2813EFBD00D00AEE /* OrderTrackerContentVM.swift in Sources */,
 				2F3BEDBB27E3624400298399 /* CatalogProductsListView.swift in Sources */,
 				2FE21E5528002AAE004B0057 /* ImagesFullScreenVM.swift in Sources */,
@@ -2101,6 +2111,7 @@
 				2F8B4FF827DD0BD3006662D2 /* GifImage.swift in Sources */,
 				2F60BA51280F7EFE002B6670 /* OrderStatusView.swift in Sources */,
 				2FDD7882280086980071366B /* LoadingScreenCatalogView.swift in Sources */,
+				2FAFF85E2869E608009BA347 /* ARFiltersView.swift in Sources */,
 				848E244A26D7EA0500992714 /* LinkedText.swift in Sources */,
 				E30D6BB126BC06230023A21F /* TextStyles.swift in Sources */,
 				B17D58F826FE19AB0094364A /* StringExtension.swift in Sources */,
@@ -2130,6 +2141,7 @@
 				2F60BA45280F7DB9002B6670 /* ZoomableOverlay.swift in Sources */,
 				2FCEFF0C2817683700D00AEE /* MainView.swift in Sources */,
 				8458BC0926FDED1900E1EDC5 /* TextExtension.swift in Sources */,
+				2FAFF8602869E60E009BA347 /* ARFiltersVM.swift in Sources */,
 				B136EF18270EDA630008F89A /* EffectRepository.swift in Sources */,
 				2FCEFF042813EC7D00D00AEE /* OrderTrackerView.swift in Sources */,
 				2FF9996A2804B71300F22BEB /* DocumentCenterView.swift in Sources */,

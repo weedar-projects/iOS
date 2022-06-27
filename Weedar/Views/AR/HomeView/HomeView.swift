@@ -38,6 +38,7 @@ struct HomeView: View {
     
     @State var openProductById: Int = 0
     @State var openByCategoryId: Int = 0
+    @State var singleProduct: ProductModel?
     
     @State var disableFilterButton = true
     
@@ -114,30 +115,38 @@ struct HomeView: View {
                 }
                 .onUIKitAppear {
                     carousel.showDescriptionCard()
+                    
                     if openByCategoryId != 0 {
-                        ARModelsManager.shared.getProducts(categoryId: openByCategoryId,filters: CatalogFilters()){
+                        ARModelsManager.shared.getProducts(categoryId: openByCategoryId, filters: CatalogFilters()){
                             ARModelsManager.shared.updateModels(){ items in
                                 carousel.updateProducts(items: items)
                             }
                         }
                     }
                     
-                    if openProductById != 0{
-                        carousel.pauseScene()
-                        ARModelsManager.shared.getProducts(filters: CatalogFilters()){
-                            ARModelsManager.shared.updateModels(){ items in
-                                carousel.updateProducts(items: items)
-                                carousel.manager.setFirstModelId(id: openProductById)
-                            }
-                        }
+                    if let product = singleProduct{
+                        let items = [product.id: (product.modelHighQualityLink, product.animationDuration)]
+                        carousel.updateProducts(items: items)
                         carousel.resumeScene()
                         carousel.shouldShowDescriptionCard = true
-                        print("IDDDDDPRODUUCT: \(openProductById)")
-                    }else{
-                        carousel.resumeScene()
                     }
                     
-                    if openProductById == 0 && openByCategoryId == 0{
+//                    if openProductById != 0{
+//                        carousel.pauseScene()
+//                        ARModelsManager.shared.getProducts(filters: CatalogFilters()){
+//                            ARModelsManager.shared.updateModels(){ items in
+//                                carousel.updateProducts(items: items)
+//                                carousel.manager.setFirstModelId(id: openProductById)
+//                            }
+//                        }
+//                        carousel.resumeScene()
+//                        carousel.shouldShowDescriptionCard = true
+//                        print("IDDDDDPRODUUCT: \(openProductById)")
+//                    }else{
+//                        carousel.resumeScene()
+//                    }
+                    
+                     if openProductById == 0 && openByCategoryId == 0{
                         ARModelsManager.shared.getProducts(filters: CatalogFilters()){
                             ARModelsManager.shared.updateModels(){ items in
                                 carousel.updateProducts(items: items)

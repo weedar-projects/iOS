@@ -11,13 +11,21 @@ import SwiftyJSON
 import Alamofire
 import CoreLocation
 
-class OrderDeliveryVMNew: ObservableObject {
+class OrderDeliveryVM: ObservableObject {
     
     enum OrderType{
         case none
         case pickup
         case delivery
     }
+    
+    enum ActiveAlert {
+        case error, location
+    }
+    
+    @Published var showAlert = false
+    @Published var activeAlert: ActiveAlert = .error
+    
     
     @Published var disableNavButton = false
     
@@ -56,6 +64,7 @@ class OrderDeliveryVMNew: ObservableObject {
     
     @Published var createdOrder: OrderResponseModel?
     
+    
     @Published var userData: UserModel?{
         didSet{
             if let userData = userData {
@@ -87,7 +96,6 @@ class OrderDeliveryVMNew: ObservableObject {
         }
     }
     
-    @Published var showAlertError = false
     @Published var messageAlertError = ""
     
     
@@ -247,7 +255,7 @@ class OrderDeliveryVMNew: ObservableObject {
 }
 
 
-extension OrderDeliveryVMNew{
+extension OrderDeliveryVM{
     
     func saveDataCreateOrder(success: @escaping (OrderResponseModel)->Void){
         guard let id = userData?.id else { return }
@@ -278,7 +286,8 @@ extension OrderDeliveryVMNew{
                 }
             case let .failure(error):
                 self.messageAlertError = error.message
-                self.showAlertError = true
+                self.activeAlert = .error
+                self.showAlert = true
                 self.createOrderButtonState = .def
                 self.disableNavButton = false
             }
@@ -305,8 +314,9 @@ extension OrderDeliveryVMNew{
                 self.disableNavButton = false
             case let .failure(error):
                 self.createOrderButtonState = .def
+                self.activeAlert = .error
                 self.messageAlertError = error.message
-                self.showAlertError = true
+                self.showAlert = true
                 self.disableNavButton = false
             }
         }
@@ -352,8 +362,9 @@ extension OrderDeliveryVMNew{
                 print("Save user info")
                 finish()
             case let .failure(error):
+                self.activeAlert = .error
                 self.messageAlertError = error.message
-                self.showAlertError = true
+                self.showAlert = true
                 self.createOrderButtonState = .def
                 self.disableNavButton = false
             }
@@ -367,7 +378,7 @@ extension OrderDeliveryVMNew{
 
 
 //Picker
-extension OrderDeliveryVMNew{
+extension OrderDeliveryVM{
     
     var pickerDeliveryTextColor: Color{
         switch currentOrderType {

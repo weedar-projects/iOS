@@ -16,10 +16,13 @@ class ProductManager {
         self.radius = radius
         
         var queueTemp: [Int] = []
+        
         queue = []
+        
         for item in items {
             queueTemp.append(item.key)
         }
+        
         while queueTemp.count < 12 {
             queueTemp += queueTemp
         }
@@ -166,7 +169,7 @@ class ProductManager {
         }
     }
     
-    func loadModel(_ product: Product, for anchor: AnchorEntity, completion: ((ModelEntity) -> Void)?) {
+    func loadModel(_ product: ProductModel, for anchor: AnchorEntity, completion: ((ModelEntity) -> Void)?) {
         // if file exists -> load form directory
         // else load from internet -> load from directory
         ProductsViewModel.shared.getModel(id: product.modelHighQualityLink) {
@@ -304,7 +307,7 @@ class ProductManager {
         }
     }
     
-    private func asyncLoadFromDirectory(_ product: Product, for anchor: AnchorEntity, completion: @escaping (ModelEntity) -> Void) {
+    private func asyncLoadFromDirectory(_ product: ProductModel, for anchor: AnchorEntity, completion: @escaping (ModelEntity) -> Void) {
         let productID = product.id
         let modelFilename = product.modelHighQualityLink
         

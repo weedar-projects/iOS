@@ -280,13 +280,13 @@ class CarouselARView: ARView, ObservableObject {
         let items = itemsCount == 1 ? itemsCount : 12
         
         print("ITEMS COUNT: \(items)")
-        for index in 1...12 {
+        for index in 1...items {
             let containerModel = ModelEntity()
             
             self.productsAnchor.addChild(containerModel)
             
             containerModel.position = [0, 0, -2]//returnCursorPosition(for: containerAnchor)
-            containerModel.transform.rotation *= simd_quatf(angle: (.pi/Float((12/2))) * Float(index), axis: SIMD3<Float>(0, -1, 0))
+            containerModel.transform.rotation *= simd_quatf(angle: (.pi/Float((items/2))) * Float(index), axis: SIMD3<Float>(0, -1, 0))
         }
     }
 }

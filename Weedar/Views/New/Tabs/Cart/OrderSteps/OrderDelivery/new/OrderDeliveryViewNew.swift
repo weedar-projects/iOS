@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct OrderDeliveryViewNew: View {
+struct OrderDeliveryView: View {
     
-    @StateObject var vm: OrderDeliveryVMNew
+    @StateObject var vm: OrderDeliveryVM
     @StateObject var locationManager = LocationManager()
     
     @Namespace var bottomID
@@ -82,6 +82,7 @@ struct OrderDeliveryViewNew: View {
                         }
                         
                         AddressList()
+               
                             
                         Rectangle()
                             .fill(Color.clear)
@@ -148,7 +149,7 @@ struct OrderDeliveryViewNew: View {
             }
             .ignoresSafeArea(.keyboard, edges: .bottom)
         }
-        .navigationTitle("Delivery details")
+        .navigationTitle("Order details")
         .navigationBarBackButtonHidden(true)
         .toolbar(content: {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -165,7 +166,29 @@ struct OrderDeliveryViewNew: View {
                 }
             }
         })
-        .customErrorAlert(title: "Error", message: vm.messageAlertError, isPresented: $vm.showAlertError)
+        .alert(isPresented: $vm.showAlert) {
+            switch vm.activeAlert {
+            case .error:
+                return Alert(title:
+                                Text("Error"),
+                             message:
+                                Text(vm.messageAlertError),
+                             dismissButton: .cancel(Text("OK"))
+                )
+            case .location:
+                return Alert(title:
+                                Text("Location sercices are off"),
+                             message:
+                                Text("To use your current location, please\nenable location services in Settings."),
+                             primaryButton: .default(Text("Not right now"), action: {
+                    vm.showAlert = false
+                }),
+                             secondaryButton: .default(Text("Go to Settings"), action: {
+                    UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
+                })
+                )
+            }
+        }
         .fullScreenCover(isPresented: $orderNavigationManager.needToShowDocumentCenter, onDismiss: {
                }, content: {
                    NavigationView{
@@ -369,7 +392,8 @@ struct OrderDeliveryViewNew: View {
                 .onTapGesture {
                     vm.locationIsLoading = true
                     if locationManager.authorisationStatus == .denied{
-                        UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
+                        vm.activeAlert = .location
+                        vm.showAlert = true
                         vm.locationIsLoading = false
                     }
                     locationManager.requestLocation { currentAddress, zipcode in
@@ -402,4 +426,15 @@ struct OrderDeliveryViewNew: View {
         })
         .frame(height: getRect().height / 4, alignment: .top)
     }
+}
+
+struct AlertInfo: Identifiable {
+    enum AlertType {
+        case one
+        case two
+    }
+    
+    let id: AlertType
+    let title: String
+    let message: String
 }

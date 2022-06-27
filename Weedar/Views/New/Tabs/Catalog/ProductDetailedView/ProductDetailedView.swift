@@ -21,13 +21,7 @@ struct ProductDetailedView: View {
         ZStack{
             
             NavigationLink(isActive: $vm.showAR) {
-                HomeView(openProductById: product.id, openByCategoryId: 0)
-                    .onAppear {
-                        tabBarManager.show()
-                    }
-                    .onDisappear {
-                        tabBarManager.showTracker()
-                    }
+                HomeView(openProductById: product.id, openByCategoryId: 0, singleProduct: product)
             } label: {
                 EmptyView()
             }

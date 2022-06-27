@@ -8,9 +8,9 @@
 import SwiftUI
  
 
-struct OrderDeliveryView: View {
+struct OrderDeliveryViewold: View {
     
-    @StateObject var vm: OrderDeliveryVM
+    @StateObject var vm: OrderDeliveryVMold
     
     @StateObject var locationManager = LocationManager()
     
@@ -181,7 +181,6 @@ struct OrderDeliveryView: View {
                         vm.disableNavButton = false
                     }else{
                         self.makeOrder()
-                        print("MAKE ORdeRrr")
                     }
                 }
                 .padding(.top, 8)
@@ -190,11 +189,9 @@ struct OrderDeliveryView: View {
             .background(Color.col_white)
             .padding(.bottom, isSmallIPhone() ? 16 : 0)
             .vBottom()
-            
-            
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
-        .navigationTitle("Delivery details")
+        .navigationTitle("Order details")
         .navigationBarBackButtonHidden(true)
         .toolbar(content: {
             ToolbarItem(placement: .navigationBarLeading) {

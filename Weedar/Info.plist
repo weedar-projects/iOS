@@ -49,9 +49,9 @@
 	<key>NSCameraUsageDescription</key>
 	<string>WEEDAR will use the camera for Augmented Reality.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Display Message Location Always and When In Use Usage Description</string>
+	<string>Your precise location is used to show your position on the map, get directions, estimate travel times and improve search results.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Display Message for Location When In Use Usage Description</string>
+	<string>Your precise location is used to show your position on the map, get directions, estimate travel times and improve search results.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need this so that you can upload photos from your photo library.</string>
 	<key>NSUserTrackingUsageDescription</key>

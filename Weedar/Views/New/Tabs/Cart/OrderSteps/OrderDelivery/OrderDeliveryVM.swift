@@ -9,7 +9,7 @@ import SwiftUI
  
 import Alamofire
 
-class OrderDeliveryVM: ObservableObject {
+class OrderDeliveryVMold: ObservableObject {
     
     @Published var buttonState: ButtonState = .def
     @Published var buttonIsDisabled = true
