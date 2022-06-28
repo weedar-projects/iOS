@@ -56,7 +56,7 @@ class UserDefaultsService {
     let defaults = UserDefaults.standard
 
     var isNotificationsEnabled: Bool {
-        return (get(fromKey: .fcmEnabled) as? Bool ?? true) && (get(fromKey: .fcmGranted) as? Bool ?? false)
+        return (get(fromKey: .fcmEnabled) as? Bool ?? true) && (get(fromKey: .fcmGranted) as? Bool ?? true)
     }
     
     

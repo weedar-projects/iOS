@@ -106,26 +106,24 @@ struct OrderReviewView: View {
                                   isDisabled: $vm.buttonIsDisabled,
                                   showIcon: false,
                                   title: "Place order") {
-                        DispatchQueue.main.async {
-                            Logger.log(message: "start ____", event: .debug)
-                            vm.disableNavButton = true
-                            vm.buttonState = .loading
-                            print("tap button")
-                            vm.confirmOrder(orderDetailsReview: orderNavigationManager.currentCreatedOrder) { success in
-                                if success {
-                                    print("succsess")
-                                    Logger.log(message: "end ____", event: .debug)
-                                    vm.buttonState = .success
-                                    orderNavigationManager.showOrderSuccessView = true
-                                    AnalyticsManager.instance.event(key: .make_order)
-                                } else {
-                                    vm.buttonState = .def
-                                    vm.showAlert = true
-                                    vm.disableNavButton = false
-                                }
+                        
+                        Logger.log(message: "start ____", event: .debug)
+                        vm.disableNavButton = true
+                        vm.buttonState = .loading
+                        print("tap button")
+                        vm.confirmOrder(orderDetailsReview: orderNavigationManager.currentCreatedOrder) { success in
+                            if success {
+                                print("succsess")
+                                Logger.log(message: "end ____", event: .debug)
+                                vm.buttonState = .success
+                                orderNavigationManager.showOrderSuccessView = true
+                                AnalyticsManager.instance.event(key: .make_order)
+                            } else {
+                                vm.buttonState = .def
+                                vm.showAlert = true
+                                vm.disableNavButton = false
                             }
                         }
-                        
                     }
                                   .padding(.horizontal, 24)
                                   .background(Color.col_white)

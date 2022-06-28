@@ -22,20 +22,21 @@ struct ChangePasswordView: View {
                     
                     
                     //old password
-                    CustomSecureTextField(text: $vm.oldPassword, state: $vm.oldPasswordTFState ,title: "Confirm current password", placeholder: "Enter yor password")
+                    CustomSecureTextField(text: $vm.oldPassword, state: $vm.oldPasswordTFState ,title: "Current password", placeholder: "Enter your current password")
                         .padding(.top, 24)
                         .onTapGesture {
                             vm.serverError = ""
                         }
                     
-                    
-                    Text(vm.serverError)
-                        .textCustom(.coreSansC45Regular, 14, Color.col_pink_main)
-                        .hLeading()
-                        .padding(.horizontal, 32)
+                    if !vm.serverError.isEmpty{
+                        Text(vm.serverError)
+                            .textCustom(.coreSansC45Regular, 14, Color.col_pink_main)
+                            .hLeading()
+                            .padding(.horizontal, 32)
+                    }
                     
                     //new password
-                    CustomSecureTextField(text: $vm.newPassword, state: $vm.newPasswordTFState ,title: "New password", placeholder: "Confirm new password", contentType: .newPassword)
+                    CustomSecureTextField(text: $vm.newPassword, state: $vm.newPasswordTFState ,title: "New password", placeholder: " Enter your new password", contentType: .newPassword)
                         .padding(.top, 24)
                         .onTapGesture {
                             vm.newPasswordTFState = .def
@@ -62,7 +63,7 @@ struct ChangePasswordView: View {
                     }
                     
                     //new password repeat
-                    CustomSecureTextField(text: $vm.newPasswordRepeat, state: $vm.newPasswordRepeatTFState ,title: "Repeat new password", placeholder: "Confirm your new password", contentType: .newPassword)
+                    CustomSecureTextField(text: $vm.newPasswordRepeat, state: $vm.newPasswordRepeatTFState ,title: "Confirm new password", placeholder: "Confirm your new password", contentType: .newPassword)
                         .padding(.top, 24)
                         .onTapGesture {
                             vm.newPasswordRepeatTFState = .def

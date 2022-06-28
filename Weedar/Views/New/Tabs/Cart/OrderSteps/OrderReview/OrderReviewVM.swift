@@ -19,11 +19,13 @@ class OrderReviewVM: ObservableObject {
     func confirmOrder(orderDetailsReview : OrderDetailsReview, finished: @escaping(Bool) -> Void) {
         
         let url = "/order/\(orderDetailsReview.orderId)/confirm"
-        
+
         API.shared.request(endPoint: url, method: .put, completion:  { result in
             switch result {
             case .success(_):
-                finished(true)
+                DispatchQueue.main.async {
+                    finished(true)
+                }
             case .failure(let error):
                 print(error.localizedDescription)
                 finished(false)

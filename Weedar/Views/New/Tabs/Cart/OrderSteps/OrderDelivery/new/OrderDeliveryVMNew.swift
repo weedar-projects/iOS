@@ -469,9 +469,9 @@ extension OrderDeliveryVM{
         case.none:
             return ""
         case .pickup:
-            return "Our budtender will ask you to show your ID card to verify your identity and age"
+            return "Our budtender will ask you to show your ID to verify your identity and age"
         case .delivery:
-            return "Our courier will ask you to show your ID card\nto verify your identity and age"
+            return "Our courier will ask you to show your ID \nto verify your identity and age"
         }
     }
 }

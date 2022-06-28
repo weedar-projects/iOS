@@ -24,7 +24,7 @@ class ProfileMainVM: ObservableObject {
     
     @Published var showView = false
     
-    @Published var notificationToggle = false
+    @Published var notificationToggle = true
     
     @Published var showNotificationAlert = false
     
@@ -39,8 +39,30 @@ class ProfileMainVM: ObservableObject {
         self.myInfoItems = [ProfileMenuItemModel(icon: "Profile-Cart", title: "My orders", state: .orders),
                                           ProfileMenuItemModel(icon: "Profile-Document", title: "Document center", state: .documents),
                                           ProfileMenuItemModel(icon: "Profile-Email", title: "Email", state: .email, additionaLinfo: email),
-                            ProfileMenuItemModel(icon: "Profile-Phone", title: "Phone", state: .phone, additionaLinfo: phone)
+                            ProfileMenuItemModel(icon: "Profile-Phone", title: "Phone", state: .phone, additionaLinfo: format(with: "+X (XXX) XXX-XXXXXX", phone: phone))
         ]
+    }
+    
+    
+    private func format(with mask: String, phone: String) -> String {
+        let numbers = phone.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
+        var result = ""
+        var index = numbers.startIndex // numbers iterator
+        
+        // iterate over the mask characters until the iterator of numbers ends
+        for ch in mask where index < numbers.endIndex {
+            if ch == "X" {
+                // mask requires a number in this place, so take the next one
+                result.append(numbers[index])
+                
+                // move numbers iterator to the next index
+                index = numbers.index(after: index)
+                
+            } else {
+                result.append(ch) // just append a mask character
+            }
+        }
+        return result
     }
 }
 

@@ -16,6 +16,8 @@ struct CatalogProductsListView: View {
      
     @State var category: CatalogCategoryModel
     
+    @ObservedObject var localModels: ARModelsManager
+    
     var body: some View {
         ZStack{
             
@@ -27,7 +29,7 @@ struct CatalogProductsListView: View {
             
             NavigationLink(isActive: $vm.showProductDetail) {
                 if let product = vm.productDetail{
-                    ProductDetailedView(product: product)
+                    ProductDetailedView(product: product, localModels: localModels)
                         .onAppear(perform: {
                             tabBarManager.hideTracker()
                             AnalyticsManager.instance.event(key: .select_product,
@@ -149,6 +151,8 @@ struct CatalogProductsListView: View {
                     .padding(.horizontal, 13)
                     .padding(.vertical, 5)
                     .background(Image.bg_gradient_main.resizable().frame(width: 60, height: 24).clipShape(Capsule()))
+                    .opacity(localModels.currentLoadedModel >= localModels.allModelCount ? 1 : 0.5)
+                    .disabled(!(localModels.currentLoadedModel >= localModels.allModelCount))
                 }
             }
         }
