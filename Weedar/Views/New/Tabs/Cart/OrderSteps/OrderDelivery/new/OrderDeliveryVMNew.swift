@@ -312,12 +312,15 @@ extension OrderDeliveryVM{
                 success(order)
                 self.createOrderButtonState = .def
                 self.disableNavButton = false
+                AnalyticsManager.instance.event(key: .review_order_success)
             case let .failure(error):
                 self.createOrderButtonState = .def
                 self.activeAlert = .error
                 self.messageAlertError = error.message
                 self.showAlert = true
                 self.disableNavButton = false
+                AnalyticsManager.instance.event(key: .order_creation_fail,
+                                                properties: [.order_creation_fail : error.message])
             }
         }
     }
@@ -342,6 +345,15 @@ extension OrderDeliveryVM{
         
         let url = Routs.user.rawValue.appending("/\(id)")
         
+        if let user = userData{
+            if user.name != userName {
+                AnalyticsManager.instance.event(key: .name_change)
+            }
+            if userAddress != userAddress{
+                AnalyticsManager.instance.event(key: .address_change_success)
+            }
+        }
+            
         let params: Parameters = [
             "name" : userName,
             "addresses" : [
@@ -367,6 +379,7 @@ extension OrderDeliveryVM{
                 self.showAlert = true
                 self.createOrderButtonState = .def
                 self.disableNavButton = false
+                AnalyticsManager.instance.event(key: .address_change_fail, properties: [.error_type : error.message])
             }
         }
     }

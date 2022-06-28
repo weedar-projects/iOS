@@ -28,10 +28,11 @@ class ProfileMainVM: ObservableObject {
     
     @Published var showNotificationAlert = false
     
-    @Published var showLogOutAler = false
+    @Published var showLogOutAlert = false
     
     @Published var showLoading = false
    
+    @Published var showDeleteAccountAlert = false
     
     func setData(email: String, phone: String) {
         print("Update items set")

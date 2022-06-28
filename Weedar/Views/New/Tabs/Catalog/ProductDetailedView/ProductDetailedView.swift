@@ -207,6 +207,7 @@ struct ProductDetailedView: View {
             
             Spacer()
             
+            if let model = product.modelHighQualityLink, model.hasSuffix(".usdz"){
             //Button
             Image("ar_button")
                 .resizable()
@@ -220,6 +221,7 @@ struct ProductDetailedView: View {
                                                                  .product_qty: vm.quantity,
                                                         .product_price: product.price.formattedString(format: .percent)])
                 }
+            }
             
         }
         .padding(.top, 16)
@@ -236,6 +238,7 @@ struct ProductDetailedView: View {
                 .textSecond()
         }
         .padding(.leading, 24)
+        .padding(.top,product.modelHighQualityLink.hasSuffix(".usdz") ? 0 : 12)
     }
     
     @ViewBuilder

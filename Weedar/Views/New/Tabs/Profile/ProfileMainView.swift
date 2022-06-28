@@ -65,7 +65,6 @@ struct ProfileMainView: View {
                         ProfileList(selectedItem: $vm.selectedItem, showView: $vm.showView,title: "Settings" ,menuItems: $vm.settingsItems)
                         
                         NotificationButtonView()
-                        
                         .customDefaultAlert(title: "\"WEEDAR\" Would Like to \nSend You Notifications", message: "Notifications may include alerts,\nsounds and icon badges.These can be configured in Settings", isPresented: $vm.showNotificationAlert, firstBtn: Alert.Button.destructive(Text("Cancel")), secondBtn: Alert.Button.default(Text("Open Settings"), action: {
                             if let appSettings = URL(string: UIApplication.openSettingsURLString),
                                UIApplication.shared.canOpenURL(appSettings) {
@@ -78,14 +77,27 @@ struct ProfileMainView: View {
                         LogOutButton()
                             .padding(.top,24)
                             .customDefaultAlert(title: "Log out",
-                                                message: "You will be returned to the login screen",
-                                                isPresented: $vm.showLogOutAler,
+                                                message: "You will be returned to the login screen.",
+                                                isPresented: $vm.showLogOutAlert,
                                                 firstBtn: .default(Text("Cancel")),
                                                 secondBtn: .destructive(Text("Log out"),
                                                                         action: {
                                 self.logout()
                             }))
-                            
+                        
+                        DeleteProfileButtton()
+                            .padding(.top,8)
+                            .customDefaultAlert(title: "Delete account",
+                                                message: "Are you sure you want to delete your account? This action cannot be undone.",
+                                                isPresented: $vm.showDeleteAccountAlert,
+                                                firstBtn: .default(Text("Cancel")),
+                                                secondBtn: .destructive(Text("Delete"),
+                                                                        action: {
+                                self.deleteProfile {
+                                    self.logout()
+                                }
+                            }))
+
                         if let info = Bundle.main.infoDictionary, let currentVersion = info["CFBundleShortVersionString"] as? String {
                             Text("v\(currentVersion)")
                                 .textSecond()
@@ -135,7 +147,7 @@ struct ProfileMainView: View {
             .padding(.horizontal)
         }
         .onTapGesture {
-            vm.showLogOutAler.toggle()
+            vm.showLogOutAlert.toggle()
         }
         
     }
@@ -171,6 +183,41 @@ struct ProfileMainView: View {
         .padding(.horizontal, 16)
         .frame(height: 48)
     }
+    
+    func DeleteProfileButtton() -> some View {
+        HStack{
+            Image("trash")
+                .colorInvert()
+            Text("Delete my account")
+                .textCustom(.coreSansC55Medium, 16, Color.col_text_main)
+        }
+        .frame(height: 48)
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color.col_gray_main, lineWidth: 1)
+                .frame(height: 48)
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal)
+                
+        )
+        .onTapGesture {
+            vm.showDeleteAccountAlert = true
+        }
+    }
+    
+   private func deleteProfile(success: @escaping ()->Void){
+        API.shared.request(rout: .user, method: .delete) { result in
+            switch result{
+            case let .success(_):
+                success()
+            case let .failure(error):
+                print(error)
+            }
+        }
+    }
+    
     private func checkUserAnswerAPNS(with isOnValue: Bool) {
         if isOnValue {
             UNUserNotificationCenter
