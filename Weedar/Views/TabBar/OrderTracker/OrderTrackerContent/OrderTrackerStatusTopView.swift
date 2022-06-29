@@ -44,7 +44,7 @@ struct OrderTrackerStatusTopView: View {
                         .blur(radius: 24)
                         .scaleEffect(CGSize(width: 0.75, height: 0.4))
                     
-                    Text(currentState.state.rawValue)
+                    Text(currentState.deliveryState.rawValue)
                         .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
                 }
                 .frame(maxWidth: .infinity)

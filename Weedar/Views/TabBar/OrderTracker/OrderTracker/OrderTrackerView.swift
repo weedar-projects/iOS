@@ -92,7 +92,7 @@ struct OrderTrackerView: View{
                                 vm.lastOffset = vm.offset
                                 orderTrackerManager.showPosition = .notUse
                                 AnalyticsManager.instance.event(key: .order_trackbar_view,
-                                                                properties: [.current_status : orderTrackerManager.currentState?.state.rawValue])
+                                                                properties: [.current_status : orderTrackerManager.currentState?.deliveryState.rawValue])
                             case .notUse:
                                 break
                             }

@@ -11,7 +11,7 @@ import SDWebImageSwiftUI
 
 struct OrderReviewView: View {
     
-    @ObservedObject var vm = OrderReviewVM()
+    @StateObject var vm = OrderReviewVM()
     
     @State var showFromPickUp = false
     
@@ -109,7 +109,6 @@ struct OrderReviewView: View {
                         
                         Logger.log(message: "start ____", event: .debug)
                         vm.disableNavButton = true
-                        vm.buttonState = .loading
                         print("tap button")
                         vm.confirmOrder(orderDetailsReview: orderNavigationManager.currentCreatedOrder) { success in
                             if success {

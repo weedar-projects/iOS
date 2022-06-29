@@ -38,13 +38,13 @@ struct OrderStatusView: View {
         case 1...4:
             return "Processing"
         case 5:
-            if isPickup{
-                return "Preparing"
-            }else{
-                return "Packing"
-            }
+            return "Packing"
         case 6:
-            return "In delivery"
+            if isPickup{
+                return "Pick up available"
+            }else{
+                return "In delivery"
+            }
         case 7...8:
             if isPickup{
                 return "Completed"
