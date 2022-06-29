@@ -404,7 +404,7 @@ extension OrderDeliveryVM{
             }
         case .pickup:
             if deliveryAvailable{
-                return Color.col_text_main
+                return Color.col_green_main
             }else{
                 return Color.col_text_second
             }
@@ -425,7 +425,7 @@ extension OrderDeliveryVM{
             return Color.col_text_white
         case .delivery:
             if pickUpAvailable{
-                return Color.col_text_main
+                return Color.col_green_main
             }else{
                 return Color.col_text_second
             }

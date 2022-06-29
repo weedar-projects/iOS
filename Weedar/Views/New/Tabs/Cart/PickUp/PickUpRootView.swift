@@ -101,7 +101,7 @@ struct PickUpRootView: View {
                     .transition(.move(edge: .bottom))
             }
         }
-        .navBarSettings("Choose a store")
+        .navBarSettings("Select a store")
         .onAppear{
             sessionManager.userData(withUpdate: true) { user in
                 vm.userData = user

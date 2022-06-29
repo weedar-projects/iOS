@@ -264,17 +264,17 @@ struct OrderDeliveryView: View {
         }
         .frame(maxWidth: .infinity)
         .background(
-                HStack{
-                    vm.pickerSelectorBackgroudColor
-                        .frame(width: (getRect().width / 2 - 24) - 0.5, height: 44)
-                        .cornerRadius(radius: 12, corners: vm.pickerSelectoreCornerShape)
-                        .animation(vm.currentOrderType == .none ? .none : .interactiveSpring(response: 0.15,
-                                                      dampingFraction: 0.65,
-                                                                                             blendDuration: 1.5),
-                                   value: vm.currentOrderType != .none)
-                        .offset(x: vm.pickerSelectoreCurrentXLocation)
-                        .hLeading()
-                }
+            HStack{
+                Color.col_black
+                    .frame(width: (getRect().width / 2 - 24), height: 44)
+                    .cornerRadius(radius: 12, corners: vm.currentOrderType == .pickup ? [.bottomRight, .topRight] : [.bottomLeft, .topLeft])
+                    .animation(.interactiveSpring(response: 0.15,
+                                                  dampingFraction: 0.65,
+                                                  blendDuration: 1.5),
+                               value: vm.currentOrderType)
+                    .offset(x: vm.currentOrderType == .pickup ? (getRect().width / 2 - 24) : 0)
+                    .hLeading()
+            }
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12)
