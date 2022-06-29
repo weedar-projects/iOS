@@ -108,7 +108,7 @@ struct OrderDeliveryView: View {
                         .animation(.none, value: vm.infoText)
                     
                     
-                    if vm.currentOrderType == .delivery || vm.currentOrderType == .none{
+                    if vm.currentOrderType == .delivery{
                         RequestButton(state: $vm.createOrderButtonState, isDisabled: $vm.createOrderButtonIsDisabled, showIcon: false, title: "Review order") {
                             vm.disableNavButton = true
                             if vm.needToUploadDocuments(){
@@ -128,7 +128,7 @@ struct OrderDeliveryView: View {
                         .padding(.top, 8)
                         .padding(.horizontal, 24)
                     } else {
-                        MainButton(title: "Choose store") {
+                        MainButton(title: "Select store") {
                             if vm.needToUploadDocuments(){
                                 vm.saveUserData {
                                     orderNavigationManager.needToShowDocumentCenter = true
@@ -198,17 +198,17 @@ struct OrderDeliveryView: View {
                                    vm.userData = user
                                }
                                vm.createOrderButtonState = .success
-                               vm.saveDataCreateOrder { order in
-                                   sessionManager.userData(withUpdate: true)
-                                   orderNavigationManager.currentCreatedOrder = vm.getCreatedOrder(order: order)
-                                   orderNavigationManager.orderType = .delivery
-                                   if vm.currentOrderType == .delivery{
+                               sessionManager.userData(withUpdate: true)
+                               if vm.currentOrderType == .delivery{
+                                   vm.saveDataCreateOrder { order in
+                                       orderNavigationManager.currentCreatedOrder = vm.getCreatedOrder(order: order)
+                                       orderNavigationManager.orderType = .delivery
                                        orderNavigationManager.showOrderReviewView = true
-                                   } else {
-                                       orderNavigationManager.showPickUpView = true
                                    }
-                                   
+                               }else{
+                                   orderNavigationManager.showPickUpView = true
                                }
+                               
                            }
                        }
                        .navBarSettings("Document center", backBtnIsHidden: true)
@@ -239,7 +239,8 @@ struct OrderDeliveryView: View {
                 .onTapGesture {
                     if vm.deliveryAvailable{
                         withAnimation {
-                            vm.currentOrderType = vm.currentOrderType == .delivery ? .none : .delivery
+                            vm.currentOrderType = .delivery
+//                            vm.currentOrderType = vm.currentOrderType == .delivery ? .none : .delivery
                         }
                     }
                 }
@@ -255,7 +256,8 @@ struct OrderDeliveryView: View {
                 .onTapGesture {
                     if vm.pickUpAvailable{
                         withAnimation {
-                            vm.currentOrderType = vm.currentOrderType == .pickup ? .none : .pickup
+                            vm.currentOrderType = .pickup
+//                            vm.currentOrderType = vm.currentOrderType == .pickup ? .none : .pickup
                         }
                     }
                 }
@@ -355,9 +357,6 @@ struct OrderDeliveryView: View {
                     .padding(.trailing, 12)
                     .opacity(vm.locationIsLoading ? 1 : 0)
                 , alignment: .trailing)
-            .onTapGesture {
-                vm.locationIsLoading = false
-            }
         }
         .padding(.horizontal, 24)
         .onChange(of: vm.userAddressTFState) { newValue in

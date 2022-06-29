@@ -29,7 +29,7 @@ class OrderDeliveryVM: ObservableObject {
     
     @Published var disableNavButton = false
     
-    @Published var currentOrderType: OrderType = .none{
+    @Published var currentOrderType: OrderType = .delivery{
         didSet{
             validateButton()
         }
@@ -245,11 +245,12 @@ class OrderDeliveryVM: ObservableObject {
         if !userAddress.isEmpty{
             deliveryAvailable = false
             pickUpAvailable = false
-            currentOrderType = .none
+            currentOrderType = .delivery
             userAddress = ""
             zipCode = ""
             addressError = ""
             userAddressTFState = .def
+            locationIsLoading = false
         }
     }
 }
@@ -469,7 +470,7 @@ extension OrderDeliveryVM{
         case.none:
             return ""
         case .pickup:
-            return "Our budtender will ask you to show your ID to verify your identity and age"
+            return "Our budtender will ask you to show your ID \nto verify your identity and age"
         case .delivery:
             return "Our courier will ask you to show your ID \nto verify your identity and age"
         }

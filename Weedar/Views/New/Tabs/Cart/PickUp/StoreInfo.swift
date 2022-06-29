@@ -60,7 +60,7 @@ struct StoreInfo: View{
                             )
                             .padding(.horizontal, 24)
                             if store.close{
-                            Text("The store is closed, but you can leave an order, we will process it in the morning.")
+                            Text("The store is closed, but you can leave an order, \nwe will process it in the morning.")
                                 .textSecond()
                                 .padding(.top, 10)
                                 .multilineTextAlignment(.center)
