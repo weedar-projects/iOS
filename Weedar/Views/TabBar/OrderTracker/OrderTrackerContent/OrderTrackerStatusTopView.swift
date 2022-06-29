@@ -10,7 +10,7 @@ import SwiftUI
 struct OrderTrackerStatusTopView: View {
     
     @Binding var currentState: OrderTrackerStateModel?
-    
+    @EnvironmentObject var orderTrackerManager: OrderTrackerManager
     @State var allState: [OrderTrackerStateModel] = []
     
     var body: some View{
@@ -43,9 +43,10 @@ struct OrderTrackerStatusTopView: View {
                         .fill(currentState.colors.last!)
                         .blur(radius: 24)
                         .scaleEffect(CGSize(width: 0.75, height: 0.4))
-                    
-                    Text(currentState.deliveryState.rawValue)
-                        .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
+                    if let currentOrder = orderTrackerManager.currentOrder{
+                        Text(currentOrder.orderType == .delivery ? currentState.deliveryState.rawValue : currentState.id == 2 ? "Available for Pick up" : currentState.pickupState.rawValue)
+                            .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
+                    }
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 38)

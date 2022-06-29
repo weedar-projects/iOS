@@ -130,6 +130,7 @@ struct PickUpRootView: View {
                             .cancel()
                         ])
         }
+        .customErrorAlert(title: "Ooops", message: vm.alertMessage, isPresented: $vm.showerrorAlert)
     }
     
     

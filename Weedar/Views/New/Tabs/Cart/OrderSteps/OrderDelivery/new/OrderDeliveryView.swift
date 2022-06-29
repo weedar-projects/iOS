@@ -170,7 +170,7 @@ struct OrderDeliveryView: View {
             switch vm.activeAlert {
             case .error:
                 return Alert(title:
-                                Text("Error"),
+                                Text("Ooops"),
                              message:
                                 Text(vm.messageAlertError),
                              dismissButton: .cancel(Text("OK"))

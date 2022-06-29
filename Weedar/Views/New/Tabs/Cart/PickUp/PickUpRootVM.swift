@@ -21,12 +21,7 @@ class PickUpRootVM: ObservableObject{
     }
     @Published var showStoreInfo = false
     
-    @Published var availableStores: [StoreModel] = []{
-        didSet{
-            print("qwerqwer: \(availableStores)")
-            
-        }
-    }
+    @Published var availableStores: [StoreModel] = []
     
     @Published var availableStoresList: [StoreModel] = []
     
@@ -56,6 +51,9 @@ class PickUpRootVM: ObservableObject{
     @Published var zipCode = ""
     
     @Published var showDirectionsView = false
+    
+    @Published var alertMessage = ""
+    @Published var showerrorAlert = false
     
     func getStores(radius: Double){
         API.shared.request(rout: .getAllStores, method: .get) { result in
@@ -103,7 +101,8 @@ class PickUpRootVM: ObservableObject{
                 let order = OrderResponseModel(json: json)
                 success(order)
             case let .failure(error):
-            print("error ot ")
+                self.alertMessage = error.message
+                self.showerrorAlert = true
             }
         }
     }

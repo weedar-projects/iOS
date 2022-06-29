@@ -132,7 +132,7 @@ struct OrderReviewView: View {
                 }
                 .alert(isPresented: self.$vm.showAlert, content: {
                     Alert(title: Text("Order creation failed"),
-                          message: Text("Error"),
+                          message: Text("Ooops"),
                           dismissButton: .default(Text("OK")))
                 })
                 .onAppear {

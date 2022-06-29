@@ -42,6 +42,7 @@ struct OrderTrackerContentView: View {
                     OrderTrackerStatusTopView(currentState: $orderTrackerManager.currentState,
                                               allState: vm.allState)
                         .padding(.top, 9)
+                
                 if let currentState = orderTrackerManager.currentState, let currentOrder = orderTrackerManager.currentOrder {
                     Text(currentOrder.orderType == .delivery ? currentState.deliveryText : currentState.pickupText)
                     .textCustom(.coreSansC45Regular, 14, Color.col_white.opacity(0.8))
