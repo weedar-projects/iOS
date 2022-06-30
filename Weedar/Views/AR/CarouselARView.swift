@@ -297,8 +297,7 @@ class CarouselARView: ARView, ObservableObject {
     
     func addEmptyAnchors(itemsCount: Int) {
         
-        
-        let items = itemsCount == 1 ? itemsCount : 12
+        let items = itemsCount == 1 ? itemsCount : 10
         
         print("ITEMS COUNT: \(items)")
         for index in 1...items {
