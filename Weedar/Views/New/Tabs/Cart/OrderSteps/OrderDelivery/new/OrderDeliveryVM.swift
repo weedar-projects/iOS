@@ -43,7 +43,13 @@ class OrderDeliveryVM: ObservableObject {
     
     @Published var deliveryAvailable = false
     @Published var pickUpAvailable = false
-    @Published var pickupState: PickupState = .none
+    @Published var pickupState: PickupState = .none{
+        didSet{
+            if pickupState == .none || pickupState == .notAvailable{
+                self.currentOrderType = .delivery
+            }
+        }
+    }
     
     @Published var userName = ""
     @Published var nameStrokeColor = Color.col_borders
@@ -173,6 +179,7 @@ class OrderDeliveryVM: ObservableObject {
                     }else{
                         self.addressError = "We do not deliver to this zip-code yet."
                         self.userAddressTFState = .error
+                        self.pickupState = .notAvailable
                     }
                 })
             }
