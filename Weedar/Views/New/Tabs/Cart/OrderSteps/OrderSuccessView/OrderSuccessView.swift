@@ -65,6 +65,7 @@ struct OrderSuccessView: View {
                     tabBarManager.currentTab = .catalog
                     tabBarManager.show()
                     tabBarManager.showARView = false
+                    tabBarManager.refreshNav(tag: .catalog)
                 }
                 .padding(.bottom, 20)
                 
