@@ -236,6 +236,7 @@ struct OrderDeliveryView: View {
                 .textCustom(.coreSansC65Bold, 16, vm.pickerDeliveryTextColor)
                 .frame(width: (getRect().width / 2 - 24) - 0.5, height: 44)
                 .background(Color.col_white.opacity(0.01))
+                .offset(y: 2)
                 .onTapGesture {
                     if vm.deliveryAvailable{
                         withAnimation {
@@ -249,18 +250,26 @@ struct OrderDeliveryView: View {
                 .fill(Color.col_borders)
                 .frame(width: 1, height: 44)
             
-            Text("Pick up")
-                .textCustom(.coreSansC65Bold, 16, vm.pickerPickUpTextColor)
-                .frame(width: (getRect().width / 2 - 24), height: 44)
-                .background(Color.col_white.opacity(0.01))
-                .onTapGesture {
-                    if vm.pickUpAvailable{
-                        withAnimation {
-                            vm.currentOrderType = .pickup
-//                            vm.currentOrderType = vm.currentOrderType == .pickup ? .none : .pickup
-                        }
+            HStack(spacing: 4){
+                if vm.pickupState == .notAvailable{
+                    Image(systemName: "xmark" )
+                        .font(Font.system(size: 10))
+                        .foregroundColor(Color.col_pink_main)
+                }
+                Text("Pick up")
+                    .textCustom(.coreSansC65Bold, 16, vm.pickerPickUpTextColor)
+                    .offset(y: 2)
+            }
+            .frame(width: (getRect().width / 2 - 24), height: 44)
+            .background(Color.col_white.opacity(0.01))
+            .onTapGesture {
+                if vm.pickUpAvailable{
+                    withAnimation {
+                        vm.currentOrderType = .pickup
+                        //                            vm.currentOrderType = vm.currentOrderType == .pickup ? .none : .pickup
                     }
                 }
+            }
         }
         .frame(maxWidth: .infinity)
         .background(

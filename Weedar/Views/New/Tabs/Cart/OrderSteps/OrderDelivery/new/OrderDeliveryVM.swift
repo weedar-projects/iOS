@@ -19,6 +19,12 @@ class OrderDeliveryVM: ObservableObject {
         case delivery
     }
     
+    enum PickupState{
+        case none
+        case available
+        case notAvailable
+    }
+    
     enum ActiveAlert {
         case error, location
     }
@@ -37,6 +43,7 @@ class OrderDeliveryVM: ObservableObject {
     
     @Published var deliveryAvailable = false
     @Published var pickUpAvailable = false
+    @Published var pickupState: PickupState = .none
     
     @Published var userName = ""
     @Published var nameStrokeColor = Color.col_borders
@@ -197,11 +204,14 @@ class OrderDeliveryVM: ObservableObject {
                 }
                 if availableStores.count > 0{
                     self.pickUpAvailable = true
+                    self.pickupState = .available
                 }else{
                     self.pickUpAvailable = false
+                    self.pickupState = .notAvailable
                 }
-            case let .failure(error):
+            case let .failure(_):
                 self.pickUpAvailable = false
+                self.pickupState = .notAvailable
             }
         }
     }
@@ -251,6 +261,7 @@ class OrderDeliveryVM: ObservableObject {
             addressError = ""
             userAddressTFState = .def
             locationIsLoading = false
+            pickupState = .none
         }
     }
 }
@@ -424,10 +435,14 @@ extension OrderDeliveryVM{
         case .pickup:
             return Color.col_text_white
         case .delivery:
-            if pickUpAvailable{
+            switch pickupState{
+            case .notAvailable:
+                return Color.col_pink_main
+            case .available:
                 return Color.col_green_main
-            }else{
+            case .none:
                 return Color.col_text_second
+                
             }
         }
     }

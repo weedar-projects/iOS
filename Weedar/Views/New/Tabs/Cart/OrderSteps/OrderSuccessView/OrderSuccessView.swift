@@ -64,6 +64,7 @@ struct OrderSuccessView: View {
                     orderNavigationManager.hideAll()
                     tabBarManager.currentTab = .catalog
                     tabBarManager.show()
+                    tabBarManager.showARView = false
                 }
                 .padding(.bottom, 20)
                 
