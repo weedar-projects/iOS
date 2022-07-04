@@ -121,11 +121,11 @@ class OrderDeliveryVM: ObservableObject {
     var descriptionText: String {
         switch currentOrderType {
         case .none:
-            return "Enter your address or select 'Use my current location'. Available options will be shown - delivery, pick up, or both. Then choose an option you want."
+            return ""
         case .pickup:
-            return "Order will be ready in 15 minutes for pick up in the store. Budtender will ask you to show your ID and tell them your order number."
+            return "On average order is ready for pick up in 15 minutes."
         case .delivery:
-            return "Incorrectly entered address  may delay your order, so please double check for misprints. Do not enter specific dispatch instruction in any of address fields."
+            return "Incorrectly entered address may delay your order."
         }
     }
     
@@ -492,7 +492,7 @@ extension OrderDeliveryVM{
         case.none:
             return ""
         case .pickup:
-            return "Our budtender will ask you to show your ID \nto verify your identity and age"
+            return "Pick up partner will ask you to show your ID \nto verify your identity and age"
         case .delivery:
             return "Our courier will ask you to show your ID \nto verify your identity and age"
         }
