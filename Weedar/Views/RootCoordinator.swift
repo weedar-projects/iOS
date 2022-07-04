@@ -15,6 +15,7 @@ struct RootCoordinator: View {
     @EnvironmentObject var coordinatorViewManager: CoordinatorViewManager
     @EnvironmentObject var orderTrackerManager: OrderTrackerManager
     @EnvironmentObject var networkConnection: NetworkConnection
+    @EnvironmentObject var cartManager: CartManager
     
     @ObservedObject var registerStepsVM = UserIdentificationRootVM()
     
@@ -44,7 +45,9 @@ struct RootCoordinator: View {
                 MainView()
                     .environmentObject(orderTrackerManager)
                     .environmentObject(orderNavigationManager)
+                    
             }
+            
             if needToUpdate{
                 ForceUpdateScreenView()
             }
@@ -113,7 +116,6 @@ struct RootCoordinator: View {
                 orderTrackerManager.disconnect()
             }
         }
-
     }
     
     func getOrderState(id: Int, openInOrderTracker: @escaping (Bool) -> Void){

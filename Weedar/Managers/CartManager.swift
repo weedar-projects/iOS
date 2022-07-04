@@ -12,6 +12,7 @@ import Alamofire
 
 class CartManager: ObservableObject {
     
+    
     @Published var cartData: CartModel?{
         didSet{
             if let productsInCart = cartData?.cartDetails{
@@ -23,6 +24,9 @@ class CartManager: ObservableObject {
         }
     }
     @Published var productsCount = 0
+    
+    @Published var showCartManagerError = false
+    @Published var messageCartManagerError = ""
     
     @Published var userData: UserModel?
     
@@ -51,11 +55,13 @@ class CartManager: ObservableObject {
                 self.cartData = cart
             case .failure(let error):
                 print("Error loading cart \(error)")
+                self.messageCartManagerError = error.message
+                self.showCartManagerError = true
             }
         }
     }
     
-    func productQuantityInCart(productId: Int, quantity: CartPrdouctQuantity){
+    func productQuantityInCart(productId: Int, quantity: CartPrdouctQuantity, success: @escaping ()->Void = {}){
         guard let cartData = cartData else {
             print("Error Cart is Empty")
             return
@@ -95,8 +101,11 @@ class CartManager: ObservableObject {
             case .success(let json):
                 let cart = CartModel(json: json)
                 self.cartData = cart
+                success()
             case .failure(let error):
                 print("Error to change quantity cart \(error)")
+                self.messageCartManagerError = error.message
+                self.showCartManagerError = true
             }
         }
     }
@@ -110,6 +119,8 @@ class CartManager: ObservableObject {
                 AnalyticsManager.instance.event(key: .clear_cart)
             case .failure(let error):
                 print("Error to clear cart \(error)")
+                self.messageCartManagerError = error.message
+                self.showCartManagerError = true
             }
         }
     }
@@ -126,6 +137,8 @@ class CartManager: ObservableObject {
                 
             case .failure(let error):
                 print("\(error.message)")
+                self.messageCartManagerError = error.message
+                self.showCartManagerError = true
             }
         }
     }

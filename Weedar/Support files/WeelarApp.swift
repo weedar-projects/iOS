@@ -13,12 +13,13 @@ import FirebaseMessaging
 import Amplitude
 import SwiftyJSON
 import AppTrackingTransparency
+import SwiftyBeaver
 
 class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
     // MARK: - Properties
     private var shouldOpenOrder = false
-    
-    
+    let log = SwiftyBeaver.self
+    let cloud = SBPlatformDestination(appID: "YbnqvR", appSecret: "aj74yJ8zyb0R0cd8iwerUlrTknpr7Xp5", encryptionKey: "9w8ZfCyrfRbnPJtfjbfaljcamkffZfm8")
     // MARK: - Class functions
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -35,6 +36,12 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         Amplitude.instance().trackingSessionEvents = true
         
         self.requestDataPermission()
+        self.log.addDestination(cloud)
+        if let id = UserDefaultsService().get(fromKey: .user){
+            self.log.info("Start session User: \(id)")
+        }else{
+            self.log.info("Start session not login user")
+        }
         
         // Initialize SDK
         Amplitude.instance().initializeApiKey("fb236e320cc3d63dda12f1d8f09443f1")

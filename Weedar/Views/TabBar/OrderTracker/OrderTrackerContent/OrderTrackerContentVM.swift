@@ -47,16 +47,16 @@ class OrderTrackerContentVM: ObservableObject {
     
     func cancelOrder(orderID: Int,completion: @escaping () -> Void){
         let endPoint = "/order/\(orderID)/cancel"
-        
+        CloudLogger().cloudLog(logData: "Cancel order tracker button tap", logState: .debug)
         API.shared.request(endPoint: endPoint, method: .put) { result in
             switch result {
             case .success(_):
+                CloudLogger().cloudLog(logData: "Order tracker success cancel order", logState: .debug)
                 completion()
             case .failure(_):
+                CloudLogger().cloudLog(logData: "Order tracker error cancel order", logState: .error)
                 completion()
             }
         }
     }
-    
-    
 }

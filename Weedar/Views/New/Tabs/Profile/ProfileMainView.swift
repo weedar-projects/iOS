@@ -262,7 +262,7 @@ struct ProfileMainView: View {
                                 }
                                 KeychainService.removePassword(serviceKey: .accessToken)
                                 KeychainService.removePassword(serviceKey: .refreshToken)
-                                
+                                UserDefaultsService().remove(key: .user)
                                 sessionManager.userIsLogged = false
                                 UserDefaultsService().set(value: false, forKey: .userVerified)
                                 UserDefaultsService().set(value: false, forKey: .userIsLogged)

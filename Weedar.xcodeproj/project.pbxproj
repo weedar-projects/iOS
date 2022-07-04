@@ -30,6 +30,8 @@
 		2F2AA74927DB63A300AB6C57 /* EmptyCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2AA74827DB63A300AB6C57 /* EmptyCartView.swift */; };
 		2F2AA74B27DB63BD00AB6C57 /* EmptyCartVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2AA74A27DB63BD00AB6C57 /* EmptyCartVM.swift */; };
 		2F2AA74D27DB6F2500AB6C57 /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2AA74C27DB6F2500AB6C57 /* MainButton.swift */; };
+		2F343335287345BD00136A05 /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = 2F343334287345BD00136A05 /* SwiftyBeaver */; };
+		2F3433372873477700136A05 /* CloudLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3433362873477700136A05 /* CloudLogger.swift */; };
 		2F3BEDA227E0C3E100298399 /* ProductDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3BEDA127E0C3E100298399 /* ProductDetailedView.swift */; };
 		2F3BEDA427E0C3E900298399 /* ProductDetailedVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3BEDA327E0C3E900298399 /* ProductDetailedVM.swift */; };
 		2F3BEDAD27E22FB100298399 /* CartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3BEDAC27E22FB100298399 /* CartManager.swift */; };
@@ -325,6 +327,7 @@
 		2F2AA74827DB63A300AB6C57 /* EmptyCartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCartView.swift; sourceTree = "<group>"; };
 		2F2AA74A27DB63BD00AB6C57 /* EmptyCartVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCartVM.swift; sourceTree = "<group>"; };
 		2F2AA74C27DB6F2500AB6C57 /* MainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButton.swift; sourceTree = "<group>"; };
+		2F3433362873477700136A05 /* CloudLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudLogger.swift; sourceTree = "<group>"; };
 		2F3BEDA127E0C3E100298399 /* ProductDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailedView.swift; sourceTree = "<group>"; };
 		2F3BEDA327E0C3E900298399 /* ProductDetailedVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailedVM.swift; sourceTree = "<group>"; };
 		2F3BEDAC27E22FB100298399 /* CartManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartManager.swift; sourceTree = "<group>"; };
@@ -606,6 +609,7 @@
 				2F8B4FFD27DD0F0F006662D2 /* FLAnimatedImage in Frameworks */,
 				2F4252EB27DA619F00DE2041 /* SwiftyJSON in Frameworks */,
 				2FE21E58280049A8004B0057 /* ScrollableImage in Frameworks */,
+				2F343335287345BD00136A05 /* SwiftyBeaver in Frameworks */,
 				3B9AF0BB8516172DC46AE475 /* Pods_Weedar.framework in Frameworks */,
 				2FC63CEB281ABD6F00A5EE18 /* Starscream in Frameworks */,
 			);
@@ -1197,6 +1201,7 @@
 				2FCF7F2D27F4E6D400DD425A /* Routs.swift */,
 				2FC63CE328186A0100A5EE18 /* PKSettingsBundleHelper.swift */,
 				2FD12FCE28295418008BB6EB /* NetworkConnection.swift */,
+				2F3433362873477700136A05 /* CloudLogger.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1769,6 +1774,7 @@
 				2FE21E57280049A8004B0057 /* ScrollableImage */,
 				2F60BA27280F4310002B6670 /* FocusEntity */,
 				2FC63CEA281ABD6F00A5EE18 /* Starscream */,
+				2F343334287345BD00136A05 /* SwiftyBeaver */,
 			);
 			productName = Weelar;
 			productReference = 4D7464E826B8830300CE8A62 /* Weedar.app */;
@@ -1806,6 +1812,7 @@
 				2F60BA26280F4310002B6670 /* XCRemoteSwiftPackageReference "FocusEntity" */,
 				2FC63CE9281ABD6F00A5EE18 /* XCRemoteSwiftPackageReference "Starscream" */,
 				2F7D4AD8283FE2EC0097C2ED /* XCRemoteSwiftPackageReference "ToastUI" */,
+				2F343333287345BD00136A05 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 			);
 			productRefGroup = 4D7464E926B8830300CE8A62 /* Products */;
 			projectDirPath = "";
@@ -2043,6 +2050,7 @@
 				E342898826CD926B00F1EB6E /* LoadingView.swift in Sources */,
 				B185F67126F4E1650003E485 /* ActivityView.swift in Sources */,
 				B1C93DE5270C9674006A1C39 /* LocalStatusBarStyle.swift in Sources */,
+				2F3433372873477700136A05 /* CloudLogger.swift in Sources */,
 				84E8D8AB26DE4EB600353825 /* Blur.swift in Sources */,
 				E3733D232702223000ED3A2A /* UIApplication+Extensions.swift in Sources */,
 				E3F4C33326F1F70A00876F27 /* SearchBar.swift in Sources */,
@@ -2392,6 +2400,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2F343333287345BD00136A05 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyBeaver/SwiftyBeaver.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.9.0;
+			};
+		};
 		2F4252E927DA619F00DE2041 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
@@ -2451,6 +2467,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2F343334287345BD00136A05 /* SwiftyBeaver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2F343333287345BD00136A05 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */;
+			productName = SwiftyBeaver;
+		};
 		2F4252EA27DA619F00DE2041 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2F4252E927DA619F00DE2041 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;

@@ -45,7 +45,7 @@ struct OrderDeliveryView: View {
                                 .animation(.none, value: vm.currentOrderType)
                                 .vTop()
                         }
-                        .frame(height: 70)
+                        .frame(height: 45)
                         .padding(.horizontal, 24)
                         .padding(.top, 12)
                         .hLeading()

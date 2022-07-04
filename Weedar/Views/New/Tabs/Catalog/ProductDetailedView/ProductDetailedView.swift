@@ -83,6 +83,7 @@ struct ProductDetailedView: View {
             }
             VStack{
                 Spacer()
+                
             AddToCartButton()
                 .padding(.horizontal, 24)
                 .padding(.bottom, tabBarManager.tabBarHeight - 24)
@@ -400,13 +401,15 @@ struct ProductDetailedView: View {
         }
         .onTapGesture {
             vm.notification.notificationOccurred(.success)
-            cartManager.productQuantityInCart(productId: product.id, quantity: .custom(vm.quantity))
-            AnalyticsManager.instance.event(key: .add_cart_prod_card,
-                                            properties: [.category : product.type.name,
-                                                         .product_id: product.id,
-                                                         .product_qty: vm.quantity,
-                                                         .product_price: product.price.formattedString(format: .percent)])
-            vm.chageAddButtonState()
+            cartManager.productQuantityInCart(productId: product.id, quantity: .custom(vm.quantity)){
+                AnalyticsManager.instance.event(key: .add_cart_prod_card,
+                                                properties: [.category : product.type.name,
+                                                             .product_id: product.id,
+                                                             .product_qty: vm.quantity,
+                                                             .product_price: product.price.formattedString(format: .percent)])
+                vm.chageAddButtonState()
+            }
+            
         }.disabled(vm.animProductInCart)
     }
     

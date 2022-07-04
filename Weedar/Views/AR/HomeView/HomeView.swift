@@ -329,10 +329,11 @@ struct ARProductInfo : View {
                     Button(action: {
                         UINotificationFeedbackGenerator().notificationOccurred(.success)
                         
-                        cartManager.productQuantityInCart(productId: product.id, quantity: .add)
-                        AnalyticsManager.instance.event(key: .add_cart_ar, properties: [.category : product.type.name,
-                                                                                        .product_id : product.id,
-                                                                                        .product_price : product.price.formattedString(format: .percent)])
+                        cartManager.productQuantityInCart(productId: product.id, quantity: .add){
+                            AnalyticsManager.instance.event(key: .add_cart_ar, properties: [.category : product.type.name,
+                                                                                            .product_id : product.id,
+                                                                                            .product_price : product.price.formattedString(format: .percent)])
+                        }
                     }){
                         ZStack{
                             Image.bg_gradient_main
