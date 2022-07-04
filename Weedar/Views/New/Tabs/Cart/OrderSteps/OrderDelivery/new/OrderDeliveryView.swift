@@ -108,7 +108,7 @@ struct OrderDeliveryView: View {
                         .animation(.none, value: vm.infoText)
                     
                     
-                    if vm.currentOrderType == .delivery || vm.currentOrderType == .none{
+                    if vm.currentOrderType == .delivery{
                         RequestButton(state: $vm.createOrderButtonState, isDisabled: $vm.createOrderButtonIsDisabled, showIcon: false, title: "Review order") {
                             vm.disableNavButton = true
                             if vm.needToUploadDocuments(){
@@ -128,7 +128,7 @@ struct OrderDeliveryView: View {
                         .padding(.top, 8)
                         .padding(.horizontal, 24)
                     } else {
-                        MainButton(title: "Choose store") {
+                        MainButton(title: "Select store") {
                             if vm.needToUploadDocuments(){
                                 vm.saveUserData {
                                     orderNavigationManager.needToShowDocumentCenter = true
@@ -170,7 +170,7 @@ struct OrderDeliveryView: View {
             switch vm.activeAlert {
             case .error:
                 return Alert(title:
-                                Text("Error"),
+                                Text("Ooops"),
                              message:
                                 Text(vm.messageAlertError),
                              dismissButton: .cancel(Text("OK"))
@@ -192,23 +192,23 @@ struct OrderDeliveryView: View {
         .fullScreenCover(isPresented: $orderNavigationManager.needToShowDocumentCenter, onDismiss: {
                }, content: {
                    NavigationView{
-                       DocumentCenterView { documentLoaded in
+                       DocumentCenterView(requiredToFillId: true) { documentLoaded in
                            if documentLoaded{
                                sessionManager.userData(withUpdate: true) { user in
                                    vm.userData = user
                                }
                                vm.createOrderButtonState = .success
-                               vm.saveDataCreateOrder { order in
-                                   sessionManager.userData(withUpdate: true)
-                                   orderNavigationManager.currentCreatedOrder = vm.getCreatedOrder(order: order)
-                                   orderNavigationManager.orderType = .delivery
-                                   if vm.currentOrderType == .delivery{
+                               sessionManager.userData(withUpdate: true)
+                               if vm.currentOrderType == .delivery{
+                                   vm.saveDataCreateOrder { order in
+                                       orderNavigationManager.currentCreatedOrder = vm.getCreatedOrder(order: order)
+                                       orderNavigationManager.orderType = .delivery
                                        orderNavigationManager.showOrderReviewView = true
-                                   } else {
-                                       orderNavigationManager.showPickUpView = true
                                    }
-                                   
+                               }else{
+                                   orderNavigationManager.showPickUpView = true
                                }
+                               
                            }
                        }
                        .navBarSettings("Document center", backBtnIsHidden: true)
@@ -236,10 +236,12 @@ struct OrderDeliveryView: View {
                 .textCustom(.coreSansC65Bold, 16, vm.pickerDeliveryTextColor)
                 .frame(width: (getRect().width / 2 - 24) - 0.5, height: 44)
                 .background(Color.col_white.opacity(0.01))
+                .offset(y: 2)
                 .onTapGesture {
                     if vm.deliveryAvailable{
                         withAnimation {
-                            vm.currentOrderType = vm.currentOrderType == .delivery ? .none : .delivery
+                            vm.currentOrderType = .delivery
+//                            vm.currentOrderType = vm.currentOrderType == .delivery ? .none : .delivery
                         }
                     }
                 }
@@ -248,31 +250,40 @@ struct OrderDeliveryView: View {
                 .fill(Color.col_borders)
                 .frame(width: 1, height: 44)
             
-            Text("Pick up")
-                .textCustom(.coreSansC65Bold, 16, vm.pickerPickUpTextColor)
-                .frame(width: (getRect().width / 2 - 24), height: 44)
-                .background(Color.col_white.opacity(0.01))
-                .onTapGesture {
-                    if vm.pickUpAvailable{
-                        withAnimation {
-                            vm.currentOrderType = vm.currentOrderType == .pickup ? .none : .pickup
-                        }
+            HStack(spacing: 4){
+                if vm.pickupState == .notAvailable{
+                    Image(systemName: "xmark" )
+                        .font(Font.system(size: 10))
+                        .foregroundColor(Color.col_pink_main)
+                }
+                Text("Pick up")
+                    .textCustom(.coreSansC65Bold, 16, vm.pickerPickUpTextColor)
+                    .offset(y: 2)
+            }
+            .frame(width: (getRect().width / 2 - 24), height: 44)
+            .background(Color.col_white.opacity(0.01))
+            .onTapGesture {
+                if vm.pickUpAvailable{
+                    withAnimation {
+                        vm.currentOrderType = .pickup
+                        //                            vm.currentOrderType = vm.currentOrderType == .pickup ? .none : .pickup
                     }
                 }
+            }
         }
         .frame(maxWidth: .infinity)
         .background(
-                HStack{
-                    vm.pickerSelectorBackgroudColor
-                        .frame(width: (getRect().width / 2 - 24) - 0.5, height: 44)
-                        .cornerRadius(radius: 12, corners: vm.pickerSelectoreCornerShape)
-                        .animation(vm.currentOrderType == .none ? .none : .interactiveSpring(response: 0.15,
-                                                      dampingFraction: 0.65,
-                                                                                             blendDuration: 1.5),
-                                   value: vm.currentOrderType != .none)
-                        .offset(x: vm.pickerSelectoreCurrentXLocation)
-                        .hLeading()
-                }
+            HStack{
+                Color.col_black
+                    .frame(width: (getRect().width / 2 - 24), height: 44)
+                    .cornerRadius(radius: 12, corners: vm.currentOrderType == .pickup ? [.bottomRight, .topRight] : [.bottomLeft, .topLeft])
+                    .animation(.interactiveSpring(response: 0.15,
+                                                  dampingFraction: 0.65,
+                                                  blendDuration: 1.5),
+                               value: vm.currentOrderType)
+                    .offset(x: vm.currentOrderType == .pickup ? (getRect().width / 2 - 24) : 0)
+                    .hLeading()
+            }
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12)
@@ -355,9 +366,6 @@ struct OrderDeliveryView: View {
                     .padding(.trailing, 12)
                     .opacity(vm.locationIsLoading ? 1 : 0)
                 , alignment: .trailing)
-            .onTapGesture {
-                vm.locationIsLoading = false
-            }
         }
         .padding(.horizontal, 24)
         .onChange(of: vm.userAddressTFState) { newValue in

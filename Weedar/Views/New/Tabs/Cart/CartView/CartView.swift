@@ -62,12 +62,6 @@ struct CartView: View {
                             .padding(.horizontal, 24)
                     
                     //create order button
-                    
-                    Text("The total amount may differ if you choose delivery. \nDelivery fee is not included.")
-                        .textSecond()
-                        .multilineTextAlignment(.center)
-                        .padding(.top, 25)
-                    
                     if let cartData = cartManager.cartData{
                     MainButton(title: "Proceed to checkout") {
                         orderNavigationManager.showDeliveryView = true

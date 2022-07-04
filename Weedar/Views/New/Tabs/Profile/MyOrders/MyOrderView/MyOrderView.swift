@@ -185,7 +185,7 @@ struct MyOrderView: MainLoadViewProtocol {
                     }
                     
                     if let state = vm.order?.state{
-                        if  state != 10 && state != 7{
+                        if  state != 10 && state != 7 && state != 8{
                             Button {
                                 vm.showCancelAlert.toggle()
                             } label: {

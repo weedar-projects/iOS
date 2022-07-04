@@ -19,6 +19,12 @@ class OrderDeliveryVM: ObservableObject {
         case delivery
     }
     
+    enum PickupState{
+        case none
+        case available
+        case notAvailable
+    }
+    
     enum ActiveAlert {
         case error, location
     }
@@ -29,7 +35,7 @@ class OrderDeliveryVM: ObservableObject {
     
     @Published var disableNavButton = false
     
-    @Published var currentOrderType: OrderType = .none{
+    @Published var currentOrderType: OrderType = .delivery{
         didSet{
             validateButton()
         }
@@ -37,6 +43,13 @@ class OrderDeliveryVM: ObservableObject {
     
     @Published var deliveryAvailable = false
     @Published var pickUpAvailable = false
+    @Published var pickupState: PickupState = .none{
+        didSet{
+            if pickupState == .none || pickupState == .notAvailable{
+                self.currentOrderType = .delivery
+            }
+        }
+    }
     
     @Published var userName = ""
     @Published var nameStrokeColor = Color.col_borders
@@ -166,6 +179,7 @@ class OrderDeliveryVM: ObservableObject {
                     }else{
                         self.addressError = "We do not deliver to this zip-code yet."
                         self.userAddressTFState = .error
+                        self.pickupState = .notAvailable
                     }
                 })
             }
@@ -197,11 +211,14 @@ class OrderDeliveryVM: ObservableObject {
                 }
                 if availableStores.count > 0{
                     self.pickUpAvailable = true
+                    self.pickupState = .available
                 }else{
                     self.pickUpAvailable = false
+                    self.pickupState = .notAvailable
                 }
-            case let .failure(error):
+            case let .failure(_):
                 self.pickUpAvailable = false
+                self.pickupState = .notAvailable
             }
         }
     }
@@ -245,11 +262,13 @@ class OrderDeliveryVM: ObservableObject {
         if !userAddress.isEmpty{
             deliveryAvailable = false
             pickUpAvailable = false
-            currentOrderType = .none
+            currentOrderType = .delivery
             userAddress = ""
             zipCode = ""
             addressError = ""
             userAddressTFState = .def
+            locationIsLoading = false
+            pickupState = .none
         }
     }
 }
@@ -403,7 +422,7 @@ extension OrderDeliveryVM{
             }
         case .pickup:
             if deliveryAvailable{
-                return Color.col_text_main
+                return Color.col_green_main
             }else{
                 return Color.col_text_second
             }
@@ -423,10 +442,14 @@ extension OrderDeliveryVM{
         case .pickup:
             return Color.col_text_white
         case .delivery:
-            if pickUpAvailable{
-                return Color.col_text_main
-            }else{
+            switch pickupState{
+            case .notAvailable:
+                return Color.col_pink_main
+            case .available:
+                return Color.col_green_main
+            case .none:
                 return Color.col_text_second
+                
             }
         }
     }
@@ -469,9 +492,9 @@ extension OrderDeliveryVM{
         case.none:
             return ""
         case .pickup:
-            return "Our budtender will ask you to show your ID card to verify your identity and age"
+            return "Our budtender will ask you to show your ID \nto verify your identity and age"
         case .delivery:
-            return "Our courier will ask you to show your ID card\nto verify your identity and age"
+            return "Our courier will ask you to show your ID \nto verify your identity and age"
         }
     }
 }

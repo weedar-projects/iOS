@@ -74,6 +74,7 @@ extension CarouselARView {
 
         lastScrollSpeed = 0
         let location = sender.location(in: self)
+       
         if let object = self.entity(at: location) {
             print("That's \(object.name)")
      
@@ -105,7 +106,6 @@ extension CarouselARView {
                         self.tutorialStage = .swipeUp
                     }
                 }
-
                 print("SHOW OVERVIEW")
                 
             case .detail(items: let selectedEntities):
@@ -116,7 +116,56 @@ extension CarouselARView {
                     configureOverview(entity)
                     finishAnimation()
                     state = .overview
-                    
+                }
+                print("SHOW DETAIL")
+            }
+            
+            gestureHandler?.configureGestures(for: state, view: self)
+        }
+    }
+    
+    func tapSimulation(object: Entity?){
+        if let object = object {
+            print("That's \(object.name)")
+     
+            switch state {
+            case .overview:
+                feedbackGenerator?.impactOccurred(intensity: 0.5)
+//                playSound(name: "select")
+                lodHolder = nil
+
+//                finishAnimation()
+                
+//                if properties.controllers[object.name] == nil {
+//                    notificationFeedbackGenerator?.notificationOccurred(.success)
+//
+//
+//                }
+                
+                updateHighlightedProduct(productName: object as! ModelEntity)
+                
+                if properties.controllers[object.name] != nil {
+                    properties.controllers.removeValue(forKey: object.name)
+                }
+                
+                state = .detail(items: [object])
+                configureDetailedView(for: object)
+                
+                if tutorialStage == .tapChoose {
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
+                        self.tutorialStage = .swipeUp
+                    }
+                }
+                print("SHOW OVERVIEW")
+                
+            case .detail(items: let selectedEntities):
+                feedbackGenerator?.impactOccurred(intensity: 0.5)
+//                playSound(name: "select")
+                properties.controller = nil
+                if let entity = selectedEntities.last {
+                    configureOverview(entity)
+                    finishAnimation()
+                    state = .overview
                 }
                 print("SHOW DETAIL")
             }

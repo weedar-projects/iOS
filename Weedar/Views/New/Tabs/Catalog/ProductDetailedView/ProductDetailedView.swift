@@ -16,7 +16,7 @@ struct ProductDetailedView: View {
     
     @EnvironmentObject var cartManager: CartManager
     @EnvironmentObject var tabBarManager: TabBarManager
-    
+    @ObservedObject var localModels: ARModelsManager
     var body: some View {
         ZStack{
             
@@ -212,6 +212,8 @@ struct ProductDetailedView: View {
             Image("ar_button")
                 .resizable()
                 .frame(width: 72, height: 72)
+                .opacity(localModels.currentLoadedModel >= localModels.allModelCount ? 1 : 0.5)
+                .disabled(!(localModels.currentLoadedModel >= localModels.allModelCount))
                 .onTapGesture {
                     tabBarManager.hideTracker()
                     vm.showAR.toggle()
@@ -221,6 +223,8 @@ struct ProductDetailedView: View {
                                                                  .product_qty: vm.quantity,
                                                         .product_price: product.price.formattedString(format: .percent)])
                 }
+                
+                    
             }
             
         }

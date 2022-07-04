@@ -44,7 +44,15 @@ class CarouselARView: ARView, ObservableObject {
         let model: ModelEntity?
     }
     
-    @Published var highlightedProduct: ProductAR? = nil
+    var openWithDetail = false
+    
+    @Published var highlightedProduct: ProductAR? = nil{
+        didSet{
+            if openWithDetail{
+                tapSimulation(object: highlightedProduct?.model)
+            }
+        }
+    }
     @Published var tutorialStage: Tutorial.Stage = .waitToStart
     
     var shouldShowDescriptionCard: Bool = true
@@ -55,9 +63,21 @@ class CarouselARView: ARView, ObservableObject {
     var state: ARViewState = .overview
     var coachingOverlay: ARCoachingOverlayView? = nil
     
-    var entities: [Entity] = []
-    var anchor: AnchorEntity!
-    var productsAnchor: AnchorEntity!
+    var entities: [Entity] = []{
+        didSet{
+            print("entities: \(entities)")
+        }
+    }
+    var anchor: AnchorEntity!{
+        didSet{
+            print("entities: \(anchor)")
+        }
+    }
+    var productsAnchor: AnchorEntity!{
+        didSet{
+            print("productsAnchor: \(productsAnchor)")
+        }
+    }
     var player: AVAudioPlayer?
     
     var properties: DetailedViewProperties = .init()
@@ -176,6 +196,7 @@ class CarouselARView: ARView, ObservableObject {
         toTrackingState(itemsCount: items.count)
         self.resumeScene()
         showDescriptionCard()
+
     }
     
     func pauseScene() {
@@ -276,8 +297,7 @@ class CarouselARView: ARView, ObservableObject {
     
     func addEmptyAnchors(itemsCount: Int) {
         
-        
-        let items = itemsCount == 1 ? itemsCount : 12
+        let items = itemsCount == 1 ? itemsCount : 10
         
         print("ITEMS COUNT: \(items)")
         for index in 1...items {

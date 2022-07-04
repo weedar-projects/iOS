@@ -22,6 +22,7 @@ struct CatalogView: MainLoadViewProtocol {
     
     @ObservedObject var localModels: ARModelsManager
     
+    
     @State var showLoader: Bool = true
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -55,7 +56,7 @@ struct CatalogView: MainLoadViewProtocol {
                             }, id: \.self)
                             { category in
                                 NavigationLink {
-                                    CatalogProductsListView(category: category)
+                                    CatalogProductsListView(category: category, localModels: localModels)
                                         .onAppear {
                                             AnalyticsManager.instance.event(key: .select_catalog,
                                                                             properties: [.item_catalog : category.name])

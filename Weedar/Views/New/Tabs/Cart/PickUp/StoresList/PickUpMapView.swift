@@ -12,6 +12,7 @@ import CoreLocation
 struct PickUpMapView: View {
     @StateObject var rootVM: PickUpRootVM
 
+    
     var body: some View{
         VStack{
             Map(coordinateRegion: $rootVM.mapRegion, annotationItems: rootVM.availableStores) { store in
@@ -33,6 +34,7 @@ struct PickUpMapView: View {
                 }
 
             }
+            
             .frame(height: 338)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .padding(.horizontal, 24)

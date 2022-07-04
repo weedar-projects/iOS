@@ -64,7 +64,7 @@ struct ContactUsView: View {
                 .padding(.bottom, 45)
             }
             .navBarSettings("Contact us")
-            .customErrorAlert(title: "Error", message: vm.errorMessage, isPresented: $vm.showAlert)
+            .customErrorAlert(title: "Ooops", message: vm.errorMessage, isPresented: $vm.showAlert)
         }
     }
 }

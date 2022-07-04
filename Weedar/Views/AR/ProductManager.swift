@@ -23,7 +23,7 @@ class ProductManager {
             queueTemp.append(item.key)
         }
         
-        while queueTemp.count < 12 {
+        while queueTemp.count < 8{
             queueTemp += queueTemp
         }
           
@@ -53,16 +53,15 @@ class ProductManager {
             queueTemp += queueTemp
         }
         
-        self.queue = queueTemp
+//        self.queue = queueTemp.sorted(by: ({$0 < $1}))
 //        setFirstModelId(id: queueTemp.first ?? 0)
-       
+//        self.queue = queue
         print("Queue: \(queue)")
     }
     
     func monitorRotation(forAnchor anchor: ModelEntity, putBackModels: Bool = false) {
         let pie: Int
         
-//        self.queue = queue.removingDuplicates()
         if !putBackModels {
             pie = self.pie(forAnchor: anchor)
         } else {
@@ -116,7 +115,7 @@ class ProductManager {
     }
     
     private func isInsideVisibleWindow(pie: Int) -> Bool {
-        return (pie < 3 && pie > -3)
+        return (pie < 2 && pie > -2)
     }
     
     private func isModelNeedsLoading(for anchor: ModelEntity) -> Bool {
@@ -129,7 +128,7 @@ class ProductManager {
     
     private func pie(forAnchor anchor: ModelEntity) -> Int {
         let rawRotation = anchor.transform.matrix.eulerAngles.y
-        let pie = Int(3 / .pi * rawRotation)
+        let pie = Int(3  / .pi * rawRotation)
         return pie
     }
     

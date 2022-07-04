@@ -42,7 +42,11 @@ struct HomeView: View {
     
     @State var disableFilterButton = true
     
+    @StateObject var cameraManager = CameraManager()
+    
     @StateObject var filtersVM = ARFiltersVM()
+    @State var showBG = false
+    @State var showCameraSettings = false
     
     // MARK: - View
     var body: some View {
@@ -75,6 +79,7 @@ struct HomeView: View {
             
             VStack {
                 VStack {
+                    
                     ARViewContainer(carousel: carousel, appear: $appear)
                         .edgesIgnoringSafeArea(.all)
                         .overlay(ZStack {
@@ -93,7 +98,28 @@ struct HomeView: View {
                         )
                         .zIndex(6)
                     
+                    
                 } //AR VSTACK
+                .customDefaultAlert(title: "Unable to access the Camera",
+                                    message: "To use AR, please\nenable camera in Settings.",
+                                    isPresented: $showCameraSettings,
+                                    firstBtn: Alert.Button.default(Text("Not right now"),
+                                                                   action: {
+                    showCameraSettings = false
+                }), secondBtn: Alert.Button.default(Text("Settings"), action: {
+                    guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
+                    if UIApplication.shared.canOpenURL(settingsUrl) {
+                        if #available(iOS 10.0, *) {
+                            UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                                // Finished opening URL
+                            })
+                        } else {
+                            // Fallback on earlier versions
+                            UIApplication.shared.openURL(settingsUrl)
+                        }
+                    }
+
+                }))
                 .statusBar(hidden: true)
                 .navigationBarBackButtonHidden(true)
                 .onChange(of: carousel.highlightedProduct?.id) { _ in
@@ -113,9 +139,18 @@ struct HomeView: View {
                     openByCategoryId = 0
                     openProductById = 0
                 }
+                .onReceive(cameraManager.$permissionGranted, perform: { (granted) in
+                    if granted {
+                        showBG = false
+                    }else{
+                        showBG = true
+                        showCameraSettings = true
+                    }
+                })
                 .onUIKitAppear {
+                    cameraManager.requestPermission()
                     carousel.showDescriptionCard()
-                    
+                    carousel.openWithDetail = false
                     if openByCategoryId != 0 {
                         ARModelsManager.shared.getProducts(categoryId: openByCategoryId, filters: CatalogFilters()){
                             ARModelsManager.shared.updateModels(){ items in
@@ -128,6 +163,7 @@ struct HomeView: View {
                         let items = [product.id: (product.modelHighQualityLink, product.animationDuration)]
                         carousel.updateProducts(items: items)
                         carousel.resumeScene()
+                        carousel.openWithDetail = true
                         carousel.shouldShowDescriptionCard = true
                     }
                     
@@ -222,6 +258,12 @@ struct HomeView: View {
                     .transition(.move(edge: .bottom))
                 }
             }
+            
+            
+            Color.col_blue_main
+                .edgesIgnoringSafeArea(.all)
+                .opacity(showBG ? 1 : 0)
+            
         } //zstack
         .onChange(of: filtersVM.showFilterView) { newValue in
             if newValue{

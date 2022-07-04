@@ -25,12 +25,6 @@ struct DocumentCenterView: MainLoadViewProtocol {
                 .padding(.horizontal, 24)
                 .padding(.top, 12)
                 .hLeading()
-                
-                Text("Our budtender will ask you to show your ID \nto verify your identity and age.")
-                    .textDefault()
-                    .padding(.top, 24)
-                    .padding(.horizontal, 24)
-                    .hLeading()
             
                 PassportView()
                 

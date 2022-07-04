@@ -339,7 +339,6 @@ extension DataRequest {
     public func customValidation() -> Self {
         
         return validate { request,response,data in
-            
             do {
                 let statusCode = response.statusCode
                 if statusCode != 401{
@@ -351,7 +350,6 @@ extension DataRequest {
                     return .failure(AFError.responseValidationFailed(reason: reason))
                 }
             } catch let error {
-                
                 print("Json serialization error \(error)")
                 let reason:AFError.ResponseValidationFailureReason = .unacceptableStatusCode(code: response.statusCode)
                 return .failure(AFError.responseValidationFailed(reason: reason))

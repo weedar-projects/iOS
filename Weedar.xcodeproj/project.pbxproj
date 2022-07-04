@@ -51,8 +51,6 @@
 		2F4252E327D9E9A200DE2041 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4252E227D9E9A200DE2041 /* AuthView.swift */; };
 		2F4252E627DA2AA900DE2041 /* DeliveryZipCodesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4252E527DA2AA900DE2041 /* DeliveryZipCodesModel.swift */; };
 		2F4252EB27DA619F00DE2041 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 2F4252EA27DA619F00DE2041 /* SwiftyJSON */; };
-		2F4252F027DA8E2500DE2041 /* OrderDeliveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4252EF27DA8E2500DE2041 /* OrderDeliveryView.swift */; };
-		2F4252F227DA8E3100DE2041 /* OrderDeliveryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4252F127DA8E3100DE2041 /* OrderDeliveryVM.swift */; };
 		2F43C382283FF2DC00606C88 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F43C381283FF2DC00606C88 /* OnboardingView.swift */; };
 		2F4F5B3F282CF8B800394578 /* DiscountBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F4F5B3E282CF8B800394578 /* DiscountBanner.swift */; };
 		2F57086F27DEA5D7004751BA /* OrderReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F57086E27DEA5D7004751BA /* OrderReviewView.swift */; };
@@ -130,14 +128,15 @@
 		2FAFF85C2869E5C6009BA347 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAFF85B2869E5C6009BA347 /* AnalyticsManager.swift */; };
 		2FAFF85E2869E608009BA347 /* ARFiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAFF85D2869E608009BA347 /* ARFiltersView.swift */; };
 		2FAFF8602869E60E009BA347 /* ARFiltersVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAFF85F2869E60E009BA347 /* ARFiltersVM.swift */; };
+		2FAFF862286B49AB009BA347 /* CameraPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAFF861286B49AB009BA347 /* CameraPermission.swift */; };
 		2FC63CE22818687A00A5EE18 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2FC63CE12818687A00A5EE18 /* Settings.bundle */; };
 		2FC63CE428186A0100A5EE18 /* PKSettingsBundleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC63CE328186A0100A5EE18 /* PKSettingsBundleHelper.swift */; };
 		2FC63CE8281AA1EC00A5EE18 /* OrderTrackerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC63CE7281AA1EC00A5EE18 /* OrderTrackerManager.swift */; };
 		2FC63CEB281ABD6F00A5EE18 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 2FC63CEA281ABD6F00A5EE18 /* Starscream */; };
 		2FC63CEF281BDEBE00A5EE18 /* loader_gif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2FC63CEE281BDEBE00A5EE18 /* loader_gif.gif */; };
 		2FC9F2492861BC9C00BF1BF4 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC9F2482861BC9C00BF1BF4 /* LocationManager.swift */; };
-		2FC9F24E2862057900BF1BF4 /* OrderDeliveryViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC9F24D2862057900BF1BF4 /* OrderDeliveryViewNew.swift */; };
-		2FC9F2502862058A00BF1BF4 /* OrderDeliveryVMNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC9F24F2862058A00BF1BF4 /* OrderDeliveryVMNew.swift */; };
+		2FC9F24E2862057900BF1BF4 /* OrderDeliveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC9F24D2862057900BF1BF4 /* OrderDeliveryView.swift */; };
+		2FC9F2502862058A00BF1BF4 /* OrderDeliveryVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC9F24F2862058A00BF1BF4 /* OrderDeliveryVM.swift */; };
 		2FCEFEFA281340C200D00AEE /* TrackerDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEFEF9281340C200D00AEE /* TrackerDropDownView.swift */; };
 		2FCEFEFE2813EC2D00D00AEE /* OrderTrackerStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEFEFD2813EC2D00D00AEE /* OrderTrackerStateModel.swift */; };
 		2FCEFF002813EC4B00D00AEE /* OrderTrackerStatusTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCEFEFF2813EC4B00D00AEE /* OrderTrackerStatusTopView.swift */; };
@@ -346,8 +345,6 @@
 		2F4252DF27D9082200DE2041 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
 		2F4252E227D9E9A200DE2041 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		2F4252E527DA2AA900DE2041 /* DeliveryZipCodesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryZipCodesModel.swift; sourceTree = "<group>"; };
-		2F4252EF27DA8E2500DE2041 /* OrderDeliveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDeliveryView.swift; sourceTree = "<group>"; };
-		2F4252F127DA8E3100DE2041 /* OrderDeliveryVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDeliveryVM.swift; sourceTree = "<group>"; };
 		2F43C381283FF2DC00606C88 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		2F4F5B3E282CF8B800394578 /* DiscountBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountBanner.swift; sourceTree = "<group>"; };
 		2F57086E27DEA5D7004751BA /* OrderReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderReviewView.swift; sourceTree = "<group>"; };
@@ -422,13 +419,14 @@
 		2FAFF85B2869E5C6009BA347 /* AnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		2FAFF85D2869E608009BA347 /* ARFiltersView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ARFiltersView.swift; path = Filters/ARFiltersView.swift; sourceTree = "<group>"; };
 		2FAFF85F2869E60E009BA347 /* ARFiltersVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ARFiltersVM.swift; path = Filters/ARFiltersVM.swift; sourceTree = "<group>"; };
+		2FAFF861286B49AB009BA347 /* CameraPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPermission.swift; sourceTree = "<group>"; };
 		2FC63CE12818687A00A5EE18 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		2FC63CE328186A0100A5EE18 /* PKSettingsBundleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKSettingsBundleHelper.swift; sourceTree = "<group>"; };
 		2FC63CE7281AA1EC00A5EE18 /* OrderTrackerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTrackerManager.swift; sourceTree = "<group>"; };
 		2FC63CEE281BDEBE00A5EE18 /* loader_gif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loader_gif.gif; sourceTree = "<group>"; };
 		2FC9F2482861BC9C00BF1BF4 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		2FC9F24D2862057900BF1BF4 /* OrderDeliveryViewNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDeliveryViewNew.swift; sourceTree = "<group>"; };
-		2FC9F24F2862058A00BF1BF4 /* OrderDeliveryVMNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDeliveryVMNew.swift; sourceTree = "<group>"; };
+		2FC9F24D2862057900BF1BF4 /* OrderDeliveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDeliveryView.swift; sourceTree = "<group>"; };
+		2FC9F24F2862058A00BF1BF4 /* OrderDeliveryVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDeliveryVM.swift; sourceTree = "<group>"; };
 		2FCEFEF9281340C200D00AEE /* TrackerDropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerDropDownView.swift; sourceTree = "<group>"; };
 		2FCEFEFD2813EC2D00D00AEE /* OrderTrackerStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTrackerStateModel.swift; sourceTree = "<group>"; };
 		2FCEFEFF2813EC4B00D00AEE /* OrderTrackerStatusTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTrackerStatusTopView.swift; sourceTree = "<group>"; };
@@ -814,8 +812,6 @@
 			isa = PBXGroup;
 			children = (
 				2FC9F24C2862056800BF1BF4 /* new */,
-				2F4252EF27DA8E2500DE2041 /* OrderDeliveryView.swift */,
-				2F4252F127DA8E3100DE2041 /* OrderDeliveryVM.swift */,
 			);
 			path = OrderDelivery;
 			sourceTree = "<group>";
@@ -1134,8 +1130,8 @@
 		2FC9F24C2862056800BF1BF4 /* new */ = {
 			isa = PBXGroup;
 			children = (
-				2FC9F24D2862057900BF1BF4 /* OrderDeliveryViewNew.swift */,
-				2FC9F24F2862058A00BF1BF4 /* OrderDeliveryVMNew.swift */,
+				2FC9F24D2862057900BF1BF4 /* OrderDeliveryView.swift */,
+				2FC9F24F2862058A00BF1BF4 /* OrderDeliveryVM.swift */,
 			);
 			path = new;
 			sourceTree = "<group>";
@@ -1659,6 +1655,7 @@
 				8458BC0826FDED1900E1EDC5 /* TextExtension.swift */,
 				E342897926CD504A00F1EB6E /* UserDefaultsService.swift */,
 				2FAFF8592864761A009BA347 /* Utils.swift */,
+				2FAFF861286B49AB009BA347 /* CameraPermission.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1932,7 +1929,7 @@
 				2F2AA74127DB57E600AB6C57 /* CartRootVM.swift in Sources */,
 				2F57087B27DF499B004751BA /* CalculationRow.swift in Sources */,
 				2F3BEDA227E0C3E100298399 /* ProductDetailedView.swift in Sources */,
-				2FC9F2502862058A00BF1BF4 /* OrderDeliveryVMNew.swift in Sources */,
+				2FC9F2502862058A00BF1BF4 /* OrderDeliveryVM.swift in Sources */,
 				EEC0D8E8275EAF0D00EEAE45 /* ReadSizeModifier.swift in Sources */,
 				2F4252DE27D8FC4300DE2041 /* VerifyIdentityVM.swift in Sources */,
 				B1F3602326FCB6F5004FFAEC /* TextFieldResponder+Extensions.swift in Sources */,
@@ -1973,13 +1970,13 @@
 				2FF9996728045DA800F22BEB /* OrderListModel.swift in Sources */,
 				2F60BA4F280F7EA8002B6670 /* AddressModel.swift in Sources */,
 				2F67C0A927CD8F6100BE8518 /* ResetPasswordView.swift in Sources */,
+				2FAFF862286B49AB009BA347 /* CameraPermission.swift in Sources */,
 				2F60BA7D281049C5002B6670 /* MainTabView.swift in Sources */,
 				2F3BEDA427E0C3E900298399 /* ProductDetailedVM.swift in Sources */,
 				2FE34C3B284925950097BBFA /* ChangePasswordVM.swift in Sources */,
 				B1DD193C270DEF0A000DEA68 /* BrandRepository.swift in Sources */,
 				2F3BEDC027E36DFF00298399 /* ProductCatalogRowView.swift in Sources */,
 				2F60BA61280F8075002B6670 /* ImageUrlView.swift in Sources */,
-				2F4252F027DA8E2500DE2041 /* OrderDeliveryView.swift in Sources */,
 				2F1FA1C62860EF84001CB50D /* PickUpShopListPiker.swift in Sources */,
 				2FF9997728089BB200F22BEB /* ForceUpdateScreenView.swift in Sources */,
 				2F57087D27DF49C1004751BA /* CalculationPriceView.swift in Sources */,
@@ -1987,7 +1984,6 @@
 				4D88070B26CE9753006C3748 /* CarouselARVIew+Gestures.swift in Sources */,
 				E352B92426CFCBD1002E7977 /* FirebaseAuth.swift in Sources */,
 				4DD2478826D799320054FE45 /* ProductManager.swift in Sources */,
-				2F4252F227DA8E3100DE2041 /* OrderDeliveryVM.swift in Sources */,
 				2FE21E3627FBA12F004B0057 /* EffectModel.swift in Sources */,
 				E350DA0126B9A0C0007B5265 /* HomeView.swift in Sources */,
 				2FE21E5A2800559C004B0057 /* CustomNavigationBackBtn.swift in Sources */,
@@ -2132,7 +2128,7 @@
 				2F60BA53280F7F1B002B6670 /* OrderSectionListModel.swift in Sources */,
 				2F57088527DF4BA9004751BA /* OrderSuccessView.swift in Sources */,
 				8458BC0726FDECF500E1EDC5 /* ColorExtension.swift in Sources */,
-				2FC9F24E2862057900BF1BF4 /* OrderDeliveryViewNew.swift in Sources */,
+				2FC9F24E2862057900BF1BF4 /* OrderDeliveryView.swift in Sources */,
 				2F3BEDB127E27EE000298399 /* TabBarManager.swift in Sources */,
 				2F07D41828497A42005D60CC /* ComfirmChangePhoneView.swift in Sources */,
 				2F60BA6B280F8348002B6670 /* OTPView.swift in Sources */,
@@ -2324,7 +2320,7 @@
 				CODE_SIGN_ENTITLEMENTS = Weedar/Weelar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 15;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Weedar/Preview Content\"";
 				DEVELOPMENT_TEAM = KP728Q64HW;
@@ -2353,7 +2349,7 @@
 				CODE_SIGN_ENTITLEMENTS = Weedar/Weelar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_ASSET_PATHS = "\"Weedar/Preview Content\"";
 				DEVELOPMENT_TEAM = KP728Q64HW;
 				ENABLE_PREVIEWS = YES;

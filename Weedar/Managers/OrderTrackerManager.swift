@@ -13,20 +13,30 @@ import SwiftyJSON
 class OrderTrackerManager: ObservableObject, WebSocketDelegate{
     
     let allState: [OrderTrackerStateModel] = [
-        OrderTrackerStateModel(id: 0, state: .submited,
+        OrderTrackerStateModel(id: 0,
+                               deliveryState: .submited,
+                               pickupState: .submited,
                                colors: [Color.col_gradient_orange_first, Color.col_gradient_orange_second],
-                               deliveryText: "Delivery partner is reviewing your order."),
-        OrderTrackerStateModel(id: 1, state: .packing,
+                               deliveryText: "Delivery partner is reviewing your order.",
+                               pickupText: "Pick up partner is reviewing your order."),
+        OrderTrackerStateModel(id: 1,
+                               deliveryState: .packing,
+                               pickupState: .packing,
                                colors: [Color.col_violet_status_bg, Color.col_white],
-                               deliveryText: "Delivery partner is preparing your order."),
+                               deliveryText: "Your order is being packaged for delivery.",
+                               pickupText: "Your order is being packaged for pick up."),
         OrderTrackerStateModel(id: 2,
-                               state: .inDelivery,
+                               deliveryState: .inDelivery,
+                               pickupState: .available,
                                colors: [Color.col_gradient_blue_first, Color.col_gradient_blue_second],
-                               deliveryText: "The driver is on the way."),
+                               deliveryText: "Our courier is on the way to you",
+                               pickupText: "Your order is available for pick up now."),
         OrderTrackerStateModel(id: 3,
-                               state: .delivered,
+                               deliveryState: .delivered,
+                               pickupState: .comlited,
                                colors: [Color.col_gradient_green_first, Color.col_gradient_green_second],
-                               deliveryText: "The order is delivered.Thank you for choosing WEEDAR.")
+                               deliveryText: "The order is successfully delivered.",
+                               pickupText: "The order is successfully completed. Enjoy!")
     ]
     
     @Published var isConnected = false
@@ -179,6 +189,11 @@ class OrderTrackerManager: ObservableObject, WebSocketDelegate{
 }
 
 struct OrderTrackerModel: Identifiable{
+    enum OrderType {
+        case delivery
+        case pickup
+    }
+    
     var id: Int
     var number: String
     var name: String
@@ -206,6 +221,9 @@ struct OrderTrackerModel: Identifiable{
     var detailCount: Int?
     var orderDetails: [OrderDetailsModel]
     var license: String
+    var orderType: OrderType
+    var partner: PartnerModel
+    
     init(json: JSON) {
         self.license = json["license"].stringValue
         self.id = json["id"].intValue
@@ -234,6 +252,9 @@ struct OrderTrackerModel: Identifiable{
         self.detailCount = json["detailCount"].intValue
         self.discount = DiscountModel(json: json["discount"])
         self.orderDetails = json["orderDetails"].arrayValue.map({ OrderDetailsModel(json: $0)})
+        let type = json["type"].intValue
+        self.orderType = type == 0 ? .delivery : .pickup
+        self.partner = PartnerModel(json: json["partner"])
     }
     
 
