@@ -87,7 +87,6 @@ struct CatalogProductsListView: View {
                     VStack{
                         if filteredProducts(searchText: vm.searchText).count > 0{
                             ForEach(filteredProducts(searchText: vm.searchText), id: \.self){ product in
-                                
                                 ProductCatalogRowView(item: product, productInCartAnimation: $vm.productInCartAnimation)
                                     .padding(.horizontal)
                                     .padding(.vertical, 10)

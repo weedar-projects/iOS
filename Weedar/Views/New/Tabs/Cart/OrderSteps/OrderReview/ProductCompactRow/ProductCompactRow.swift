@@ -25,7 +25,14 @@ struct ProductCompactRow: View {
                     .mask(Rectangle()
                             .frame(width: 32, height: 32)
                     )
-            
+                    .overlay(
+                    Image("nft_mini")
+                        .resizable()
+                        .frame(width: 34, height: 18)
+                        .offset(y: -18)
+                        .opacity(data.product.isNft ? 1 : 0)
+                    ,alignment: .top
+                    )
             VStack(alignment: .leading,spacing: 7){
                 Text("\(data.product.name)")
                     .textCustom(.coreSansC45Regular, 16, lightText ? Color.col_text_white : Color.col_text_main)

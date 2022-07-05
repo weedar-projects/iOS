@@ -37,6 +37,7 @@ struct ProductDetailedView: View {
             
             ProductDetailedBodyView(imageSize: $vm.imageSize, scrollOffset: $vm.scrollOffset) {
                 //nftbanner
+                if product.isNft{
                 ZStack{
                     Image("nft_banner_bg")
                         .resizable()
@@ -45,7 +46,7 @@ struct ProductDetailedView: View {
                 }
                 .frame(width: getRect().width, height: 67)
                 .cornerRadius(radius: 12, corners: [.topLeft,.topRight])
-                
+                }
                 //category tree
                 HStack{
                     //category name

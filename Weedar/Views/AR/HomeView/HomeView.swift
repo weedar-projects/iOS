@@ -284,14 +284,16 @@ struct ARProductInfo : View {
     @Binding var opacity: Double
     
     var body: some View {
-        BottomSheetView(blur: 4.0, backgroundColor: Color.black.opacity(0.4)) {
-            if let product = ProductsViewModel.shared.getProduct(id: product.id) {
+        if let product = ProductsViewModel.shared.getProduct(id: product.id) {
+            BottomSheetView(blur: 4.0, backgroundColor: Color.black.opacity(0.4), isNft: product.isNft) {
+            
                 HStack {
                     VStack (alignment: .leading) {
                         Text(product.brand.name ?? "")
                             .font(.system(size: 14))
                             .foregroundColor(ColorManager.Buttons.buttonTextInactiveColor)
                             .padding([.top], 16)
+                 
                         Text(product.name)
                             .font(.system(size: 14))
                             .foregroundColor(.white)
@@ -352,16 +354,10 @@ struct ARProductInfo : View {
                 .padding(.bottom, getSafeArea().bottom + 75)
                 .padding([.trailing, .leading], 24)
                 .opacity(opacity)
-            }
+            
         }
-        .overlay(
-            //nftbanner
-        Image("nft_circle")
-            .resizable()
-            .frame(width: 87, height: 87)
-            .padding(.leading, 24)
-            .offset(x: 0, y: -43)
-            ,alignment: .topLeading)
+        }
+   
     }
 }
 

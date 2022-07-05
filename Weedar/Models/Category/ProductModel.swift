@@ -65,6 +65,7 @@ struct ProductModel: Identifiable, Hashable {
     var strain: Strain
     var effects: [Effect]
     var quantity: Int = 0
+    var isNft: Bool
     
     // temp, backend
     func grammWeightDouble() -> Double {
@@ -95,5 +96,6 @@ struct ProductModel: Identifiable, Hashable {
         self.strain = Strain(json: json["strain"])
         self.effects = json["effects"].arrayValue.map({ Effect(json: $0) })
         self.quantity = json["quantity"].intValue
+        self.isNft = json["isNft"].boolValue
     }
 }
