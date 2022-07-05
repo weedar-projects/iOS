@@ -153,16 +153,16 @@ struct OrderDeliveryView: View {
         .navigationBarBackButtonHidden(true)
         .toolbar(content: {
             ToolbarItem(placement: .navigationBarLeading) {
-                ZStack{
-                    Image("backNavBtn")
-                        .resizable()
-                        .frame(width: 14, height: 14)
-                }
-                .onTapGesture {
+                Button {
                     if !vm.disableNavButton{
                         tabBarManager.show()
                         self.mode.wrappedValue.dismiss()
                     }
+                } label: {
+                    Image("backNavBtn")
+                        .resizable()
+                        .frame(width: 14, height: 14)
+                        .padding(10)
                 }
             }
         })

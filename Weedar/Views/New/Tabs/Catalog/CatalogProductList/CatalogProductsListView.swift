@@ -153,6 +153,13 @@ struct CatalogProductsListView: View {
                     .opacity(localModels.currentLoadedModel >= localModels.allModelCount ? 1 : 0.5)
                     .disabled(!(localModels.currentLoadedModel >= localModels.allModelCount))
                 }
+                .disabled(vm.showFilterView)
+                .overlay(
+                    Color.col_black.opacity(vm.showFilterView ? 0.4 : 0)
+                        .frame(width: 60, height: 24)
+                        .clipShape(Capsule())
+                        .offset(x: 4)
+                )
             }
         }
     }

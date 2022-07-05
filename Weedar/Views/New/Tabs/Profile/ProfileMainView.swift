@@ -296,6 +296,7 @@ struct ProfileMainView_Previews: PreviewProvider {
 
 
 struct CustomToggle: View {
+    @State var notification = UINotificationFeedbackGenerator()
     @Binding var isOn: Bool
     var actionOnChange: () -> Void
     var body: some View{
@@ -311,6 +312,10 @@ struct CustomToggle: View {
                 .offset(x: isOn ? 10 : -10)
         }
         .onTapGesture {
+            if isOn == false{
+                notification.notificationOccurred(.success)
+            }
+            
             withAnimation {
                 isOn.toggle()
             }

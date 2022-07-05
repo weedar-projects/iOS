@@ -112,6 +112,13 @@ struct RootCoordinator: View {
             if connect{
                 orderTrackerManager.connect()
                 tabBarManager.currentTab = .catalog
+                tabBarManager.showARView = false
+                tabBarManager.refreshNav(tag: .catalog)
+                tabBarManager.refreshNav(tag: .cart)
+                tabBarManager.refreshNav(tag: .profile)
+                if orderTrackerManager.needToShow{
+                    tabBarManager.showOrderTracker = true
+                }
             }else{
                 orderTrackerManager.disconnect()
             }

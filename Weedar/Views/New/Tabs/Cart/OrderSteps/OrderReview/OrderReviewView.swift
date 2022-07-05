@@ -132,7 +132,7 @@ struct OrderReviewView: View {
                 }
                 .alert(isPresented: self.$vm.showAlert, content: {
                     Alert(title: Text("Order creation failed"),
-                          message: Text("Ooops"),
+                          message: Text(vm.alerMessage.isEmpty ? "Please try again." : vm.alerMessage),
                           dismissButton: .default(Text("OK")))
                 })
                 .onAppear {
@@ -147,12 +147,7 @@ struct OrderReviewView: View {
         .navigationBarBackButtonHidden(true)
         .toolbar(content: {
             ToolbarItem(placement: .navigationBarLeading) {
-                ZStack{
-                    Image("backNavBtn")
-                        .resizable()
-                        .frame(width: 14, height: 14)
-                }
-                .onTapGesture {
+                Button {
                     if !vm.disableNavButton{
                         
                         if orderNavigationManager.orderType == .delivery{
@@ -162,6 +157,11 @@ struct OrderReviewView: View {
                             orderNavigationManager.showPickUpView = true
                         }
                     }
+                } label: {
+                    Image("backNavBtn")
+                        .resizable()
+                        .frame(width: 14, height: 14)
+                        .padding(10)
                 }
                 .opacity(orderNavigationManager.showOrderSuccessView ? 0 : 1)
             }

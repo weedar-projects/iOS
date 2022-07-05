@@ -244,12 +244,11 @@ struct MyOrderView: MainLoadViewProtocol {
                 primaryButton: .cancel(Text("Close")),
                 secondaryButton: .destructive(Text("Cancel"),
                                               action: {
-              self.showLoader = true
-              vm.cancelOrder { 
-                  vm.getOrder(id: id) {
-                      self.showLoader = false
-                  }
-                  
+              vm.cancelOrder {
+                  self.presentationMode.wrappedValue.dismiss()
+//                  vm.getOrder(id: id) {
+//                      self.showLoader = false
+//                  }
               }
           }))
         })
