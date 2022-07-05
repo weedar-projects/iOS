@@ -354,6 +354,14 @@ struct ARProductInfo : View {
                 .opacity(opacity)
             }
         }
+        .overlay(
+            //nftbanner
+        Image("nft_circle")
+            .resizable()
+            .frame(width: 87, height: 87)
+            .padding(.leading, 24)
+            .offset(x: 0, y: -43)
+            ,alignment: .topLeading)
     }
 }
 

@@ -34,7 +34,17 @@ struct ProductDetailedView: View {
                 }
                 .animation(.none, value: true)
             
+            
             ProductDetailedBodyView(imageSize: $vm.imageSize, scrollOffset: $vm.scrollOffset) {
+                //nftbanner
+                ZStack{
+                    Image("nft_banner_bg")
+                        .resizable()
+                    Image("nft_banner")
+                        .resizable()
+                }
+                .frame(width: getRect().width, height: 67)
+                .cornerRadius(radius: 12, corners: [.topLeft,.topRight])
                 
                 //category tree
                 HStack{
