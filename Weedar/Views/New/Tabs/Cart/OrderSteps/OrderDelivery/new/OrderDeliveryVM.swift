@@ -11,13 +11,14 @@ import SwiftyJSON
 import Alamofire
 import CoreLocation
 
+
+enum OrderType{
+    case none
+    case pickup
+    case delivery
+}
+
 class OrderDeliveryVM: ObservableObject {
-    
-    enum OrderType{
-        case none
-        case pickup
-        case delivery
-    }
     
     enum PickupState{
         case none

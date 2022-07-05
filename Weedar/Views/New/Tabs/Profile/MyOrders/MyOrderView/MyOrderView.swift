@@ -92,7 +92,7 @@ struct MyOrderView: MainLoadViewProtocol {
                         
                         if let order = vm.order{
                         //Pricing view
-                            CalculationPriceView(data: $vm.orderDetailsReview,showDelivery: !order.partner.isPickUp,showDiscount: true)
+                            CalculationPriceView(data: $vm.orderDetailsReview,showDelivery: order.orderType == .delivery, showDiscount: true)
                             .padding(.top, 24)
                             .padding(.horizontal, 24)
                             .onAppear {
@@ -100,8 +100,8 @@ struct MyOrderView: MainLoadViewProtocol {
                             }
                         }
                         
-                        if let isPickUp = vm.order?.partner.isPickUp{
-                            Text(isPickUp ? "Pick up at" : "Delivery details")
+                        if let isPickUp = vm.order?.orderType{
+                            Text(isPickUp == .pickup ? "Pick up at" : "Delivery details")
                                 .textCustom(.coreSansC65Bold
                                             , 14, Color.col_text_second)
                                 .padding(.top, 24)
@@ -122,7 +122,7 @@ struct MyOrderView: MainLoadViewProtocol {
                             
                             VStack(alignment: .leading,spacing: 10){
                                 
-                                if let partner = vm.order?.partner, partner.isPickUp == true{
+                                if let orderType = vm.order?.orderType, let partner = vm.order?.partner, orderType == .pickup{
                                     Text(partner.name)
                                         .textDefault()
                                 }else{
@@ -131,22 +131,21 @@ struct MyOrderView: MainLoadViewProtocol {
                                 }
                                 
                                 
-                                if let userAddress = vm.order?.addressLine1, let partner = vm.order?.partner, partner.isPickUp == false{
+                                if let userAddress = vm.order?.addressLine1, let orderType = vm.order?.orderType, orderType == .delivery{
                                     if !userAddress.isEmpty{
                                     Text(userAddress)
                                         .textDefault()
                                     }
                                 }
                                 
-                                if let partner = vm.order?.partner, partner.isPickUp == true{
+                                if let partner = vm.order?.partner,  let orderType = vm.order?.orderType, orderType == .pickup{
                                     Text(partner.address)
                                         .textDefault()
                                 }
                                                                 
-                                if let partner = vm.order?.partner, partner.isPickUp == true{
+                                if let partner = vm.order?.partner,  let orderType = vm.order?.orderType, orderType == .pickup{
                                     Text(partner.phone)
                                         .textDefault()
-                                    
                                 }else{
                                     Text("\(vm.order?.phone ?? "")")
                                         .textDefault()
@@ -161,7 +160,8 @@ struct MyOrderView: MainLoadViewProtocol {
                         
                     }
                     .padding(.top, 8)
-                    if let isPickUp = vm.order?.partner.isPickUp, isPickUp{
+                    
+                    if let orderType = vm.order?.orderType, orderType == .pickup{
                         ZStack{
                             RadialGradient(colors: [Color.col_gradient_blue_second,
                                                     Color.col_gradient_blue_first],
