@@ -103,7 +103,7 @@ struct OrderTrackerContentView: View {
                             Text(currentOrder.partner.address)
                                 .textCustom(.coreSansC45Regular, 14, Color.col_text_white)
                             
-                            Text(currentOrder.partner.phone)
+                            Text(Utils.shared.phoneFormat(phone: currentOrder.partner.phone))
                                 .textCustom(.coreSansC45Regular, 14, Color.col_text_white)
                         }
                         .hLeading()
@@ -119,7 +119,7 @@ struct OrderTrackerContentView: View {
                                 Text("\(orderTrackerManager.currentOrder?.addressLine1 ?? "")")
                                     .textCustom(.coreSansC45Regular, 14, Color.col_text_white)
                                 
-                                Text("\(orderTrackerManager.currentOrder?.phone ?? "")")
+                                Text("\(Utils.shared.phoneFormat(phone:  orderTrackerManager.currentOrder?.phone ?? ""))")
                                     .textCustom(.coreSansC45Regular, 14, Color.col_text_white)
                             }
                             .hLeading()

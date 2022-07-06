@@ -144,10 +144,10 @@ struct MyOrderView: MainLoadViewProtocol {
                                 }
                                                                 
                                 if let partner = vm.order?.partner,  let orderType = vm.order?.orderType, orderType == .pickup{
-                                    Text(partner.phone)
+                                    Text(Utils.shared.phoneFormat(phone: partner.phone) )
                                         .textDefault()
                                 }else{
-                                    Text("\(vm.order?.phone ?? "")")
+                                    Text("\(Utils.shared.phoneFormat(phone: vm.order?.phone ?? ""))")
                                         .textDefault()
                                 }
                              

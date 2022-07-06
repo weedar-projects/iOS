@@ -130,6 +130,7 @@ struct RootCoordinator: View {
                 }
             }else{
                 orderTrackerManager.disconnect()
+                orderNavigationManager.needToShowDocumentCenter = false
             }
         }
     }

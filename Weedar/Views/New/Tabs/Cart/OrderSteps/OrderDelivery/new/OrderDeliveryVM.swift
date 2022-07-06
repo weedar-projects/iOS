@@ -153,7 +153,7 @@ class OrderDeliveryVM: ObservableObject {
     }
     
     func validation(appear: Bool = false){
-        if userName.isEmpty{
+        if userName.isEmptyOrWhitespace() {
             if !appear{
                 userNameTFState = .error
                 userNameError = "Please enter Full name."
