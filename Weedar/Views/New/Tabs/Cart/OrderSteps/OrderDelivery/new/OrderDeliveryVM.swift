@@ -68,6 +68,7 @@ class OrderDeliveryVM: ObservableObject {
             validateButton()
         }
     }
+    @Published var addressIsLoading = false
     
     @Published var addressStrokeColor = Color.col_borders
     @Published var addressError = ""
@@ -167,7 +168,9 @@ class OrderDeliveryVM: ObservableObject {
             createOrderButtonIsDisabled = false
             pickupButtonDisable = false
         }
+        
         validateButton()
+        
         self.validationAddress()
     }
     
@@ -184,6 +187,7 @@ class OrderDeliveryVM: ObservableObject {
                         self.addressError = "We do not deliver to this zip-code yet."
                         self.userAddressTFState = .error
                         self.pickupState = .notAvailable
+                        self.addressIsLoading = false
                     }
                 })
             }
@@ -200,6 +204,7 @@ class OrderDeliveryVM: ObservableObject {
     
     
    private func checkPickupAvailable(){
+       self.addressIsLoading = true
         API.shared.request(rout: .getAllStores, method: .get) { result in
             switch result{
             case let .success(json):
@@ -220,7 +225,9 @@ class OrderDeliveryVM: ObservableObject {
                     self.pickUpAvailable = false
                     self.pickupState = .notAvailable
                 }
+                self.addressIsLoading = false
             case let .failure(_):
+                self.addressIsLoading = false
                 self.pickUpAvailable = false
                 self.pickupState = .notAvailable
             }

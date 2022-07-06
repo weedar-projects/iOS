@@ -66,12 +66,19 @@ struct OrderDeliveryView: View {
                                 .hLeading()
                         }
                         
-                        //Address text field
-                        AddressTextField()
-                            .padding(.top, 24)
-                            .onTapGesture {
-                                vm.tapToAddressField()
+                        ZStack{
+                            
+                            //Address text field
+                            AddressTextField()
+                                .padding(.top, 24)
+                                .onTapGesture {
+                                    vm.tapToAddressField()
+                                }
+                            
+                            if vm.addressIsLoading || vm.locationIsLoading{
+                                Color.col_white.opacity(0.01)
                             }
+                        }
                         
                         if !vm.addressError.isEmpty{
                             Text(vm.addressError)
@@ -137,17 +144,19 @@ struct OrderDeliveryView: View {
                                 .background(Color.col_black.opacity(vm.pickupButtonDisable ? 0.3 : 1))
                                 .cornerRadius(12)
                         }
-                        .disabled(vm.pickupButtonDisable)
+                        
                         .padding(.top, 8)
                         .padding(.horizontal, 24)
                         .onTapGesture {
-                            if vm.needToUploadDocuments(){
-                                vm.saveUserData {
-                                    orderNavigationManager.needToShowDocumentCenter = true
-                                }
-                            }else{
-                                vm.saveUserData(){
-                                    orderNavigationManager.showPickUpView = true
+                            if !vm.pickupButtonDisable{
+                                if vm.needToUploadDocuments(){
+                                    vm.saveUserData {
+                                        orderNavigationManager.needToShowDocumentCenter = true
+                                    }
+                                }else{
+                                    vm.saveUserData(){
+                                        orderNavigationManager.showPickUpView = true
+                                    }
                                 }
                             }
                         }
@@ -420,9 +429,9 @@ struct OrderDeliveryView: View {
                         vm.zipCode = zipcode
                         vm.validation()
                         vm.locationIsLoading = false
-                        hideKeyboard()
                     }
-                        
+                    
+                    hideKeyboard()
                 }
             }
             if let predictions = vm.addressListPlaces?.predictions, vm.userAddress.count>=3, vm.showAddressList {
@@ -433,6 +442,7 @@ struct OrderDeliveryView: View {
                         Text("\(item.predictionDescription)")
                             .foregroundColor(.black)
                             .onTapGesture {
+                                vm.addressIsLoading = true
                                 vm.tapToGoogleAddress(placeID: item.placeID)
                                 vm.showAddressList = false
                                 UIApplication.shared.endEditing()

@@ -73,7 +73,7 @@ struct TrackerDropDownView: View {
             }
         }
         .background(Color.col_gray_dropdown_bg
-                        .opacity(showMenu ? 1 : 0)
+            .opacity(showMenu && orderTrackerManager.aviableOrders.count > 1 ? 1 : 0)
                         .cornerRadius(radius: 12, corners: [.bottomLeft, .bottomRight])
                         .cornerRadius(radius: 16, corners: [.topLeft, .topRight])
         )
