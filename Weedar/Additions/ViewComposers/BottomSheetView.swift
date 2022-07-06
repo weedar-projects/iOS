@@ -33,15 +33,6 @@ struct BottomSheetView<Content: View>: View {
              .edgesIgnoringSafeArea(.bottom)
              .ignoresSafeArea(.keyboard)
              .padding(.top, 8)
-             .overlay(
-                 //nftbanner
-             Image("nft_circle")
-                 .resizable()
-                 .frame(width: 87, height: 87)
-                 .padding(.leading, 24)
-                 .offset(x: 0, y: -55)
-                 .opacity(isNft ? 1 : 0)
-                 ,alignment: .topLeading)
         }
     }
 }

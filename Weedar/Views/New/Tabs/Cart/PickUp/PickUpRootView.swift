@@ -8,7 +8,7 @@
 import SwiftUI
 import MapKit
 import SwiftyJSON
-
+import Introspect
 
 struct PickUpRootView: View {
     @StateObject var vm = PickUpRootVM()
@@ -131,6 +131,9 @@ struct PickUpRootView: View {
                         ])
         }
         .customErrorAlert(title: "Ooops", message: vm.alertMessage, isPresented: $vm.showerrorAlert)
+        .introspectNavigationController { navigationController in
+            navigationController.interactivePopGestureRecognizer?.isEnabled = true
+        }
     }
     
     

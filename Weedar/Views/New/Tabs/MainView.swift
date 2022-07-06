@@ -11,6 +11,7 @@ struct MainView: View {
     @EnvironmentObject var tabBarManager: TabBarManager
     @EnvironmentObject var orderTrackerManager: OrderTrackerManager
     @EnvironmentObject var cartManager: CartManager
+    @EnvironmentObject var networkConnection: NetworkConnection
     init(){
         UITabBar.appearance().isHidden = true
     }
@@ -37,7 +38,7 @@ struct MainView: View {
                             }
                     }
                     .opacity(tabBarManager.showOrderTracker ? tabBarManager.detailScrollValue : 0)
-                    .customErrorAlert(title: "Ooops", message: cartManager.messageCartManagerError, isPresented: $cartManager.showCartManagerError)
+                    .customErrorAlert(title: "Ooops", message: networkConnection.isConnected ? cartManager.messageCartManagerError : "No internet connection.\nCheck your network and try again.", isPresented: $cartManager.showCartManagerError)
                     
                     VStack(spacing: 0){
                         
@@ -50,12 +51,12 @@ struct MainView: View {
                                 }
                             }
                         
-                        if tabBarManager.showOrderTracker{
-                            Rectangle()
-                                .fill(Color.col_white.opacity(tabBarManager.showOrderDetailView ? 0.2 : 0))
-                                .frame(height: 1)
-                                .frame(maxWidth: .infinity)
-                        }
+//                        if tabBarManager.showOrderTracker{
+//                            Rectangle()
+//                                .fill(Color.col_white.opacity(tabBarManager.showOrderDetailView ? 0.2 : 0))
+//                                .frame(height: 1)
+//                                .frame(maxWidth: .infinity)
+//                        }
                         
                         CustomTabBarView()
                         

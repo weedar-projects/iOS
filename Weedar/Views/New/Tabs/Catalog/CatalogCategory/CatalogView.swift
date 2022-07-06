@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import Introspect
 
 struct CatalogView: MainLoadViewProtocol {
     
@@ -128,6 +128,9 @@ struct CatalogView: MainLoadViewProtocol {
                 sessionManager.userData { user in
                     vm.showDiscountAlert = user.showDiscountBanner
                 }
+            }
+            .introspectNavigationController { navigationController in
+                navigationController.interactivePopGestureRecognizer?.isEnabled = true
             }
     }
     

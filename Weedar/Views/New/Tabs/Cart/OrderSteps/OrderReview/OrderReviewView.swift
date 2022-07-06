@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
- 
+import Introspect
 
 struct OrderReviewView: View {
     
@@ -166,5 +166,8 @@ struct OrderReviewView: View {
                 .opacity(orderNavigationManager.showOrderSuccessView ? 0 : 1)
             }
         })
+        .introspectNavigationController { navigationController in
+            navigationController.interactivePopGestureRecognizer?.isEnabled = false
+        }
     }
 }

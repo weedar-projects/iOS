@@ -289,10 +289,16 @@ struct ARProductInfo : View {
             
                 HStack {
                     VStack (alignment: .leading) {
+                        
+                        if product.isNft{
+                            Image("nft_mini")
+                                .padding(.top,14)
+                        }
+                        
                         Text(product.brand.name ?? "")
                             .font(.system(size: 14))
                             .foregroundColor(ColorManager.Buttons.buttonTextInactiveColor)
-                            .padding([.top], 16)
+                            .padding([.top], 6)
                  
                         Text(product.name)
                             .font(.system(size: 14))

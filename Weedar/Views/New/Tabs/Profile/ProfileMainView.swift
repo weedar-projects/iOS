@@ -20,6 +20,7 @@ struct ProfileMainView: View {
     @EnvironmentObject var tabBarManager: TabBarManager
     @EnvironmentObject var orderTrackerManager: OrderTrackerManager
     @EnvironmentObject var sessionManager: SessionManager
+    @EnvironmentObject var networkConnection: NetworkConnection
     @StateObject var userIdentificationRootVM = UserIdentificationRootVM()
     var body: some View {
         NavigationView{
@@ -55,7 +56,11 @@ struct ProfileMainView: View {
                     EmptyView()
                 }
                 .isDetailLink(false)
-                
+                .onChange(of: networkConnection.isConnected) { newValue in
+                    if newValue{
+                        vm.showView = false
+                    }
+                }
                 Color.white
                 
                 ScrollView(.vertical, showsIndicators: false) {

@@ -111,13 +111,22 @@ struct RootCoordinator: View {
         .onChange(of: networkConnection.isConnected) { connect in
             if connect{
                 orderTrackerManager.connect()
-                tabBarManager.currentTab = .catalog
-                tabBarManager.showARView = false
-                tabBarManager.refreshNav(tag: .catalog)
-                tabBarManager.refreshNav(tag: .cart)
-                tabBarManager.refreshNav(tag: .profile)
-                if orderTrackerManager.needToShow{
-                    tabBarManager.showOrderTracker = true
+                switch tabBarManager.currentTab{
+                case .catalog:
+                    tabBarManager.refreshNav(tag: .catalog)
+                case .cart:
+                    tabBarManager.refreshNav(tag: .cart)
+                    orderNavigationManager.showDeliveryView = false
+                    orderNavigationManager.showPickUpView = false
+                    orderNavigationManager.showOrderReviewView = false
+                    orderNavigationManager.showOrderSuccessView = false
+                    orderNavigationManager.needToShowDocumentCenter = false
+                case .profile:
+                    tabBarManager.refreshNav(tag: .profile)
+                case .auth:
+                    break
+                case .userIdentififcation:
+                    break
                 }
             }else{
                 orderTrackerManager.disconnect()

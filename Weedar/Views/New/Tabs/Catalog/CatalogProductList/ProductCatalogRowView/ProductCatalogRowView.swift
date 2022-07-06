@@ -43,12 +43,9 @@ struct ProductCatalogRowView: View {
                 )
                 .overlay(
                     //nftbanner
-                    
-                        Image("nft_circle")
-                            .resizable()
-                            .frame(width: 58, height: 58)
-                            .offset(x: -2, y: -8)
+                        Image("nft_mini")
                             .opacity(item.isNft ? 1 : 0)
+                            .padding(11)
                     ,alignment: .topLeading)
                 
             Spacer()
