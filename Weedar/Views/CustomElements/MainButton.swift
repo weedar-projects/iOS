@@ -10,7 +10,7 @@ import SwiftUI
 struct MainButton: View {
       
     @State var title: String = ""
-
+    
     @State var icon: String?
     
     @State var iconSize: CGFloat = 24

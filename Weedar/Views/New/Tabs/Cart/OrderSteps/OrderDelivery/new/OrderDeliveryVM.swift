@@ -112,6 +112,7 @@ class OrderDeliveryVM: ObservableObject {
     
     @Published var messageAlertError = ""
     
+    @Published var pickupButtonDisable = true
     
     @Published var locationIsLoading = false
     
@@ -158,11 +159,13 @@ class OrderDeliveryVM: ObservableObject {
                 userNameTFState = .error
                 userNameError = "Please enter Full name."
                 createOrderButtonIsDisabled = true
+                pickupButtonDisable = true
             }
         }else{
             userNameTFState = .success
             userNameError = ""
             createOrderButtonIsDisabled = false
+            pickupButtonDisable = false
         }
         validateButton()
         self.validationAddress()

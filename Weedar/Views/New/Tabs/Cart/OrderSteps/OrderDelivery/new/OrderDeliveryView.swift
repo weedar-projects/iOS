@@ -128,7 +128,19 @@ struct OrderDeliveryView: View {
                         .padding(.top, 8)
                         .padding(.horizontal, 24)
                     } else {
-                        MainButton(title: "Select store") {
+                        
+                        ZStack{
+                            Text("Select store")
+                                .textCustom(.coreSansC65Bold, 16, Color.col_text_white)
+                                .frame(height: 48)
+                                .frame(maxWidth: .infinity)
+                                .background(Color.col_black.opacity(vm.pickupButtonDisable ? 0.3 : 1))
+                                .cornerRadius(12)
+                        }
+                        .disabled(vm.pickupButtonDisable)
+                        .padding(.top, 8)
+                        .padding(.horizontal, 24)
+                        .onTapGesture {
                             if vm.needToUploadDocuments(){
                                 vm.saveUserData {
                                     orderNavigationManager.needToShowDocumentCenter = true
@@ -139,8 +151,7 @@ struct OrderDeliveryView: View {
                                 }
                             }
                         }
-                        .padding(.top, 8)
-                        .padding(.horizontal, 24)
+                        
                     }
                 }
                 .background(Color.col_white)
