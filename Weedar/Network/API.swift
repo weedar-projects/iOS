@@ -196,8 +196,9 @@ class API{
                                              message: error.localizedDescription)))
             }
         }
+        
+        
     }
-//
 //    enum VersionError: Error {
 //        case invalidResponse, invalidBundleInfo
 //    }

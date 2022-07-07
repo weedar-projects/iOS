@@ -56,7 +56,7 @@ struct ProductModel: Identifiable, Hashable {
     var visible: Bool
     var price, wholesalePrice: Double
     var cbd: Double
-    var aspectRatio: Double?
+    var aspectRatio: Float?
     var animationDuration: Double
     var gramWeight, ounceWeight: Double
     var totalCannabinoids: Double
@@ -86,7 +86,7 @@ struct ProductModel: Identifiable, Hashable {
         self.price = json["price"].doubleValue
         self.wholesalePrice = json["wholesalePrice"].doubleValue
         self.cbd = json["cbd"].doubleValue
-        self.aspectRatio = json["aspectRatio"].doubleValue
+        self.aspectRatio = json["aspectRatio"].floatValue
         self.animationDuration = json["animationDuration"].doubleValue
         self.gramWeight = json["gramWeight"].doubleValue
         self.ounceWeight = json["ounceWeight"].doubleValue

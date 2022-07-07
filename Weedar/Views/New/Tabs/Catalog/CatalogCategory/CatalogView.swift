@@ -140,7 +140,7 @@ struct CatalogView: MainLoadViewProtocol {
                 if networkConnection.isConnected{
                     if vm.categories.isEmpty{
                         self.vm.loadCategories { val in
-                            self.vm.fetchProducts {
+                            self.vm.getProductsForAR {
 //                                self.localModels.fetchProducts {
 //                                    self.localModels.getAllModels()
                                     self.showLoader = false
@@ -156,7 +156,7 @@ struct CatalogView: MainLoadViewProtocol {
                 if isConnected{
                     if vm.categories.isEmpty{
                         self.vm.loadCategories { val in
-                            self.vm.fetchProducts {
+                            self.vm.getProductsForAR {
                                 self.localModels.getProducts(filters: nil) {
                                     self.localModels.getAllModels()
                                     self.showLoader = false
