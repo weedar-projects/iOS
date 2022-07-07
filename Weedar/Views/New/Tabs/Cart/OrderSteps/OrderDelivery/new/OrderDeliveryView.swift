@@ -419,6 +419,7 @@ struct OrderDeliveryView: View {
                 .background(Color.white.frame(width: getRect().width))
                 .onTapGesture {
                     vm.locationIsLoading = true
+                    vm.activateAddressTF()
                     if locationManager.authorisationStatus == .denied{
                         vm.activeAlert = .location
                         vm.showAlert = true
@@ -443,6 +444,7 @@ struct OrderDeliveryView: View {
                             .foregroundColor(.black)
                             .onTapGesture {
                                 vm.addressIsLoading = true
+                                vm.activateAddressTF()
                                 vm.tapToGoogleAddress(placeID: item.placeID)
                                 vm.showAddressList = false
                                 UIApplication.shared.endEditing()

@@ -114,7 +114,7 @@ class OrderDeliveryVM: ObservableObject {
     @Published var messageAlertError = ""
     
     @Published var pickupButtonDisable = true
-    
+
     @Published var locationIsLoading = false
     
     private var oldZipCode = ""
@@ -202,6 +202,19 @@ class OrderDeliveryVM: ObservableObject {
         }
     }
     
+    func activateAddressTF(){
+        DispatchQueue.main.asyncAfter(deadline: .now()+4) {
+            if self.addressIsLoading{
+                self.addressIsLoading = false
+            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()+5) {
+            if self.locationIsLoading{
+                self.locationIsLoading = false
+            }
+        }
+    }
     
    private func checkPickupAvailable(){
        self.addressIsLoading = true
