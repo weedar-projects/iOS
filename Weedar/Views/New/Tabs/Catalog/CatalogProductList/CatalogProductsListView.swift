@@ -152,6 +152,7 @@ struct CatalogProductsListView: View {
                     .background(Image.bg_gradient_main.resizable().frame(width: 60, height: 24).clipShape(Capsule()))
                     .opacity(localModels.currentLoadedModel >= localModels.allModelCount ? 1 : 0.5)
                     .disabled(!(localModels.currentLoadedModel >= localModels.allModelCount))
+                    .opacity(category.id == 8 ? 0 : 1)
                 }
                 .disabled(vm.showFilterView)
                 .overlay(
