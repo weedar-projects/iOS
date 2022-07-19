@@ -15,7 +15,7 @@ struct UserInfoView: View {
     
     var body: some View{
         VStack(alignment: .leading){
-            Text("\(name), \n\(address), \n\(phone)")
+            Text("\(name), \n\(address), \n\(Utils.shared.phoneFormat(phone: phone))")
                 .textDefault()
                 .lineSpacing(4.8)
                 .padding()

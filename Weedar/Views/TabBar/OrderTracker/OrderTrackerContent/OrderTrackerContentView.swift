@@ -103,7 +103,7 @@ struct OrderTrackerContentView: View {
                             Text(currentOrder.partner.address)
                                 .textCustom(.coreSansC45Regular, 14, Color.col_text_white)
                             
-                            Text(currentOrder.partner.phone)
+                            Text(Utils.shared.phoneFormat(phone: currentOrder.partner.phone))
                                 .textCustom(.coreSansC45Regular, 14, Color.col_text_white)
                         }
                         .hLeading()
@@ -119,7 +119,7 @@ struct OrderTrackerContentView: View {
                                 Text("\(orderTrackerManager.currentOrder?.addressLine1 ?? "")")
                                     .textCustom(.coreSansC45Regular, 14, Color.col_text_white)
                                 
-                                Text("\(orderTrackerManager.currentOrder?.phone ?? "")")
+                                Text("\(Utils.shared.phoneFormat(phone:  orderTrackerManager.currentOrder?.phone ?? ""))")
                                     .textCustom(.coreSansC45Regular, 14, Color.col_text_white)
                             }
                             .hLeading()
@@ -148,7 +148,7 @@ struct OrderTrackerContentView: View {
                             }
                         }
                         
-                        if orderTrackerManager.currentOrder?.state ?? 0 !=  7{
+                        if orderTrackerManager.currentOrder?.state ?? 0 != 7{
                             ZStack{
                                 ZStack{
                                     Text("Cancel order")
@@ -160,11 +160,11 @@ struct OrderTrackerContentView: View {
                                 .background(ButtonBGDarkGradient())
                                 
                             }
-                                .padding(.top, 8)
-                                .onTapGesture {
-                                    vm.showCancelAlert.toggle()
-                                }
-                            
+                            .padding(.top, 8)
+                            .onTapGesture {
+                                vm.showCancelAlert = true
+                                CloudLogger().cloudLog(logData: "Show cancel order Alert", logState: .info)
+                            }
                         }
                         Rectangle()
                             .fill(Color.black)
@@ -175,6 +175,16 @@ struct OrderTrackerContentView: View {
                 }
                 .disabled(disableScroll)
                 .padding(.top, 7)
+                .customDefaultAlert(title: "Cancel order?", message: "Do you confirm you want to cancel this order?", isPresented: $vm.showCancelAlert, firstBtn: .default(Text("Close")), secondBtn: .destructive(Text("Cancel"), action: {
+                    vm.loading = true
+                    
+                    AnalyticsManager.instance.event(key: .cancel_order,
+                                                    properties: [.current_status : orderTrackerManager.currentState?.deliveryState.rawValue])
+                    
+                    vm.cancelOrder(orderID: orderTrackerManager.currentOrder?.id ?? 0) {
+                        vm.loading = false
+                    }
+                }))
             }
             
             StateAndDropDounView()
@@ -194,27 +204,6 @@ struct OrderTrackerContentView: View {
         })
         .onChange(of: orderTrackerManager.avaibleCount, perform: { newValue in
             vm.loading = false
-        })
-        .alert(isPresented: $vm.showCancelAlert, content: {
-          Alert(title: Text("Cancel order?"),
-                message: Text("Do you confirm you want to cancel this order?"),
-                primaryButton: .default(Text("Close")),
-                secondaryButton: .destructive(Text("Cancel"),
-                                              action: {
-              vm.loading = true
-              
-              AnalyticsManager.instance.event(key: .cancel_order,
-                                              properties: [.current_status : orderTrackerManager.currentState?.deliveryState.rawValue])
-              
-              vm.cancelOrder(orderID: orderTrackerManager.currentOrder?.id ?? 0) {
-//                  if let firstOrder = orderTrackerManager.aviableOrders.first{
-//                      orderTrackerManager.currentOrder = firstOrder
-//                  }else{
-//                      orderTrackerManager.currentOrder = nil
-//                  }
-                  vm.loading = false
-              }
-          }))
         })
         .actionSheet(isPresented: $vm.showDirectionsView) {
             ActionSheet(title: Text("Select app"),
@@ -295,6 +284,14 @@ struct OrderProductCompactRow: View {
                     .frame(width: 32, height: 32)
                     .mask(Rectangle()
                             .frame(width: 32, height: 32)
+                    )
+                    .overlay(
+                        Image("nft_mini")
+                            .resizable()
+                            .frame(width: 34, height: 18)
+                            .offset(y: -18)
+                            .opacity(data.product.isNft ? 1 : 0)
+                        ,alignment: .top
                     )
             
             VStack(alignment: .leading,spacing: 7){

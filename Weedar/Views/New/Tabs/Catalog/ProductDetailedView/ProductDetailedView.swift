@@ -34,8 +34,19 @@ struct ProductDetailedView: View {
                 }
                 .animation(.none, value: true)
             
+            
             ProductDetailedBodyView(imageSize: $vm.imageSize, scrollOffset: $vm.scrollOffset) {
-                
+                //nftbanner
+                if product.isNft{
+                ZStack{
+                    Image("nft_banner_bg")
+                        .resizable()
+                    Image("nft_banner")
+                        .resizable()
+                }
+                .frame(width: getRect().width, height: 67)
+                .cornerRadius(radius: 12, corners: [.topLeft,.topRight])
+                }
                 //category tree
                 HStack{
                     //category name
@@ -83,6 +94,7 @@ struct ProductDetailedView: View {
             }
             VStack{
                 Spacer()
+                
             AddToCartButton()
                 .padding(.horizontal, 24)
                 .padding(.bottom, tabBarManager.tabBarHeight - 24)
@@ -400,13 +412,15 @@ struct ProductDetailedView: View {
         }
         .onTapGesture {
             vm.notification.notificationOccurred(.success)
-            cartManager.productQuantityInCart(productId: product.id, quantity: .custom(vm.quantity))
-            AnalyticsManager.instance.event(key: .add_cart_prod_card,
-                                            properties: [.category : product.type.name,
-                                                         .product_id: product.id,
-                                                         .product_qty: vm.quantity,
-                                                         .product_price: product.price.formattedString(format: .percent)])
-            vm.chageAddButtonState()
+            cartManager.productQuantityInCart(productId: product.id, quantity: .custom(vm.quantity)){
+                AnalyticsManager.instance.event(key: .add_cart_prod_card,
+                                                properties: [.category : product.type.name,
+                                                             .product_id: product.id,
+                                                             .product_qty: vm.quantity,
+                                                             .product_price: product.price.formattedString(format: .percent)])
+                vm.chageAddButtonState()
+            }
+            
         }.disabled(vm.animProductInCart)
     }
     

@@ -11,7 +11,6 @@ struct PickUpListView: View {
     @StateObject var rootVM: PickUpRootVM
     
     var body: some View{
-        ScrollView(.vertical, showsIndicators: false) {
             ZStack{
                 VStack(alignment: .leading,spacing: 17){
                     ForEach(rootVM.availableStoresList.sorted(by: ({$0.distance < $1.distance}))){store in
@@ -60,22 +59,24 @@ struct PickUpListView: View {
                             }
                         }
                     }
-                }
-                VStack{
-                    Image("productsnotfound")
-                        .resizable()
-                        .frame(width: 109, height: 109)
                     
-                    Text("No stores found.")
-                        .textDefault()
-                        .padding(.top, 18)
                 }
-                .ignoresSafeArea(.keyboard, edges: .all)
-                .padding(.top,48)
-                .opacity(rootVM.emptyStores ? 1 : 0)
+                if rootVM.emptyStores{
+                    VStack{
+                        Image("productsnotfound")
+                            .resizable()
+                            .frame(width: 109, height: 109)
+                        
+                        Text("No stores found.")
+                            .textDefault()
+                            .padding(.top, 18)
+                    }
+                    .ignoresSafeArea(.keyboard, edges: .all)
+                    .padding(.top,48)
+                }
+                
             }.onChange(of: rootVM.availableStores.count) { newValue in
                 rootVM.emptyStores = newValue == 0 ? true : false
             }
-        }
     }
 }

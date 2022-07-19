@@ -30,7 +30,7 @@ struct Product: Codable, Identifiable, Hashable {
     var brand: Brand
     var type, strain: Strain
     var effects: [Effect]
-    
+    var isNft: Bool
     // temp, backend
     func grammWeightDouble() -> Double {
         return gramWeight

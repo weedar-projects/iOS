@@ -53,7 +53,6 @@ struct LoginView: View {
             //Next Button
             RequestButton(state: $vm.nextButtonState,isDisabled: $vm.nextButtonIsDisabled ,title: "welcomeview.welcome_content_next") {
                 vm.userLogin { needToFillData in
-                    
                     sessionManager.userData(withUpdate: true)
                     if needToFillData{
                         UserDefaultsService().set(value: true, forKey: .needToFillUserData)

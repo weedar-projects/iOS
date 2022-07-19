@@ -179,6 +179,7 @@ struct OrderResponseModel: Identifiable {
 //    var detail: [OrderDetail]?
     var userId, detailCount: Int?
     var license: String
+    var orderType: OrderType
     
     init(json: JSON) {
         self.license = json["license"].stringValue
@@ -197,7 +198,7 @@ struct OrderResponseModel: Identifiable {
         self.exciseTaxSum = json["exciseTaxSum"].doubleValue
         self.salesTaxSum = json["salesTaxSum"].doubleValue
         self.cityTaxSum = json["cityTaxSum"].doubleValue
-        self.taxSum = json["taxSum"].doubleValue
+        self.taxSum = json["cityTaxSum"].doubleValue
         self.profitSum = json["profitSum"].doubleValue
         self.createdAt = json["createdAt"].stringValue
         self.state = json["state"].intValue
@@ -210,6 +211,7 @@ struct OrderResponseModel: Identifiable {
         self.detailCount = json["detailCount"].intValue
         self.area = AreaModel(json: json["area"])
         self.partner = PartnerModel(json: json["partner"])
+        self.orderType = json["type"].intValue == 0 ? .delivery : .pickup
     }
 }
 

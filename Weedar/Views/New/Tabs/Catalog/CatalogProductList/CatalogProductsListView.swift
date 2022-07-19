@@ -87,7 +87,6 @@ struct CatalogProductsListView: View {
                     VStack{
                         if filteredProducts(searchText: vm.searchText).count > 0{
                             ForEach(filteredProducts(searchText: vm.searchText), id: \.self){ product in
-                                
                                 ProductCatalogRowView(item: product, productInCartAnimation: $vm.productInCartAnimation)
                                     .padding(.horizontal)
                                     .padding(.vertical, 10)
@@ -153,7 +152,15 @@ struct CatalogProductsListView: View {
                     .background(Image.bg_gradient_main.resizable().frame(width: 60, height: 24).clipShape(Capsule()))
                     .opacity(localModels.currentLoadedModel >= localModels.allModelCount ? 1 : 0.5)
                     .disabled(!(localModels.currentLoadedModel >= localModels.allModelCount))
+                    .opacity(category.id == 8 ? 0 : 1)
                 }
+                .disabled(vm.showFilterView)
+                .overlay(
+                    Color.col_black.opacity(vm.showFilterView ? 0.4 : 0)
+                        .frame(width: 60, height: 24)
+                        .clipShape(Capsule())
+                        .offset(x: 4)
+                )
             }
         }
     }

@@ -15,6 +15,7 @@ struct RootCoordinator: View {
     @EnvironmentObject var coordinatorViewManager: CoordinatorViewManager
     @EnvironmentObject var orderTrackerManager: OrderTrackerManager
     @EnvironmentObject var networkConnection: NetworkConnection
+    @EnvironmentObject var cartManager: CartManager
     
     @ObservedObject var registerStepsVM = UserIdentificationRootVM()
     
@@ -44,7 +45,9 @@ struct RootCoordinator: View {
                 MainView()
                     .environmentObject(orderTrackerManager)
                     .environmentObject(orderNavigationManager)
+                    
             }
+            
             if needToUpdate{
                 ForceUpdateScreenView()
             }
@@ -108,12 +111,28 @@ struct RootCoordinator: View {
         .onChange(of: networkConnection.isConnected) { connect in
             if connect{
                 orderTrackerManager.connect()
-                tabBarManager.currentTab = .catalog
+                switch tabBarManager.currentTab{
+                case .catalog:
+                    tabBarManager.refreshNav(tag: .catalog)
+                case .cart:
+                    tabBarManager.refreshNav(tag: .cart)
+                    orderNavigationManager.showDeliveryView = false
+                    orderNavigationManager.showPickUpView = false
+                    orderNavigationManager.showOrderReviewView = false
+                    orderNavigationManager.showOrderSuccessView = false
+                    orderNavigationManager.needToShowDocumentCenter = false
+                case .profile:
+                    tabBarManager.refreshNav(tag: .profile)
+                case .auth:
+                    break
+                case .userIdentififcation:
+                    break
+                }
             }else{
                 orderTrackerManager.disconnect()
+                orderNavigationManager.needToShowDocumentCenter = false
             }
         }
-
     }
     
     func getOrderState(id: Int, openInOrderTracker: @escaping (Bool) -> Void){

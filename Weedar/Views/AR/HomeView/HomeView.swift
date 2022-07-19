@@ -284,14 +284,22 @@ struct ARProductInfo : View {
     @Binding var opacity: Double
     
     var body: some View {
-        BottomSheetView(blur: 4.0, backgroundColor: Color.black.opacity(0.4)) {
-            if let product = ProductsViewModel.shared.getProduct(id: product.id) {
+        if let product = ProductsViewModel.shared.getProduct(id: product.id) {
+            BottomSheetView(blur: 4.0, backgroundColor: Color.black.opacity(0.4), isNft: product.isNft) {
+            
                 HStack {
                     VStack (alignment: .leading) {
+                        
+                        if product.isNft{
+                            Image("nft_mini")
+                                .padding(.top,14)
+                        }
+                        
                         Text(product.brand.name ?? "")
                             .font(.system(size: 14))
                             .foregroundColor(ColorManager.Buttons.buttonTextInactiveColor)
-                            .padding([.top], 16)
+                            .padding([.top], 6)
+                 
                         Text(product.name)
                             .font(.system(size: 14))
                             .foregroundColor(.white)
@@ -329,10 +337,11 @@ struct ARProductInfo : View {
                     Button(action: {
                         UINotificationFeedbackGenerator().notificationOccurred(.success)
                         
-                        cartManager.productQuantityInCart(productId: product.id, quantity: .add)
-                        AnalyticsManager.instance.event(key: .add_cart_ar, properties: [.category : product.type.name,
-                                                                                        .product_id : product.id,
-                                                                                        .product_price : product.price.formattedString(format: .percent)])
+                        cartManager.productQuantityInCart(productId: product.id, quantity: .add){
+                            AnalyticsManager.instance.event(key: .add_cart_ar, properties: [.category : product.type.name,
+                                                                                            .product_id : product.id,
+                                                                                            .product_price : product.price.formattedString(format: .percent)])
+                        }
                     }){
                         ZStack{
                             Image.bg_gradient_main
@@ -351,8 +360,10 @@ struct ARProductInfo : View {
                 .padding(.bottom, getSafeArea().bottom + 75)
                 .padding([.trailing, .leading], 24)
                 .opacity(opacity)
-            }
+            
         }
+        }
+   
     }
 }
 

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import Introspect
 
 struct CatalogView: MainLoadViewProtocol {
     
@@ -129,6 +129,9 @@ struct CatalogView: MainLoadViewProtocol {
                     vm.showDiscountAlert = user.showDiscountBanner
                 }
             }
+            .introspectNavigationController { navigationController in
+                navigationController.interactivePopGestureRecognizer?.isEnabled = true
+            }
     }
     
     var loader: some View{
@@ -137,7 +140,7 @@ struct CatalogView: MainLoadViewProtocol {
                 if networkConnection.isConnected{
                     if vm.categories.isEmpty{
                         self.vm.loadCategories { val in
-                            self.vm.fetchProducts {
+                            self.vm.getProductsForAR {
 //                                self.localModels.fetchProducts {
 //                                    self.localModels.getAllModels()
                                     self.showLoader = false
@@ -153,7 +156,7 @@ struct CatalogView: MainLoadViewProtocol {
                 if isConnected{
                     if vm.categories.isEmpty{
                         self.vm.loadCategories { val in
-                            self.vm.fetchProducts {
+                            self.vm.getProductsForAR {
                                 self.localModels.getProducts(filters: nil) {
                                     self.localModels.getAllModels()
                                     self.showLoader = false

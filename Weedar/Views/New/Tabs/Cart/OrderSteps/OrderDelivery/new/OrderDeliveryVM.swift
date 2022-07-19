@@ -11,13 +11,14 @@ import SwiftyJSON
 import Alamofire
 import CoreLocation
 
+
+enum OrderType{
+    case none
+    case pickup
+    case delivery
+}
+
 class OrderDeliveryVM: ObservableObject {
-    
-    enum OrderType{
-        case none
-        case pickup
-        case delivery
-    }
     
     enum PickupState{
         case none
@@ -67,6 +68,7 @@ class OrderDeliveryVM: ObservableObject {
             validateButton()
         }
     }
+    @Published var addressIsLoading = false
     
     @Published var addressStrokeColor = Color.col_borders
     @Published var addressError = ""
@@ -111,7 +113,8 @@ class OrderDeliveryVM: ObservableObject {
     
     @Published var messageAlertError = ""
     
-    
+    @Published var pickupButtonDisable = true
+
     @Published var locationIsLoading = false
     
     private var oldZipCode = ""
@@ -121,11 +124,11 @@ class OrderDeliveryVM: ObservableObject {
     var descriptionText: String {
         switch currentOrderType {
         case .none:
-            return "Enter your address or select 'Use my current location'. Available options will be shown - delivery, pick up, or both. Then choose an option you want."
+            return ""
         case .pickup:
-            return "Order will be ready in 15 minutes for pick up in the store. Budtender will ask you to show your ID and tell them your order number."
+            return "On average order is ready for pick up in 15 minutes."
         case .delivery:
-            return "Incorrectly entered address  may delay your order, so please double check for misprints. Do not enter specific dispatch instruction in any of address fields."
+            return "Incorrectly entered address may delay your order."
         }
     }
     
@@ -152,18 +155,22 @@ class OrderDeliveryVM: ObservableObject {
     }
     
     func validation(appear: Bool = false){
-        if userName.isEmpty{
+        if userName.isEmptyOrWhitespace() {
             if !appear{
                 userNameTFState = .error
                 userNameError = "Please enter Full name."
                 createOrderButtonIsDisabled = true
+                pickupButtonDisable = true
             }
         }else{
             userNameTFState = .success
             userNameError = ""
             createOrderButtonIsDisabled = false
+            pickupButtonDisable = false
         }
+        
         validateButton()
+        
         self.validationAddress()
     }
     
@@ -180,6 +187,7 @@ class OrderDeliveryVM: ObservableObject {
                         self.addressError = "We do not deliver to this zip-code yet."
                         self.userAddressTFState = .error
                         self.pickupState = .notAvailable
+                        self.addressIsLoading = false
                     }
                 })
             }
@@ -194,8 +202,22 @@ class OrderDeliveryVM: ObservableObject {
         }
     }
     
+    func activateAddressTF(){
+        DispatchQueue.main.asyncAfter(deadline: .now()+4) {
+            if self.addressIsLoading{
+                self.addressIsLoading = false
+            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()+5) {
+            if self.locationIsLoading{
+                self.locationIsLoading = false
+            }
+        }
+    }
     
    private func checkPickupAvailable(){
+       self.addressIsLoading = true
         API.shared.request(rout: .getAllStores, method: .get) { result in
             switch result{
             case let .success(json):
@@ -216,7 +238,9 @@ class OrderDeliveryVM: ObservableObject {
                     self.pickUpAvailable = false
                     self.pickupState = .notAvailable
                 }
+                self.addressIsLoading = false
             case let .failure(_):
+                self.addressIsLoading = false
                 self.pickUpAvailable = false
                 self.pickupState = .notAvailable
             }
@@ -492,7 +516,7 @@ extension OrderDeliveryVM{
         case.none:
             return ""
         case .pickup:
-            return "Our budtender will ask you to show your ID \nto verify your identity and age"
+            return "Pick up partner will ask you to show your ID \nto verify your identity and age"
         case .delivery:
             return "Our courier will ask you to show your ID \nto verify your identity and age"
         }

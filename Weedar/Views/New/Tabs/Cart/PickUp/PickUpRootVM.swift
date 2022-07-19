@@ -17,6 +17,7 @@ class PickUpRootVM: ObservableObject{
     @Published var selectedRadius: Double = 20{
         didSet{
             self.getStores(radius: selectedRadius)
+            self.selectedStore = nil
         }
     }
     @Published var showStoreInfo = false

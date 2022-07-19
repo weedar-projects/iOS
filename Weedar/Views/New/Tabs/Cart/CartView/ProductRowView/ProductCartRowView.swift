@@ -51,13 +51,18 @@ struct ProductCartRowView: View {
                     .scaledToFit()
                     .frame(width: vm.itemViewHeight ,height: vm.itemViewHeight)
                     .mask(Rectangle()
-                            .frame(height: vm.itemViewHeight)
-                            .cornerRadius(24)
+                        .frame(height: vm.itemViewHeight)
+                        .cornerRadius(24)
                     )
                     .cornerRadius(24)
                     .overlay(RoundedRectangle(cornerRadius: 24)
-                                .strokeBorder(Color.col_borders.opacity(0.5), lineWidth: 2))
-                
+                        .strokeBorder(Color.col_borders.opacity(0.5), lineWidth: 2))
+                    .overlay(
+                        //nftbanner
+                        Image("nft_mini")
+                            .opacity(item.isNft ? 1 : 0)
+                            .padding(11)
+                        ,alignment: .topLeading)
                 Spacer()
                 
                 //product info

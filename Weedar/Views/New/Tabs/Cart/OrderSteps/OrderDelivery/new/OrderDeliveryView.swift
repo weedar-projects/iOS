@@ -45,7 +45,7 @@ struct OrderDeliveryView: View {
                                 .animation(.none, value: vm.currentOrderType)
                                 .vTop()
                         }
-                        .frame(height: 70)
+                        .frame(height: 45)
                         .padding(.horizontal, 24)
                         .padding(.top, 12)
                         .hLeading()
@@ -66,12 +66,19 @@ struct OrderDeliveryView: View {
                                 .hLeading()
                         }
                         
-                        //Address text field
-                        AddressTextField()
-                            .padding(.top, 24)
-                            .onTapGesture {
-                                vm.tapToAddressField()
+                        ZStack{
+                            
+                            //Address text field
+                            AddressTextField()
+                                .padding(.top, 24)
+                                .onTapGesture {
+                                    vm.tapToAddressField()
+                                }
+                            
+                            if vm.addressIsLoading || vm.locationIsLoading{
+                                Color.col_white.opacity(0.01)
                             }
+                        }
                         
                         if !vm.addressError.isEmpty{
                             Text(vm.addressError)
@@ -128,19 +135,32 @@ struct OrderDeliveryView: View {
                         .padding(.top, 8)
                         .padding(.horizontal, 24)
                     } else {
-                        MainButton(title: "Select store") {
-                            if vm.needToUploadDocuments(){
-                                vm.saveUserData {
-                                    orderNavigationManager.needToShowDocumentCenter = true
-                                }
-                            }else{
-                                vm.saveUserData(){
-                                    orderNavigationManager.showPickUpView = true
+                        
+                        ZStack{
+                            Text("Select store")
+                                .textCustom(.coreSansC65Bold, 16, Color.col_text_white)
+                                .frame(height: 48)
+                                .frame(maxWidth: .infinity)
+                                .background(Color.col_black.opacity(vm.pickupButtonDisable ? 0.3 : 1))
+                                .cornerRadius(12)
+                        }
+                        
+                        .padding(.top, 8)
+                        .padding(.horizontal, 24)
+                        .onTapGesture {
+                            if !vm.pickupButtonDisable{
+                                if vm.needToUploadDocuments(){
+                                    vm.saveUserData {
+                                        orderNavigationManager.needToShowDocumentCenter = true
+                                    }
+                                }else{
+                                    vm.saveUserData(){
+                                        orderNavigationManager.showPickUpView = true
+                                    }
                                 }
                             }
                         }
-                        .padding(.top, 8)
-                        .padding(.horizontal, 24)
+                        
                     }
                 }
                 .background(Color.col_white)
@@ -153,16 +173,16 @@ struct OrderDeliveryView: View {
         .navigationBarBackButtonHidden(true)
         .toolbar(content: {
             ToolbarItem(placement: .navigationBarLeading) {
-                ZStack{
-                    Image("backNavBtn")
-                        .resizable()
-                        .frame(width: 14, height: 14)
-                }
-                .onTapGesture {
+                Button {
                     if !vm.disableNavButton{
                         tabBarManager.show()
                         self.mode.wrappedValue.dismiss()
                     }
+                } label: {
+                    Image("backNavBtn")
+                        .resizable()
+                        .frame(width: 14, height: 14)
+                        .padding(10)
                 }
             }
         })
@@ -399,6 +419,7 @@ struct OrderDeliveryView: View {
                 .background(Color.white.frame(width: getRect().width))
                 .onTapGesture {
                     vm.locationIsLoading = true
+                    vm.activateAddressTF()
                     if locationManager.authorisationStatus == .denied{
                         vm.activeAlert = .location
                         vm.showAlert = true
@@ -409,9 +430,9 @@ struct OrderDeliveryView: View {
                         vm.zipCode = zipcode
                         vm.validation()
                         vm.locationIsLoading = false
-                        hideKeyboard()
                     }
-                        
+                    
+                    hideKeyboard()
                 }
             }
             if let predictions = vm.addressListPlaces?.predictions, vm.userAddress.count>=3, vm.showAddressList {
@@ -422,6 +443,8 @@ struct OrderDeliveryView: View {
                         Text("\(item.predictionDescription)")
                             .foregroundColor(.black)
                             .onTapGesture {
+                                vm.addressIsLoading = true
+                                vm.activateAddressTF()
                                 vm.tapToGoogleAddress(placeID: item.placeID)
                                 vm.showAddressList = false
                                 UIApplication.shared.endEditing()

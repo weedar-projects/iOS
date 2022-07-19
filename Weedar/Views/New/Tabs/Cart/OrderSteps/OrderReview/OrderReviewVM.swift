@@ -13,8 +13,10 @@ class OrderReviewVM: ObservableObject {
     @Published var buttonIsDisabled = false
     @Published var disableNavButton = false
     @Published var showAlert = false
+    @Published var alerMessage = ""
     @Published var showSuccessView = false
     @Published var showLoading = false
+    
     
     func confirmOrder(orderDetailsReview : OrderDetailsReview, finished: @escaping(Bool) -> Void) {
         
@@ -27,7 +29,7 @@ class OrderReviewVM: ObservableObject {
                     finished(true)
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                self.alerMessage = error.message
                 finished(false)
             }
         })

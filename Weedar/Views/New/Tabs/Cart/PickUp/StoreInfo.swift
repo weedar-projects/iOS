@@ -87,7 +87,7 @@ struct StoreInfo: View{
                                 rootVM.showDirectionsView = true
                             }
                             
-                            MainButton(title: "Done") {
+                            MainButton(title: "Review Order") {
                                 rootVM.makeOrder { order in
                                     orderNavigationManager.currentCreatedOrder = rootVM.getCreatedOrder(order: order)
                                     orderNavigationManager.orderType = .pickup

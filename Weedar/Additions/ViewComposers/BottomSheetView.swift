@@ -11,18 +11,21 @@ struct BottomSheetView<Content: View>: View {
     let content: Content
     var backgroundColor = Color.white
     var blur: CGFloat = 0.0
+    var isNft: Bool = false
 
-    init(blur: CGFloat = 0.0, backgroundColor: Color = Color.white, @ViewBuilder content: () -> Content) {
+    init(blur: CGFloat = 0.0, backgroundColor: Color = Color.white, isNft: Bool ,@ViewBuilder content: () -> Content) {
         self.content = content()
         self.blur = blur
         self.backgroundColor = backgroundColor
+        self.isNft = isNft
     }
     
     var body: some View {
         VStack {
             Spacer()
             VStack {
-                content.padding(.bottom, 16)
+                content
+                    .padding(.bottom, 16)
             }
             .background(backgroundColor)
             .background(blur > 0.0 ? Blur(style: .systemUltraThinMaterialDark) : Blur(style: .extraLight))

@@ -72,6 +72,7 @@ class ProductManager {
             if isModelNeedsLoading(for: anchor) {
                 anchor.isEnabled = false
                 let modelID = getModelIDToLoad(forPie: pie)
+                print("modelID: \(modelID)")
                 if let product = ProductsViewModel.shared.getProduct(id: modelID) {
                     print("--- --- ---")
                     print("modelID: \(modelID)")
@@ -79,6 +80,8 @@ class ProductManager {
                         print("LOADED MODELS \(loadedModels)\n QUEU: \(queue)")
                         self.asyncLoad(name: product.modelHighQualityLink, id: modelID, for: anchor, product: product)
                     }
+                }else{
+                    print("fail to load: \(modelID)")
                 }
             }
         } else {
@@ -205,7 +208,7 @@ class ProductManager {
             })
     }
     
-    private func asyncLoad(name: String, id: Int, for anchor: ModelEntity, product: Product) {
+    private func asyncLoad(name: String, id: Int, for anchor: ModelEntity, product: ProductModel) {
         var cancellable: AnyCancellable? = nil
         
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String

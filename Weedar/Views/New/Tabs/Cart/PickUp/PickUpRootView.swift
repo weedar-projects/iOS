@@ -8,7 +8,7 @@
 import SwiftUI
 import MapKit
 import SwiftyJSON
-
+import Introspect
 
 struct PickUpRootView: View {
     @StateObject var vm = PickUpRootVM()
@@ -69,9 +69,10 @@ struct PickUpRootView: View {
                                 PickUpListView(rootVM: vm)
                                     .transition(.fade)
                             }else{
-                                
                                 PickUpMapView(rootVM: vm)
+                                    .transition(.fade)
                             }
+                            
                             Rectangle()
                                 .fill(Color.white)
                                 .frame(width: 10, height: 1)
@@ -101,6 +102,7 @@ struct PickUpRootView: View {
                     .transition(.move(edge: .bottom))
             }
         }
+        .edgesIgnoringSafeArea(.bottom)
         .navBarSettings("Select a store")
         .onAppear{
             sessionManager.userData(withUpdate: true) { user in
@@ -131,6 +133,9 @@ struct PickUpRootView: View {
                         ])
         }
         .customErrorAlert(title: "Ooops", message: vm.alertMessage, isPresented: $vm.showerrorAlert)
+        .introspectNavigationController { navigationController in
+            navigationController.interactivePopGestureRecognizer?.isEnabled = true
+        }
     }
     
     

@@ -29,7 +29,7 @@ class OrderTrackerManager: ObservableObject, WebSocketDelegate{
                                deliveryState: .inDelivery,
                                pickupState: .available,
                                colors: [Color.col_gradient_blue_first, Color.col_gradient_blue_second],
-                               deliveryText: "Our courier is on the way to you",
+                               deliveryText: "The courier is on the way to you.",
                                pickupText: "Your order is available for pick up now."),
         OrderTrackerStateModel(id: 3,
                                deliveryState: .delivered,

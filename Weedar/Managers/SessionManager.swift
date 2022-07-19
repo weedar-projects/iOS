@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftyJSON
 import Amplitude
+import SwiftyBeaver
 
 class SessionManager: ObservableObject {
     
