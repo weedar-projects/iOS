@@ -124,6 +124,21 @@
 		2F8B4FFD27DD0F0F006662D2 /* FLAnimatedImage in Frameworks */ = {isa = PBXBuildFile; productRef = 2F8B4FFC27DD0F0F006662D2 /* FLAnimatedImage */; };
 		2F9D789628869D37005F2901 /* ARGameMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9D789528869D37005F2901 /* ARGameMainView.swift */; };
 		2F9D789928869DC1005F2901 /* ModelsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9D789828869DC1005F2901 /* ModelsViewModel.swift */; };
+		2F9D789C2886AA26005F2901 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9D789B2886AA26005F2901 /* Model.swift */; };
+		2F9D789E2886AA79005F2901 /* FirebaseStorageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9D789D2886AA79005F2901 /* FirebaseStorageHelper.swift */; };
+		2FA3E5792886AF1500058CB9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3E5782886AF1500058CB9 /* SettingsView.swift */; };
+		2FA3E57B2886AFBD00058CB9 /* SessionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3E57A2886AFBD00058CB9 /* SessionSettings.swift */; };
+		2FA3E57D2886AFF800058CB9 /* PlacementSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3E57C2886AFF800058CB9 /* PlacementSettings.swift */; };
+		2FA3E57F2886B03100058CB9 /* SceneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3E57E2886B03100058CB9 /* SceneManager.swift */; };
+		2FA3E5812886B06500058CB9 /* ModelDeletionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3E5802886B06500058CB9 /* ModelDeletionManager.swift */; };
+		2FA3E5832886B0AF00058CB9 /* ARGameContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3E5822886B0AF00058CB9 /* ARGameContentView.swift */; };
+		2FA3E5852886B0D500058CB9 /* ARGameViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3E5842886B0D500058CB9 /* ARGameViewContainer.swift */; };
+		2FA3E5872886B13400058CB9 /* CustomGameARView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3E5862886B13400058CB9 /* CustomGameARView.swift */; };
+		2FA3E58A2886B2AB00058CB9 /* ScenePersistenceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3E5892886B2AB00058CB9 /* ScenePersistenceHelper.swift */; };
+		2FA3E58D2886B3B500058CB9 /* PlacmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3E58C2886B3B500058CB9 /* PlacmentView.swift */; };
+		2FA3E58F2886B3DD00058CB9 /* DeletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3E58E2886B3DD00058CB9 /* DeletionView.swift */; };
+		2FA3E5912886B41B00058CB9 /* ControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3E5902886B41B00058CB9 /* ControlView.swift */; };
+		2FA3E5932886B45100058CB9 /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA3E5922886B45100058CB9 /* BrowseView.swift */; };
 		2FA59F792832F224001597C2 /* LoadingScreenCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA59F782832F224001597C2 /* LoadingScreenCart.swift */; };
 		2FA5C21227E7DD6100289756 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5C21127E7DD6100289756 /* AddressView.swift */; };
 		2FA5C21627E8C71E00289756 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5C21527E8C71E00289756 /* SessionManager.swift */; };
@@ -419,6 +434,21 @@
 		2F8B4FF927DD0CC7006662D2 /* catalog_ar_gif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = catalog_ar_gif.gif; sourceTree = "<group>"; };
 		2F9D789528869D37005F2901 /* ARGameMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARGameMainView.swift; sourceTree = "<group>"; };
 		2F9D789828869DC1005F2901 /* ModelsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelsViewModel.swift; sourceTree = "<group>"; };
+		2F9D789B2886AA26005F2901 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		2F9D789D2886AA79005F2901 /* FirebaseStorageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageHelper.swift; sourceTree = "<group>"; };
+		2FA3E5782886AF1500058CB9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		2FA3E57A2886AFBD00058CB9 /* SessionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSettings.swift; sourceTree = "<group>"; };
+		2FA3E57C2886AFF800058CB9 /* PlacementSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacementSettings.swift; sourceTree = "<group>"; };
+		2FA3E57E2886B03100058CB9 /* SceneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneManager.swift; sourceTree = "<group>"; };
+		2FA3E5802886B06500058CB9 /* ModelDeletionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDeletionManager.swift; sourceTree = "<group>"; };
+		2FA3E5822886B0AF00058CB9 /* ARGameContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARGameContentView.swift; sourceTree = "<group>"; };
+		2FA3E5842886B0D500058CB9 /* ARGameViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARGameViewContainer.swift; sourceTree = "<group>"; };
+		2FA3E5862886B13400058CB9 /* CustomGameARView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGameARView.swift; sourceTree = "<group>"; };
+		2FA3E5892886B2AB00058CB9 /* ScenePersistenceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenePersistenceHelper.swift; sourceTree = "<group>"; };
+		2FA3E58C2886B3B500058CB9 /* PlacmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacmentView.swift; sourceTree = "<group>"; };
+		2FA3E58E2886B3DD00058CB9 /* DeletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletionView.swift; sourceTree = "<group>"; };
+		2FA3E5902886B41B00058CB9 /* ControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlView.swift; sourceTree = "<group>"; };
+		2FA3E5922886B45100058CB9 /* BrowseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseView.swift; sourceTree = "<group>"; };
 		2FA59F782832F224001597C2 /* LoadingScreenCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreenCart.swift; sourceTree = "<group>"; };
 		2FA5C21127E7DD6100289756 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		2FA5C21527E8C71E00289756 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
@@ -1138,8 +1168,12 @@
 		2F9D789428869BF1005F2901 /* ARGame */ = {
 			isa = PBXGroup;
 			children = (
+				2FA3E58B2886B39D00058CB9 /* Views */,
+				2FA3E5882886B2A100058CB9 /* Utils */,
+				2F9D789A2886AA1D005F2901 /* Models */,
 				2F9D789728869D9B005F2901 /* Environments */,
 				2F9D789528869D37005F2901 /* ARGameMainView.swift */,
+				2FA3E5842886B0D500058CB9 /* ARGameViewContainer.swift */,
 			);
 			path = ARGame;
 			sourceTree = "<group>";
@@ -1148,8 +1182,43 @@
 			isa = PBXGroup;
 			children = (
 				2F9D789828869DC1005F2901 /* ModelsViewModel.swift */,
+				2FA3E57A2886AFBD00058CB9 /* SessionSettings.swift */,
+				2FA3E57C2886AFF800058CB9 /* PlacementSettings.swift */,
+				2FA3E57E2886B03100058CB9 /* SceneManager.swift */,
+				2FA3E5802886B06500058CB9 /* ModelDeletionManager.swift */,
 			);
 			path = Environments;
+			sourceTree = "<group>";
+		};
+		2F9D789A2886AA1D005F2901 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2F9D789B2886AA26005F2901 /* Model.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2FA3E5882886B2A100058CB9 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2FA3E5892886B2AB00058CB9 /* ScenePersistenceHelper.swift */,
+				2F9D789D2886AA79005F2901 /* FirebaseStorageHelper.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		2FA3E58B2886B39D00058CB9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2FA3E5822886B0AF00058CB9 /* ARGameContentView.swift */,
+				2FA3E5862886B13400058CB9 /* CustomGameARView.swift */,
+				2FA3E5782886AF1500058CB9 /* SettingsView.swift */,
+				2FA3E58C2886B3B500058CB9 /* PlacmentView.swift */,
+				2FA3E58E2886B3DD00058CB9 /* DeletionView.swift */,
+				2FA3E5902886B41B00058CB9 /* ControlView.swift */,
+				2FA3E5922886B45100058CB9 /* BrowseView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		2FC9F24C2862056800BF1BF4 /* new */ = {
@@ -1827,14 +1896,14 @@
 			);
 			mainGroup = 4D7464DF26B8830300CE8A62;
 			packageReferences = (
-				2FAAFD4F27C4E827008D4729 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI.git" */,
-				2F4252E927DA619F00DE2041 /* XCRemoteSwiftPackageReference "SwiftyJSON.git" */,
-				2F8B4FFB27DD0F0F006662D2 /* XCRemoteSwiftPackageReference "FLAnimatedImage.git" */,
-				2FE21E56280049A8004B0057 /* XCRemoteSwiftPackageReference "ScrollableImage.git" */,
+				2FAAFD4F27C4E827008D4729 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				2F4252E927DA619F00DE2041 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				2F8B4FFB27DD0F0F006662D2 /* XCRemoteSwiftPackageReference "FLAnimatedImage" */,
+				2FE21E56280049A8004B0057 /* XCRemoteSwiftPackageReference "ScrollableImage" */,
 				2F60BA26280F4310002B6670 /* XCRemoteSwiftPackageReference "FocusEntity" */,
-				2FC63CE9281ABD6F00A5EE18 /* XCRemoteSwiftPackageReference "Starscream.git" */,
+				2FC63CE9281ABD6F00A5EE18 /* XCRemoteSwiftPackageReference "Starscream" */,
 				2F7D4AD8283FE2EC0097C2ED /* XCRemoteSwiftPackageReference "ToastUI" */,
-				2F343333287345BD00136A05 /* XCRemoteSwiftPackageReference "SwiftyBeaver.git" */,
+				2F343333287345BD00136A05 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 			);
 			productRefGroup = 4D7464E926B8830300CE8A62 /* Products */;
 			projectDirPath = "";
@@ -1968,9 +2037,11 @@
 				845B8D0426D6BC56000B3E80 /* GooglePlace.swift in Sources */,
 				E350D9F726B99DF7007B5265 /* NavigationBarUtils.swift in Sources */,
 				B1260384270C37C6006B1C0A /* TabBarPage.swift in Sources */,
+				2FA3E5932886B45100058CB9 /* BrowseView.swift in Sources */,
 				B1D83D0C2715E313004FC914 /* String+Extensions.swift in Sources */,
 				4DED3CFB27049999009AD3AD /* ProductQuickLookController.swift in Sources */,
 				2FDD788A280449330071366B /* ProfileMainVM.swift in Sources */,
+				2FA3E57B2886AFBD00058CB9 /* SessionSettings.swift in Sources */,
 				2F2AA74B27DB63BD00AB6C57 /* EmptyCartVM.swift in Sources */,
 				2FC9F2492861BC9C00BF1BF4 /* LocationManager.swift in Sources */,
 				2FA5C21227E7DD6100289756 /* AddressView.swift in Sources */,
@@ -2021,6 +2092,7 @@
 				2FCEFF0A2813EFBD00D00AEE /* OrderTrackerContentVM.swift in Sources */,
 				2F3BEDBB27E3624400298399 /* CatalogProductsListView.swift in Sources */,
 				2FE21E5528002AAE004B0057 /* ImagesFullScreenVM.swift in Sources */,
+				2FA3E5792886AF1500058CB9 /* SettingsView.swift in Sources */,
 				845B8CF826D5C34F000B3E80 /* SupportRepository.swift in Sources */,
 				2F67C0AB27CD900400BE8518 /* ResetPasswordVM.swift in Sources */,
 				2F60BA25280F328E002B6670 /* ARMainCarouselView.swift in Sources */,
@@ -2044,9 +2116,11 @@
 				2F07D411284977C2005D60CC /* ChangePhoneView.swift in Sources */,
 				2F67C09427CD520600BE8518 /* CustomSecureTextField.swift in Sources */,
 				2F57087927DF4985004751BA /* ProductCompactRow.swift in Sources */,
+				2FA3E58D2886B3B500058CB9 /* PlacmentView.swift in Sources */,
 				B1FD5AE826FB3EF300F7A77F /* ImagePickerWrapper.swift in Sources */,
 				2F4252E027D9082200DE2041 /* RootCoordinator.swift in Sources */,
 				2F60BA4A280F7E2C002B6670 /* UserInfoView.swift in Sources */,
+				2FA3E5912886B41B00058CB9 /* ControlView.swift in Sources */,
 				B129D46E26F23EA0004B7E00 /* TextModifier.swift in Sources */,
 				2F1FA1CC2860EFC2001CB50D /* StoreModel.swift in Sources */,
 				B16B2F2326F8B1CD00C5E456 /* NSObject+Extensions.swift in Sources */,
@@ -2054,6 +2128,7 @@
 				B136EF1A270EF4160008F89A /* URL+Extensions.swift in Sources */,
 				E3ED873126E7916F005748B0 /* OrderRepositoryProtocol.swift in Sources */,
 				81F19A962722D4BD00176518 /* ShimmerView.swift in Sources */,
+				2F9D789E2886AA79005F2901 /* FirebaseStorageHelper.swift in Sources */,
 				2FCF7F2B27F4E5CF00DD425A /* CatalogCategoryModel.swift in Sources */,
 				2F3BEDAD27E22FB100298399 /* CartManager.swift in Sources */,
 				2F1FA1C42860EF73001CB50D /* PickUpMapView.swift in Sources */,
@@ -2071,6 +2146,7 @@
 				E350D9EC26B9993F007B5265 /* LoginModel.swift in Sources */,
 				E342898826CD926B00F1EB6E /* LoadingView.swift in Sources */,
 				B185F67126F4E1650003E485 /* ActivityView.swift in Sources */,
+				2F9D789C2886AA26005F2901 /* Model.swift in Sources */,
 				B1C93DE5270C9674006A1C39 /* LocalStatusBarStyle.swift in Sources */,
 				2F3433372873477700136A05 /* CloudLogger.swift in Sources */,
 				84E8D8AB26DE4EB600353825 /* Blur.swift in Sources */,
@@ -2084,6 +2160,7 @@
 				4D51165C26C40CF300E5D0BF /* CarouselARView.swift in Sources */,
 				845B8CFA26D5C3C4000B3E80 /* SupportModel.swift in Sources */,
 				2FE34C3928491CD90097BBFA /* ChangePasswordView.swift in Sources */,
+				2FA3E57D2886AFF800058CB9 /* PlacementSettings.swift in Sources */,
 				845B8D0226D6BC4B000B3E80 /* GooglePlaceRepository.swift in Sources */,
 				2FF9996428045BBE00F22BEB /* MyOrdersListVM.swift in Sources */,
 				2F57087127DEA621004751BA /* AvailabilityDeliveryView.swift in Sources */,
@@ -2094,6 +2171,7 @@
 				B129D46326F22841004B7E00 /* Enums.swift in Sources */,
 				2FF9996E2805BDF600F22BEB /* LoadingDocumentCenterView.swift in Sources */,
 				2F60BA7628104854002B6670 /* CartProduct.swift in Sources */,
+				2FA3E5852886B0D500058CB9 /* ARGameViewContainer.swift in Sources */,
 				2FA59F792832F224001597C2 /* LoadingScreenCart.swift in Sources */,
 				2FE21E3D27FBB408004B0057 /* PriceSlider.swift in Sources */,
 				2FCF7F3027F4F8E900DD425A /* ProductModel.swift in Sources */,
@@ -2103,6 +2181,7 @@
 				E3FBC63926C2DDE5004402ED /* ProductRepository.swift in Sources */,
 				E350D9FB26B99E6C007B5265 /* ColorManager.swift in Sources */,
 				E3FBC64026C32A6E004402ED /* KeychainService.swift in Sources */,
+				2FA3E58F2886B3DD00058CB9 /* DeletionView.swift in Sources */,
 				E31D4FA926F0F5F400FA4AB2 /* TypeResponseModel.swift in Sources */,
 				2F07D413284977CF005D60CC /* ChangePhoneVM.swift in Sources */,
 				2F07D41628497A36005D60CC /* ComfirmChangePhoneVM.swift in Sources */,
@@ -2112,6 +2191,7 @@
 				4B1E54CF27A045BE008C0188 /* Amplitude+Extensions.swift in Sources */,
 				81F835A72739AEFE00E2553F /* LineDelayedView.swift in Sources */,
 				2F60BA5F280F8009002B6670 /* OrderSection.swift in Sources */,
+				2FA3E5812886B06500058CB9 /* ModelDeletionManager.swift in Sources */,
 				2FCF7F3827F5C90900DD425A /* MyOrderView.swift in Sources */,
 				2FF999752806D0D100F22BEB /* CustomAlert.swift in Sources */,
 				2F3BEDC427E49DC100298399 /* OrderNavigationManager.swift in Sources */,
@@ -2152,8 +2232,10 @@
 				84ED00E626DCF24300707D18 /* PasswordChangeView.swift in Sources */,
 				2F60BA70280F8480002B6670 /* ButtonStyles.swift in Sources */,
 				2F60BA48280F7DEA002B6670 /* ZoomableView.swift in Sources */,
+				2FA3E5872886B13400058CB9 /* CustomGameARView.swift in Sources */,
 				E3630CE626D8F4430085FD90 /* TutorialView.swift in Sources */,
 				E38F1A6026BBF58C00621C88 /* BottomSheetView.swift in Sources */,
+				2FA3E58A2886B2AB00058CB9 /* ScenePersistenceHelper.swift in Sources */,
 				2F2AA74427DB580E00AB6C57 /* CartView.swift in Sources */,
 				2F60BA53280F7F1B002B6670 /* OrderSectionListModel.swift in Sources */,
 				2F57088527DF4BA9004751BA /* OrderSuccessView.swift in Sources */,
@@ -2178,6 +2260,7 @@
 				2F60BA38280F7C09002B6670 /* BrandButtonView.swift in Sources */,
 				E352B92526CFCBD1002E7977 /* FirebaseAuthManager.swift in Sources */,
 				2F8B4FAB27DB9B25006662D2 /* CustomDivider.swift in Sources */,
+				2FA3E57F2886B03100058CB9 /* SceneManager.swift in Sources */,
 				2F67C09927CD607C00BE8518 /* KeyboardReadable.swift in Sources */,
 				2F67C0AD27CE1A6800BE8518 /* UserIdentificationRootView.swift in Sources */,
 				B1B0554C26F4A76200652E72 /* SecureTextFieldView.swift in Sources */,
@@ -2195,6 +2278,7 @@
 				2F9D789628869D37005F2901 /* ARGameMainView.swift in Sources */,
 				2F9D789928869DC1005F2901 /* ModelsViewModel.swift in Sources */,
 				2FD12FD12829AF6D008BB6EB /* NoInternetConnectionView.swift in Sources */,
+				2FA3E5832886B0AF00058CB9 /* ARGameContentView.swift in Sources */,
 				4DCEF7AC26D4FC37007B56CD /* GestureRecognizerDelegateHandler.swift in Sources */,
 				2FDD7888280449290071366B /* ProfileMainView.swift in Sources */,
 				4DECB31C26D8187800E2659E /* float4x4+Extension.swift in Sources */,
@@ -2424,7 +2508,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		2F343333287345BD00136A05 /* XCRemoteSwiftPackageReference "SwiftyBeaver.git" */ = {
+		2F343333287345BD00136A05 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyBeaver/SwiftyBeaver.git";
 			requirement = {
@@ -2432,7 +2516,7 @@
 				minimumVersion = 1.9.0;
 			};
 		};
-		2F4252E927DA619F00DE2041 /* XCRemoteSwiftPackageReference "SwiftyJSON.git" */ = {
+		2F4252E927DA619F00DE2041 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
 			requirement = {
@@ -2456,7 +2540,7 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		2F8B4FFB27DD0F0F006662D2 /* XCRemoteSwiftPackageReference "FLAnimatedImage.git" */ = {
+		2F8B4FFB27DD0F0F006662D2 /* XCRemoteSwiftPackageReference "FLAnimatedImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Flipboard/FLAnimatedImage.git";
 			requirement = {
@@ -2464,7 +2548,7 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		2FAAFD4F27C4E827008D4729 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI.git" */ = {
+		2FAAFD4F27C4E827008D4729 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
 			requirement = {
@@ -2472,7 +2556,7 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		2FC63CE9281ABD6F00A5EE18 /* XCRemoteSwiftPackageReference "Starscream.git" */ = {
+		2FC63CE9281ABD6F00A5EE18 /* XCRemoteSwiftPackageReference "Starscream" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/daltoniam/Starscream.git";
 			requirement = {
@@ -2480,7 +2564,7 @@
 				minimumVersion = 4.0.0;
 			};
 		};
-		2FE21E56280049A8004B0057 /* XCRemoteSwiftPackageReference "ScrollableImage.git" */ = {
+		2FE21E56280049A8004B0057 /* XCRemoteSwiftPackageReference "ScrollableImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gtokman/ScrollableImage.git";
 			requirement = {
@@ -2493,12 +2577,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		2F343334287345BD00136A05 /* SwiftyBeaver */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2F343333287345BD00136A05 /* XCRemoteSwiftPackageReference "SwiftyBeaver.git" */;
+			package = 2F343333287345BD00136A05 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */;
 			productName = SwiftyBeaver;
 		};
 		2F4252EA27DA619F00DE2041 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2F4252E927DA619F00DE2041 /* XCRemoteSwiftPackageReference "SwiftyJSON.git" */;
+			package = 2F4252E927DA619F00DE2041 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
 		};
 		2F60BA27280F4310002B6670 /* FocusEntity */ = {
@@ -2508,22 +2592,22 @@
 		};
 		2F8B4FFC27DD0F0F006662D2 /* FLAnimatedImage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2F8B4FFB27DD0F0F006662D2 /* XCRemoteSwiftPackageReference "FLAnimatedImage.git" */;
+			package = 2F8B4FFB27DD0F0F006662D2 /* XCRemoteSwiftPackageReference "FLAnimatedImage" */;
 			productName = FLAnimatedImage;
 		};
 		2FAAFD5027C4E827008D4729 /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2FAAFD4F27C4E827008D4729 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI.git" */;
+			package = 2FAAFD4F27C4E827008D4729 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
 		};
 		2FC63CEA281ABD6F00A5EE18 /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2FC63CE9281ABD6F00A5EE18 /* XCRemoteSwiftPackageReference "Starscream.git" */;
+			package = 2FC63CE9281ABD6F00A5EE18 /* XCRemoteSwiftPackageReference "Starscream" */;
 			productName = Starscream;
 		};
 		2FE21E57280049A8004B0057 /* ScrollableImage */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2FE21E56280049A8004B0057 /* XCRemoteSwiftPackageReference "ScrollableImage.git" */;
+			package = 2FE21E56280049A8004B0057 /* XCRemoteSwiftPackageReference "ScrollableImage" */;
 			productName = ScrollableImage;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -9,7 +9,9 @@ import SwiftUI
 import FirebaseFirestore
 
 class ModelsViewModel: ObservableObject {
-    @Published var models: [Model] = []
+    @Published var models: [Model] = [Model(name: "model1", category: .test, scaleCompensation: 1.0),
+                                      Model(name: "model2", category: .test, scaleCompensation: 1.0),
+                                      Model(name: "model3", category: .test, scaleCompensation: 1.0)]
     
     private let db = Firestore.firestore()
     
@@ -25,7 +27,7 @@ class ModelsViewModel: ObservableObject {
                 
                 let name = data["name"] as? String ?? ""
                 let categoryText = data["category"] as? String ?? ""
-                let category = ModelCategory(rawValue: categoryText) ?? .decor
+                let category = ModelCategory(rawValue: categoryText) ?? .test
                 let scaleCompensation = data["scaleCompensation"] as? Double ?? 1.0
                 
                 return Model(name: name, category: category, scaleCompensation: Float(scaleCompensation))

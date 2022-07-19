@@ -16,5 +16,5 @@ target 'Weedar' do
   pod 'Amplitude', '~> 8.5.0'
   pod 'SSSwiftUIGIFView'
   pod 'FirebaseFirestore'  
-
+  pod 'FirebaseStorage'
 end

@@ -45,7 +45,6 @@ struct RootCoordinator: View {
                 MainView()
                     .environmentObject(orderTrackerManager)
                     .environmentObject(orderNavigationManager)
-                    
             }
             
             if needToUpdate{

@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct AR_FurnitureApp: App {
+struct ARGameMainView: View {
     @StateObject var sessionSettings = SessionSettings()
     @StateObject var placementSettings = PlacementSettings()
     @StateObject var sceneManager = SceneManager()
@@ -16,14 +16,14 @@ struct AR_FurnitureApp: App {
     @StateObject var modelDeletionManager = ModelDeletionManager()
     
     
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-                .environmentObject(sessionSettings)
-                .environmentObject(placementSettings)
-                .environmentObject(sceneManager)
-                .environmentObject(modelsViewModel)
-                .environmentObject(modelDeletionManager)
-        }
+    var body: some View {
+        
+        ARGameContentView()
+            .environmentObject(sessionSettings)
+            .environmentObject(placementSettings)
+            .environmentObject(sceneManager)
+            .environmentObject(modelsViewModel)
+            .environmentObject(modelDeletionManager)
+        
     }
 }

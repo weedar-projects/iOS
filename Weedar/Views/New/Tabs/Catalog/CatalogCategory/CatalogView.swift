@@ -25,6 +25,8 @@ struct CatalogView: MainLoadViewProtocol {
     
     @State var showLoader: Bool = true
     
+    @State var showGame = false
+    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var content: some View {
@@ -44,9 +46,30 @@ struct CatalogView: MainLoadViewProtocol {
                             EmptyView()
                         }
                         
+                        NavigationLink(isActive: $showGame) {
+                            ARGameMainView()
+                        } label: {
+                            EmptyView()
+                        }
+                        
+                        
                         Color.white
                         
                     VStack(spacing: 8){
+                        
+                        ZStack{
+                            Color.black.opacity(0.3)
+                                .cornerRadius(24)
+                            
+                            Text("AR GAME")
+                                .textTitle()
+                        }
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 140)
+                        .padding(.horizontal, 22)
+                        .onTapGesture {
+                            self.showGame = true
+                        }
                         
                         ARCategoryView(localModels: localModels)
                         
