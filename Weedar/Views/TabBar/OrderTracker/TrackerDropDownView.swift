@@ -14,6 +14,14 @@ struct TrackerDropDownView: View {
     
     var body: some View {
         VStack{
+            ZStack{
+                Color.col_gray_dropdown_button
+                    .cornerRadius(24)
+                    .frame(height: 32)
+                    .shadow(color: Color.col_black.opacity(showMenu ? 0.15 : 0), radius: 3, x: 0, y: 4)
+                    .frame(width: 110 + (orderTrackerManager.aviableOrders.count > 1 ? 37 : 0))
+                    .hTrailing()
+                
             HStack(spacing: 0){
                 Text("#\(orderTrackerManager.currentOrder?.number ?? "")")
                     .textCustom(.coreSansC65Bold, 14, Color.col_white)
@@ -34,8 +42,6 @@ struct TrackerDropDownView: View {
                 }
             }
             .frame(height: 32)
-            .background(Color.col_gray_dropdown_button.cornerRadius(24))
-            .shadow(color: Color.col_black.opacity(showMenu ? 0.15 : 0), radius: 3, x: 0, y: 4)
             .onTapGesture {
                 withAnimation(.spring()){
                     if orderTrackerManager.aviableOrders.count > 1{
@@ -44,6 +50,7 @@ struct TrackerDropDownView: View {
                 }
             }
             .hTrailing()
+            }
             
             if showMenu{
                 VStack(spacing: 0){
@@ -66,7 +73,7 @@ struct TrackerDropDownView: View {
             }
         }
         .background(Color.col_gray_dropdown_bg
-                        .opacity(showMenu ? 1 : 0)
+            .opacity(showMenu && orderTrackerManager.aviableOrders.count > 1 ? 1 : 0)
                         .cornerRadius(radius: 12, corners: [.bottomLeft, .bottomRight])
                         .cornerRadius(radius: 16, corners: [.topLeft, .topRight])
         )

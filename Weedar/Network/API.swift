@@ -24,7 +24,8 @@ class API{
     var accessToken : String?  { return KeychainService.loadPassword(serviceKey: .accessToken) }
     var refreshToken : String?  { return KeychainService.loadPassword(serviceKey: .refreshToken) }
 
-    func request(endPoint: String = "",
+    func request(url: String = "",
+                 endPoint: String = "",
                  rout: Routs = .empty,
                  method: HTTPMethod = .get,
                  parameters: [String: Any] = [:],
@@ -33,6 +34,10 @@ class API{
                  completion: @escaping (Result<JSON,APIError>) -> Void ){
         
         var reqUrl: URL?
+        
+        if !url.isEmpty{
+            reqUrl = URL(string: url)!
+        }
         
         //add url
         if !endPoint.isEmpty {
@@ -55,6 +60,7 @@ class API{
         heads.add(name: "Content-Type", value: "application/json")
         
         guard let reqUrl = reqUrl else {
+            print("URL IS EMPTY")
             return
         }
         
@@ -190,8 +196,9 @@ class API{
                                              message: error.localizedDescription)))
             }
         }
+        
+        
     }
-//
 //    enum VersionError: Error {
 //        case invalidResponse, invalidBundleInfo
 //    }
@@ -333,7 +340,6 @@ extension DataRequest {
     public func customValidation() -> Self {
         
         return validate { request,response,data in
-            
             do {
                 let statusCode = response.statusCode
                 if statusCode != 401{
@@ -345,7 +351,6 @@ extension DataRequest {
                     return .failure(AFError.responseValidationFailed(reason: reason))
                 }
             } catch let error {
-                
                 print("Json serialization error \(error)")
                 let reason:AFError.ResponseValidationFailureReason = .unacceptableStatusCode(code: response.statusCode)
                 return .failure(AFError.responseValidationFailed(reason: reason))

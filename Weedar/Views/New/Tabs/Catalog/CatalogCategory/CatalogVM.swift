@@ -45,26 +45,20 @@ class CatalogVM: ObservableObject {
         }
     }
     
-    //FOR LOADING AR FIX
-    /// API `Get Products`
-    func fetchProducts(finished: @escaping() -> Void) {
-        ProductRepository
-            .shared
-            .getProducts(withParameters: FiltersRequestModel()) { result in
-                switch result {
-                case .success(let productsData):
-                    DispatchQueue.main.async {
-                        
-                        var loadedProducts: [Product] = []
-                        loadedProducts.append(contentsOf: productsData)
-                        ProductsViewModel.shared.products = loadedProducts
-                        finished()
-                    }
-                    
-                case .failure(let error):
-                    Logger.log(message: error.localizedDescription, event: .error)
-                    finished()
+    //get product
+    func getProductsForAR(success: @escaping ()->Void){
+        API.shared.request(rout: .getProductsList) { result in
+            switch result{
+            case let .success(data):
+                var products: [ProductModel] = []
+                for product in data.arrayValue{
+                    products.append(ProductModel(json: product))
                 }
+                ProductsViewModel.shared.products = products
+                success()
+            case .failure(_):
+                break
             }
+        }
     }
 }

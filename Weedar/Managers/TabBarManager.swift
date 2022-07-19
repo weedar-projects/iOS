@@ -26,7 +26,13 @@ struct TabBarItem: Identifiable {
 
 class TabBarManager: ObservableObject {
     
-    @Published var currentTab: TabBarPages = .catalog
+    @Published var currentTab: TabBarPages = .catalog{
+        didSet{
+            if currentTab == .catalog{
+                showARView = false
+            }
+        }
+    }
     
     @Published var tabBarHeight: CGFloat = isSmallDevise ? 66 : 86
     @Published var tabBarBottomPadding: CGFloat = isSmallDevise ? 66 : 50

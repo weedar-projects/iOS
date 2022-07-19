@@ -25,9 +25,9 @@ struct OrderSuccessView: View {
             //imgage
             VStack{
                 //Logo
-                Image("orderSuccessLogo")
+                Image("logo_dark")
                     .resizable()
-                    .frame(width: 270, height: 70)
+                    .frame(width: 70, height: 70)
                     .hLeading()
                     .padding(.top, getSafeArea().top)
                 
@@ -36,7 +36,9 @@ struct OrderSuccessView: View {
                     .textCustom(.coreSansC65Bold, 40, Color.col_text_main)
                     .padding(.top, 24)
                 
-                Text("ordersuccessview.description".localized)
+                
+                Text(orderNavigationManager.orderType == .pickup ? "Order will be ready for pick in 15 minutes. Pick up partner will ask you to show your ID to verify your identity and age." :  "ordersuccessview.description".localized)
+                    .lineSpacing(8)
                     .textCustom(.coreSansC45Regular, 16, Color.col_text_main)
                     .hLeading()
                     .padding(.top, 8)
@@ -62,6 +64,8 @@ struct OrderSuccessView: View {
                     orderNavigationManager.hideAll()
                     tabBarManager.currentTab = .catalog
                     tabBarManager.show()
+                    tabBarManager.showARView = false
+                    tabBarManager.refreshNav(tag: .catalog)
                 }
                 .padding(.bottom, 20)
                 

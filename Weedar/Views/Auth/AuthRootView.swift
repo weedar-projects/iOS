@@ -25,13 +25,11 @@ struct AuthRootView: View, KeyboardReadable {
                     .onAppear(){
                         orderTrackerManager.disconnect()
                     }
+                    
             }
-
         }
         .onChange(of: vm.showOnboarding, perform: { newValue in
             print(newValue)
         })
     }
 }
-
-

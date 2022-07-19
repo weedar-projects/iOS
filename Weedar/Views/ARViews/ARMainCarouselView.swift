@@ -47,7 +47,6 @@ struct ARMainCarouselContainer: UIViewRepresentable {
         context.coordinator.view = view
         session.delegate = context.coordinator
         
-        view.environment.background = .color(.blue)
         // Handle taps
         view.addGestureRecognizer(
             UITapGestureRecognizer(

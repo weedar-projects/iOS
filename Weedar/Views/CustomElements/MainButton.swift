@@ -10,7 +10,7 @@ import SwiftUI
 struct MainButton: View {
       
     @State var title: String = ""
-
+    
     @State var icon: String?
     
     @State var iconSize: CGFloat = 24
@@ -28,7 +28,7 @@ struct MainButton: View {
                         .foregroundColor(Color.col_text_white)
                 }
                 Text(title.localized)
-                    .offset(y: 2)
+                    
                     .textCustom(.coreSansC65Bold, 16, Color.col_text_white)
             }
             .frame(height: 48)

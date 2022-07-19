@@ -33,6 +33,7 @@ class ARModelsManager: ObservableObject {
     @Published var currentLoadedModel: Int = 0
    
     @Published private var products: [Product] = []
+    @Published private var filteredProducts: [ProductModel] = []
     
     var carusel: CarouselARView?
     
@@ -42,9 +43,9 @@ class ARModelsManager: ObservableObject {
     
     init() {
         notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-//        self.fetchProducts {
-//            self.getAllModels()
-//        }
+        self.getProducts(filters: CatalogFilters()) {
+            self.getAllModels()
+        }
     }
     
     @objc func appMovedToForeground() {
@@ -58,26 +59,47 @@ class ARModelsManager: ObservableObject {
         }
     }
     
-     func fetchProducts(finished: @escaping() -> Void) {
-        ProductRepository
-            .shared
-            .getProducts(withParameters: FiltersRequestModel()) { result in
-                switch result {
-                case .success(let products):
-                    DispatchQueue.main.async {
-                        self.products.removeAll()
-                        self.products.append(contentsOf: products)
-                        finished()
-                    }
-                case .failure(let error):
-                    Logger.log(message: error.localizedDescription, event: .error)
-                    break
-                }
+    //get product
+    func getProducts(categoryId: Int = -1, filters: CatalogFilters?, finish: @escaping ()->Void = {}){
+        self.filteredProducts = []
+        
+        var params: [String : Any] = [:]
+        
+        if let filters = filters {
+            params = composeFilters(categoryId: categoryId, catalogFilters: filters)
+        }else{
+            if categoryId != -1{
+                params = [CatalogFilterKey.type.rawValue : categoryId]
             }
+        }
+         
+        API.shared.request(rout: .getProductsList, parameters: params) { result in
+            switch result{
+            case let .success(data):
+                for product in data.arrayValue{
+                    self.filteredProducts.append(ProductModel(json: product))
+                }
+                finish()
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    
+    
+    func updateModels(finish: @escaping ([Int: ModelTuple])->Void = {_ in}){
+        var updatedItems: [Int: ModelTuple] = [:]
+        for product in filteredProducts {
+            if product.modelHighQualityLink.hasSuffix(".usdz"){
+                updatedItems[product.id] = (product.modelHighQualityLink, product.animationDuration)
+            }
+        }
+        finish(updatedItems)
     }
     
      func getAllModels(){
-        for product in products {
+        for product in filteredProducts {
             if product.modelHighQualityLink.hasSuffix(".usdz"){
                 print("\n\n---------\nAPPEND \(product.id)")
                 print("animationDuration \(product.animationDuration)")
@@ -103,6 +125,38 @@ class ARModelsManager: ObservableObject {
         carusel = CarouselARView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height))
     }
     
+    
+    private func composeFilters(categoryId: Int, catalogFilters: CatalogFilters) -> [String: Any] {
+        var filters: [String : Any] = [:]
+        
+        if categoryId != -1{
+            filters = [CatalogFilterKey.type.rawValue : categoryId]
+        }
+        if let search = catalogFilters.search{
+            filters.merge(dict: [CatalogFilterKey.search.rawValue : search])
+        }
+        if let brand = catalogFilters.brands{
+            filters.merge(dict: [CatalogFilterKey.brand.rawValue : convertToArray(value: brand)])
+        }
+        if let effect = catalogFilters.effects{
+            filters.merge(dict: [CatalogFilterKey.effect.rawValue : convertToArray(value: effect)])
+        }
+        if let priceFrom = catalogFilters.priceFrom{
+            filters.merge(dict: [CatalogFilterKey.priceFrom.rawValue : priceFrom])
+        }
+        if let priceTo = catalogFilters.priceTo{
+            filters.merge(dict: [CatalogFilterKey.priceTo.rawValue : priceTo])
+        }
+        
+        return filters
+    }
+    private func convertToArray(value: Set<Int>) -> [Int]{
+         var int: [Int] = []
+         for value in value {
+             int.append(value)
+         }
+         return int
+     }
     
     
     func getFilesCount() -> Int{

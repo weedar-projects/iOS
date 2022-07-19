@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Alamofire
-import Amplitude
+ 
 import FirebaseAuth
 
 class ComfirmPhoneVM: ObservableObject {
@@ -81,17 +81,10 @@ class ComfirmPhoneVM: ObservableObject {
                 self.formatPhone = userPhone
                 self.ud.set(value: userPhone, forKey: .phone)
                 self.verifyPhoneNumber()
-                
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                Amplitude.instance().logEvent("number_confirm_success")
-                }
-                
+                AnalyticsManager.instance.event(key: .number_confirm_success)
             } else {
                 guard let error = error else { return }
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                Amplitude.instance().logEvent("number_confirm_fail", withEventProperties: ["error_type" : error.localizedDescription])
-                }
-                
+                AnalyticsManager.instance.event(key: .number_confirm_fail)
                 Logger.log(message: error.localizedDescription, event: .error)
                 self.errorMessage = error.localizedDescription
                 self.isErrorShow = true
@@ -191,9 +184,7 @@ extension ComfirmPhoneVM{
       isResendCodeTimerShow = true
         sendPhoneAuthentication()
         resendCodeQty += 1
-        if UserDefaults.standard.bool(forKey: "EnableTracking"){
-        Amplitude.instance().logEvent("resend_code", withEventProperties: ["resend_code_qty" : resendCodeQty])
-        }
+        AnalyticsManager.instance.event(key: .resend_code, properties: [.resend_code_qty : resendCodeQty])
       timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
         self.secondsLeft -= 1
         

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 
 struct ContactUsView: View {
     
@@ -57,16 +57,14 @@ struct ContactUsView: View {
                 
                 RequestButton(state: $vm.buttonState, isDisabled: $vm.buttonIsDisabled, showIcon: false, title: "Send") {
                     vm.sendMessage()
-                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                    Amplitude.instance().logEvent("send_message")
-                    }
+                    AnalyticsManager.instance.event(key: .send_message)
                 }
                 .padding(.top, 16)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 45)
             }
             .navBarSettings("Contact us")
-            .customErrorAlert(title: "Error", message: vm.errorMessage, isPresented: $vm.showAlert)
+            .customErrorAlert(title: vm.alertTitle, message: vm.alertMessage, isPresented: $vm.showAlert)
         }
     }
 }

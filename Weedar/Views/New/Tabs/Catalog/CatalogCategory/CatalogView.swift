@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+import Introspect
 
 struct CatalogView: MainLoadViewProtocol {
     
@@ -22,6 +22,7 @@ struct CatalogView: MainLoadViewProtocol {
     
     @ObservedObject var localModels: ARModelsManager
     
+    
     @State var showLoader: Bool = true
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -34,12 +35,10 @@ struct CatalogView: MainLoadViewProtocol {
                     ZStack{
                         //AR Catalog view
                         NavigationLink(isActive: $tabBarManager.showARView) {
-                            HomeView()
+                            HomeView(openProductById: 0, openByCategoryId: 0)
                                 .onAppear {
-                                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                                        print("worktraking")
-                                    Amplitude.instance().logEvent("select_catalog", withEventProperties: ["item_catalog" : "AR Catalog"])
-                                    }
+                                    AnalyticsManager.instance.event(key: .select_catalog,
+                                                                    properties: [.item_catalog : "AR Catalog"])
                                 }
                         } label: {
                             EmptyView()
@@ -57,12 +56,10 @@ struct CatalogView: MainLoadViewProtocol {
                             }, id: \.self)
                             { category in
                                 NavigationLink {
-                                    CatalogProductsListView(category: category)
+                                    CatalogProductsListView(category: category, localModels: localModels)
                                         .onAppear {
-                                            if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                                            Amplitude.instance().logEvent("select_catalog", withEventProperties: ["item_catalog" : category.name])
-                                            }
+                                            AnalyticsManager.instance.event(key: .select_catalog,
+                                                                            properties: [.item_catalog : category.name])
                                         }
                                 } label: {
                                     SmallCategoryView(category: category)
@@ -79,10 +76,10 @@ struct CatalogView: MainLoadViewProtocol {
                             .cornerRadius(16)
                             .onTapGesture {
                                 vm.showWebView.toggle()
-                                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                                Amplitude.instance().logEvent("select_catalog", withEventProperties: ["item_catalog" : "Coming soon"])
-                                }
+                                
+                                AnalyticsManager.instance.event(key: .select_catalog,
+                                                                properties: [.item_catalog : "Coming soon"])
+                                
                             }
                             .padding(.horizontal)
                             .padding(.bottom, 25)
@@ -106,7 +103,6 @@ struct CatalogView: MainLoadViewProtocol {
                 }
                 .onAppear {
                     appDelegate.requestAuthorization()
-                    
                 }
                     if vm.showDiscountAlert{
                         ZStack{
@@ -133,6 +129,9 @@ struct CatalogView: MainLoadViewProtocol {
                     vm.showDiscountAlert = user.showDiscountBanner
                 }
             }
+            .introspectNavigationController { navigationController in
+                navigationController.interactivePopGestureRecognizer?.isEnabled = true
+            }
     }
     
     var loader: some View{
@@ -141,11 +140,11 @@ struct CatalogView: MainLoadViewProtocol {
                 if networkConnection.isConnected{
                     if vm.categories.isEmpty{
                         self.vm.loadCategories { val in
-                            self.vm.fetchProducts {
-                                self.localModels.fetchProducts {
-                                    self.localModels.getAllModels()
+                            self.vm.getProductsForAR {
+//                                self.localModels.fetchProducts {
+//                                    self.localModels.getAllModels()
                                     self.showLoader = false
-                                }
+//                                }
                             }
                         }
                     }else{
@@ -157,8 +156,8 @@ struct CatalogView: MainLoadViewProtocol {
                 if isConnected{
                     if vm.categories.isEmpty{
                         self.vm.loadCategories { val in
-                            self.vm.fetchProducts {
-                                self.localModels.fetchProducts {
+                            self.vm.getProductsForAR {
+                                self.localModels.getProducts(filters: nil) {
                                     self.localModels.getAllModels()
                                     self.showLoader = false
                                 }

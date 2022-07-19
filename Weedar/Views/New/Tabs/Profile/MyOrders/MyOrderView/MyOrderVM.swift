@@ -28,11 +28,13 @@ class MyOrderVM: ObservableObject {
     @Published var orderProducts: [OrderDetailModel] = []
     @Published var order: OrderResponseModel?
     @Published var navTitle: String = ""
-    @Published var orderDetailsReview: OrderDetailsReview = OrderDetailsReview(orderId: 0, totalSum: 0, exciseTaxSum: 0, salesTaxSum: 0, localTaxSum: 0, discount: nil, taxSum: 0, sum: 0, state: 0)
+    @Published var orderDetailsReview: OrderDetailsReview = OrderDetailsReview(orderId: 0, totalSum: 0, exciseTaxSum: 0, salesTaxSum: 0, localTaxSum: 0, discount: nil, taxSum: 0, sum: 0, state: 0, fullAdress: "",username: "",phone: "", partnerPhone: "", partnerName: "", partnerAdress: "", orderNumber: "")
     
     @Published var showCancelAlert = false
    
     @Published var firstLoading = true
+    
+    @Published var showDirectionsView = false
     
     func getOrderDetails(_ orderId: Int, comletion: @escaping ()->Void){
         guard orderId != 0 else { return }
@@ -52,23 +54,6 @@ class MyOrderVM: ObservableObject {
             }
         }
     }
-//    func getOrderDetailsOld(_ orderId: Int, comletion: @escaping ()->Void) {
-//        OrderRepository.shared.getOrderDetails(orderId: orderId) { result in
-//            switch result {
-//                case .success(let item):
-//                self.orderProducts = []
-//                    item.forEach { details in
-//                        self.orderProducts.append(CartProduct(id: orderId, item: details.product, quantity: details.quantity,imageLink: details.product.imageLink))
-//                    }
-//
-//                self.getOrder(id: orderId, comletion: {
-//                    comletion()
-//                })
-//                case .failure(let error):
-//                    print(error)
-//            }
-//        }
-//    }
     
     func getOrder(id: Int, comletion: @escaping ()->Void) {
         let endpoint = Routs.getOrderById.rawValue.appending("/\(id)")
@@ -85,7 +70,12 @@ class MyOrderVM: ObservableObject {
                 let discount = DiscountModel(json: json["discount"]) 
                 let state = json["state"].intValue
                 let sum = json["sum"].doubleValue
-                self.orderDetailsReview =  OrderDetailsReview(orderId: id, totalSum: totalSum, exciseTaxSum: exciseTaxSum, totalWeight: self.totalGramWeight().formattedString(format: .percent), salesTaxSum: salesTaxSum, localTaxSum: cityTaxSum, discount: discount, taxSum: taxSum, sum: sum, state: state)
+                
+                let name = json["name"].stringValue
+                let phone = json["phone"].stringValue
+                let addressLine1 = json["addressLine1"].stringValue
+                let licence = json["license"].stringValue
+                self.orderDetailsReview =  OrderDetailsReview(orderId: id, totalSum: totalSum, exciseTaxSum: exciseTaxSum, totalWeight: self.totalGramWeight().formattedString(format: .percent), salesTaxSum: salesTaxSum, localTaxSum: cityTaxSum, discount: discount, taxSum: taxSum, sum: sum, state: state,fullAdress: addressLine1,username: name,phone: phone,partnerPhone: "", partnerName: "", partnerAdress: "", licence: licence, orderNumber: "")
                 
                 self.order = OrderResponseModel(json: json)
                 comletion()

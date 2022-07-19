@@ -21,7 +21,7 @@ struct ComfirmChangePhoneView: View {
         ZStack{
         VStack{
             //description
-            Text("The SMS code is sent to \(vm.phoneNumber)")
+            Text("The SMS code is sent to \(Utils.shared.phoneFormat(phone: vm.phoneNumber))")
                 .textCustom(.coreSansC45Regular, 14, Color.col_text_second)
                 .padding(.leading, 24)
                 .padding(.top, 12)

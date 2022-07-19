@@ -29,6 +29,8 @@ struct OrderModel: Identifiable{
     var detail: [ProductModel]?
     var userId, detailCount: Int?
     
+    var partner: PartnerModel
+    
     init(json: JSON) {
         self.id = json["id"].intValue
         self.number = json["number"].stringValue
@@ -56,5 +58,6 @@ struct OrderModel: Identifiable{
         self.detailCount = json["detailCount"].intValue
         self.area = AreaModel(json: json["area"])
         self.detail = json["detail"].arrayValue.map({ProductModel(json: $0)})
+        self.partner = PartnerModel(json: json["partner"])
     }
 }

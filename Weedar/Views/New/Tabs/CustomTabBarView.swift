@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 
 struct CustomTabBarView: View {
 
@@ -66,9 +66,7 @@ struct CustomTabBarButtonView: View {
                , alignment: .topTrailing)
         }
         .onTapGesture {
-            if UserDefaults.standard.bool(forKey: "EnableTracking"){
-            Amplitude.instance().logEvent("select_bar_menu", withEventProperties: ["tab_select_catalog" : page.title])
-            }
+            AnalyticsManager.instance.event(key: .select_bar_menu,properties:  [.tab_select_catalog : page.title])
             withAnimation(.default){
                 if page.tag == selected {
                     tabBarManager.refreshNav(tag: selected)

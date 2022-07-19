@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-import Amplitude
+
 
 struct OrderTrackerContentView: View {
     
@@ -43,19 +43,28 @@ struct OrderTrackerContentView: View {
                                               allState: vm.allState)
                         .padding(.top, 9)
                 
-                Text(orderTrackerManager.currentState?.deliveryText ?? "")
+                if let currentState = orderTrackerManager.currentState, let currentOrder = orderTrackerManager.currentOrder {
+                    Text(currentOrder.orderType == .delivery ? currentState.deliveryText : currentState.pickupText)
                     .textCustom(.coreSansC45Regular, 14, Color.col_white.opacity(0.8))
                     .foregroundColor(orderTrackerManager.currentState?.colors.first ?? Color.clear)
                     .padding(.top, 12)
                     .hLeading()
-                
+                }
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack{
+                        if let license = orderTrackerManager.currentOrder?.license{
+                            Text("Order fulfilled by: \(license)")
+                                .textCustom(.coreSansC45Regular, 14, Color.col_white.opacity(0.8))
+                                .hLeading()
+                                .padding(.top,12)
+                        }
+                        
                         Text("List of items")
                             .textCustom(.coreSansC65Bold, 14, Color.col_text_white.opacity(0.7))
                             .padding(.leading, 11)
-                            .padding(.top,12)
+                            .padding(.top, 12)
+                            
                             .hLeading()
                         if let products = orderTrackerManager.currentOrder?.orderDetails{
                         VStack{
@@ -76,29 +85,70 @@ struct OrderTrackerContentView: View {
                             .background(Color.col_white.opacity(0.1).cornerRadius(12))
                             .padding(.top, 12)
                         
-                        Text("Delivery details")
+                        if let currentOrder = orderTrackerManager.currentOrder{
+                            Text(currentOrder.orderType == .delivery ? "Delivery details" : "Pick up at")
                             .textCustom(.coreSansC65Bold, 14, Color.col_text_white.opacity(0.7))
                             .padding(.top, 12)
                             .padding(.leading, 11)
                             .hLeading()
+                        }
                         
+                        if let currentOrder = orderTrackerManager.currentOrder, currentOrder.orderType == .pickup{
+
                         //delivery user data
                         VStack(alignment: .leading,spacing: 10){
-                            Text("\(orderTrackerManager.currentOrder?.name ?? "")")
+                            Text(currentOrder.partner.name)
                                 .textCustom(.coreSansC45Regular, 14, Color.col_text_white)
                             
-                            Text("\(orderTrackerManager.currentOrder?.addressLine1 ?? "")")
+                            Text(currentOrder.partner.address)
                                 .textCustom(.coreSansC45Regular, 14, Color.col_text_white)
                             
-                            Text("\(orderTrackerManager.currentOrder?.phone ?? "")")
+                            Text(Utils.shared.phoneFormat(phone: currentOrder.partner.phone))
                                 .textCustom(.coreSansC45Regular, 14, Color.col_text_white)
                         }
                         .hLeading()
                         .padding()
                         .background(Color.col_white.opacity(0.1).cornerRadius(12))
                         .padding(.top,8)
+                        }else{
+                            //delivery user data
+                            VStack(alignment: .leading,spacing: 10){
+                                Text("\(orderTrackerManager.currentOrder?.name ?? "")")
+                                    .textCustom(.coreSansC45Regular, 14, Color.col_text_white)
+                                
+                                Text("\(orderTrackerManager.currentOrder?.addressLine1 ?? "")")
+                                    .textCustom(.coreSansC45Regular, 14, Color.col_text_white)
+                                
+                                Text("\(Utils.shared.phoneFormat(phone:  orderTrackerManager.currentOrder?.phone ?? ""))")
+                                    .textCustom(.coreSansC45Regular, 14, Color.col_text_white)
+                            }
+                            .hLeading()
+                            .padding()
+                            .background(Color.col_white.opacity(0.1).cornerRadius(12))
+                            .padding(.top,8)
+                        }
+                        if let currentOrder = orderTrackerManager.currentOrder, currentOrder.orderType == .pickup{
+                            ZStack{
+                                RadialGradient(colors: [Color.col_gradient_blue_second,
+                                                        Color.col_gradient_blue_first],
+                                               center: .center,
+                                               startRadius: 0,
+                                               endRadius: 220)
+                                .opacity(0.25)
+                                .clipShape(CustomCorner(corners: .allCorners,
+                                                        radius: 12))
+                                .frame(height: 48)
+                                
+                                Text("Directions")
+                                    .textCustom(.coreSansC55Medium, 16, Color.col_blue_main)
+                            }
+                            .padding(.top, 24)
+                            .onTapGesture {
+                                vm.showDirectionsView = true
+                            }
+                        }
                         
-                        if  orderTrackerManager.currentOrder?.state ?? 0 !=  7{
+                        if orderTrackerManager.currentOrder?.state ?? 0 != 7{
                             ZStack{
                                 ZStack{
                                     Text("Cancel order")
@@ -110,11 +160,11 @@ struct OrderTrackerContentView: View {
                                 .background(ButtonBGDarkGradient())
                                 
                             }
-                                .padding(.top, 12)
-                                .onTapGesture {
-                                    vm.showCancelAlert.toggle()
-                                }
-                            
+                            .padding(.top, 8)
+                            .onTapGesture {
+                                vm.showCancelAlert = true
+                                CloudLogger().cloudLog(logData: "Show cancel order Alert", logState: .info)
+                            }
                         }
                         Rectangle()
                             .fill(Color.black)
@@ -125,6 +175,16 @@ struct OrderTrackerContentView: View {
                 }
                 .disabled(disableScroll)
                 .padding(.top, 7)
+                .customDefaultAlert(title: "Cancel order?", message: "Do you confirm you want to cancel this order?", isPresented: $vm.showCancelAlert, firstBtn: .default(Text("Close")), secondBtn: .destructive(Text("Cancel"), action: {
+                    vm.loading = true
+                    
+                    AnalyticsManager.instance.event(key: .cancel_order,
+                                                    properties: [.current_status : orderTrackerManager.currentState?.deliveryState.rawValue])
+                    
+                    vm.cancelOrder(orderID: orderTrackerManager.currentOrder?.id ?? 0) {
+                        vm.loading = false
+                    }
+                }))
             }
             
             StateAndDropDounView()
@@ -145,36 +205,36 @@ struct OrderTrackerContentView: View {
         .onChange(of: orderTrackerManager.avaibleCount, perform: { newValue in
             vm.loading = false
         })
-        .alert(isPresented: $vm.showCancelAlert, content: {
-          Alert(title: Text("Cancel order?"),
-                message: Text("Do you confirm you want to cancel this order?"),
-                primaryButton: .default(Text("Close")),
-                secondaryButton: .destructive(Text("Cancel"),
-                                              action: {
-              vm.loading = true
-              if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-              Amplitude.instance().logEvent("cancel_order",
-                                            withEventProperties: ["current_status" : orderTrackerManager.currentState?.state.rawValue])
-              }
-              vm.cancelOrder(orderID: orderTrackerManager.currentOrder?.id ?? 0) {
-//                  if let firstOrder = orderTrackerManager.aviableOrders.first{
-//                      orderTrackerManager.currentOrder = firstOrder
-//                  }else{
-//                      orderTrackerManager.currentOrder = nil
-//                  }
-                  vm.loading = false
-              }
-          }))
-        })
+        .actionSheet(isPresented: $vm.showDirectionsView) {
+            ActionSheet(title: Text("Select app"),
+                        buttons: [
+                            .default(
+                                Text("Google Maps")
+                                    .foregroundColor(Color.lightSecondaryE.opacity(1.0))
+                                    .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
+                            ) {
+                                guard let store = orderTrackerManager.currentOrder?.partner else {return}
+                                Utils.shared.openGoogleMap(address: store.address,lat: store.latitudeCoordinate, lon: store.longitudeCoordinate)
+                            },
+                            .default(
+                                Text("Apple Maps")
+                                    .foregroundColor(Color.lightSecondaryE.opacity(1.0))
+                                    .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
+                            ) {
+                                guard let store = orderTrackerManager.currentOrder?.partner else {return}
+                                Utils.shared.openAppleMap(address: store.address,lat: store.latitudeCoordinate, lon: store.longitudeCoordinate)
+                            },
+                            .cancel()
+                        ])
+        }
     }
     
     
     @ViewBuilder
     func StateAndDropDounView() -> some View {
-        if let currentState = orderTrackerManager.currentState {
+        if let currentState = orderTrackerManager.currentState, let currentOrder = orderTrackerManager.currentOrder {
             ZStack{
-                Text(currentState.state.rawValue)
+                Text(currentOrder.orderType == .delivery ? currentState.deliveryState.rawValue : currentState.pickupState.rawValue)
                     .textCustom(.coreSansC65Bold, 12, Color.col_text_main)
                     .padding(.vertical, 5)
                     .padding(.horizontal, 12)
@@ -224,6 +284,14 @@ struct OrderProductCompactRow: View {
                     .frame(width: 32, height: 32)
                     .mask(Rectangle()
                             .frame(width: 32, height: 32)
+                    )
+                    .overlay(
+                        Image("nft_mini")
+                            .resizable()
+                            .frame(width: 34, height: 18)
+                            .offset(y: -18)
+                            .opacity(data.product.isNft ? 1 : 0)
+                        ,alignment: .top
                     )
             
             VStack(alignment: .leading,spacing: 7){
@@ -310,12 +378,14 @@ struct CalculationOrderPriceView: View {
                         Text("$\((data.sum).formattedString(format: .percent) )")
                             .textCustom(.coreSansC45Regular, 16,Color.col_text_white)
                     }
-                    HStack{
-                        Text("Delivery fee")
-                            .textCustom(.coreSansC45Regular, 16, Color.col_text_white)
-                        Spacer()
-                        Text("$10.00")
-                            .textCustom(.coreSansC45Regular, 16,Color.col_text_white)
+                    if let type = orderTrackerManager.currentOrder?.orderType, type == .delivery{
+                        HStack{
+                            Text("Delivery fee")
+                                .textCustom(.coreSansC45Regular, 16, Color.col_text_white)
+                            Spacer()
+                            Text("$10.00")
+                                .textCustom(.coreSansC45Regular, 16,Color.col_text_white)
+                        }
                     }
                     HStack{
                         Text("Excise tax")

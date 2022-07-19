@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-import Amplitude
+ 
 
 struct ProductCartRowView: View {
     
@@ -36,11 +36,9 @@ struct ProductCartRowView: View {
             .hTrailing()
             .onTapGesture {
                 cartManager.productQuantityInCart(productId: item.id, quantity: .removeAll)
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                    Amplitude.instance().logEvent("delete_product", withEventProperties: ["category" : item.type.name,
-                                                                                          "product_id" : item.id,
-                                                                                          "product_price" : item.price.formattedString(format: .percent)])
-                }
+                AnalyticsManager.instance.event(key: .delete_product, properties: [.category : item.type.name,
+                                                                                   .product_id : item.id,
+                                                                                   .product_price : item.price.formattedString(format: .percent)])
             }
 
             HStack(spacing: 0){
@@ -53,13 +51,18 @@ struct ProductCartRowView: View {
                     .scaledToFit()
                     .frame(width: vm.itemViewHeight ,height: vm.itemViewHeight)
                     .mask(Rectangle()
-                            .frame(height: vm.itemViewHeight)
-                            .cornerRadius(24)
+                        .frame(height: vm.itemViewHeight)
+                        .cornerRadius(24)
                     )
                     .cornerRadius(24)
                     .overlay(RoundedRectangle(cornerRadius: 24)
-                                .strokeBorder(Color.col_borders.opacity(0.5), lineWidth: 2))
-                
+                        .strokeBorder(Color.col_borders.opacity(0.5), lineWidth: 2))
+                    .overlay(
+                        //nftbanner
+                        Image("nft_mini")
+                            .opacity(item.isNft ? 1 : 0)
+                            .padding(11)
+                        ,alignment: .topLeading)
                 Spacer()
                 
                 //product info

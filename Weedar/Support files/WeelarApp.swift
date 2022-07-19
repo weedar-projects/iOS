@@ -13,12 +13,13 @@ import FirebaseMessaging
 import Amplitude
 import SwiftyJSON
 import AppTrackingTransparency
+import SwiftyBeaver
 
 class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
     // MARK: - Properties
     private var shouldOpenOrder = false
-    
-    
+    let log = SwiftyBeaver.self
+    let cloud = SBPlatformDestination(appID: "YbnqvR", appSecret: "aj74yJ8zyb0R0cd8iwerUlrTknpr7Xp5", encryptionKey: "9w8ZfCyrfRbnPJtfjbfaljcamkffZfm8")
     // MARK: - Class functions
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -35,6 +36,12 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         Amplitude.instance().trackingSessionEvents = true
         
         self.requestDataPermission()
+        self.log.addDestination(cloud)
+        if let id = UserDefaultsService().get(fromKey: .user){
+            self.log.info("Start session User: \(id)")
+        }else{
+            self.log.info("Start session not login user")
+        }
         
         // Initialize SDK
         Amplitude.instance().initializeApiKey("fb236e320cc3d63dda12f1d8f09443f1")
@@ -44,7 +51,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        Amplitude.instance().logEvent("app_close")
+        AnalyticsManager.instance.event(key: .app_close)
     }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
@@ -104,8 +111,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
             if id != 0{
                 DeepLinks.shared.data = DeeplinkModel(id: id, type: type)
                 NotificationCenter.default.post(name: .showDeeplinkOrderTracker, object: nil)
-                Amplitude.instance().logEvent("app_start", withEventProperties: ["source" : "push notifs"])
-                
+                AnalyticsManager.instance.event(key: .app_start, properties: [.source: "push notification"])
             }
         }
 
@@ -114,31 +120,26 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
     
     // Remote Push Notifications
     func requestAuthorization() {
-        let granded = UserDefaultsService().get(fromKey: .fcmGranted) as? Bool
-
-        // Request Authorizathion
-        if granded == nil {
-            UNUserNotificationCenter
-                .current()
-                .requestAuthorization(options: [.alert, .badge, .sound],
-                                      completionHandler: { granted, error in
-                    guard
-                        error == nil
-                    else {
-                        Logger.log(message: error!.localizedDescription, event: .error)
-                        return
-                    }
-                    Messaging.messaging().isAutoInitEnabled = granted
-                    UserDefaultsService().set(value: granted, forKey: .fcmGranted)
-                    
-                    if granted {
-                        self.saveTokenFCM()
-
-                        /// API `User Enable/Disable Remote Push Notifications`
-                        self.updatePushNotificationState(true)
-                    }
-                })
-        }
+        
+        UNUserNotificationCenter
+            .current()
+            .requestAuthorization(options: [.alert, .badge, .sound],
+                                  completionHandler: { granted, error in
+                guard
+                    error == nil
+                else {
+                    Logger.log(message: error!.localizedDescription, event: .error)
+                    return
+                }
+                Messaging.messaging().isAutoInitEnabled = true
+                
+                self.saveTokenFCM()
+                
+                /// API `User Enable/Disable Remote Push Notifications`
+                self.updatePushNotificationState(true)
+                
+            })
+        
     }
     
     func requestDataPermission() {

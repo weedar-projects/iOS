@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-import Amplitude
+ 
 
 struct ImagesFullScreenView: View {
     
@@ -83,12 +83,11 @@ struct ImagesFullScreenView: View {
                     if !animProductInCart{
                         vm.notification.notificationOccurred(.success)
                         cartManager.productQuantityInCart(productId: product.id, quantity: .add)
-                        if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                            Amplitude.instance().logEvent("add_cart_prod_card", withEventProperties: ["category" : product.type.name,
-                                                                                                      "product_id" : product.id,
-                                                                                                      "product_qty" : 1,
-                                                                                                      "product_price" : product.price.formattedString(format: .percent)])
-                        }
+                        AnalyticsManager.instance.event(key: .add_cart_prod_card,
+                                                        properties: [.category : product.type.name,
+                                                                     .product_id: product.id,
+                                                                     .product_qty: 1,
+                                                                     .product_price: product.price.formattedString(format: .percent)])
                         chageAddButtonState()
                     }
                 }

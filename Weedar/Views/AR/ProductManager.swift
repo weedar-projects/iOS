@@ -11,9 +11,38 @@ import SwiftUI
 import AudioToolbox
 
 class ProductManager {
-    init(items: [Int: ModelTuple], scale: Float, radius: Float) {
+    init(items: [Int: ModelTuple], scale: Float, radius: Float, openById: Int = 0) {
         self.scale = scale
-      
+        self.radius = radius
+        
+        var queueTemp: [Int] = []
+        
+        queue = []
+        
+        for item in items {
+            queueTemp.append(item.key)
+        }
+        
+        while queueTemp.count < 8{
+            queueTemp += queueTemp
+        }
+          
+        self.queue = queueTemp
+        
+        if openById != 0{
+            setFirstModelId(id: openById)
+        }
+        print("Queue: \(queue)")
+    }
+    
+    var queue: [Int]
+    var loadedModels: [Int] = []
+    var scale: Float
+    var radius: Float
+    
+    func loadModels(items: [Int: ModelTuple]){
+        self.queue.removeAll()
+        
         var queueTemp: [Int] = []
      
         for item in items {
@@ -24,14 +53,11 @@ class ProductManager {
             queueTemp += queueTemp
         }
         
-        self.queue = queueTemp
-        
-        self.radius = radius
+//        self.queue = queueTemp.sorted(by: ({$0 < $1}))
+//        setFirstModelId(id: queueTemp.first ?? 0)
+//        self.queue = queue
+        print("Queue: \(queue)")
     }
-    
-    var queue: [Int]
-    var scale: Float
-    var radius: Float
     
     func monitorRotation(forAnchor anchor: ModelEntity, putBackModels: Bool = false) {
         let pie: Int
@@ -46,14 +72,16 @@ class ProductManager {
             if isModelNeedsLoading(for: anchor) {
                 anchor.isEnabled = false
                 let modelID = getModelIDToLoad(forPie: pie)
-                
+                print("modelID: \(modelID)")
                 if let product = ProductsViewModel.shared.getProduct(id: modelID) {
                     print("--- --- ---")
                     print("modelID: \(modelID)")
-                    
                     if product.modelHighQualityLink.hasSuffix(".usdz") {
+                        print("LOADED MODELS \(loadedModels)\n QUEU: \(queue)")
                         self.asyncLoad(name: product.modelHighQualityLink, id: modelID, for: anchor, product: product)
                     }
+                }else{
+                    print("fail to load: \(modelID)")
                 }
             }
         } else {
@@ -66,8 +94,31 @@ class ProductManager {
         }
     }
     
+    
+    func setFirstModelId(id: Int){
+        print("Queue FITLRST : \(queue)")
+        if queue[0] != id{
+            queue.append(queue[0])
+            queue.insert(id, at: 0)
+            queue = uniq(source: queue)
+            print("Queue LAST: \(queue)")
+        }
+    }
+    
+    private func uniq<S: Sequence, T: Hashable> (source: S) -> [T] where S.Iterator.Element == T {
+        var buffer = [T]() // возвращаемый массив
+        var added = Set<T>() // набор - уникальные значения
+        for elem in source {
+            if !added.contains(elem) {
+                buffer.append(elem)
+                added.insert(elem)
+            }
+        }
+        return buffer
+    }
+    
     private func isInsideVisibleWindow(pie: Int) -> Bool {
-        return (pie < 3 && pie > -3)
+        return (pie < 2 && pie > -2)
     }
     
     private func isModelNeedsLoading(for anchor: ModelEntity) -> Bool {
@@ -80,15 +131,16 @@ class ProductManager {
     
     private func pie(forAnchor anchor: ModelEntity) -> Int {
         let rawRotation = anchor.transform.matrix.eulerAngles.y
-        let pie = Int(4 / .pi * rawRotation)
+        let pie = Int(3  / .pi * rawRotation)
         return pie
     }
     
     func segmentCenter(for anchor: ModelEntity) -> CGFloat {
         let angle = anchor.transform.matrix.eulerAngles.y
-        let segment = (angle + .pi).truncatingRemainder(dividingBy: (.pi / 4))
-        let segmentCenter = segment - (.pi / 12)
         
+        let segment = (angle + .pi).truncatingRemainder(dividingBy: (.pi / 3))
+        let segmentCenter = segment - (.pi / 12)
+//        print("ANGEL: \(angle) | SEGMENT: \(segment) | SEGMENTCENTER: \(segmentCenter)")
         return CGFloat(segmentCenter)
     }
     
@@ -96,9 +148,18 @@ class ProductManager {
         // gives model id to load depending on
         // what side user is turing the carousel to
         if pie > 0 {
-            return queue.removeLast()
+            print("queue.removeLast \(queue.last)")
+            if let quueLast = queue.last{
+                return queue.removeLast()
+            }else{
+                return 0
+            }
         } else {
-            return queue.removeFirst()
+            if let quueLast = queue.first{
+                return queue.removeFirst()
+            }else{
+                return 0
+            }
         }
     }
     
@@ -107,11 +168,10 @@ class ProductManager {
             queue.append(modelID)
         } else {
             queue.insert(modelID, at: 0)
-            
         }
     }
     
-    func loadModel(_ product: Product, for anchor: AnchorEntity, completion: ((ModelEntity) -> Void)?) {
+    func loadModel(_ product: ProductModel, for anchor: AnchorEntity, completion: ((ModelEntity) -> Void)?) {
         // if file exists -> load form directory
         // else load from internet -> load from directory
         ProductsViewModel.shared.getModel(id: product.modelHighQualityLink) {
@@ -148,7 +208,7 @@ class ProductManager {
             })
     }
     
-    private func asyncLoad(name: String, id: Int, for anchor: ModelEntity, product: Product) {
+    private func asyncLoad(name: String, id: Int, for anchor: ModelEntity, product: ProductModel) {
         var cancellable: AnyCancellable? = nil
         
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
@@ -171,6 +231,7 @@ class ProductManager {
                         mode: .trigger,
                         filter: .sensor)
                     noModelBox.generateCollisionShapes(recursive: true)
+                    
                     anchor.isEnabled = true
                     
                     cancellable?.cancel()
@@ -201,8 +262,54 @@ class ProductManager {
         }
     }
 
+    private func asyncLoadEntityModel(name: String, id: Int, for anchor: ModelEntity, product: Product, boxColor: UIColor = UIColor.green) {
+        var cancellable: AnyCancellable? = nil
+        
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let url = URL(fileURLWithPath: path)
+        let pathComponent = url.appendingPathComponent(name + ".usdz")
+       
+        DispatchQueue.main.async {
+            cancellable = ModelEntity.loadModelAsync(contentsOf: pathComponent, withName: name)
+                .sink(receiveCompletion: { error in
+                    print("Unexpected error: \(error)")
+                    
+                    let boxMesh = MeshResource.generateBox(size: [0.5, 0.5, 0.5])
+                    let simpleMaterial = SimpleMaterial(color: boxColor, isMetallic: false)
+                    let noModelBox = ModelEntity(mesh: boxMesh, materials: [simpleMaterial])
+                    noModelBox.name = String(id)
+                    noModelBox.position = [0, -1, -self.radius]
+                    anchor.addChild(noModelBox)
+                    noModelBox.components[CollisionComponent.self] = CollisionComponent(
+                        shapes: [.generateBox(size: [0.25, 0.8, 0.1])],
+                        mode: .trigger,
+                        filter: .sensor)
+                    noModelBox.generateCollisionShapes(recursive: true)
+                    
+                    anchor.isEnabled = true
+                    
+                    cancellable?.cancel()
+                }, receiveValue: { entity in
+                    let boxMesh = MeshResource.generateBox(size: [0.5, 0.5, 0.5])
+                    let simpleMaterial = SimpleMaterial(color: boxColor, isMetallic: false)
+                    let noModelBox = ModelEntity(mesh: boxMesh, materials: [simpleMaterial])
+                    noModelBox.name = String(id)
+                    noModelBox.position = [0, -1, -self.radius]
+                    anchor.addChild(noModelBox)
+                    noModelBox.components[CollisionComponent.self] = CollisionComponent(
+                        shapes: [.generateBox(size: [0.25, 0.8, 0.1])],
+                        mode: .trigger,
+                        filter: .sensor)
+                    noModelBox.generateCollisionShapes(recursive: true)
+                    
+                    anchor.isEnabled = true
+                    
+                    cancellable?.cancel()
+                })
+        }
+    }
     
-    private func asyncLoadFromDirectory(_ product: Product, for anchor: AnchorEntity, completion: @escaping (ModelEntity) -> Void) {
+    private func asyncLoadFromDirectory(_ product: ProductModel, for anchor: AnchorEntity, completion: @escaping (ModelEntity) -> Void) {
         let productID = product.id
         let modelFilename = product.modelHighQualityLink
         
@@ -244,5 +351,19 @@ class ProductManager {
                     completion(entity)
                 })
         }
+    }
+}
+
+extension Array where Element: Hashable {
+    func removingDuplicates() -> [Element] {
+        var addedDict = [Element: Bool]()
+
+        return filter {
+            addedDict.updateValue(true, forKey: $0) == nil
+        }
+    }
+
+    mutating func removeDuplicates() {
+        self = self.removingDuplicates()
     }
 }

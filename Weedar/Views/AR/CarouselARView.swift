@@ -44,7 +44,15 @@ class CarouselARView: ARView, ObservableObject {
         let model: ModelEntity?
     }
     
-    @Published var highlightedProduct: ProductAR? = nil
+    var openWithDetail = false
+    
+    @Published var highlightedProduct: ProductAR? = nil{
+        didSet{
+            if openWithDetail{
+                tapSimulation(object: highlightedProduct?.model)
+            }
+        }
+    }
     @Published var tutorialStage: Tutorial.Stage = .waitToStart
     
     var shouldShowDescriptionCard: Bool = true
@@ -55,9 +63,21 @@ class CarouselARView: ARView, ObservableObject {
     var state: ARViewState = .overview
     var coachingOverlay: ARCoachingOverlayView? = nil
     
-    var entities: [Entity] = []
-    var anchor: AnchorEntity!
-    var productsAnchor: AnchorEntity!
+    var entities: [Entity] = []{
+        didSet{
+            print("entities: \(entities)")
+        }
+    }
+    var anchor: AnchorEntity!{
+        didSet{
+            print("entities: \(anchor)")
+        }
+    }
+    var productsAnchor: AnchorEntity!{
+        didSet{
+            print("productsAnchor: \(productsAnchor)")
+        }
+    }
     var player: AVAudioPlayer?
     
     var properties: DetailedViewProperties = .init()
@@ -66,7 +86,7 @@ class CarouselARView: ARView, ObservableObject {
     
     var lastScrollSpeed: CGFloat = 0
     
-    let manager: ProductManager
+    var manager: ProductManager
     
     var selectionGenerator: UISelectionFeedbackGenerator? = nil
     var feedbackGenerator: UIImpactFeedbackGenerator? = nil
@@ -104,21 +124,22 @@ class CarouselARView: ARView, ObservableObject {
 #endif
     }
 
-    func toTrackingState() {
+    func toTrackingState(itemsCount: Int) {
         print("tracking")
         
         if !anchorFound {
             let productsAnchor = AnchorEntity()
             self.productsAnchor = productsAnchor
-            
             self.anchor.addChild(productsAnchor)
             
             if let angle = angle {
                 productsAnchor.transform.rotation = simd_quatf(angle: angle, axis: SIMD3<Float>(0, 1, 0))
             }
+                
+            self.addEmptyAnchors(itemsCount: itemsCount)
             
-            self.addEmptyAnchors()
             self.shouldDoPerFrameUpdates = true
+            
         }
         anchorFound = true
     }
@@ -151,7 +172,7 @@ class CarouselARView: ARView, ObservableObject {
         self.anchor.components.set(directionLight)
         self.anchor.components.set(spotLight)
         
-        toTrackingState()
+        toTrackingState(itemsCount: ARModelsManager.shared.itemNamesDemo.count)
         
 #if !targetEnvironment(simulator)
         self.addGestureRecognizers()
@@ -163,6 +184,19 @@ class CarouselARView: ARView, ObservableObject {
         feedbackGenerator = UIImpactFeedbackGenerator()
         selectionGenerator = UISelectionFeedbackGenerator()
         notificationFeedbackGenerator = UINotificationFeedbackGenerator()
+    }
+    
+    func updateProducts(items: [Int: ModelTuple]){
+        pauseScene()
+        manager = ProductManager(items: items,
+                                 scale: Scale.overview,
+                                 radius: radius)
+        anchor.removeChild(productsAnchor)
+        self.anchorFound = false
+        toTrackingState(itemsCount: items.count)
+        self.resumeScene()
+        showDescriptionCard()
+
     }
     
     func pauseScene() {
@@ -261,15 +295,24 @@ class CarouselARView: ARView, ObservableObject {
         
     }
     
-    func addEmptyAnchors() {
-        let anchorCount = 12
-        for index in 1...anchorCount {
+    func addEmptyAnchors(itemsCount: Int) {
+        
+        let items = itemsCount == 1 ? itemsCount : 10
+        
+        print("ITEMS COUNT: \(items)")
+        for index in 1...items {
             let containerModel = ModelEntity()
             
             self.productsAnchor.addChild(containerModel)
             
             containerModel.position = [0, 0, -2]//returnCursorPosition(for: containerAnchor)
-            containerModel.transform.rotation *= simd_quatf(angle: (.pi/Float((anchorCount/2))) * Float(index), axis: SIMD3<Float>(0, -1, 0))
+            containerModel.transform.rotation *= simd_quatf(angle: (.pi/Float((items/2))) * Float(index), axis: SIMD3<Float>(0, -1, 0))
         }
     }
+}
+
+
+extension BinaryInteger {
+    var isEven: Bool { isMultiple(of: 2) }
+    var isOdd:  Bool { !isEven }
 }

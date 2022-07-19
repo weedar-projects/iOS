@@ -10,7 +10,19 @@ import Combine
 
 class ProductsViewModel: ObservableObject {
     // MARK: - Properties
-    @Published var products: [Product] = [] // TODO:  move to database
+    @Published var productsOld: [Product] = []{
+        didSet{
+            print("products: \(products)")
+        }
+    }
+    
+    @Published var products: [ProductModel] = []{
+        didSet{
+            print("products: \(products)")
+        }
+    }
+    
+    // TODO:  move to database
     public var filteredProducts: [Product] = []
     public static let shared = ProductsViewModel()
 
@@ -31,16 +43,6 @@ class ProductsViewModel: ObservableObject {
         
     func onAppear() {
         
-        Publishers.CombineLatest($products, $filtersRequestModel)
-            .map { products, filters in
-                products.filter { filters.includedForFilters($0) }
-            }
-            .removeDuplicates()
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: { [weak self] value in
-                self?.filteredProducts = value
-            })
-            .store(in: &cancelables)
     }
 
     func onDisappear() {
@@ -60,7 +62,12 @@ class ProductsViewModel: ObservableObject {
         return filteredProducts.filter { $0.type.id == categoryID }
     }
         
-    func getProduct(id: Int) -> Product? {
+    func getProductOld(id: Int) -> Product? {
+        let product = ProductsViewModel.shared.productsOld.first { $0.id == id }
+        return product
+    }
+    
+    func getProduct(id: Int) -> ProductModel? {
         let product = ProductsViewModel.shared.products.first { $0.id == id }
         return product
     }
@@ -110,7 +117,6 @@ class ProductsViewModel: ObservableObject {
                         Logger.log(message: "Products: \n\(products)", event: .debug)
                         
                         self.products.removeAll()
-                        self.products.append(contentsOf: products)
 //                        ARModelsManager.shared.getAllModels()
                         finished()
                     }

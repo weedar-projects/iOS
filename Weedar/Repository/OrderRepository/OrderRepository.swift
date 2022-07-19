@@ -133,74 +133,71 @@ final class OrderRepository: BaseRepository, OrderRepositoryProtocol {
     
     // Deprecated:
     
-    func makeOrder2(data: OrderRequestModel, completion: @escaping (Result<OrderResponseModel, OrderRequestError>) -> Void) {
-        guard let token = token else {
-            completion(.failure(OrderRequestError(message: "User is not authorized.")))
-            return
-        }
-
-        guard let url = URL(string: baseURL + "/order") else {
-            completion(.failure(OrderRequestError(message: "Can't resolve URL endpoint")))
-            return
-        }
-
-        let body = data
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("application/json", forHTTPHeaderField: "accept")
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        request.httpBody = try? JSONEncoder().encode(body)
-
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            
-            guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
-                completion(.failure(OrderRequestError(message: "Error URL Code")))
-               return
-            }
-
-            guard let data = data, error == nil else {
-                completion(.failure(OrderRequestError(message: "Empty data")))
-                return
-            }
-
-            guard let orderResponse = try? JSONDecoder().decode(OrderResponseModel.self, from: data) else {
-                completion(.failure(OrderRequestError(message: "Can't decode order response")))
-                return
-            }
-
-            completion(.success(orderResponse))
-        }.resume()
-    }
+//    func makeOrder2(data: OrderRequestModel, completion: @escaping (Result<OrderResponseModel, OrderRequestError>) -> Void) {
+//        guard let token = token else {
+//            completion(.failure(OrderRequestError(message: "User is not authorized.")))
+//            return
+//        }
+//
+//        guard let url = URL(string: baseURL + "/order") else {
+//            completion(.failure(OrderRequestError(message: "Can't resolve URL endpoint")))
+//            return
+//        }
+//
+//        let body = data
+//
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "POST"
+//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//        request.setValue("application/json", forHTTPHeaderField: "accept")
+//        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+//        request.httpBody = try? JSONEncoder().encode(body)
+//
+//        URLSession.shared.dataTask(with: request) { (data, response, error) in
+//
+//            guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
+//                completion(.failure(OrderRequestError(message: "Error URL Code")))
+//               return
+//            }
+//
+//            guard let data = data, error == nil else {
+//                completion(.failure(OrderRequestError(message: "Empty data")))
+//                return
+//            }
+//
+//
+//
+//            completion(.success(orderResponse))
+//        }.resume()
+//    }
     
-    func confirmOrder2(id: Int, completion: @escaping (Result<Bool, OrderRequestError>) -> Void) {
-        guard let token = token else {
-            completion(.failure(OrderRequestError(message: "User is not authorized.")))
-            return
-        }
-
-        guard let url = URL(string: baseURL + "/order/\(id)/confirm") else {
-            completion(.failure(OrderRequestError(message: "Can't resolve URL endpoint")))
-            return
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "PUT"
-        request.setValue("*/*", forHTTPHeaderField: "accept")
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        request.timeoutInterval = 15
-
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            
-            guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
-                completion(.failure(OrderRequestError(message: "Invalid request")))
-               return
-            }
-            print(response)
-            completion(.success(true))
-        }.resume()
-    }
+//    func confirmOrder2(id: Int, completion: @escaping (Result<Bool, OrderRequestError>) -> Void) {
+//        guard let token = token else {
+//            completion(.failure(OrderRequestError(message: "User is not authorized.")))
+//            return
+//        }
+//
+//        guard let url = URL(string: baseURL + "/order/\(id)/confirm") else {
+//            completion(.failure(OrderRequestError(message: "Can't resolve URL endpoint")))
+//            return
+//        }
+//
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "PUT"
+//        request.setValue("*/*", forHTTPHeaderField: "accept")
+//        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+//        request.timeoutInterval = 15
+//
+//        URLSession.shared.dataTask(with: request) { (data, response, error) in
+//
+//            guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
+//                completion(.failure(OrderRequestError(message: "Invalid request")))
+//               return
+//            }
+//            print(response)
+//            completion(.success(true))
+//        }.resume()
+//    }
     
     func getOrders2(userId id: Int, completion: @escaping (Result<[OrderResponseModel], OrderRequestError>) -> Void) {
 
@@ -226,13 +223,9 @@ final class OrderRepository: BaseRepository, OrderRepositoryProtocol {
                     completion(.failure(OrderRequestError(message: "Empty data")))
                     return
                 }
+
                 
-                guard let productResponse = try? JSONDecoder().decode([OrderResponseModel].self, from: data) else {
-                    completion(.failure(OrderRequestError(message: "Can't decode order response")))
-                    return
-                }
-                
-                completion(.success(productResponse))
+//                completion(.success(productResponse))
             }
         }.resume()
     }

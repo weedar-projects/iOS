@@ -18,4 +18,15 @@ struct OrderDetailsReview {
     var taxSum: Double
     var sum: Double
     var state: Int
+    var fullAdress: String
+    var username: String
+    var phone: String
+    
+    var partnerPhone: String
+    var partnerName: String
+    var partnerAdress: String
+    
+    var licence: String = ""
+    
+    var orderNumber: String
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-import Amplitude
+ 
 
 struct ProductDetailedView: View {
     @StateObject var vm  = ProductDetailedVM()
@@ -16,18 +16,12 @@ struct ProductDetailedView: View {
     
     @EnvironmentObject var cartManager: CartManager
     @EnvironmentObject var tabBarManager: TabBarManager
-    
+    @ObservedObject var localModels: ARModelsManager
     var body: some View {
         ZStack{
             
             NavigationLink(isActive: $vm.showAR) {
-                HomeView()
-                    .onAppear {
-                        tabBarManager.show()
-                    }
-                    .onDisappear {
-                        tabBarManager.showTracker()
-                    }
+                HomeView(openProductById: product.id, openByCategoryId: 0, singleProduct: product)
             } label: {
                 EmptyView()
             }
@@ -40,8 +34,19 @@ struct ProductDetailedView: View {
                 }
                 .animation(.none, value: true)
             
+            
             ProductDetailedBodyView(imageSize: $vm.imageSize, scrollOffset: $vm.scrollOffset) {
-                
+                //nftbanner
+                if product.isNft{
+                ZStack{
+                    Image("nft_banner_bg")
+                        .resizable()
+                    Image("nft_banner")
+                        .resizable()
+                }
+                .frame(width: getRect().width, height: 67)
+                .cornerRadius(radius: 12, corners: [.topLeft,.topRight])
+                }
                 //category tree
                 HStack{
                     //category name
@@ -86,10 +91,10 @@ struct ProductDetailedView: View {
             if vm.showImageFullScreen{
                 ImagesFullScreenView(imageLink: product.imageLink,product: product ,showImageFullScreen: $vm.showImageFullScreen)
                     .transition(.fade)
-                
             }
             VStack{
                 Spacer()
+                
             AddToCartButton()
                 .padding(.horizontal, 24)
                 .padding(.bottom, tabBarManager.tabBarHeight - 24)
@@ -214,21 +219,25 @@ struct ProductDetailedView: View {
             
             Spacer()
             
+            if let model = product.modelHighQualityLink, model.hasSuffix(".usdz"){
             //Button
             Image("ar_button")
                 .resizable()
                 .frame(width: 72, height: 72)
+                .opacity(localModels.currentLoadedModel >= localModels.allModelCount ? 1 : 0.5)
+                .disabled(!(localModels.currentLoadedModel >= localModels.allModelCount))
                 .onTapGesture {
                     tabBarManager.hideTracker()
                     vm.showAR.toggle()
-                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                    Amplitude.instance().logEvent("product_card_ar", withEventProperties: ["category" : product.type.name,
-                                                                                           "product_id" : product.id,
-                                                                                           "product_qty" : vm.quantity,
-                                                                                           "product_price" : product.price.formattedString(format: .percent)])
-                    }
+                    AnalyticsManager.instance.event(key: .select_product,
+                                                    properties: [.category : product.type.name,
+                                                                 .product_id: product.id,
+                                                                 .product_qty: vm.quantity,
+                                                        .product_price: product.price.formattedString(format: .percent)])
                 }
+                
+                    
+            }
             
         }
         .padding(.top, 16)
@@ -245,6 +254,7 @@ struct ProductDetailedView: View {
                 .textSecond()
         }
         .padding(.leading, 24)
+        .padding(.top,product.modelHighQualityLink.hasSuffix(".usdz") ? 0 : 12)
     }
     
     @ViewBuilder
@@ -402,15 +412,15 @@ struct ProductDetailedView: View {
         }
         .onTapGesture {
             vm.notification.notificationOccurred(.success)
-            cartManager.productQuantityInCart(productId: product.id, quantity: .custom(vm.quantity))
-            if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-            Amplitude.instance().logEvent("add_cart_prod_card", withEventProperties: ["category" : product.type.name,
-                                                                                      "product_id" : product.id,
-                                                                                      "product_qty" : vm.quantity,
-                                                                                      "product_price" : product.price.formattedString(format: .percent)])
+            cartManager.productQuantityInCart(productId: product.id, quantity: .custom(vm.quantity)){
+                AnalyticsManager.instance.event(key: .add_cart_prod_card,
+                                                properties: [.category : product.type.name,
+                                                             .product_id: product.id,
+                                                             .product_qty: vm.quantity,
+                                                             .product_price: product.price.formattedString(format: .percent)])
+                vm.chageAddButtonState()
             }
-            vm.chageAddButtonState()
+            
         }.disabled(vm.animProductInCart)
     }
     

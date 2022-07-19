@@ -38,7 +38,7 @@ struct MyOrderView: MainLoadViewProtocol {
                             .textCustom(.coreSansC65Bold, 16, Color.col_text_main)
                             Spacer()
                         
-                        OrderStatusView(status: vm.order?.state ?? 0)
+                        OrderStatusView(status: vm.order?.state ?? 0, isPickup: vm.order?.partner.isPickUp ?? false)
                     }
                     .padding(.horizontal, 16)
                     .frame(height: 48)
@@ -52,9 +52,17 @@ struct MyOrderView: MainLoadViewProtocol {
                                 )
                     .padding([.horizontal, .top],24)
                     
+                    if let license = vm.order?.license{
+                        Text("Order fulfilled by: \(license)")
+                            .textCustom(.coreSansC45Regular, 14, Color.col_text_second)
+                            .hLeading()
+                            .padding(.top,6)
+                            .padding(.horizontal, 35)
+                    }
+                    
                     Text("List of items")
                         .textCustom(.coreSansC65Bold, 14, Color.col_text_second)
-                        .padding(.top, 24)
+                        .padding(.top, 12)
                         .padding(.leading, 35)
                         .hLeading()
                     
@@ -82,17 +90,24 @@ struct MyOrderView: MainLoadViewProtocol {
                         
                         .padding(.horizontal, 24)
                         
+                        if let order = vm.order{
                         //Pricing view
-                        CalculationPriceView(data: $vm.orderDetailsReview, showDiscount: true)
+                            CalculationPriceView(data: $vm.orderDetailsReview,showDelivery: order.orderType == .delivery, showDiscount: true)
                             .padding(.top, 24)
                             .padding(.horizontal, 24)
+                            .onAppear {
+                                print("is pickup \(order.partner.isPickUp)")
+                            }
+                        }
                         
-                        Text("Delivery details")
-                            .textCustom(.coreSansC65Bold
-                                        , 14, Color.col_text_second)
-                            .padding(.top, 24)
-                            .padding(.leading, 35)
-                            .hLeading()
+                        if let isPickUp = vm.order?.orderType{
+                            Text(isPickUp == .pickup ? "Pick up at" : "Delivery details")
+                                .textCustom(.coreSansC65Bold
+                                            , 14, Color.col_text_second)
+                                .padding(.top, 24)
+                                .padding(.leading, 35)
+                                .hLeading()
+                        }
                         
                         //delivery user data
                         ZStack{
@@ -106,17 +121,36 @@ struct MyOrderView: MainLoadViewProtocol {
                             
                             
                             VStack(alignment: .leading,spacing: 10){
-                                Text("\(vm.order?.name ?? "")")
-                                    .textDefault()
                                 
-                                Text("\(vm.order?.addressLine1 ?? "")")
-                                    .textDefault()
+                                if let orderType = vm.order?.orderType, let partner = vm.order?.partner, orderType == .pickup{
+                                    Text(partner.name)
+                                        .textDefault()
+                                }else{
+                                    Text("\(vm.order?.name ?? "")")
+                                        .textDefault()
+                                }
                                 
-                               // Text("\(vm.order?.zipCode ?? "")")
-                                 //   .textDefault()
                                 
-                                Text("\(vm.order?.phone ?? "")")
-                                    .textDefault()
+                                if let userAddress = vm.order?.addressLine1, let orderType = vm.order?.orderType, orderType == .delivery{
+                                    if !userAddress.isEmpty{
+                                    Text(userAddress)
+                                        .textDefault()
+                                    }
+                                }
+                                
+                                if let partner = vm.order?.partner,  let orderType = vm.order?.orderType, orderType == .pickup{
+                                    Text(partner.address)
+                                        .textDefault()
+                                }
+                                                                
+                                if let partner = vm.order?.partner,  let orderType = vm.order?.orderType, orderType == .pickup{
+                                    Text(Utils.shared.phoneFormat(phone: partner.phone) )
+                                        .textDefault()
+                                }else{
+                                    Text("\(Utils.shared.phoneFormat(phone: vm.order?.phone ?? ""))")
+                                        .textDefault()
+                                }
+                             
                             }
                             .padding()
                             .hLeading()
@@ -126,8 +160,32 @@ struct MyOrderView: MainLoadViewProtocol {
                         
                     }
                     .padding(.top, 8)
+                    
+                    if let orderType = vm.order?.orderType, orderType == .pickup{
+                        ZStack{
+                            RadialGradient(colors: [Color.col_gradient_blue_second,
+                                                    Color.col_gradient_blue_first],
+                                           center: .center,
+                                           startRadius: 0,
+                                           endRadius: 220)
+                            .opacity(0.25)
+                            .clipShape(CustomCorner(corners: .allCorners,
+                                                    radius: 12))
+                            .frame(height: 48)
+                            
+                            Text("Directions")
+                                .textCustom(.coreSansC55Medium, 16, Color.col_blue_main)
+                        }
+                        .padding(.horizontal, 24)
+                        .padding(.top, 32)
+                        .onTapGesture {
+                            vm.showDirectionsView = true
+                        }
+                        
+                    }
+                    
                     if let state = vm.order?.state{
-                        if  state != 10 && state != 7{
+                        if  state != 10 && state != 7 && state != 8{
                             Button {
                                 vm.showCancelAlert.toggle()
                             } label: {
@@ -138,7 +196,7 @@ struct MyOrderView: MainLoadViewProtocol {
                                     .background(Color.col_bg_second.cornerRadius(12))
                                     .padding(.horizontal, 24)
                             }
-                            .padding(.top, 24)
+                            .padding(.top, 15)
                         }
                     }
                 }
@@ -158,18 +216,39 @@ struct MyOrderView: MainLoadViewProtocol {
                 .opacity(showDeeplink ? 1 : 0)
             }
         }
+        .actionSheet(isPresented: $vm.showDirectionsView) {
+            ActionSheet(title: Text("Select app"),
+                        buttons: [
+                            .default(
+                                Text("Google Maps")
+                                    .foregroundColor(Color.lightSecondaryE.opacity(1.0))
+                                    .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
+                            ) {
+                                guard let store = vm.order else {return}
+                                Utils.shared.openGoogleMap(address: store.partner.address,lat: store.partner.latitudeCoordinate, lon: store.partner.longitudeCoordinate)
+                            },
+                            .default(
+                                Text("Apple Maps")
+                                    .foregroundColor(Color.lightSecondaryE.opacity(1.0))
+                                    .font(.custom(CustomFont.coreSansC45Regular.rawValue, size: 16))
+                            ) {
+                                guard let store = vm.order else {return}
+                                Utils.shared.openAppleMap(address: store.partner.address,lat: store.partner.latitudeCoordinate, lon: store.partner.longitudeCoordinate)
+                            },
+                            .cancel()
+                        ])
+        }
         .alert(isPresented: $vm.showCancelAlert, content: {
           Alert(title: Text("Cancel order?"),
                 message: Text("Do you confirm you want to cancel this order?"),
                 primaryButton: .cancel(Text("Close")),
                 secondaryButton: .destructive(Text("Cancel"),
                                               action: {
-              self.showLoader = true
-              vm.cancelOrder { 
-                  vm.getOrder(id: id) {
-                      self.showLoader = false
-                  }
-                  
+              vm.cancelOrder {
+                  self.presentationMode.wrappedValue.dismiss()
+//                  vm.getOrder(id: id) {
+//                      self.showLoader = false
+//                  }
               }
           }))
         })

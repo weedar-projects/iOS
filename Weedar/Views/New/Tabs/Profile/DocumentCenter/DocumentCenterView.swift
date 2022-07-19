@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 
 struct DocumentCenterView: MainLoadViewProtocol {
     
@@ -25,12 +25,6 @@ struct DocumentCenterView: MainLoadViewProtocol {
                 .padding(.horizontal, 24)
                 .padding(.top, 12)
                 .hLeading()
-                
-                Text("Our courier will ask you to show your ID \nto verify your identity and age.")
-                    .textDefault()
-                    .padding(.top, 24)
-                    .padding(.horizontal, 24)
-                    .hLeading()
             
                 PassportView()
                 
@@ -118,14 +112,10 @@ struct DocumentCenterView: MainLoadViewProtocol {
                     switch vm.selectedPhoto {
                     case .id:
                         vm.idImage = image
-                        if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                        Amplitude.instance().logEvent("id_upload", withEventProperties: ["method_id" :"choose_an_image"])
-                        }
+                        AnalyticsManager.instance.event(key: .id_upload, properties: [.method_id:"choose_an_image"])
                     case .rec:
                         vm.recommendationImage = image
-                        if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                        Amplitude.instance().logEvent("recommend_id", withEventProperties: ["method_id" :"choose_an_image"])
-                        }
+                        AnalyticsManager.instance.event(key: .recommend_id, properties: [.method_id:"choose_an_image"])
                     }
                 }
                 .navigationTitle("Choose an image")
@@ -147,14 +137,10 @@ struct DocumentCenterView: MainLoadViewProtocol {
                     switch vm.selectedPhoto {
                     case .id:
                         vm.idImage = image
-                        if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                        Amplitude.instance().logEvent("id_upload", withEventProperties: ["method_id" :"take_a_photo"])
-                        }
+                        AnalyticsManager.instance.event(key: .id_upload, properties: [.method_id:"take_a_photo"])
                     case .rec:
                         vm.recommendationImage = image
-                        if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                        Amplitude.instance().logEvent("recommend_id", withEventProperties: ["method_id" :"take_a_photo"])
-                        }
+                        AnalyticsManager.instance.event(key: .recommend_id, properties: [.method_id:"take_a_photo"])
                     }
                 }
                 .navigationTitle("Take a photo")
@@ -186,9 +172,7 @@ struct DocumentCenterView: MainLoadViewProtocol {
             vm.isActionSheetShow.toggle()
         } trashAction: {
             vm.idImage = nil
-            if UserDefaults.standard.bool(forKey: "EnableTracking"){
-            Amplitude.instance().logEvent("remove_id")
-            }
+            AnalyticsManager.instance.event(key: .remove_id)
         }
         .padding(.horizontal, 24)
         .onChange(of: vm.idImage) { newValue in
@@ -216,9 +200,7 @@ struct DocumentCenterView: MainLoadViewProtocol {
             vm.isActionSheetShow.toggle()
         }trashAction: {
             vm.recommendationImage = nil
-            if UserDefaults.standard.bool(forKey: "EnableTracking"){
-            Amplitude.instance().logEvent("remove_recommend")
-            }
+            AnalyticsManager.instance.event(key: .remove_recommend)
         }
         .padding(.horizontal, 24)
         .onChange(of: vm.recommendationImage) { newValue in

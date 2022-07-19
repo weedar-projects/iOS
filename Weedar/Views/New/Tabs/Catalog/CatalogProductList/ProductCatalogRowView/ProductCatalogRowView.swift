@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-import Amplitude
+ 
 
 struct ProductCatalogRowView: View {
     
@@ -41,6 +41,12 @@ struct ProductCatalogRowView: View {
                             .strokeBorder(Color.col_borders
                                             .opacity(0.5), lineWidth: 2)
                 )
+                .overlay(
+                    //nftbanner
+                        Image("nft_mini")
+                            .opacity(item.isNft ? 1 : 0)
+                            .padding(11)
+                    ,alignment: .topLeading)
                 
             Spacer()
             
@@ -121,16 +127,16 @@ struct ProductCatalogRowView: View {
             }
             .onTapGesture {
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
-                cartManager.productQuantityInCart(productId: item.id, quantity: .add)
-                vm.product_qty += 1
-                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                Amplitude.instance().logEvent("add_cart_catalog", withEventProperties: ["category" : item.type.name,
-                                                                                        "product_id" : item.id,
-                                                                                        "product_qty" : vm.product_qty,
-                                                                                        "product_price" : item.price.formattedString(format: .percent)])
+                cartManager.productQuantityInCart(productId: item.id, quantity: .add){
+                    vm.product_qty += 1
+                    
+                    AnalyticsManager.instance.event(key: .add_cart_catalog,
+                                                    properties: [.category : item.type.name,
+                                                                 .product_id: item.id,
+                                                                 .product_qty: vm.product_qty,
+                                                                 .product_price: item.price.formattedString(format: .percent)])
+                    vm.chageAddButtonState()
                 }
-                vm.chageAddButtonState()
             }
         }
         

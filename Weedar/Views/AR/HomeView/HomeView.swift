@@ -8,7 +8,7 @@
 import SwiftUI
 import RealityKit
 import SDWebImageSwiftUI
-import Amplitude
+ 
 
 struct LoadingAnimateView: View {
     @State var animation = true
@@ -35,6 +35,18 @@ struct HomeView: View {
     @State private var appear = true
     @State private var opacity = 1.0
     @State private var showDesctiption = true
+    
+    @State var openProductById: Int = 0
+    @State var openByCategoryId: Int = 0
+    @State var singleProduct: ProductModel?
+    
+    @State var disableFilterButton = true
+    
+    @StateObject var cameraManager = CameraManager()
+    
+    @StateObject var filtersVM = ARFiltersVM()
+    @State var showBG = false
+    @State var showCameraSettings = false
     
     // MARK: - View
     var body: some View {
@@ -63,9 +75,11 @@ struct HomeView: View {
 //                .vTop()
 //                .zIndex(3)
 //                .edgesIgnoringSafeArea(.top)
-//            
+            
+            
             VStack {
                 VStack {
+                    
                     ARViewContainer(carousel: carousel, appear: $appear)
                         .edgesIgnoringSafeArea(.all)
                         .overlay(ZStack {
@@ -82,9 +96,30 @@ struct HomeView: View {
                                 .padding(24)
                                 .padding(.bottom, 50)
                         )
-                    
                         .zIndex(6)
+                    
+                    
                 } //AR VSTACK
+                .customDefaultAlert(title: "Unable to access the Camera",
+                                    message: "To use AR, please\nenable camera in Settings.",
+                                    isPresented: $showCameraSettings,
+                                    firstBtn: Alert.Button.default(Text("Not right now"),
+                                                                   action: {
+                    showCameraSettings = false
+                }), secondBtn: Alert.Button.default(Text("Settings"), action: {
+                    guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else { return }
+                    if UIApplication.shared.canOpenURL(settingsUrl) {
+                        if #available(iOS 10.0, *) {
+                            UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                                // Finished opening URL
+                            })
+                        } else {
+                            // Fallback on earlier versions
+                            UIApplication.shared.openURL(settingsUrl)
+                        }
+                    }
+
+                }))
                 .statusBar(hidden: true)
                 .navigationBarBackButtonHidden(true)
                 .onChange(of: carousel.highlightedProduct?.id) { _ in
@@ -101,12 +136,62 @@ struct HomeView: View {
                     self.appear = false
                     carousel.pauseScene()
                     tabbarManager.showTracker()
+                    openByCategoryId = 0
+                    openProductById = 0
                 }
+                .onReceive(cameraManager.$permissionGranted, perform: { (granted) in
+                    if granted {
+                        showBG = false
+                    }else{
+                        showBG = true
+                        showCameraSettings = true
+                    }
+                })
                 .onUIKitAppear {
+                    cameraManager.requestPermission()
                     carousel.showDescriptionCard()
+                    carousel.openWithDetail = false
+                    if openByCategoryId != 0 {
+                        ARModelsManager.shared.getProducts(categoryId: openByCategoryId, filters: CatalogFilters()){
+                            ARModelsManager.shared.updateModels(){ items in
+                                carousel.updateProducts(items: items)
+                            }
+                        }
+                    }
+                    
+                    if let product = singleProduct{
+                        let items = [product.id: (product.modelHighQualityLink, product.animationDuration)]
+                        carousel.updateProducts(items: items)
+                        carousel.resumeScene()
+                        carousel.openWithDetail = true
+                        carousel.shouldShowDescriptionCard = true
+                    }
+                    
+//                    if openProductById != 0{
+//                        carousel.pauseScene()
+//                        ARModelsManager.shared.getProducts(filters: CatalogFilters()){
+//                            ARModelsManager.shared.updateModels(){ items in
+//                                carousel.updateProducts(items: items)
+//                                carousel.manager.setFirstModelId(id: openProductById)
+//                            }
+//                        }
+//                        carousel.resumeScene()
+//                        carousel.shouldShowDescriptionCard = true
+//                        print("IDDDDDPRODUUCT: \(openProductById)")
+//                    }else{
+//                        carousel.resumeScene()
+//                    }
+                    
+                     if openProductById == 0 && openByCategoryId == 0{
+                        ARModelsManager.shared.getProducts(filters: CatalogFilters()){
+                            ARModelsManager.shared.updateModels(){ items in
+                                carousel.updateProducts(items: items)
+                            }
+                        }
+                    }
+                    
                     statusBarStyle.currentStyle = .darkContent
                     //                tabbarManager.isCurrentOrderViewExtended = false
-                    carousel.resumeScene()
                     tabbarManager.hideTracker()
                     self.appear = true
                     withAnimation(Animation.spring().delay(0.5)) {
@@ -140,6 +225,19 @@ struct HomeView: View {
                                 Image("navbar-refresh")
                                     .frame(width: 24, height: 24, alignment: .leading)
                             }
+                            
+//                            Button {
+//                                filtersVM.showFilterView = true
+//                            } label: {
+//                                Image("navbar-filter")
+//                                    .frame(width: 24, height: 24, alignment: .leading)
+//                            }
+//                            .disabled(disableFilterButton)
+//                            .onAppear(){
+//                                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+//                                    self.disableFilterButton = false
+//                                }
+//                            }
                         }) // HStack
                         .foregroundColor(.lightOnSurfaceA.opacity(1.0))
                 )
@@ -148,7 +246,32 @@ struct HomeView: View {
                     TutorialsView(isShown: $tutorialsIsActive)
                 }
             }// MAIN VSTACK
+            
+            
+            if filtersVM.showFilterView{
+                ZStack{
+                    Color.black.opacity(0.2)
+                        .edgesIgnoringSafeArea(.all)
+                        .transition(.fade)
+                ARFiltersView(rootVM: filtersVM,
+                              carousel: carousel)
+                    .transition(.move(edge: .bottom))
+                }
+            }
+            
+            
+            Color.col_blue_main
+                .edgesIgnoringSafeArea(.all)
+                .opacity(showBG ? 1 : 0)
+            
         } //zstack
+        .onChange(of: filtersVM.showFilterView) { newValue in
+            if newValue{
+                tabbarManager.hide()
+            }else{
+                tabbarManager.show()
+            }
+        }
     }
 }
 
@@ -161,14 +284,22 @@ struct ARProductInfo : View {
     @Binding var opacity: Double
     
     var body: some View {
-        BottomSheetView(blur: 4.0, backgroundColor: Color.black.opacity(0.4)) {
-            if let product = ProductsViewModel.shared.getProduct(id: product.id) {
+        if let product = ProductsViewModel.shared.getProduct(id: product.id) {
+            BottomSheetView(blur: 4.0, backgroundColor: Color.black.opacity(0.4), isNft: product.isNft) {
+            
                 HStack {
                     VStack (alignment: .leading) {
+                        
+                        if product.isNft{
+                            Image("nft_mini")
+                                .padding(.top,14)
+                        }
+                        
                         Text(product.brand.name ?? "")
                             .font(.system(size: 14))
                             .foregroundColor(ColorManager.Buttons.buttonTextInactiveColor)
-                            .padding([.top], 16)
+                            .padding([.top], 6)
+                 
                         Text(product.name)
                             .font(.system(size: 14))
                             .foregroundColor(.white)
@@ -206,11 +337,10 @@ struct ARProductInfo : View {
                     Button(action: {
                         UINotificationFeedbackGenerator().notificationOccurred(.success)
                         
-                        cartManager.productQuantityInCart(productId: product.id, quantity: .add)
-                        if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                        Amplitude.instance().logEvent("add_cart_ar", withEventProperties: ["category" : product.type.name,
-                                                                                                "product_id" : product.id,
-                                                                                                "product_price" : product.price.formattedString(format: .percent)])
+                        cartManager.productQuantityInCart(productId: product.id, quantity: .add){
+                            AnalyticsManager.instance.event(key: .add_cart_ar, properties: [.category : product.type.name,
+                                                                                            .product_id : product.id,
+                                                                                            .product_price : product.price.formattedString(format: .percent)])
                         }
                     }){
                         ZStack{
@@ -230,8 +360,10 @@ struct ARProductInfo : View {
                 .padding(.bottom, getSafeArea().bottom + 75)
                 .padding([.trailing, .leading], 24)
                 .opacity(opacity)
-            }
+            
         }
+        }
+   
     }
 }
 

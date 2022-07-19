@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 import SDWebImageSwiftUI
 
 struct CartView: View {
@@ -62,22 +62,20 @@ struct CartView: View {
                             .padding(.horizontal, 24)
                     
                     //create order button
-                    
                     if let cartData = cartManager.cartData{
                     MainButton(title: "Proceed to checkout") {
                         orderNavigationManager.showDeliveryView = true
                         tabBarManager.hide()
-                        if let productsInCart = cartManager.cartData?.cartDetails{
-                            for product in productsInCart {
-                                if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                                    Amplitude.instance().logEvent("proceed_checkout", withEventProperties: ["category" : product.product.type,
-                                                                                                            "product_id" : product.product.id,
-                                                                                                            "product_price" : product.product.price.formattedString(format: .percent)])
-                                }
-                            }
+                        var properties: [AMPropertieKey : Any]  = [:]
+                        for product in cartData.cartDetails {
+                            properties = [.category : product.product.type.name,
+                                          .product_id : product.product.id,
+                                          .product_price : product.product.price.formattedString(format: .percent)]
+                            
                         }
+                        AnalyticsManager.instance.event(key: .proceed_checkout, properties: properties)
                     }
-                    .padding(.top, 32)
+                    .padding(.top, 17)
                     .padding(.horizontal, 24)
                     .padding(.bottom, 50)
                     .padding(.bottom, tabBarManager.showOrderTracker ? 95 : isSmallIPhone() ? 35 : 25)
@@ -104,6 +102,7 @@ struct CartView: View {
                                     secondBtn: .destructive(
                                         Text("Clear"),
                                         action: {
+                     
                                             self.cartManager.clearAllProductCart()
                                         }
                                     ))
@@ -112,6 +111,10 @@ struct CartView: View {
         .sheet(isPresented: $vm.showDiscontCodeView, content: {
             DiscontCodeView(showView: $vm.showDiscontCodeView)
         })
+        .onUIKitAppear {
+            tabBarManager.show()
+        }
+     
 //        .onAppear() {
 //            cartManager.updateCalculations()
 //            vm.validateToNext(concentrated: cartManager.totalConcentrated,

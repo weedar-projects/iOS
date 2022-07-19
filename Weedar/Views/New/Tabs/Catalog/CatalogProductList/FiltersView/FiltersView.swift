@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
-import Amplitude
+
 
 struct FiltersView: View {
     
@@ -89,16 +89,16 @@ struct FiltersView: View {
                 .padding(.horizontal,24)
                 .padding(.top, 24)
                 
-                //comfirm button
+                //confirm button
                 MainButton(title: "Confirm", icon: "checkmark", iconSize: 14) {
                     rootVM.getProducts(categoryId: rootVM.categoryId, filters: rootVM.filters)
                     rootVM.canReset = true
-                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-                    Amplitude.instance().logEvent("filters_apply", withEventProperties: ["category" : rootVM.categoryId,
-                                                                                         "price_range" : "\(rootVM.filters.priceFrom?.formattedString(format: .percent)) - \(rootVM.filters.priceTo?.formattedString(format: .percent))",
-                                                                                         "brand_name" : rootVM.filters.brands ?? 0,
-                                                                                         "effects" :rootVM.filters.effects ?? 0])
-                    }
+                    
+                    AnalyticsManager.instance.event(key: .filters_apply,
+                                                    properties: [.category : rootVM.categoryId,
+                                                                 .price_range: "\(rootVM.filters.priceFrom?.formattedString(format: .percent)) - \(rootVM.filters.priceTo?.formattedString(format: .percent))",
+                                                                 .brand_name: rootVM.filters.brands ?? 0,
+                                                                 .effects: rootVM.filters.effects ?? 0])
                     withAnimation {
                         rootVM.showFilterView = false
                     }

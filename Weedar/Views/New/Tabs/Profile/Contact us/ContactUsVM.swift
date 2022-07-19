@@ -18,7 +18,8 @@ class ContactUsVM: ObservableObject {
     @Published var buttonIsDisabled = true
 
     @Published var showAlert = false
-    @Published var errorMessage = ""
+    @Published var alertMessage = ""
+    @Published var alertTitle = ""
     
     
     func validateButton(){
@@ -41,9 +42,13 @@ class ContactUsVM: ObservableObject {
             switch result{
             case .success(_):
                 self.updateView()
+                self.alertMessage = "Your message has been successfully sent."
+                self.alertTitle = "Thank you!"
+                self.showAlert = true
             case let .failure(error):
                 print("ERROR: \(error)")
-                self.errorMessage = error.message
+                self.alertMessage = error.message
+                self.alertTitle = "Ooops"
                 self.showAlert = true
             }
         }

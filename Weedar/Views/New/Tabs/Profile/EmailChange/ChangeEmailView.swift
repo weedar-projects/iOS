@@ -25,7 +25,7 @@ struct ChangeEmailView: View {
                         .padding(.top)
                 }
                 
-                CustomTextField(text: $vm.email, state: $vm.emailTFState, title: "New email", placeholder: "Enter your email", keyboardType: .emailAddress)
+                CustomTextField(text: $vm.email, state: $vm.emailTFState, title: "New email", placeholder: "Enter your new email", keyboardType: .emailAddress)
                     .padding(.top, 24)
                 
                 CustomSecureTextField(text: $vm.password, state: $vm.passwordTFState, title: "Password", placeholder: "Enter your password")

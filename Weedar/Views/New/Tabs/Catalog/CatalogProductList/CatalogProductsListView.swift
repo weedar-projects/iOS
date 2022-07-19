@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Amplitude
+ 
 
 struct CatalogProductsListView: View {
     
@@ -16,24 +16,29 @@ struct CatalogProductsListView: View {
      
     @State var category: CatalogCategoryModel
     
+    @ObservedObject var localModels: ARModelsManager
+    
     var body: some View {
         ZStack{
             
             NavigationLink(isActive: $vm.showAR) {
-                
+                HomeView(openProductById: 0, openByCategoryId: category.id)
             } label: {
                 EmptyView()
             }
             
             NavigationLink(isActive: $vm.showProductDetail) {
                 if let product = vm.productDetail{
-                    ProductDetailedView(product: product)
+                    ProductDetailedView(product: product, localModels: localModels)
                         .onAppear(perform: {
                             tabBarManager.hideTracker()
-                            if UserDefaults.standard.bool(forKey: "EnableTracking"){
+                            AnalyticsManager.instance.event(key: .select_product,
+                                                            properties: [.category : product.type.name,
+                                                                         .product_id: product.id,
+                                                                         .product_price: product.price.formattedString(format: .percent)])
 
-                            Amplitude.instance().logEvent("select_product", withEventProperties: ["category" : product.type.name, "product_id" : product.id, "price" : product.price])
-                            }
+        
+                            
                         })
                 }
             } label: {
@@ -62,16 +67,12 @@ struct CatalogProductsListView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .frame(height: 28)
-//                    .background(Color.col_black.cornerRadius(8))
-//                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.col_black, lineWidth: 1))
+
                 }
                 .padding(.top, 12)
                 .onTapGesture {
                     withAnimation {
-                        if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                        Amplitude.instance().logEvent("click_filters")
-                        }
+                        AnalyticsManager.instance.event(key: .click_filters)
                         UIApplication.shared.endEditing()
                         vm.showFilterView = true
                     }
@@ -86,7 +87,6 @@ struct CatalogProductsListView: View {
                     VStack{
                         if filteredProducts(searchText: vm.searchText).count > 0{
                             ForEach(filteredProducts(searchText: vm.searchText), id: \.self){ product in
-                                
                                 ProductCatalogRowView(item: product, productInCartAnimation: $vm.productInCartAnimation)
                                     .padding(.horizontal)
                                     .padding(.vertical, 10)
@@ -134,23 +134,34 @@ struct CatalogProductsListView: View {
             tabBarManager.show()
         }
         .toolbar {
-//            ToolbarItem(placement: .navigationBarTrailing) {
-//                Button {
-//                    vm.showAR.toggle()
-//                } label: {
-//                    HStack{
-//                    Image("Catalog-AR-White-Icon")
-//                        .resizable()
-//                        .frame(width: 13, height: 13)
-//
-//                        Text("AR")
-//                            .textCustom(.coreSansC65Bold, 12, Color.col_text_white)
-//                    }
-//                    .padding(.horizontal, 13)
-//                    .padding(.vertical, 5)
-//                    .background(Color.col_purple_main.cornerRadius(12))
-//                }
-//            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    vm.showAR.toggle()
+                } label: {
+                    HStack{
+                    Image("Catalog-AR-White-Icon")
+                        .resizable()
+                        .frame(width: 13, height: 13)
+                        .colorInvert()
+
+                        Text("AR")
+                            .textCustom(.coreSansC65Bold, 12, Color.col_text_main)
+                    }
+                    .padding(.horizontal, 13)
+                    .padding(.vertical, 5)
+                    .background(Image.bg_gradient_main.resizable().frame(width: 60, height: 24).clipShape(Capsule()))
+                    .opacity(localModels.currentLoadedModel >= localModels.allModelCount ? 1 : 0.5)
+                    .disabled(!(localModels.currentLoadedModel >= localModels.allModelCount))
+                    .opacity(category.id == 8 ? 0 : 1)
+                }
+                .disabled(vm.showFilterView)
+                .overlay(
+                    Color.col_black.opacity(vm.showFilterView ? 0.4 : 0)
+                        .frame(width: 60, height: 24)
+                        .clipShape(Capsule())
+                        .offset(x: 4)
+                )
+            }
         }
     }
     
@@ -193,10 +204,7 @@ struct CatalogProductsListView: View {
                 .transition(.move(edge: .bottom))
                 .edgesIgnoringSafeArea(.bottom)
                 .onDisappear {
-                    if UserDefaults.standard.bool(forKey: "EnableTracking"){
-
-                    Amplitude.instance().logEvent("filter_close")
-                    }
+                    AnalyticsManager.instance.event(key: .filter_close)
                 }
         }
     }

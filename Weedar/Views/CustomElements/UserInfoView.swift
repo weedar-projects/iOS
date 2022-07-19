@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct UserInfoView: View {
-    @EnvironmentObject var sessionManager: SessionManager
     
-    @State var user: UserModel?
+    @Binding var name: String
+    @Binding var address: String
+    @Binding var phone: String
     
     var body: some View{
         VStack(alignment: .leading){
-            Text("\(user?.name ?? ""), \n\(user?.addresses.first?.addressLine1 ?? ""), \n\(user?.phone ?? "")")
+            Text("\(name), \n\(address), \n\(Utils.shared.phoneFormat(phone: phone))")
                 .textDefault()
                 .lineSpacing(4.8)
                 .padding()
@@ -32,10 +33,5 @@ struct UserInfoView: View {
         )
         .padding(.top,8)
         .padding(.horizontal, 24)
-        .onAppear {
-            sessionManager.userData(withUpdate: true) { user in
-                self.user = user
-            }
-        }
     }
 }
