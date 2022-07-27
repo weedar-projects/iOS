@@ -28,9 +28,17 @@ class ARModelsManager: ObservableObject {
     
     var itemNamesDemo: [Int: ModelTuple] = [:]
 
-    @Published var allModelCount: Int = 0
+    @Published var allModelCount: Int = 0{
+        didSet{
+            print("allModelCount \(allModelCount)")
+        }
+    }
     
-    @Published var currentLoadedModel: Int = 0
+    @Published var currentLoadedModel: Int = 0{
+        didSet{
+            print("currentLoadedModel \(currentLoadedModel)")
+        }
+    }
    
     @Published private var products: [Product] = []
     @Published private var filteredProducts: [ProductModel] = []
@@ -44,6 +52,7 @@ class ARModelsManager: ObservableObject {
     init() {
         notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         self.getProducts(filters: CatalogFilters()) {
+            print("INIT \(self.filteredProducts)")
             self.getAllModels()
         }
     }
@@ -101,6 +110,7 @@ class ARModelsManager: ObservableObject {
      func getAllModels(){
         for product in filteredProducts {
             if product.modelHighQualityLink.hasSuffix(".usdz"){
+                
                 print("\n\n---------\nAPPEND \(product.id)")
                 print("animationDuration \(product.animationDuration)")
                 print("modelHighQualityLink \(product.modelHighQualityLink)")
@@ -110,14 +120,15 @@ class ARModelsManager: ObservableObject {
                 let url = "\(BaseRepository().baseURL)/model/" + product.modelHighQualityLink
                 
                 methodLoadModelData(argIdCount: product.id, argWebURLStr: url) { value in
-
+ 
                     DispatchQueue.main.async {
                         self.currentLoadedModel = self.getFilesCount()
                     }
                 }
             }
         }
-        
+         
+        print("filteredProducts: \(filteredProducts)")
         self.allModelCount = itemNamesDemo.count
         
         self.currentLoadedModel = getFilesCount()

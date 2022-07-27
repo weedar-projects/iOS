@@ -38,7 +38,6 @@ struct RootCoordinator: View {
             switch coordinatorViewManager.currentRootView {
             case .auth:
                 AuthRootView()
-                    
             case .registerSetps:
                 UserIdentificationRootView(vm: registerStepsVM)
             case .main:
