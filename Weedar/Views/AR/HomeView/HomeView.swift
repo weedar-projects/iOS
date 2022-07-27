@@ -76,7 +76,6 @@ struct HomeView: View {
 //                .zIndex(3)
 //                .edgesIgnoringSafeArea(.top)
             
-            
             VStack {
                 VStack {
                     
