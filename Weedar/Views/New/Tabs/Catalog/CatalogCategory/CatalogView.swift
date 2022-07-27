@@ -48,6 +48,12 @@ struct CatalogView: MainLoadViewProtocol {
                         
                         NavigationLink(isActive: $showGame) {
                             ARGameMainView()
+                                .onAppear(){
+                                    tabBarManager.hide()
+                                }
+                                .onDisappear(){
+                                    tabBarManager.show()
+                                }
                         } label: {
                             EmptyView()
                         }

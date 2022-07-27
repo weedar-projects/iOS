@@ -1,0 +1,16 @@
+{
+  "images" : [
+    {
+      "filename" : "Book.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "unit" : "centimeters",
+    "width" : 19.539717891610987
+  }
+}
