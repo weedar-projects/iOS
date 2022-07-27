@@ -136,22 +136,22 @@ struct CatalogView: MainLoadViewProtocol {
     
     var loader: some View{
         LoadingScreenCatalogView()
-            .onAppear(perform: {
+            .onUIKitAppear {
                 if networkConnection.isConnected{
                     if vm.categories.isEmpty{
                         self.vm.loadCategories { val in
                             self.vm.getProductsForAR {
-//                                self.localModels.fetchProducts {
-//                                    self.localModels.getAllModels()
+                                self.localModels.getProducts(filters: nil) {
+                                    self.localModels.getAllModels()
                                     self.showLoader = false
-//                                }
+                                }
                             }
                         }
                     }else{
                         self.showLoader = false
                     }
                 }
-            })
+            }
             .onChange(of: networkConnection.isConnected, perform: { isConnected in
                 if isConnected{
                     if vm.categories.isEmpty{

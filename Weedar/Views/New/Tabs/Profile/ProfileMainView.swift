@@ -269,6 +269,7 @@ struct ProfileMainView: View {
                                 KeychainService.removePassword(serviceKey: .refreshToken)
                                 UserDefaultsService().remove(key: .user)
                                 sessionManager.userIsLogged = false
+                                sessionManager.needToFillUserData = true
                                 UserDefaultsService().set(value: false, forKey: .userVerified)
                                 UserDefaultsService().set(value: false, forKey: .userIsLogged)
                                 UserDefaultsService().set(value: true, forKey: .needToFillUserData)

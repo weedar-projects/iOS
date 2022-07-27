@@ -55,8 +55,8 @@ class CartManager: ObservableObject {
                 self.cartData = cart
             case .failure(let error):
                 print("Error loading cart \(error)")
-                self.messageCartManagerError = error.message
-                self.showCartManagerError = true
+//                self.messageCartManagerError = error.message
+//                self.showCartManagerError = true
             }
         }
     }

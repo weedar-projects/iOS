@@ -259,7 +259,6 @@ struct WeelarApp: App {
     var body: some Scene {
         WindowGroup {
             RootCoordinator()
-            
                 .onOpenURL { url in
                     print("Received URL: \(url)")
                     Auth.auth().canHandle(url) // <- just for information purposes
@@ -282,6 +281,9 @@ struct WeelarApp: App {
                  print("Order tracker state connect\(orderTrackerManager.isConnected)")
              case .inactive:
                print("App is inactive")
+                 if let _  = UserDefaultsService().get(fromKey: .userIsLogged){
+                     orderTrackerManager.disconnect()
+                 }
              case .background:
                  print("App is in background")
                  if let _  = UserDefaultsService().get(fromKey: .userIsLogged){
