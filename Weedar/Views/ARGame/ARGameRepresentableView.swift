@@ -7,12 +7,24 @@
 
 import SwiftUI
 import ARKit
+import Combine
 
+enum LinkAction {
+    case resetModel
+}
+
+class VCLink : ObservableObject {
+    @Published var action : LinkAction?
+    
+    func resetModel() {
+        action = .resetModel
+    }
+}
 
 struct ARGameRepresentableView: UIViewControllerRepresentable {
     typealias UIViewControllerType = ARGameUIKitView
     
-    @Binding var imageFounded: Bool
+    var vcLink : VCLink
     
     func makeUIViewController(context: Context) -> ARGameUIKitView {
         let vc = ARGameUIKitView()
@@ -22,6 +34,29 @@ struct ARGameRepresentableView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController:
                                 ARGameRepresentableView.UIViewControllerType, context:
                                 UIViewControllerRepresentableContext<ARGameRepresentableView>) {
+        context.coordinator.viewController = uiViewController
+        context.coordinator.vcLink = vcLink
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        return Coordinator()
+    }
+    
+    
+    class Coordinator {
+        var vcLink : VCLink? {
+            didSet {
+                cancelable = vcLink?.$action.sink(receiveValue: { (action) in
+                    guard let action = action else {
+                        return
+                    }
+                    self.viewController?.action(action)
+                })
+            }
+        }
+        
+        var viewController : ARGameUIKitView?
+        private var cancelable : AnyCancellable?
     }
 }
 
@@ -36,12 +71,22 @@ class ARGameUIKitView: UIViewController {
         self.view = ARSCNView(frame: .zero)
     }
     
+    let manager = ARGameManger.shared
+    
     let fadeDuration: TimeInterval = 0.3
     let rotateDuration: TimeInterval = 3
     let waitDuration: TimeInterval = 10
     
+    func action(_ action : LinkAction) {
+        switch action {
+        case .resetModel:
+            resetTrackingConfiguration()
+        }
+    }
     
     lazy var fadeAndSpinAction: SCNAction = {
+        self.manager.objectFounded = true
+        
         return .sequence([
             .fadeIn(duration: fadeDuration),
             .rotateBy(x: 0, y: 0, z: CGFloat.pi * 360 / 180, duration: rotateDuration),
@@ -84,9 +129,6 @@ class ARGameUIKitView: UIViewController {
         return node
     }()
     
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         sceneView.delegate = self
@@ -110,7 +152,6 @@ class ARGameUIKitView: UIViewController {
         sceneView.session.pause()
     }
     
-    
     func resetTrackingConfiguration() {
         guard let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else { return }
         let configuration = ARWorldTrackingConfiguration()
@@ -125,7 +166,9 @@ extension ARGameUIKitView: ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         DispatchQueue.main.async {
             guard let imageAnchor = anchor as? ARImageAnchor,
-                  let imageName = imageAnchor.referenceImage.name else { return }
+                  let imageName = imageAnchor.referenceImage.name else {    
+                return
+            }
             
             // TODO: Comment out code
             //            let planeNode = self.getPlaneNode(withReferenceImage: imageAnchor.referenceImage)
@@ -134,13 +177,11 @@ extension ARGameUIKitView: ARSCNViewDelegate {
             //            planeNode.runAction(self.fadeAction)
             //            node.addChildNode(planeNode)
             
-            // TODO: Overlay 3D Object
             let overlayNode = self.getNode(withImageName: imageName)
             overlayNode.opacity = 0
             overlayNode.position.y = 0.2
             overlayNode.runAction(self.fadeAndSpinAction)
             node.addChildNode(overlayNode)
-            
         }
     }
     

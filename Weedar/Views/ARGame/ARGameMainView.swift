@@ -10,29 +10,34 @@ import SwiftUI
 struct ARGameMainView: View {
     @Environment(\.presentationMode) var mode
     @State var manager = ARGameManger.shared
+    
+    @ObservedObject var vcLink = VCLink()
+    
     var body: some View {
         ZStack{
-            ARGameRepresentableView()
+            ARGameRepresentableView(vcLink: vcLink)
                 .edgesIgnoringSafeArea(.all)
             
-            if !manager.objectFounded{
-            Text("Find object")
-                .textCustom(.coreSansC65Bold, 18, .col_text_white)
-                .padding()
-                .background(Color.col_black.opacity(0.4).cornerRadius(12))
-                .vBottom()
-                .padding(.bottom, 50)
+            Button {
+                vcLink.resetModel()
+            } label: {
+                Text("Reset")
+                    .textCustom(.coreSansC65Bold, 18, .col_text_white)
+                    .padding(12)
+                    .background(Color.col_black.opacity(0.4).cornerRadius(12))
+                    
             }
-            
+            .vTop()
+            .hTrailing()
+            .padding()
+             
             //Back button
             Button {
                 mode.wrappedValue.dismiss()
             } label: {
-                
                 Image("Back-Navigation-Button")
                     .resizable()
                     .frame(width: 45, height: 45)
-                
             }
             .hLeading()
             .vTop()
