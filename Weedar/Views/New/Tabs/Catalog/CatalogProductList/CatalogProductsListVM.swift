@@ -24,6 +24,8 @@ class CatalogProductsListVM: ObservableObject {
     @Published var productDetail: ProductModel?
     
     @Published var showAR = false
+    
+    @Published var page = 0
    
     @Published var loading = false
     
@@ -35,7 +37,7 @@ class CatalogProductsListVM: ObservableObject {
     @Published var categoryId: Int = 0{
         didSet{
             if lastCategory != categoryId{
-                self.getProducts(categoryId: categoryId, filters: filters)
+//                self.getProducts(categoryId: categoryId, filters: filters)
             }
         }
     }
@@ -51,19 +53,20 @@ class CatalogProductsListVM: ObservableObject {
     }
     
     //get product
-    func getProducts(categoryId: Int, filters: CatalogFilters?){
+    func getProducts(categoryId: Int,page: Int = 1 ,filters: CatalogFilters?){
         loading = true
-        self.products = []
-        
+                
         self.lastCategory = categoryId
         
         var params: [String : Any] = [:]
+        
 
         if let filters = filters {
             params = composeFilters(categoryId: categoryId, catalogFilters: filters)
         }else{
             params = [CatalogFilterKey.type.rawValue : categoryId]
         }
+        params["page"] = page
          
         API.shared.request(rout: .getProductsList, parameters: params) { result in
             switch result{
@@ -76,6 +79,11 @@ class CatalogProductsListVM: ObservableObject {
                 break
             }
         }
+    }
+    
+    func nextPage(){
+        self.page += 1
+        getProducts(categoryId: categoryId, page: page, filters: filters)
     }
     
     //get effect for filters

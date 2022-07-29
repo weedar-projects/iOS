@@ -113,6 +113,13 @@ struct CatalogProductsListView: View {
                         }
                     }
                     .padding(.bottom, tabBarManager.showOrderTracker ? 95 : isSmallIPhone() ? 30 : 0)
+                    
+                    Rectangle()
+                        .fill(Color.black)
+                        .frame(width: 10, height: 1)
+                        .onAppear(){
+                            vm.nextPage()
+                        }
                 }
                 .padding(.top, 12)
                     
@@ -129,7 +136,6 @@ struct CatalogProductsListView: View {
         .onUIKitAppear {
             
             tabBarManager.orderTrackerHidePage = false
-            
             tabBarManager.showTracker()
             tabBarManager.show()
         }
